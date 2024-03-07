@@ -1,20 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    backgroundColor: "#fff",
-    flex: 1,
-    justifyContent: "center",
-  },
-});
+import { Text, View } from "react-native";
 
 function App() {
   return (
-    <View style={styles.container}>
+    <View className="flex-1 items-center justify-center bg-white">
       <Text>앱을 시작하려면 App.js를 열어보세요!</Text>
       <StatusBar style="auto" />
     </View>
