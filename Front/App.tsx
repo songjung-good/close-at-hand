@@ -1,5 +1,16 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    backgroundColor: "#fff",
+    flex: 1,
+    justifyContent: "center",
+  },
+});
 
 function App() {
   return (
@@ -9,15 +20,6 @@ function App() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 const AppEntryPoint = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED
   ? require("./.storybook").default

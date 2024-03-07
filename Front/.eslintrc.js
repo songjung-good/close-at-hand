@@ -29,5 +29,13 @@ module.exports = {
   plugins: ["@typescript-eslint", "react"],
   rules: {
     quotes: ["error", "double"],
+    "linebreak-style": ["error", "unix"],
+    "react/react-in-jsx-scope": "off",
+    // 모듈 해석기 지정
+    "eslint-import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
   },
 };
