@@ -1,13 +1,12 @@
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./src/shared/lib/tanstackquery/tanstackQuery";
-
 import Index from "./src/app/example/Index";
+import { StatusBar } from "expo-status-bar";
 
 function App() {
 	return (
-		<QueryClientProvider client={queryClient}>
+		<>
+			<StatusBar style="auto" />
 			<Index />
-		</QueryClientProvider>
+		</>
 	);
 }
 
