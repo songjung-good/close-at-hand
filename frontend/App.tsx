@@ -1,19 +1,18 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./src/shared/lib/tanstackquery/tanstackQuery";
 
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import Index from "./src/app/example/Index";
 
 function App() {
-  return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text>앱을 시작하려면 App.js를 열어보세요!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+	return (
+		<QueryClientProvider client={queryClient}>
+			<Index />
+		</QueryClientProvider>
+	);
 }
 
 const AppEntryPoint = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED
-  ? require("./.storybook").default
-  : App;
+	? require("./.storybook").default
+	: App;
 
 export default AppEntryPoint;
