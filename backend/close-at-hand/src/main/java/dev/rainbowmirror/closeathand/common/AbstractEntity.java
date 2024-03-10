@@ -1,9 +1,10 @@
-package dev.rainbowmirror.closeathand.domain;
+package dev.rainbowmirror.closeathand.common;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.ZonedDateTime;
@@ -16,6 +17,6 @@ public class AbstractEntity {
     @CreationTimestamp
     private ZonedDateTime createdAt;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     private ZonedDateTime updatedAt;
 }

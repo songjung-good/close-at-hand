@@ -8,11 +8,11 @@ import lombok.ToString;
 @Builder
 @ToString
 public class UserCommand {
-    private final String name;
+    private final String userName;
 
     public User toEntity(){
         return User.builder()
-                .name(name)
+                .userName(userName)
                 .build();
     }
 }

@@ -1,4 +1,4 @@
-package dev.rainbowmirror.closeathand.domain.clothes;
+package dev.rainbowmirror.closeathand.domain.preset;
 
 
 import lombok.Builder;
@@ -8,5 +8,5 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
-public class ClothesCommand {
+public class PresetCommand {
 }

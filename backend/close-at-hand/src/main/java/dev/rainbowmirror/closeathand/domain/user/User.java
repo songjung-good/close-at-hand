@@ -1,7 +1,7 @@
 package dev.rainbowmirror.closeathand.domain.user;
 
 
-import dev.rainbowmirror.closeathand.domain.AbstractEntity;
+import dev.rainbowmirror.closeathand.common.AbstractEntity;
 import dev.rainbowmirror.closeathand.common.exception.util.TokenGenrator;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -19,10 +19,10 @@ import org.springframework.util.StringUtils;
 public class User extends AbstractEntity {
 
     @Id
-    @GeneratedValue
-    private Long user_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
     private String userToken;
-    private String name;
+    private String userName;
     private String height;
     private String gender;
 
@@ -39,12 +39,12 @@ public class User extends AbstractEntity {
     }
 
     @Builder
-    public User(String name) {
-        if (!StringUtils.hasLength(name)) throw new RuntimeException("empty name");
+    public User(String userName) {
+        if (!StringUtils.hasLength(userName)) throw new RuntimeException("empty name");
 
         final String CLIENT_PREFIX = "cli_";
         this.userToken = TokenGenrator.randomChracterWithPrefix(CLIENT_PREFIX);
-        this.name = name;
+        this.userName = userName;
         this.status = Status.ENABLE;
     }
 
