@@ -1,5 +1,5 @@
-import { ClosetScreen } from "../../screen/index";
 import { Stack } from "./reactNavigations";
+import { ClosetScreen } from "../../screens";
 
 const ClosetNav = () => {
 	return (

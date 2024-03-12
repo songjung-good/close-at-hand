@@ -1,6 +1,5 @@
-import { StyleSheet } from "react-native";
 import { Stack } from "./reactNavigations";
-import { HomeScreen } from "../../screen";
+import { HomeScreen } from "../../screens";
 
 const HomeNav = () => {
 	return (
@@ -11,5 +10,3 @@ const HomeNav = () => {
 };
 
 export default HomeNav;
-
-const styles = StyleSheet.create({});

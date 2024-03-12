@@ -1,6 +1,5 @@
-import { StyleSheet } from "react-native";
 import { Stack } from "./reactNavigations";
-import { SettingsScreen } from "../../screen";
+import { SettingsScreen } from "../../screens";
 
 const SettingsNav = () => {
 	return (
@@ -11,5 +10,3 @@ const SettingsNav = () => {
 };
 
 export default SettingsNav;
-
-const styles = StyleSheet.create({});

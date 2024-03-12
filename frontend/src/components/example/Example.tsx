@@ -1,9 +1,6 @@
 import { Button, Text } from "react-native";
 
-import {
-	useBears,
-	useBearActions,
-} from "../../shared/lib/zustand/example/exampleStore";
+import { useBears, useBearActions } from "../../shared";
 import UI from "./UI";
 
 function Example() {

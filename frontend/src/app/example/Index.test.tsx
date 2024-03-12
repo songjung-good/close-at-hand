@@ -1,4 +1,3 @@
-import React from "react";
 import "@testing-library/jest-native/";
 import { render, fireEvent } from "@testing-library/react-native";
 

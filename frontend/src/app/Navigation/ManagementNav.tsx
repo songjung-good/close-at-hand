@@ -1,6 +1,5 @@
-import { StyleSheet } from "react-native";
 import { Stack } from "./reactNavigations";
-import { ManagementScreen } from "../../screen";
+import { ManagementScreen } from "../../screens";
 
 const ManagementNav = () => {
 	return (
@@ -14,5 +13,3 @@ const ManagementNav = () => {
 };
 
 export default ManagementNav;
-
-const styles = StyleSheet.create({});

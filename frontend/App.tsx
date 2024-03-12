@@ -1,4 +1,4 @@
-import Index from "./src/app/example/Index";
+import Index from "./src/app/App";
 import { StatusBar } from "expo-status-bar";
 
 function App() {
