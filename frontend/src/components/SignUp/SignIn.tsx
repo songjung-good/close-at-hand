@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 
 import { BorderBottomInput } from "../../shared";
-import { StyledButton } from "../../shared/";
+import { StyledButton } from "../../shared";
 
 const SignUp = () => {
 	const [userId, setUserId] = useState("");
