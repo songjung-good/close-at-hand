@@ -2,11 +2,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { ClosetScreen } from "../../screens";
 
-export type ParamList = {
+export type ClosetParamList = {
 	closet: undefined;
 };
 
-const Stack = createNativeStackNavigator<ParamList>();
+const Stack = createNativeStackNavigator<ClosetParamList>();
 
 const ClosetNav = () => {
 	return (

@@ -7,7 +7,7 @@ import { BorderBottomInput, StyledButton } from "../../shared";
 import { fetchLogin } from "./API";
 
 const SignIn = () => {
-	const navigation = useNavigation();
+	const navigation = useNavigation<RootNav>();
 	const [accountId, setAccountId] = useState("");
 	const [password, setPassword] = useState("");
 

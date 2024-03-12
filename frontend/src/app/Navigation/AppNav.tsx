@@ -1,8 +1,5 @@
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import {
-	createBottomTabNavigator,
-	BottomTabNavigationProp,
-} from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import HomeNav from "./HomeNav";
 import ClosetNav from "./ClosetNav";
@@ -12,15 +9,13 @@ import SettingsNav from "./SettingsNav";
 import OnBoardingNav from "./OnBoardingNav";
 
 // type
-type RootParamList = {
+export type RootParamList = {
 	"0": undefined;
 	"1": undefined;
 	"2": undefined;
 	"3": undefined;
 	onboarding: undefined;
 };
-
-export type RootNav = BottomTabNavigationProp<RootParamList>;
 
 const Tab = createBottomTabNavigator<RootParamList>();
 

@@ -2,11 +2,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { ManagementScreen } from "../../screens";
 
-export type ParamList = {
+export type MangeMentParamList = {
 	management: undefined;
 };
 
-const Stack = createNativeStackNavigator<ParamList>();
+const Stack = createNativeStackNavigator<MangeMentParamList>();
 
 const ManagementNav = () => {
 	return (
