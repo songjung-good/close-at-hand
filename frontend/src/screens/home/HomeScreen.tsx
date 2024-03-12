@@ -1,9 +1,49 @@
-import { StyleSheet } from "react-native";
+// src/screens/home/HomeScreen.tsx
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const HomeScreen = () => {
-	return <></>;
+const HomeScreen: React.FC = () => {
+  const navigation = useNavigation();
+
+  const handleControllerScreenNavigation = () => {
+    navigation.navigate('ControllerScreen'); // 해당 부분 수정
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>홈 화면</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleControllerScreenNavigation}
+      >
+        <Text style={styles.buttonText}>컨트롤러 화면으로 이동</Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
-export default HomeScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#8DB9F8',
+    padding: 15,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
 
-const styles = StyleSheet.create({});
+export default HomeScreen;
