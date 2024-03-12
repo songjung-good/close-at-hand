@@ -8,7 +8,6 @@ describe("BorderBottomInput", () => {
 	const INITIAL_VALUE = "value";
 	const TestID = "input";
 
-	// 스냅샷 테스트 코드의 내용을 변경한다면 __snapshots__에서 해당 파일 삭제
 	it("스냅샷 테스트", () => {
 		const tree = renderer
 			.create(
