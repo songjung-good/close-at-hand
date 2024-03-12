@@ -1,6 +1,12 @@
-import { StyleSheet } from "react-native";
-import { Stack } from "./reactNavigations";
-import { SettingsScreen } from "../../screen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import { SettingsScreen } from "../../screens";
+
+export type ParamList = {
+	settings: undefined;
+};
+
+const Stack = createNativeStackNavigator<ParamList>();
 
 const SettingsNav = () => {
 	return (
@@ -11,5 +17,3 @@ const SettingsNav = () => {
 };
 
 export default SettingsNav;
-
-const styles = StyleSheet.create({});

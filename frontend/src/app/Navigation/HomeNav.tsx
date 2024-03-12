@@ -1,6 +1,12 @@
-import { StyleSheet } from "react-native";
-import { Stack } from "./reactNavigations";
-import { HomeScreen } from "../../screen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import { HomeScreen } from "../../screens";
+
+export type ParamList = {
+	home: undefined;
+};
+
+const Stack = createNativeStackNavigator<ParamList>();
 
 const HomeNav = () => {
 	return (
@@ -11,5 +17,3 @@ const HomeNav = () => {
 };
 
 export default HomeNav;
-
-const styles = StyleSheet.create({});

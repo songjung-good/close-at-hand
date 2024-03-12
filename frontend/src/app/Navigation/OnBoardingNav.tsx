@@ -1,19 +1,19 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { ClosetScreen } from "../../screens";
+import { LoginScreen } from "../../screens";
 
 export type ParamList = {
-	closet: undefined;
+	login: undefined;
 };
 
 const Stack = createNativeStackNavigator<ParamList>();
 
-const ClosetNav = () => {
+const OnBoardingNav = () => {
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name="closet" component={ClosetScreen} />
+			<Stack.Screen name="login" component={LoginScreen}></Stack.Screen>
 		</Stack.Navigator>
 	);
 };
 
-export default ClosetNav;
+export default OnBoardingNav;

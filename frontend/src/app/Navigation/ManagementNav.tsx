@@ -1,6 +1,12 @@
-import { StyleSheet } from "react-native";
-import { Stack } from "./reactNavigations";
-import { ManagementScreen } from "../../screen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import { ManagementScreen } from "../../screens";
+
+export type ParamList = {
+	management: undefined;
+};
+
+const Stack = createNativeStackNavigator<ParamList>();
 
 const ManagementNav = () => {
 	return (
@@ -14,5 +20,3 @@ const ManagementNav = () => {
 };
 
 export default ManagementNav;
-
-const styles = StyleSheet.create({});
