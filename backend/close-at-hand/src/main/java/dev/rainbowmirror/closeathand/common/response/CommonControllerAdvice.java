@@ -22,7 +22,6 @@ import java.util.List;
 public class CommonControllerAdvice {
 
     private static final List<ErrorCode> SPECIFIC_ALERT_TARGET_ERROR_CODE_LIST = Lists.newArrayList();
-
     /**
      * http status: 500 AND result: FAIL
      * 시스템 예외 상황. 집중 모니터링 대상

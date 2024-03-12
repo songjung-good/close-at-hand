@@ -11,7 +11,7 @@ public class UserServiceImpl implements UserService{
     private final UserStore userStore;
     private final UserReader userReader;
     @Override
-    public UserInfo registerUser(UserCommand command) {
+    public UserInfo signup(UserCommand command) {
         User initUser = command.toEntity();
         User user = userStore.store(initUser);
         return new UserInfo(user);

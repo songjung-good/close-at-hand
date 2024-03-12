@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
 @Slf4j
@@ -25,10 +26,23 @@ public class User extends AbstractEntity {
     private String userName;
     private String height;
     private String gender;
-
+    private String account;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Builder
+    public User(String userName, String account, String password) {
+        if (!StringUtils.hasLength(userName)) throw new RuntimeException("empty name");
+
+        final String CLIENT_PREFIX = "cli_";
+        this.userToken = TokenGenrator.randomChracterWithPrefix(CLIENT_PREFIX);
+        this.userName = userName;
+        this.status = Status.ENABLE;
+        this.account = account;
+        this.password = password;
+    }
 
     @Getter
     @RequiredArgsConstructor
@@ -36,16 +50,6 @@ public class User extends AbstractEntity {
         ENABLE( "활성화"), DISABLE("비활성화");
 
         private final String description;
-    }
-
-    @Builder
-    public User(String userName) {
-        if (!StringUtils.hasLength(userName)) throw new RuntimeException("empty name");
-
-        final String CLIENT_PREFIX = "cli_";
-        this.userToken = TokenGenrator.randomChracterWithPrefix(CLIENT_PREFIX);
-        this.userName = userName;
-        this.status = Status.ENABLE;
     }
 
     public void enable() {
