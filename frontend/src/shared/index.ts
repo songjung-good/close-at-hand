@@ -20,3 +20,6 @@ export { default as COLORS } from "./constant/COLORS";
 export { default as BorderBottomInput } from "./Common/BorderBottomInput";
 export { default as StyledButton } from "./Common/StyledButton";
 export { default as TextButton } from "./Common/TextButton";
+
+// styleSheet
+export { SHADOW } from "./Common/commonStyleSheet";

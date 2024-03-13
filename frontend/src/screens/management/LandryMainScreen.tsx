@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
 
-const ManagementScreen = () => {
+const LandryMainScreen = () => {
 	return <></>;
 };
 
-export default ManagementScreen;
+export default LandryMainScreen;
 
 const styles = StyleSheet.create({});
