@@ -1,8 +1,13 @@
 import { create } from "zustand";
 
+type Token = {
+	token: string;
+	exp: string;
+};
+
 interface User {
-	accessToken: string;
-	refreshToken: string;
+	accessToken: Token;
+	refreshToken: Token;
 	nickName: string;
 	actions: {
 		setAccessToken: (token: User["accessToken"]) => void;
@@ -12,9 +17,9 @@ interface User {
 }
 
 const useUser = create<User>((set) => ({
-	accessToken: "",
+	accessToken: { token: "", exp: "" },
+	refreshToken: { token: "", exp: "" },
 	nickName: "",
-	refreshToken: "",
 	actions: {
 		setAccessToken: (token) =>
 			set((state) => ({
@@ -37,7 +42,9 @@ const useUser = create<User>((set) => ({
 }));
 
 export const useToken = () => useUser((state) => state.accessToken);
+export const useRefreshToken = () => useUser((state) => state.refreshToken);
 export const useNickName = () => useUser((state) => state.nickName);
 export const useUserActions = () => useUser((state) => state.actions);
 
-export const useIsLogin = () => useUser((state) => !!state.accessToken);
+export const useIsLogin = () =>
+	useUser((state) => new Date(state.refreshToken.exp) < new Date());
