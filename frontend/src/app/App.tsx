@@ -7,13 +7,14 @@ import { queryClient, useUserActions } from "../shared/index";
 
 export default function App() {
 	const { setRefreshToken } = useUserActions();
+
 	useEffect(() => {
 		async function getLoginInfo() {
 			try {
 				const credentials = await getGenericPassword();
-				console.log(credentials);
 				if (credentials) {
-					setRefreshToken(credentials.password);
+					setRefreshToken({ token: credentials.password, exp: "" });
+					// access Token을 얻는 로직 작성
 				}
 			} catch (error) {
 				console.log(error);
