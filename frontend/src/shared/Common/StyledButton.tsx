@@ -1,20 +1,40 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import COLORS from "../constant/COLORS";
 
+const colorMatch = {
+	SkyBlue: COLORS.Black,
+	CarrotRed: COLORS.White,
+	Black: COLORS.White,
+	White: COLORS.Black,
+};
+
 interface Props {
 	title: string;
 	onPress: () => void;
+	backgroundColor?: keyof typeof colorMatch;
 }
 
-const StyledButton: React.FC<Props> = ({ onPress, title }) => {
+const StyledButton: React.FC<Props> = ({ title, onPress, backgroundColor }) => {
+	console.log(backgroundColor);
 	return (
 		<View style={styles.container}>
 			<Pressable
-				style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+				style={({ pressed }) => [
+					styles.button,
+					pressed && styles.pressed,
+					{ backgroundColor: COLORS[backgroundColor ?? "SkyBlue"] },
+				]}
 				onPress={onPress}
 				testID="button"
 			>
-				<Text style={styles.text}>{title}</Text>
+				<Text
+					style={[
+						styles.text,
+						{ color: colorMatch[backgroundColor ?? "SkyBlue"] },
+					]}
+				>
+					{title}
+				</Text>
 			</Pressable>
 		</View>
 	);
@@ -27,8 +47,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	button: {
-		backgroundColor: COLORS.SkyBlue,
-		borderColor: COLORS.White,
 		borderRadius: 5,
 		borderWidth: 1,
 		minHeight: 45,
