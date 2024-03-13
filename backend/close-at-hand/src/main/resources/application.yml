@@ -14,3 +14,5 @@ spring:
 server:
   port: 3000
   shutdown: graceful
+  servlet:
+    context-path: /api/v1

@@ -1,8 +1,10 @@
 package dev.rainbowmirror.closeathand.domain.user;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class UserInfo {
     private final Long user_id;
     private final String userToken;
