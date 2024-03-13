@@ -42,6 +42,8 @@ dependencies {
 //	implementation("org.springframework.boot:spring-boot-starter-security")
 	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 	runtimeOnly("com.mysql:mysql-connector-j")
+	// swagger
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")

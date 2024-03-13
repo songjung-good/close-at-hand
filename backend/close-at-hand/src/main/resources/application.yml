@@ -16,3 +16,10 @@ server:
   shutdown: graceful
   servlet:
     context-path: /api/v1
+springdoc:
+  swagger-ui:
+    path: /swagger
+    groups-order: desc
+  api-docs:
+    path: /api-docs
+  show-actuator: true
