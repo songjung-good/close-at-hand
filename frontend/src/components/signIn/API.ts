@@ -28,8 +28,8 @@ export async function fetchLogin({ accountId, password }: FetchLogin) {
 				" " +
 				oneHourEarlier.toTimeString().split(" ")[0];
 			try {
-				const a = SecureStore.setItemAsync("token", data.token);
-				const b = SecureStore.setItemAsync("exp", formattedDateTime);
+				const a = SecureStore.setItemAsync("CloseAtHandtoken", data.token);
+				const b = SecureStore.setItemAsync("CloseAtHandexp", formattedDateTime);
 				const c = setGenericPassword("refreshToken", data.token);
 				await Promise.allSettled([a, b, c]);
 			} catch (error) {

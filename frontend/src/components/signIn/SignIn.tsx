@@ -31,10 +31,14 @@ const SignIn = () => {
 		mutate({ accountId, password });
 	}
 
+	function handleIdChange(input: string) {
+		setAccountId(input.toLowerCase());
+	}
+
 	return (
 		<>
 			<BorderBottomInput
-				onChangeText={setAccountId}
+				onChangeText={handleIdChange}
 				value={accountId}
 				placeholder="아이디"
 			/>
