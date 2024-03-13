@@ -12,9 +12,15 @@ const LoginScreen = () => {
 
 	return (
 		<View style={styles.container}>
-			{signUpTry ? <SignUp /> : <SignIn />}
+			{signUpTry ? (
+				<SignUp setSignUpTry={setSignUpTry} data-testID="sign-up" />
+			) : (
+				<SignIn data-testID="sign-in" />
+			)}
 			<TextButton
-				text="아직 회원가입을 하지 않으셨나요?"
+				text={
+					signUpTry ? "이미 회원이신가요?" : "아직 회원가입을 하지 않으셨나요?"
+				}
 				onPress={hanldePress}
 			/>
 		</View>

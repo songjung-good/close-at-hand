@@ -15,7 +15,6 @@ interface Props {
 }
 
 const StyledButton: React.FC<Props> = ({ title, onPress, backgroundColor }) => {
-	console.log(backgroundColor);
 	return (
 		<View style={styles.container}>
 			<Pressable
