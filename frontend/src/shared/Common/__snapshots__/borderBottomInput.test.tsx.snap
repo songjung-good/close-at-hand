@@ -4,6 +4,7 @@ exports[`BorderBottomInput 스냅샷 테스트 1`] = `
 <TextInput
   onChangeText={[Function]}
   placeholder="플레이스홀더"
+  secureTextEntry={false}
   style={
     {
       "backgroundColor": "#ffffff",

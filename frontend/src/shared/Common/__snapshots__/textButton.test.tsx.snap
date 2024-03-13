@@ -31,12 +31,22 @@ exports[`TextButton 스냅샷 테스트 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    [
+      {
+        "alignItems": "center",
+        "justifyContent": "center",
+      },
+      false,
+    ]
+  }
   testID="button"
 >
   <Text
     style={
       {
-        "color": "#8DE0F8",
+        "backgroundColor": "#ffffff",
+        "color": "#7687F5",
       }
     }
   >

@@ -5,14 +5,14 @@ interface Props {
 	value: string;
 	onChangeText: (text: string) => void;
 	placeholder: string;
-	isPassword?: boolean;
+	secureTextEntry?: boolean;
 }
 
 const BorderBottomInput: React.FC<Props> = ({
 	value,
 	onChangeText,
 	placeholder,
-	isPassword = false,
+	secureTextEntry = false,
 }) => {
 	function handleChange(text: string) {
 		onChangeText(text);
@@ -20,8 +20,9 @@ const BorderBottomInput: React.FC<Props> = ({
 
 	return (
 		<TextInput
+			secureTextEntry={secureTextEntry}
 			style={styles.input}
-			value={isPassword ? value.replace("//i", "*") : value}
+			value={value}
 			onChangeText={handleChange}
 			placeholder={placeholder}
 			testID="input"
