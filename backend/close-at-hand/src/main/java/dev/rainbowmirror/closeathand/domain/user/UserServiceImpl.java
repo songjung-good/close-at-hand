@@ -13,7 +13,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
     private final UserStore userStore;
     private final UserReader userReader;
-    private final UserRepository userRepository;
     @Override
     public UserInfo getUserInfo(String userToken) {
         User user = userReader.getUser(userToken);
@@ -31,7 +30,7 @@ public class UserServiceImpl implements UserService{
     public UserInfo updateUser(UserCommands.UpdateCommand command) {
         User beforeUser = userReader.getUser(command.getUserToken());
         beforeUser.update(command);
-        User user = userRepository.save(beforeUser);
+        User user = userStore.store(beforeUser);
         return new UserInfo(user);
     }
 
@@ -39,7 +38,7 @@ public class UserServiceImpl implements UserService{
     public UserInfo enableUser(String userToken) {
         User beforeUser = userReader.getUser(userToken);
         beforeUser.enable();
-        User user = userRepository.save(beforeUser);
+        User user = userStore.store(beforeUser);
         return new UserInfo(user);
     }
 
@@ -47,7 +46,7 @@ public class UserServiceImpl implements UserService{
     public UserInfo disableUser(String userToken) {
         User beforeUser = userReader.getUser(userToken);
         beforeUser.disable();
-        User user = userRepository.save(beforeUser);
+        User user = userStore.store(beforeUser);
         return new UserInfo(user);
     }
 }
