@@ -16,6 +16,7 @@ module.exports = {
 			supportsTablet: true,
 		},
 		android: {
+			package: "com.closeAtHand",
 			adaptiveIcon: {
 				foregroundImage: "./assets/adaptive-icon.png",
 				backgroundColor: "#ffffff",
