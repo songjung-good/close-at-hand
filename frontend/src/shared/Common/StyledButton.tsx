@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import COLORS from "../../app/constant/COLORS";
+import { COLORS } from "../../app";
 
 const colorMatch = {
 	SkyBlue: COLORS.Black,
