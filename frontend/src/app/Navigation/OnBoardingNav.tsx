@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { ForDebug, LoginScreen } from "../../screens";
-import BluetoothConnection from "../../screens/onboarding/BluetoothConnectionScreen";
+import BluetoothConnectionScreen from "../../screens/onboarding/BluetoothConnectionScreen";
 
 export type OnBoardingParamList = {
 	login: undefined;
@@ -18,7 +18,7 @@ const OnBoardingNav = () => {
 			<Stack.Screen name="login" component={LoginScreen}></Stack.Screen>
 			<Stack.Screen
 				name="bluetooth"
-				component={BluetoothConnection}
+				component={BluetoothConnectionScreen}
 			></Stack.Screen>
 		</Stack.Navigator>
 	);
