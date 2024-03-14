@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { HomeScreen } from "../../screens";
-import { ControllerScreen } from "../../screens"; // 추가
+import { ControllerScreen, HomeScreen } from "../../screens";
 
 export type HomeParamList = {
 	home: undefined;

@@ -1,13 +1,10 @@
 // src/screens/home/HomeScreen.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
-const HomeScreen: React.FC = () => {
-  const navigation = useNavigation();
-
+const HomeScreen: React.FC <RootScreenProps> = ({navigation}) => {
   const handleControllerScreenNavigation = () => {
-    navigation.navigate('controller'); // 해당 부분 수정
+    navigation.navigate("controller"); // 해당 부분 수정
   };
 
   return (
