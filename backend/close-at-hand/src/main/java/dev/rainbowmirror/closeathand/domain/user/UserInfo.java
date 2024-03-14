@@ -6,7 +6,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class UserInfo {
-    private final Long user_id;
+    private final Long userId;
     private final String userToken;
     private final String userName;
     private final Float height;
@@ -14,7 +14,7 @@ public class UserInfo {
     private final User.Status status;
 
     public UserInfo(User user) {
-        this.user_id = user.getUserId();
+        this.userId = user.getUserId();
         this.userToken = user.getUserToken();
         this.userName = user.getUserName();
         this.height = user.getHeight();
