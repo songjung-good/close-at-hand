@@ -4,17 +4,16 @@ package dev.rainbowmirror.closeathand.domain.user;
 import dev.rainbowmirror.closeathand.common.AbstractEntity;
 import dev.rainbowmirror.closeathand.common.exception.util.TokenGenrator;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
 @Slf4j
 @Getter
 @Entity
 @NoArgsConstructor
+@ToString
 @Table(name = "user")
 public class User extends AbstractEntity {
 
@@ -25,10 +24,37 @@ public class User extends AbstractEntity {
     private String userName;
     private String height;
     private String gender;
-
+    private String account;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Builder
+    public User(String userName, String account, String password, String userToken,
+                String height,
+                String gender,
+                Long userId) {
+        if (!StringUtils.hasLength(userName)) throw new RuntimeException("empty name");
+        if (!StringUtils.hasLength(account)) throw new RuntimeException("empty account");
+        if (!StringUtils.hasLength(password)) throw new RuntimeException("empty password");
+
+        final String CLIENT_PREFIX = "cli_";
+        this.userToken = TokenGenrator.randomChracterWithPrefix(CLIENT_PREFIX);
+        this.userName = userName;
+        this.status = Status.ENABLE;
+        this.account = account;
+        this.password = password;
+    }
+
+    public void update(UserCommands.UpdateCommand command){
+        if (StringUtils.hasLength(command.getUserName())) this.userName = command.getUserName();
+        if (StringUtils.hasLength(command.getAccount())) this.account = command.getAccount();
+        if (StringUtils.hasLength(command.getHeight())) this.height = command.getHeight();
+        if (StringUtils.hasLength(command.getGender())) this.gender = command.getGender();
+        if (StringUtils.hasLength(command.getPassword())) this.password = command.getPassword();
+
+    }
 
     @Getter
     @RequiredArgsConstructor
@@ -36,16 +62,6 @@ public class User extends AbstractEntity {
         ENABLE( "활성화"), DISABLE("비활성화");
 
         private final String description;
-    }
-
-    @Builder
-    public User(String userName) {
-        if (!StringUtils.hasLength(userName)) throw new RuntimeException("empty name");
-
-        final String CLIENT_PREFIX = "cli_";
-        this.userToken = TokenGenrator.randomChracterWithPrefix(CLIENT_PREFIX);
-        this.userName = userName;
-        this.status = Status.ENABLE;
     }
 
     public void enable() {

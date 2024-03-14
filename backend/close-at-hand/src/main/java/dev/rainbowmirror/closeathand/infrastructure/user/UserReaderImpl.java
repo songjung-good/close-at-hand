@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.infrastructure.user;
 
+import dev.rainbowmirror.closeathand.common.exception.EntityNotFoundException;
 import dev.rainbowmirror.closeathand.domain.user.User;
 import dev.rainbowmirror.closeathand.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,6 @@ public class UserReaderImpl implements UserReader {
     @Override
     public User getUser(String userToken) {
         return userRepository.findByUserToken(userToken)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(EntityNotFoundException::new);
     }
 }
