@@ -1,5 +1,6 @@
 import { Image, Pressable, View, StyleSheet, Text } from "react-native";
-import { COLORS, SHADOW } from "../../shared";
+import { SHADOW } from "../../shared";
+import COLORS from "../../app/constant/COLORS";
 
 interface Props {
 	image: ReturnType<typeof require>;

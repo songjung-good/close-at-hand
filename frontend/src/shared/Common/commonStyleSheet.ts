@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import COLORS from "../constant/COLORS";
+import COLORS from "../../app/constant/COLORS";
 
 const styles = StyleSheet.create({
 	shadow: {

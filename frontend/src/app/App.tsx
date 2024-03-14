@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { getGenericPassword } from "react-native-keychain";
-import AppNav from "./Navigation/AppNav";
+import AppNav from "./navigation/AppNav";
 
 import { queryClient, useUserActions } from "../shared/index";
 

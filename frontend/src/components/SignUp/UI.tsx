@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { StyleSheet, Text } from "react-native";
-import { COLORS } from "../../shared";
+import COLORS from "../../app/constant/COLORS";
 
 interface Props {
 	children: ReactNode;

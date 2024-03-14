@@ -9,7 +9,7 @@ import ManagementNav from "./ManagementNav";
 import SettingsNav from "./SettingsNav";
 
 import OnBoardingNav from "./OnBoardingNav";
-import { COLORS } from "../../shared";
+import COLORS from "../constant/COLORS";
 
 // type
 export type RootParamList = {

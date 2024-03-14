@@ -3,4 +3,4 @@ export { default as ManagementMenuList } from "./managementMenuList/ManagementMe
 
 // OnBoarding
 export { default as SignIn } from "./signIn/SignIn";
-export { default as SignUp } from "./SignUp/SignUp";
+export { default as SignUp } from "./signUp/SignUp";
