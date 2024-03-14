@@ -9,7 +9,7 @@ public class UserInfo {
     private final Long user_id;
     private final String userToken;
     private final String userName;
-    private final String height;
+    private final Float height;
     private final String gender;
     private final User.Status status;
 

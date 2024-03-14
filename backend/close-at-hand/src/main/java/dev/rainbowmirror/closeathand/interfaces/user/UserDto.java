@@ -36,7 +36,7 @@ public class UserDto {
     public static class SignupResponse {
         private final String userToken;
         private final String userName;
-        private final String height;
+        private final Float height;
         private final String gender;
 
         public SignupResponse(UserInfo userInfo) {
@@ -53,7 +53,7 @@ public class UserDto {
     public static class updateRequest {
         private String userToken;
         private String userName;
-        private String height;
+        private Float height;
         private String gender;
         private String account;
         private String password;
@@ -74,7 +74,7 @@ public class UserDto {
     public static class UpdateResponse {
         private final String userToken;
         private final String userName;
-        private final String height;
+        private final Float height;
         private final String gender;
         public UpdateResponse(UserInfo userInfo) {
             this.userToken = userInfo.getUserToken();
@@ -89,7 +89,7 @@ public class UserDto {
     public static class DeleteResponse {
         private final String userToken;
         private final String userName;
-        private final String height;
+        private final Float height;
         private final String gender;
         public DeleteResponse(UserInfo userInfo) {
             this.userToken = userInfo.getUserToken();

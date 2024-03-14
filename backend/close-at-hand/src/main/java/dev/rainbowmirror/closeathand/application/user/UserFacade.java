@@ -27,4 +27,9 @@ public class UserFacade {
         UserInfo userInfo = userService.disableUser(userToken);
         return userInfo;
     }
+
+    public UserInfo checkDuplicate(String account) {
+        UserInfo userInfo = userService.checkDuplicate(account);
+        return userInfo;
+    }
 }

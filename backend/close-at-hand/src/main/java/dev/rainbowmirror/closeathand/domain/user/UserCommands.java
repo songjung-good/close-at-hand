@@ -27,7 +27,7 @@ public class UserCommands {
     public static class UpdateCommand{
         private final String userToken;
         private final String userName;
-        private final String height;
+        private final Float height;
         private final String gender;
         private final String account;
         private final String password;
