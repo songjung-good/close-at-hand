@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { StyledButton } from "../../shared";
 
-const BluetoothConnection: React.FC<RootScreenProps> = ({ navigation }) => {
+const BluetoothConnection: React.FC<NavigationProps> = ({ navigation }) => {
 	function hanldeCancel() {
 		navigation.navigate("0");
 	}

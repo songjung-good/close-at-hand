@@ -8,8 +8,8 @@ import {
 
 export type MangeMentParamList = {
 	managementMain: undefined;
-	LaundryMain: undefined;
-	History: undefined;
+	laundryMain: undefined;
+	history: undefined;
 };
 
 const Stack = createNativeStackNavigator<MangeMentParamList>();
@@ -23,10 +23,10 @@ const ManagementNav = () => {
 				options={{ headerShown: false }}
 			></Stack.Screen>
 			<Stack.Screen
-				name="LaundryMain"
+				name="laundryMain"
 				component={LandryMainScreen}
 			></Stack.Screen>
-			<Stack.Screen name="History" component={HistoryMainScreen}></Stack.Screen>
+			<Stack.Screen name="history" component={HistoryMainScreen}></Stack.Screen>
 		</Stack.Navigator>
 	);
 };
