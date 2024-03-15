@@ -7,4 +7,5 @@ public interface UserService {
     UserInfo updateUser(UserCommands.UpdateCommand command);
     UserInfo enableUser(String userToken);
     UserInfo disableUser(String userToken);
+    UserInfo checkDuplicate(String account);
 }
