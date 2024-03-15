@@ -1,5 +1,5 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RouteProp } from "@react-navigation/native";
+import { RouteProp as A } from "@react-navigation/native";
 
 import type { RootParamList } from "./navigation/AppNav";
 import type { HomeParamList } from "./navigation/HomeNav";
@@ -18,14 +18,18 @@ type NativeStackParamList = RootParamList &
 type AllScreen = {
 	[key in keyof NativeStackParamList]: NativeStackParamList[key];
 };
+type Route<T extends keyof AllScreen> = A<AllScreen, T>;
 
 declare global {
 	interface Navigation extends NativeStackNavigationProp<AllScreen> {}
-
-	interface NavigationProps {
+	interface RootRouteProp<T extends keyof AllScreen> {
+		route: Route<T>;
+	}
+	interface RootNavigaionProp {
 		navigation: NativeStackNavigationProp<AllScreen>;
 	}
-	interface RouteProps {
-		route: RouteProp<AllScreen>;
+	interface RootScreenProp<T extends keyof AllScreen> {
+		navigation: NativeStackNavigationProp<AllScreen>;
+		route: Route<T>;
 	}
 }
