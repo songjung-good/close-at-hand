@@ -4,3 +4,4 @@ export { default as ManagementMenuList } from "./managementMenuList/ManagementMe
 // OnBoarding
 export { default as SignIn } from "./signIn/SignIn";
 export { default as SignUp } from "./signUp/SignUp";
+export { default as Bluetooth } from "./ble/Blutooth";

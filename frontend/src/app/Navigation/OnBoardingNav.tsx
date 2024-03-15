@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { ForDebug, LoginScreen } from "../../screens";
-import BluetoothConnection from "../../screens/onboarding/BluetoothConnection";
+import BluetoothConnection from "../../screens/onboarding/BluetoothConnectionScreen";
 
 export type OnBoardingParamList = {
 	login: undefined;

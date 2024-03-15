@@ -1,11 +1,8 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import { StyledButton } from "../../shared";
 import { COLORS } from "../../app";
+import { Bluetooth } from "../../components";
 
-const BluetoothConnection: React.FC<NavigationProps> = ({ navigation }) => {
-	function hanldeCancel() {
-		navigation.navigate("0");
-	}
+const BluetoothConnection: React.FC<RootNavigaionProp> = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<Text style={[styles.title, styles.textCenter]}>
@@ -19,11 +16,7 @@ const BluetoothConnection: React.FC<NavigationProps> = ({ navigation }) => {
 			<Text style={[styles.text, styles.textCenter]}>
 				스마트 미러를 켜주시고 연결될 때까지 잠시 기다려 주세요
 			</Text>
-			<StyledButton
-				title="취소"
-				onPress={hanldeCancel}
-				backgroundColor="CarrotRed"
-			/>
+			<Bluetooth />
 		</View>
 	);
 };
