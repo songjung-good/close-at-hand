@@ -16,9 +16,9 @@ public class ClothesServiceImpl implements ClothesService{
 
     @Override
     public ClothesInfo createClothes(ClothesCommand.CreateCommand command) {
-        // 유저 토큰으로 user를 찾아서 넣어줘야함 -> update를 만들자
+        // 유저 토큰으로 user를 찾아서 넣어줘야함 -> update를 만들자X
         var user = userReader.getUser(command.getUserToken());
-        Clothes initClothes = command.toEntity();
+        Clothes initClothes = command.toEntity(user);
         Clothes clothes = clothesStore.store(initClothes);
         return new ClothesInfo(clothes);
     }

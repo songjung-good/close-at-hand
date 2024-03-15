@@ -34,5 +34,27 @@ public class ClothesCommand {
                     .price(price)
                     .build();
         }
+
+        public Clothes toEntity(User user) {
+            return Clothes.builder()
+                    .clothesImgUrl(clothesImgUrl)
+                    .userToken(userToken)
+                    .detection(detection)
+                    .lastWashDate(lastWashDate)
+                    .price(price)
+                    .user(user)
+                    .build();
+        }
+    }
+
+    @Getter
+    @Builder
+    @ToString
+    public static class UpdateCommand {
+        private final String clothesImgUrl;
+        private final String userToken;
+        private final String detection;
+        private final ZonedDateTime lastWashDate;
+        private final Integer price;
     }
 }

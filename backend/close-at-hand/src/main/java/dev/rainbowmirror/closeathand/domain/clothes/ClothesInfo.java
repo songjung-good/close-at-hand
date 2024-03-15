@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.domain.clothes;
 
+import dev.rainbowmirror.closeathand.domain.user.User;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;
@@ -13,6 +14,7 @@ public class ClothesInfo {
     private final String detection;
     private final ZonedDateTime lastWashDate;
     private final Integer price;
+//    private final User user;
 
     public ClothesInfo(Clothes clothes) {
         this.clothesId = clothes.getClothesId();
@@ -21,4 +23,6 @@ public class ClothesInfo {
         this.lastWashDate = clothes.getLastWashDate();
         this.price = clothes.getPrice();
     }
+
+
 }
