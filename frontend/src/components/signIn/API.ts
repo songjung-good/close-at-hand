@@ -1,6 +1,6 @@
 import { API } from "../../shared";
 import { setGenericPassword } from "react-native-keychain";
-import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface FetchLogin {
 	accountId: string;
@@ -28,8 +28,8 @@ export async function fetchLogin({ accountId, password }: FetchLogin) {
 				" " +
 				oneHourEarlier.toTimeString().split(" ")[0];
 			try {
-				const a = SecureStore.setItemAsync("CloseAtHandtoken", data.token);
-				const b = SecureStore.setItemAsync("CloseAtHandexp", formattedDateTime);
+				const a = AsyncStorage.setItem("CloseAtHandtoken", data.token);
+				const b = AsyncStorage.setItem("CloseAtHandexp", formattedDateTime);
 				const c = setGenericPassword("refreshToken", data.token);
 				await Promise.allSettled([a, b, c]);
 			} catch (error) {
