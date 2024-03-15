@@ -28,13 +28,5 @@ module.exports = {
 		extra: {
 			storybookEnabled: "process.env.STORYBOOK_ENABLED",
 		},
-		plugins: [
-			[
-				"expo-secure-store",
-				{
-					faceIDPermission: "Face ID를 사용하기 위해 권한을 허용해주세요.",
-				},
-			],
-		],
 	},
 };
