@@ -1,8 +1,8 @@
 import "@testing-library/jest-native/";
 import { render, fireEvent } from "@testing-library/react-native";
+import "@react-nav igation/native";
 import Menu from "./Menu";
 import ManagementMenuList from "./ManagementMenuList";
-import "@react-navigation/native";
 
 jest.mock("@react-navigation/native");
 
