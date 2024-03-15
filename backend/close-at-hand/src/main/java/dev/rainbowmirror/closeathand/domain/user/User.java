@@ -62,7 +62,7 @@ public class User extends AbstractEntity {
         this.password = password;
     }
 
-    public void update(UserCommands.UpdateCommand command){
+    public void update(UserCommand.UpdateCommand command){
         if (StringUtils.hasLength(command.getUserName())) this.userName = command.getUserName();
         if (StringUtils.hasLength(command.getAccount())) this.account = command.getAccount();
         if (command.getHeight() != null) this.height = command.getHeight();

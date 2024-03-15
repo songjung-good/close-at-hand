@@ -1,6 +1,6 @@
 package dev.rainbowmirror.closeathand.application.user;
 
-import dev.rainbowmirror.closeathand.domain.user.UserCommands;
+import dev.rainbowmirror.closeathand.domain.user.UserCommand;
 import dev.rainbowmirror.closeathand.domain.user.UserInfo;
 import dev.rainbowmirror.closeathand.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 public class UserFacade {
     private final UserService userService;
 
-    public UserInfo signup(UserCommands.UserCommand userCommand){
-        UserInfo userInfo = userService.insertUser(userCommand);
+    public UserInfo signup(UserCommand.CreateCommand createCommand){
+        UserInfo userInfo = userService.insertUser(createCommand);
         return userInfo;
     }
 
-    public UserInfo updateUser(UserCommands.UpdateCommand updateCommand) {
+    public UserInfo updateUser(UserCommand.UpdateCommand updateCommand) {
         UserInfo userInfo = userService.updateUser(updateCommand);
         return userInfo;
     }

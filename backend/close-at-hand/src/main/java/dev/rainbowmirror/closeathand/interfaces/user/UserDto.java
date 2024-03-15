@@ -1,6 +1,6 @@
 package dev.rainbowmirror.closeathand.interfaces.user;
 
-import dev.rainbowmirror.closeathand.domain.user.UserCommands;
+import dev.rainbowmirror.closeathand.domain.user.UserCommand;
 import dev.rainbowmirror.closeathand.domain.user.UserInfo;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -22,8 +22,8 @@ public class UserDto {
         @NotEmpty(message = "check userName")
         private String password;
 
-        public UserCommands.UserCommand toCommand(){
-            return UserCommands.UserCommand.builder()
+        public UserCommand.CreateCommand toCommand(){
+            return UserCommand.CreateCommand.builder()
                     .userName(userName)
                     .account(account)
                     .password(password)
@@ -57,8 +57,8 @@ public class UserDto {
         private String gender;
         private String account;
         private String password;
-        public UserCommands.UpdateCommand toCommand(){
-            return UserCommands.UpdateCommand.builder()
+        public UserCommand.UpdateCommand toCommand(){
+            return UserCommand.UpdateCommand.builder()
                     .userToken(userToken)
                     .userName(userName)
                     .height(height)

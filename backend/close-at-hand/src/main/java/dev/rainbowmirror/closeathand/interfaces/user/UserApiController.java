@@ -2,7 +2,7 @@ package dev.rainbowmirror.closeathand.interfaces.user;
 
 import dev.rainbowmirror.closeathand.application.user.UserFacade;
 import dev.rainbowmirror.closeathand.common.response.CommonResponse;
-import dev.rainbowmirror.closeathand.domain.user.UserCommands;
+import dev.rainbowmirror.closeathand.domain.user.UserCommand;
 import dev.rainbowmirror.closeathand.domain.user.UserInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,8 +25,8 @@ public class UserApiController {
     @Operation(summary = "아이디 생성", description = "회원가입 api, 유저의 정보를 데이터베이스에 저장합니다.")
     @PostMapping
     public CommonResponse signup(@RequestBody UserDto.SignupRequest request){
-        UserCommands.UserCommand userCommand = request.toCommand();
-        UserInfo userInfo = this.userFacade.signup(userCommand);
+        UserCommand.CreateCommand createCommand = request.toCommand();
+        UserInfo userInfo = this.userFacade.signup(createCommand);
         UserDto.SignupResponse response = new UserDto.SignupResponse(userInfo);
         return CommonResponse.success(response);
     }

@@ -17,14 +17,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserInfo insertUser(UserCommands.UserCommand command) {
+    public UserInfo insertUser(UserCommand.CreateCommand command) {
         User initUser = command.toEntity();
         User user = userStore.store(initUser);
         return new UserInfo(user);
     }
 
     @Override
-    public UserInfo updateUser(UserCommands.UpdateCommand command) {
+    public UserInfo updateUser(UserCommand.UpdateCommand command) {
         User beforeUser = userReader.getUser(command.getUserToken());
         beforeUser.update(command);
         User user = userStore.store(beforeUser);
