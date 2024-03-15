@@ -21,15 +21,17 @@ public class User extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String userToken;
     @Column(nullable = false)
     private String userName;
 
     private Float height;
     private String gender;
-    @Column(nullable = false)
+
+    @Column(nullable = false, unique = true)
     private String account;
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -50,14 +52,11 @@ public class User extends AbstractEntity {
         if (StringUtils.hasLength(userToken)){
             this.userToken = userToken;
             this.status = status;
-            this.userName = userName;
-            this.account = account;
-            this.password = password;
+        } else {
+            final String CLIENT_PREFIX = "cli_";
+            this.userToken = TokenGenrator.randomChracterWithPrefix(CLIENT_PREFIX);
+            this.status = Status.ENABLE;
         }
-
-        final String CLIENT_PREFIX = "cli_";
-        this.userToken = TokenGenrator.randomChracterWithPrefix(CLIENT_PREFIX);
-        this.status = Status.ENABLE;
         this.userName = userName;
         this.account = account;
         this.password = password;

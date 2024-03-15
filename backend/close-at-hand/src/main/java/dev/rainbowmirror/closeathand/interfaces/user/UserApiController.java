@@ -22,7 +22,7 @@ public class UserApiController {
 //    3. return commonResponse (entityInfo converted)
     private final UserFacade userFacade;
 
-    @Operation(summary = "아이디 생성", description = "회원가입용 api, 유저의 정보를 데이터베이스에 저장합니다.")
+    @Operation(summary = "아이디 생성", description = "회원가입 api, 유저의 정보를 데이터베이스에 저장합니다.")
     @PostMapping
     public CommonResponse signup(@RequestBody UserDto.SignupRequest request){
         UserCommands.UserCommand userCommand = request.toCommand();
