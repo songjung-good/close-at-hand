@@ -4,12 +4,14 @@ import {
 	HistoryMainScreen,
 	LandryMainScreen,
 	ManagementMainScreen,
+	RecentCody,
 } from "../../screens";
 
 export type MangeMentParamList = {
 	managementMain: undefined;
 	laundryMain: undefined;
 	history: undefined;
+	recentCody: undefined;
 };
 
 const Stack = createNativeStackNavigator<MangeMentParamList>();
@@ -21,12 +23,10 @@ const ManagementNav = () => {
 				name="managementMain"
 				component={ManagementMainScreen}
 				options={{ headerShown: false }}
-			></Stack.Screen>
-			<Stack.Screen
-				name="laundryMain"
-				component={LandryMainScreen}
-			></Stack.Screen>
-			<Stack.Screen name="history" component={HistoryMainScreen}></Stack.Screen>
+			/>
+			<Stack.Screen name="laundryMain" component={LandryMainScreen} />
+			<Stack.Screen name="history" component={HistoryMainScreen} />
+			<Stack.Screen name="recentCody" component={RecentCody} />
 		</Stack.Navigator>
 	);
 };

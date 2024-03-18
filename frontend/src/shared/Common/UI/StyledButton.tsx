@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { COLORS } from "../../app";
+import { COLORS, FONTSIZE } from "../../constant/STYLES";
 
 const colorMatch = {
 	SkyBlue: COLORS.Black,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 		opacity: 0.75,
 	},
 	text: {
-		fontSize: 16,
+		fontSize: FONTSIZE.ExtraSmall,
 		textAlign: "center",
 		fontWeight: "bold",
 		width: "auto",

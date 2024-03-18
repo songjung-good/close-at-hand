@@ -14,12 +14,9 @@ const Stack = createNativeStackNavigator<OnBoardingParamList>();
 const OnBoardingNav = () => {
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name="forDebug" component={ForDebug}></Stack.Screen>
-			<Stack.Screen name="login" component={LoginScreen}></Stack.Screen>
-			<Stack.Screen
-				name="bluetooth"
-				component={BluetoothConnectionScreen}
-			></Stack.Screen>
+			<Stack.Screen name="forDebug" component={ForDebug} />
+			<Stack.Screen name="login" component={LoginScreen} />
+			<Stack.Screen name="bluetooth" component={BluetoothConnectionScreen} />
 		</Stack.Navigator>
 	);
 };

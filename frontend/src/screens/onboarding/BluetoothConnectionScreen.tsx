@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import { COLORS } from "../../app";
+import { COLORS, FONTSIZE } from "../../shared";
 import { Bluetooth } from "../../components";
 
 const BluetoothConnection: React.FC<RootNavigaionProp> = ({ navigation }) => {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		color: COLORS.Turquoise,
-		fontSize: 32,
+		fontSize: FONTSIZE.ExtarLarge,
 		marginVertical: 4,
 	},
 	imageContainer: {
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 		marginVertical: 10,
 	},
 	text: {
-		fontSize: 16,
+		fontSize: FONTSIZE.ExtraSmall,
 		marginVertical: 5,
 	},
 	textCenter: {

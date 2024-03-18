@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator<SettingsParamList>();
 const SettingsNav = () => {
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name="settings" component={SettingsScreen}></Stack.Screen>
+			<Stack.Screen name="settings" component={SettingsScreen} />
 		</Stack.Navigator>
 	);
 };

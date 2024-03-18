@@ -1,4 +1,4 @@
-const COLORS = {
+export const COLORS = {
 	PaleBlue: "#E7F4FF",
 	Blue: "#8DB9F8",
 	SkyBlue: "#8DE0F8",
@@ -11,4 +11,11 @@ const COLORS = {
 	White: "#ffffff",
 };
 
-export default COLORS;
+export const FONTSIZE = {
+	ExtraSmall: 16,
+	Small: 20,
+	Medium: 24,
+	Large: 28,
+	ExtarLarge: 32,
+	XXLarge: 36,
+};

@@ -1,5 +1,5 @@
 import { StyleSheet, TextInput } from "react-native";
-import { COLORS } from "../../app";
+import { COLORS, FONTSIZE } from "../../constant/STYLES";
 
 interface Props {
 	value: string;
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 		borderColor: COLORS.Black,
 		borderBottomWidth: 1,
 
-		fontSize: 16,
+		fontSize: FONTSIZE.ExtraSmall,
 		textAlign: "left",
 
 		height: 40,

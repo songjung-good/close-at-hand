@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text } from "react-native";
-import { COLORS } from "../../app";
+import { COLORS } from "../../constant/STYLES";
 
 interface Props {
 	text: string;
