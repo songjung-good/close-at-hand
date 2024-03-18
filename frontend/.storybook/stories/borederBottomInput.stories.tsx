@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { BorderBottomInput } from "../../src/shared";
+import { BorderBottomInput } from "../../src/components";
 
 const meta = {
 	component: BorderBottomInput,

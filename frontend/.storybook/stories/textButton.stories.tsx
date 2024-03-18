@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { TextButton } from "../../src/shared";
+import { TextButton } from "../../src/components";
 
 const meta = {
 	component: TextButton,
@@ -12,6 +12,5 @@ type Story = StoryObj<typeof meta>;
 export const 글자버튼 = {
 	args: {
 		text: "버튼",
-		onPress: () => {},
 	},
 } satisfies Story;
