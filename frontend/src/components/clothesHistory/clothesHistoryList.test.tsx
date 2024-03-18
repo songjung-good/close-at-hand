@@ -1,11 +1,10 @@
-import React from "react";
 import { render, waitFor } from "@testing-library/react-native";
 import { useQuery } from "@tanstack/react-query";
 import "@react-navigation/native";
 
 import ClothesHistoryList from "./ClothesHistoryList";
-import Card from "../cordiCard/RecentCordiCard";
-import { FetchListResponse } from "../types";
+import Card from "../cordiCard/CordiCard";
+import { ClothesFetchListResponse } from "../types";
 
 jest.mock("@react-navigation/native");
 jest.mock("@tanstack/react-query");
@@ -59,7 +58,7 @@ describe("ClothesHistoryList component", () => {
 
 describe("Card component", () => {
 	it("렌더링 테스트", () => {
-		const outfit: FetchListResponse = {
+		const outfit: ClothesFetchListResponse = {
 			outfitId: 1,
 			outfitUrl: "https://example.com/outfit.jpg",
 		};
