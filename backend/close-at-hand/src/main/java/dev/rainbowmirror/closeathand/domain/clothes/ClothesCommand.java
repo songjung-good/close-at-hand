@@ -57,4 +57,5 @@ public class ClothesCommand {
         private final ZonedDateTime lastWashDate;
         private final Integer price;
     }
+
 }
