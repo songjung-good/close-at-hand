@@ -4,18 +4,18 @@ import { useQuery } from "@tanstack/react-query";
 import "@react-navigation/native";
 
 import ClothesHistoryList from "./ClothesHistoryList";
-import Card from "./Card";
+import Card from "../../shared/Common/CordiShared/RecentCordiCard";
 import { FetchListResponse } from "./types";
 
 jest.mock("@react-navigation/native");
 jest.mock("@tanstack/react-query");
 
 describe("ClothesHistoryList component", () => {
-	test("렌더링 테스트", async () => {
-		const mockData: FetchListResponse[] = [
-			{ outfitId: 1, outfitUrl: "https://example.com/outfit1.jpg" },
-			{ outfitId: 2, outfitUrl: "https://example.com/outfit2.jpg" },
-		];
+	it("렌더링 테스트", async () => {
+		const mockData = Array.from({ length: 5 }, (_, i) => ({
+			outfitId: i,
+			name: `https://example.com/outfit1.jpg${i + 1}`,
+		}));
 
 		// useQuery를 mocking
 		(useQuery as jest.Mock).mockReturnValue({
@@ -37,7 +37,7 @@ describe("ClothesHistoryList component", () => {
 		});
 	});
 
-	test("에러 발생 시 에러 표시", async () => {
+	it("에러 발생 시 에러 표시", async () => {
 		const mockError = new Error("네트워크 에러");
 
 		// 에러 상황의 useQuery를 mocking
@@ -58,7 +58,7 @@ describe("ClothesHistoryList component", () => {
 });
 
 describe("Card component", () => {
-	test("렌더링 테스트", () => {
+	it("렌더링 테스트", () => {
 		const outfit: FetchListResponse = {
 			outfitId: 1,
 			outfitUrl: "https://example.com/outfit.jpg",

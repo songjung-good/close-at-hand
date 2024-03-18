@@ -1,6 +1,5 @@
 import { Image, Pressable, View, StyleSheet, Text } from "react-native";
-import { SHADOW } from "../../shared";
-import { COLORS } from "../../app";
+import { SHADOW, COLORS, FONTSIZE } from "../../shared";
 
 interface Props {
 	image: ReturnType<typeof require>;
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	text: {
-		fontSize: 32,
+		fontSize: FONTSIZE.ExtarLarge,
 		textAlign: "center",
 	},
 	image: {
