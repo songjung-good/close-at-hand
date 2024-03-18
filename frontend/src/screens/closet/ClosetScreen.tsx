@@ -1,82 +1,126 @@
-// src/screens/closet/ClosetScreen.tsx
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TextInput, ScrollView, FlatList, TouchableOpacity, Text } from "react-native";
 import axios from "axios";
-import API from "../../shared/axios/axios"
 
+// 옷 아이템 컴포넌트
+const ClotheItem: React.FC<{ cloth: IClothe }> = ({ cloth }) => {
+  return (
+    <View style={styles.clothesItem}>
+      <Text>{cloth.name}</Text>
+    </View>
+  );
+};
 
+// 옷 인터페이스
 interface IClothe {
   id: number;
   name: string;
   image: string;
 }
 
-// Mock data for clothes
-const clothesData1 = [
-  { id: '1', name: 'Shirt 1' },
-  { id: '2', name: 'Pants 1' },
-  { id: '3', name: 'Dress 1' },
-  // ... (add more items)
-];
+const ClosetScreen: React.FC <RootScreenProps> = ({navigation}) => {
+  const [clothes, setClothes] = useState<IClothe[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedButton, setSelectedButton] = useState("closet");
+  const [recommendedClothes, setRecommendedClothes] = useState<IClothe[]>([]);
 
-const clothesData2 = [
-  { id: '4', name: 'Jacket 1' },
-  { id: '5', name: 'Skirt 1' },
-  // ... (add more items)
-];
+  useEffect(() => {
+    // 서버로부터 옷 목록 데이터를 가져오는 API 호출
+  //   const fetchData = async () => {
+  //     const response = await axios.get("/api/clothes");
+  //     setClothes(response.data);
+  //   };
 
-const ClosetScreen: React.FC = () => {
-  const [isFirstScreen, setIsFirstScreen] = useState(true);
+  //   fetchData();
+  // }, []);
+    // 임시 데이터
+    const tempClothesData: IClothe[] = [
+      { id: 1, name: "티셔츠", image: "url" },
+      { id: 2, name: "바지", image: "url" },
+      { id: 3, name: "원피스", image: "url" },
+    ];
+    setClothes(tempClothesData);
 
-  const toggleScreen = () => {
-    setIsFirstScreen((prev) => !prev);
+    // 임시 데이터
+    const tempRecommendedClothesData: IClothe[] = [
+      { id: 4, name: "재킷", image: "url" },
+      { id: 5, name: "스커트", image: "url" },
+    ];
+    setRecommendedClothes(tempRecommendedClothesData);
+  }, []);
+
+  const handleBackButtonClick = () => {
+    // 메인 페이지로 이동하는 코드
+    navigation.navigate('home'); // 예시로 'home'으로 이동하도록 설정
   };
 
-  const renderClothesList = () => {
+  const handleClosetButtonClick = () => {
+    setSelectedButton("closet");
+  };
+
+  const handleCodyButtonClick = () => {
+    setSelectedButton("cody");
+  };
+
+  const renderClothes = () => {
+    return clothes.filter((cloth) => {
+      return cloth.name.toLowerCase().includes(searchQuery.toLowerCase());
+    }).map((cloth) => (
+      <ClotheItem key={cloth.id} cloth={cloth} />
+    ));
+  };
+
+  const renderRecommendedClothes = () => {
+    // 서버로부터 오늘의 추천 옷 목록을 가져오는 API 호출
+    // const fetchData = async () => {
+    //   const response = await axios.get("/api/clothes/recommended");
+    //   setRecommendedClothes(response.data);
+    // };
+    // fetchData();
+
     return (
-      <FlatList
-        data={isFirstScreen ? clothesData1 : clothesData2}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.clothesItem}>
-            <Text>{item.name}</Text>
-          </View>
-        )}
-        numColumns={isFirstScreen ? 3 : 1}
-      />
+      <View>
+        <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
+        <FlatList
+          data={recommendedClothes}
+          renderItem={({ item }) => <ClotheItem key={item.id} cloth={item} />}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.headerButton}>
-          <Text>뒤로가기</Text>
+        <TouchableOpacity onPress={handleBackButtonClick}>
+          <Text style={styles.backButtonText}>$ 내 옷장</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.headerButton}>
-          <Text>검색</Text>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="검색어를 입력하세요"
+          value={searchQuery}
+          onChangeText={(e) => setSearchQuery(e)}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={handleClosetButtonClick} style={[styles.button, selectedButton === "closet" && styles.selectedButton]}>
+          <Text style={styles.buttonText}>옷장</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleCodyButtonClick} style={[styles.button, selectedButton === "cody" && styles.selectedButton]}>
+          <Text style={styles.buttonText}>코디</Text>
         </TouchableOpacity>
       </View>
-
-      {/* Toggle Buttons */}
-      <View style={styles.toggleButtons}>
-        <TouchableOpacity
-          style={[styles.toggleButton, isFirstScreen && styles.activeButton]}
-          onPress={() => isFirstScreen || toggleScreen()}
-        >
-          <Text>1번 화면</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.toggleButton, !isFirstScreen && styles.activeButton]}
-          onPress={() => !isFirstScreen || toggleScreen()}
-        >
-          <Text>2번 화면</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Clothes List */}
-      {renderClothesList()}
+      {selectedButton === "closet" && (
+        <ScrollView style={styles.content}>
+          {renderRecommendedClothes()}
+          {renderClothes()}
+        </ScrollView>
+      )}
+      {selectedButton === "cody" && (
+        // 코디 목록을 표시하는 코드
+        <Text>코디 목록</Text>
+      )}
     </View>
   );
 };
@@ -86,27 +130,48 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 10,
   },
-  headerButton: {
-    width: '20%',
-    alignItems: 'center',
+  backButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#000",
   },
-  toggleButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+  searchInput: {
+    width: 200,
+    height: 40,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
     padding: 10,
   },
-  toggleButton: {
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: "#ccc",
+  },
+  buttonText: {
+    color: "#000",
+    fontSize: 16,
+  },
+  selectedButton: {
+    backgroundColor: "#8DB9F8",
+  },
+  content: {
     flex: 1,
-    alignItems: 'center',
     padding: 10,
-    backgroundColor: '#ccc',
   },
-  activeButton: {
-    backgroundColor: '#8DB9F8',
+  recommendedTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
   clothesItem: {
     flex: 1,
@@ -120,139 +185,3 @@ const styles = StyleSheet.create({
 });
 
 export default ClosetScreen;
-
-
-
-// import React, { useState, useEffect } from "react";
-// import { View, StyleSheet, TextInput, ScrollView, FlatList, TouchableOpacity, Text } from "react-native";
-// import axios from "axios";
-
-// interface IClothe {
-//   id: number;
-//   name: string;
-//   image: string;
-// }
-
-// const ClosetScreen: React.FC = () => {
-//   const [clothes, setClothes] = useState<IClothe[]>([]);
-//   const [searchQuery, setSearchQuery] = useState("");
-//   const [selectedButton, setSelectedButton] = useState("closet");
-
-//   useEffect(() => {
-//     // 서버로부터 옷 목록 데이터를 가져오는 API 호출
-//     const fetchData = async () => {
-//       const response = await axios.get("/api/clothes");
-//       setClothes(response.data);
-//     };
-
-//     fetchData();
-//   }, []);
-  
-//   // 메인 페이지로 이동하는 코드
-//   const handleBackButtonClick = () => {
-//     navigation.navigate('home');
-//   };
-
-//   const handleClosetButtonClick = () => {
-//     setSelectedButton("closet");
-//   };
-
-//   const handleCodyButtonClick = () => {
-//     setSelectedButton("cody");
-//   };
-
-//   const renderClothes = () => {
-//     return clothes.filter((cloth) => {
-//       return cloth.name.toLowerCase().includes(searchQuery.toLowerCase());
-//     }).map((cloth) => (
-//       <ClotheItem key={cloth.id} cloth={cloth} />
-//     ));
-//   };
-
-//   const renderRecommendedClothes = () => {
-//     // 서버로부터 오늘의 추천 옷 목록을 가져오는 API 호출
-//     const fetchData = async () => {
-//       const response = await axios.get("/api/clothes/recommended");
-//       // ...
-//     };
-
-//     fetchData();
-
-//     return (
-//       <View>
-//         <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
-//         <FlatList
-//           data={recommendedClothes}
-//           renderItem={({ item }) => <ClotheItem key={item.id} cloth={item} />}
-//           keyExtractor={(item) => item.id.toString()}
-//         />
-//       </View>
-//     );
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.header}>
-//         <TouchableOpacity onPress={handleBackButtonClick}>
-//           <Text style={styles.backButtonText}>뒤로가기</Text>
-//         </TouchableOpacity>
-//         <Text style={styles.title}>내 옷장</Text>
-//         <TextInput
-//           style={styles.searchInput}
-//           placeholder="검색어를 입력하세요"
-//           value={searchQuery}
-//           onChangeText={(e) => setSearchQuery(e)}
-//         />
-//       </View>
-//       <View style={styles.buttonContainer}>
-//         <TouchableOpacity onPress={handleClosetButtonClick} style={[styles.button, selectedButton === "closet" && styles.selectedButton]}>
-//           <Text style={styles.buttonText}>옷장</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity onPress={handleCodyButtonClick} style={[styles.button, selectedButton === "cody" && styles.selectedButton]}>
-//           <Text style={styles.buttonText}>코디</Text>
-//         </TouchableOpacity>
-//       </View>
-//       {selectedButton === "closet" && (
-//         <ScrollView style={styles.content}>
-//           {renderRecommendedClothes()}
-//           {renderClothes()}
-//         </ScrollView>
-//       )}
-//       {selectedButton === "cody" && (
-//         // 코디 목록을 표시하는 코드
-//       )}
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   header: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//     padding: 10,
-//   },
-//   backButtonText: {
-//     fontSize: 16,
-//     color: "#000",
-//   },
-//   title: {
-//     fontSize: 20,
-//     fontWeight: "bold",
-//     flex: 1,
-//     textAlign: "center",
-//   },
-//   searchInput: {
-//     width: 200,
-//     height: 40,
-//     borderColor: "#ccc",
-//     borderWidth: 1,
-//     borderRadius: 5,
-//     padding: 10,
-//   },
-//   buttonContainer: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     padding: 10
