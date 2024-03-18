@@ -1,12 +1,12 @@
-import { FlatList, StyleSheet } from "react-native";
-import ReactCordiCard from "../cordiCard/RecentCordiCard";
+import { FlatList } from "react-native";
+import CordiCard from "../cordiCard/CordiCard";
 import { useQuery } from "@tanstack/react-query";
 import { fetchList } from "./API";
 import { placeholderData } from "./constant";
 import LoadingOrError from "../fetchHelper/LoadingOrError";
 
 const ClothesHistoryList = () => {
-	const { data, isError, error } = useQuery({
+	const { data, isError, error, isLoading } = useQuery({
 		queryKey: ["clothesList"],
 		queryFn: fetchList,
 		placeholderData,
@@ -19,21 +19,17 @@ const ClothesHistoryList = () => {
 				<FlatList
 					horizontal={true}
 					data={data}
-					renderItem={({ item }) => <ReactCordiCard {...item} />}
+					renderItem={({ item }) => (
+						<CordiCard {...item} noOnPress={isLoading} />
+					)}
 					keyExtractor={(item) => item.outfitId.toString()}
-				></FlatList>
+				/>
 			)}
 			{isError && (
-				<LoadingOrError
-					isLoading={false}
-					isError={isError}
-					error={error}
-				></LoadingOrError>
+				<LoadingOrError isLoading={false} isError={isError} error={error} />
 			)}
 		</>
 	);
 };
 
 export default ClothesHistoryList;
-
-const styles = StyleSheet.create({});

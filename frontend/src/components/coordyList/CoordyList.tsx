@@ -1,8 +1,8 @@
+import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { FlatList, StyleSheet } from "react-native";
 
 import { fetchCoordyList } from "./API";
-import ReactCordiCard from "../cordiCard/RecentCordiCard";
+import CordiCard from "../cordiCard/CordiCard";
 import LoadingOrError from "../fetchHelper/LoadingOrError";
 
 const CoordyList = () => {
@@ -19,8 +19,11 @@ const CoordyList = () => {
 			{data && (
 				<FlatList
 					data={data}
-					renderItem={({ item }) => <ReactCordiCard {...item} />}
+					renderItem={({ item }) => (
+						<CordiCard {...item} widthMathToScreen={true} />
+					)}
 					keyExtractor={(item) => item.outfitId.toString()}
+					numColumns={3}
 				/>
 			)}
 		</>
@@ -28,5 +31,3 @@ const CoordyList = () => {
 };
 
 export default CoordyList;
-
-const styles = StyleSheet.create({});

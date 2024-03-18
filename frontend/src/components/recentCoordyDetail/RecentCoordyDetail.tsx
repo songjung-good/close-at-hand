@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import { StyleSheet } from "react-native";
 import { fetchDetail } from "./API";
 import LoadingOrError from "../fetchHelper/LoadingOrError";

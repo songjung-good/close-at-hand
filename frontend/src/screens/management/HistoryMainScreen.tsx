@@ -4,7 +4,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { ClothesHistoryList } from "../../components/";
 import { FONTSIZE } from "../../shared";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
 
 const HistoryMainScreen = () => {
 	const navigation = useNavigation<Navigation>();
@@ -22,6 +21,9 @@ const HistoryMainScreen = () => {
 				</Pressable>
 			</View>
 			<ClothesHistoryList />
+			<View style={styles.titleContainer}>
+				<Text style={styles.text}>이번 달 가장 많이 입은 옷</Text>
+			</View>
 		</>
 	);
 };
