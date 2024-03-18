@@ -15,7 +15,7 @@ describe("CordiCard 컴포넌트", () => {
 		(useNavigation as jest.Mock).mockReturnValue(mockNavigation);
 
 		const { getByTestId } = render(
-			<CordiCard outfitId={testId} outfitUrl="test-url" noOnPress={false} />,
+			<CordiCard outfitId={testId} outfitUrl="test-url" />,
 		);
 
 		const pressable = getByTestId("card-1");
@@ -26,7 +26,7 @@ describe("CordiCard 컴포넌트", () => {
 		});
 	});
 
-	it("noOnPress가 false일 때 navigate 함수가 호출 안됨", () => {
+	it("noOnPress가 true일 때 navigate 함수가 호출 안됨", () => {
 		const mockNavigation = {
 			navigate: jest.fn(),
 		};
