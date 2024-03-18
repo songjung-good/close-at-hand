@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text } from "react-native";
-import { ReactCordiCard } from "../../shared";
+import ReactCordiCard from "../cordiShared/RecentCordiCard";
 import { useQuery } from "@tanstack/react-query";
 import { fetchList } from "./API";
 import { placeholderData } from "./constant";

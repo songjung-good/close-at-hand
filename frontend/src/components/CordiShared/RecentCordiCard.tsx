@@ -1,5 +1,5 @@
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import { FetchListResponse } from "../../../components/clothesHistory/types";
+import { FetchListResponse } from "../clothesHistory/types";
 import { useNavigation } from "@react-navigation/native";
 
 const ReactCordiCard: React.FC<FetchListResponse> = ({
