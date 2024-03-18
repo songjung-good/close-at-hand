@@ -1,6 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { COLORS, FONTSIZE } from "../../shared";
-import { Bluetooth } from "../../components";
 
 const BluetoothConnection: React.FC<RootNavigaionProp> = ({ navigation }) => {
 	return (
@@ -16,7 +15,6 @@ const BluetoothConnection: React.FC<RootNavigaionProp> = ({ navigation }) => {
 			<Text style={[styles.text, styles.textCenter]}>
 				스마트 미러를 켜주시고 연결될 때까지 잠시 기다려 주세요
 			</Text>
-			<Bluetooth />
 		</View>
 	);
 };
