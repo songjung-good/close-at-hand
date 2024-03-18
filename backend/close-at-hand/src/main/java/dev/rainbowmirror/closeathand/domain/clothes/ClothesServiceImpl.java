@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class ClothesServiceImpl implements ClothesService{
     private final ClothesStore clothesStore;
     private final UserReader userReader;
+    private final ClothesReader clothesReader;
 
     @Override
     public ClothesInfo createClothes(ClothesCommand.CreateCommand command) {
@@ -20,6 +21,12 @@ public class ClothesServiceImpl implements ClothesService{
         var user = userReader.getUser(command.getUserToken());
         Clothes initClothes = command.toEntity(user);
         Clothes clothes = clothesStore.store(initClothes);
+        return new ClothesInfo(clothes);
+    }
+
+    @Override
+    public ClothesInfo findClothes(Long clothesId) { // command로 안받고 그냥 id받아서 넘기기
+        Clothes clothes = clothesReader.findClothes(clothesId);
         return new ClothesInfo(clothes);
     }
 }

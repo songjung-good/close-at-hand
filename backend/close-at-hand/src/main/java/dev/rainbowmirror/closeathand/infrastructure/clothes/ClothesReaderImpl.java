@@ -13,8 +13,7 @@ public class ClothesReaderImpl implements ClothesReader {
     private final ClothesRepository clothesRepository;
 
     @Override
-    public Clothes getClothes(Long clothesId) {
-        // 앞에 this를 붙여야하나? yes. 왜??
+    public Clothes findClothes(Long clothesId) { // 옷 id로 옷 정보 가져오기
         return this.clothesRepository.getReferenceById(clothesId);
     }
 }

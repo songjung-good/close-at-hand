@@ -1,6 +1,6 @@
 package dev.rainbowmirror.closeathand.domain.clothes;
 
-public interface ClothesReader {
+public interface ClothesReader { // read
     // 옷 id로 옷 정보 읽기
-    Clothes getClothes(Long clothesId);
+    Clothes findClothes(Long clothesId);
 }

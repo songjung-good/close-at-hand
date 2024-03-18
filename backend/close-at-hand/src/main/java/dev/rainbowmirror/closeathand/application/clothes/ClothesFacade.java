@@ -15,6 +15,12 @@ public class ClothesFacade {
 
     public ClothesInfo createClothes(ClothesCommand.CreateCommand createCommand) {
         ClothesInfo clothesInfo = clothesService.createClothes(createCommand);
+        // 옴니커머스로 데이터 보내고 정보 받아오기
+        return clothesInfo;
+    }
+
+    public ClothesInfo findClothes(Long clothesId) {
+        ClothesInfo clothesInfo = clothesService.findClothes(clothesId);
         return clothesInfo;
     }
 }
