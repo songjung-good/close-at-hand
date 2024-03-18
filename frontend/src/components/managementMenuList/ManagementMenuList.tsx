@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import Menu from "./Menu";
 import { useNavigation } from "@react-navigation/native";
 
@@ -31,5 +30,3 @@ const ManagementMenuList = () => {
 };
 
 export default ManagementMenuList;
-
-const styles = StyleSheet.create({});

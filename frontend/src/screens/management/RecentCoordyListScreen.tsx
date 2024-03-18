@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { CoordyList } from "../../components";
 
 const RecentCoordyListScreen = () => {
@@ -6,5 +5,3 @@ const RecentCoordyListScreen = () => {
 };
 
 export default RecentCoordyListScreen;
-
-const styles = StyleSheet.create({});

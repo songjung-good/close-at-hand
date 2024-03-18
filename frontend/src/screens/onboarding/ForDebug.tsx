@@ -1,5 +1,3 @@
-import { StyleSheet } from "react-native";
-
 import { StyledButton } from "../../components";
 
 const ForDebug: React.FC<RootNavigaionProp> = ({ navigation }) => {
@@ -34,5 +32,3 @@ const ForDebug: React.FC<RootNavigaionProp> = ({ navigation }) => {
 };
 
 export default ForDebug;
-
-const styles = StyleSheet.create({});

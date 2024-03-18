@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { StyleSheet } from "react-native";
 import { fetchDetail } from "./API";
 import LoadingOrError from "../fetchHelper/LoadingOrError";
 import DetailUI from "./DetailUI";
@@ -24,5 +23,3 @@ const RecentCoordyDetail: React.FC<Props> = ({ outfitId }) => {
 };
 
 export default RecentCoordyDetail;
-
-const styles = StyleSheet.create({});

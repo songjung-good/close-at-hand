@@ -1,4 +1,4 @@
-import { FlatList, Image, StyleSheet, Text } from "react-native";
+import { FlatList, Image, Text } from "react-native";
 
 import CordiCard from "../cordiCard/CordiCard";
 import { CoordyDetail } from "./types";
@@ -21,5 +21,3 @@ const DetailUI: React.FC<CoordyDetail> = ({ contains, outfitUrl, weather }) => {
 };
 
 export default DetailUI;
-
-const styles = StyleSheet.create({});
