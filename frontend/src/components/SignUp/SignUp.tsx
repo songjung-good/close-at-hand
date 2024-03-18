@@ -1,5 +1,5 @@
 import { Alert, StyleSheet } from "react-native";
-import { BorderBottomInput, StyledButton } from "../../shared";
+import { BorderBottomInput, StyledButton } from "../../widgets";
 import { useReducer, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { fetchSignUp } from "./API";

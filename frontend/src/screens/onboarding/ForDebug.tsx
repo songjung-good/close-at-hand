@@ -1,8 +1,9 @@
-import { StyleSheet } from "react-native";
-import { StyledButton } from "../../shared";
 import React from "react";
+import { StyleSheet } from "react-native";
 
-const ForDebug: React.FC<NavigationProps> = ({ navigation }) => {
+import { StyledButton } from "../../components";
+
+const ForDebug: React.FC<RootNavigaionProp> = ({ navigation }) => {
 	function hanldeLogin() {
 		navigation.navigate("login");
 	}

@@ -1,5 +1,5 @@
 import { StyleSheet, TextInput } from "react-native";
-import { COLORS, FONTSIZE } from "../../constant/STYLES";
+import { COLORS, FONTSIZE } from "../shared/styles/STYLES";
 
 interface Props {
 	value: string;

@@ -41,7 +41,6 @@ exports[`StyledButton 스냅샷 테스트 1`] = `
     style={
       [
         {
-          "backgroundColor": "#8DE0F8",
           "borderColor": "#ffffff",
           "borderRadius": 5,
           "borderWidth": 1,
@@ -50,18 +49,26 @@ exports[`StyledButton 스냅샷 테스트 1`] = `
           "padding": 10,
         },
         false,
+        {
+          "backgroundColor": "#8DE0F8",
+        },
       ]
     }
     testID="button"
   >
     <Text
       style={
-        {
-          "fontSize": 16,
-          "fontWeight": "bold",
-          "textAlign": "center",
-          "width": "auto",
-        }
+        [
+          {
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "textAlign": "center",
+            "width": "auto",
+          },
+          {
+            "color": "#121212",
+          },
+        ]
       }
     >
       value

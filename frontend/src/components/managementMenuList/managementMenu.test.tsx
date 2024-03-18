@@ -1,6 +1,7 @@
 import "@testing-library/jest-native/";
 import { render, fireEvent } from "@testing-library/react-native";
-import "@react-nav igation/native";
+import "@react-navigation/native";
+
 import Menu from "./Menu";
 import ManagementMenuList from "./ManagementMenuList";
 
