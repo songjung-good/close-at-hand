@@ -9,6 +9,6 @@ export { default as Bluetooth } from "./ble/Blutooth";
 export { default as ReactCordiCard } from "./cordiShared/RecentCordiCard";
 
 // UI
-export { default as BorderBottomInput } from "../widgets/BorderBottomInput";
-export { default as StyledButton } from "../widgets/StyledButton";
-export { default as TextButton } from "../widgets/TextButton";
+export { default as BorderBottomInput } from "./inputs/BorderBottomInput";
+export { default as StyledButton } from "./buttons/StyledButton";
+export { default as TextButton } from "./buttons/TextButton";

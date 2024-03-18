@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
 
-const RecentCody = () => {
+const RecentCoordy = () => {
 	return <></>;
 };
 
-export default RecentCody;
+export default RecentCoordy;
 
 const styles = StyleSheet.create({});

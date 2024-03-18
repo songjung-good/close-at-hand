@@ -4,12 +4,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { ClothesHistoryList } from "../../components/";
 import { FONTSIZE } from "../../shared";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
 
 const HistoryMainScreen = () => {
 	const navigation = useNavigation<Navigation>();
 
 	function handleRecentPress() {
-		// 최근 코디 전체보기로 이동
+		navigation.navigate("recentCoordy");
 	}
 
 	return (
