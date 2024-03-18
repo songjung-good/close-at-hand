@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import "@react-navigation/native";
 
 import ClothesHistoryList from "./ClothesHistoryList";
-import Card from "../cordiShared/RecentCordiCard";
-import { FetchListResponse } from "./types";
+import Card from "../cordiCard/RecentCordiCard";
+import { FetchListResponse } from "../types";
 
 jest.mock("@react-navigation/native");
 jest.mock("@tanstack/react-query");

@@ -10,7 +10,7 @@ const HistoryMainScreen = () => {
 	const navigation = useNavigation<Navigation>();
 
 	function handleRecentPress() {
-		navigation.navigate("recentCoordy");
+		navigation.navigate("recentCoordyList");
 	}
 
 	return (

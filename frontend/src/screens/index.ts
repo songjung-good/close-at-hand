@@ -8,7 +8,8 @@ export { default as ClosetScreen } from "./closet/ClosetScreen";
 export { default as ManagementMainScreen } from "./management/ManagementMainScreen";
 export { default as LandryMainScreen } from "./management/LandryMainScreen";
 export { default as HistoryMainScreen } from "./management/HistoryMainScreen";
-export { default as RecentCoordyScreen } from "./management/RecentCoordyScreen";
+export { default as RecentCoordyListScreen } from "./management/RecentCoordyListScreen";
+export { default as RecentCoordyDetailScreen } from "./management/RecentCoordyDetailScreen";
 
 // 세팅
 export { default as SettingsScreen } from "./settingsScreen/SettingsScreen";

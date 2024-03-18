@@ -1,17 +1,21 @@
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import { FetchListResponse } from "../clothesHistory/types";
 import { useNavigation } from "@react-navigation/native";
 
-const ReactCordiCard: React.FC<FetchListResponse> = ({
+import { ClothesFetchListResponse } from "../types";
+import { COLORS } from "../../shared";
+
+const ReactCordiCard: React.FC<ClothesFetchListResponse> = ({
 	outfitId,
 	outfitUrl,
 }) => {
 	const navigation = useNavigation<Navigation>();
-	function handlePress() {
-		navigation.navigate("0");
+
+	function handlePress(outfitId: number) {
+		navigation.navigate("recentCoordyDetail", { outfitId });
 	}
+
 	return (
-		<Pressable onPress={handlePress}>
+		<Pressable onPress={handlePress.bind(this, outfitId)}>
 			<View style={styles.container}>
 				<Image
 					style={styles.image}
@@ -28,6 +32,7 @@ export default ReactCordiCard;
 const styles = StyleSheet.create({
 	container: {
 		height: 210,
+		width: "auto",
 		justifyContent: "center",
 		alignItems: "center",
 	},
@@ -36,5 +41,6 @@ const styles = StyleSheet.create({
 		width: 150,
 		resizeMode: "cover",
 		margin: 5,
+		backgroundColor: COLORS.Gray,
 	},
 });

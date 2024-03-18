@@ -1,9 +1,9 @@
 import { API } from "../../shared";
-import { FetchListResponse } from "../types";
+import { CoordyDetail } from "./types";
 
-export async function fetchList() {
-	return API.get("/outfit", {})
-		.then((response) => response.data as FetchListResponse[])
+export async function fetchDetail(outfitId: number) {
+	return API.get(`outfit/${outfitId}`)
+		.then((response) => response.data as CoordyDetail)
 		.catch((error) => {
 			if (error.response) {
 				throw new Error(error.response.data?.message ?? "네트워크 에러");
