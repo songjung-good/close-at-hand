@@ -19,7 +19,7 @@
 }
 
 html {
-  cursor: none;
+  cursor: auto;
   overflow: hidden;
   background: var(--color-background);
   user-select: none;
