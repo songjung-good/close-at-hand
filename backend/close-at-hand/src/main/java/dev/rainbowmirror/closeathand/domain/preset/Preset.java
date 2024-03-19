@@ -26,10 +26,7 @@ public class Preset extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long presetId;
 
-    @Column(nullable = false)
     private String presetImgUrl;
-
-    @Column(nullable = false)
     private String presetName;
 
     @ManyToMany

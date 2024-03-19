@@ -1,11 +1,8 @@
 package dev.rainbowmirror.closeathand.domain.user;
 
-import dev.rainbowmirror.closeathand.infrastructure.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -20,14 +17,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserInfo insertUser(UserCommands.UserCommand command) {
+    public UserInfo insertUser(UserCommand.CreateCommand command) {
         User initUser = command.toEntity();
         User user = userStore.store(initUser);
         return new UserInfo(user);
     }
 
     @Override
-    public UserInfo updateUser(UserCommands.UpdateCommand command) {
+    public UserInfo updateUser(UserCommand.UpdateCommand command) {
         User beforeUser = userReader.getUser(command.getUserToken());
         beforeUser.update(command);
         User user = userStore.store(beforeUser);
@@ -48,5 +45,12 @@ public class UserServiceImpl implements UserService{
         beforeUser.disable();
         User user = userStore.store(beforeUser);
         return new UserInfo(user);
+    }
+
+    @Override
+    public UserInfo checkDuplicate(String account) {
+        var user = userReader.getByAccount(account).orElse(null);
+        if (user == null) return null;
+        else return new UserInfo(user);
     }
 }

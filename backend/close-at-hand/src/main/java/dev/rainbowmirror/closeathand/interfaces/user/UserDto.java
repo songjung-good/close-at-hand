@@ -1,6 +1,6 @@
 package dev.rainbowmirror.closeathand.interfaces.user;
 
-import dev.rainbowmirror.closeathand.domain.user.UserCommands;
+import dev.rainbowmirror.closeathand.domain.user.UserCommand;
 import dev.rainbowmirror.closeathand.domain.user.UserInfo;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -22,8 +22,8 @@ public class UserDto {
         @NotEmpty(message = "check userName")
         private String password;
 
-        public UserCommands.UserCommand toCommand(){
-            return UserCommands.UserCommand.builder()
+        public UserCommand.CreateCommand toCommand(){
+            return UserCommand.CreateCommand.builder()
                     .userName(userName)
                     .account(account)
                     .password(password)
@@ -36,7 +36,7 @@ public class UserDto {
     public static class SignupResponse {
         private final String userToken;
         private final String userName;
-        private final String height;
+        private final Float height;
         private final String gender;
 
         public SignupResponse(UserInfo userInfo) {
@@ -53,12 +53,12 @@ public class UserDto {
     public static class updateRequest {
         private String userToken;
         private String userName;
-        private String height;
+        private Float height;
         private String gender;
         private String account;
         private String password;
-        public UserCommands.UpdateCommand toCommand(){
-            return UserCommands.UpdateCommand.builder()
+        public UserCommand.UpdateCommand toCommand(){
+            return UserCommand.UpdateCommand.builder()
                     .userToken(userToken)
                     .userName(userName)
                     .height(height)
@@ -74,7 +74,7 @@ public class UserDto {
     public static class UpdateResponse {
         private final String userToken;
         private final String userName;
-        private final String height;
+        private final Float height;
         private final String gender;
         public UpdateResponse(UserInfo userInfo) {
             this.userToken = userInfo.getUserToken();
@@ -89,7 +89,7 @@ public class UserDto {
     public static class DeleteResponse {
         private final String userToken;
         private final String userName;
-        private final String height;
+        private final Float height;
         private final String gender;
         public DeleteResponse(UserInfo userInfo) {
             this.userToken = userInfo.getUserToken();
