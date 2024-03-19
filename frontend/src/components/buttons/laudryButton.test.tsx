@@ -5,7 +5,7 @@ describe("LandryButton component", () => {
 	it("렌더링 테스트", () => {
 		const title = "My Button";
 		const { getByText, getByTestId } = render(
-			<LandryButton title={title} onPress={jest.fn()} moveTo="null" />,
+			<LandryButton title={title} onPress={jest.fn()} bubble1={true} />,
 		);
 
 		// title이 올바르게 렌더링
@@ -20,7 +20,7 @@ describe("LandryButton component", () => {
 		const mockFn = jest.fn();
 
 		const { getByText } = render(
-			<LandryButton title={title} onPress={mockFn} moveTo="hi" />,
+			<LandryButton title={title} onPress={mockFn} bubble1={true} />,
 		);
 
 		const button = getByText(title);
