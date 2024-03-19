@@ -3,11 +3,11 @@ import { Alert } from "react-native";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigation } from "@react-navigation/native";
 
-import { BorderBottomInput, StyledButton } from "../../shared";
+import { BorderBottomInput, StyledButton } from "../buttons";
 import { fetchLogin } from "./API";
 
 const SignIn = () => {
-	const navigation = useNavigation<RootNav>();
+	const navigation = useNavigation<Navigation>();
 	const [accountId, setAccountId] = useState("");
 	const [password, setPassword] = useState("");
 

@@ -1,16 +1,15 @@
-import { StyleSheet } from "react-native";
 import Menu from "./Menu";
 import { useNavigation } from "@react-navigation/native";
 
 const ManagementMenuList = () => {
-	const navigation = useNavigation<ManageMentNav>();
+	const navigation = useNavigation<Navigation>();
 
 	function handleLaundryPress() {
-		navigation.navigate("LaundryMain");
+		navigation.navigate("laundryMain");
 	}
 
 	function handleHistoryPress() {
-		navigation.navigate("History");
+		navigation.navigate("history");
 	}
 	return (
 		<>
@@ -31,5 +30,3 @@ const ManagementMenuList = () => {
 };
 
 export default ManagementMenuList;
-
-const styles = StyleSheet.create({});

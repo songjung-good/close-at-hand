@@ -12,8 +12,8 @@ const Stack = createNativeStackNavigator<HomeParamList>();
 const HomeNav = () => {
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name="home" component={HomeScreen}></Stack.Screen>
-			<Stack.Screen name="controller" component={ControllerScreen}></Stack.Screen>
+			<Stack.Screen name="home" component={HomeScreen} />
+			<Stack.Screen name="controller" component={ControllerScreen} />
 		</Stack.Navigator>
 	);
 };

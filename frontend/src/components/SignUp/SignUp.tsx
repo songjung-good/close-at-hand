@@ -1,5 +1,5 @@
-import { Alert, StyleSheet } from "react-native";
-import { BorderBottomInput, StyledButton } from "../../shared";
+import { Alert } from "react-native";
+import { BorderBottomInput, StyledButton } from "../buttons";
 import { useReducer, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { fetchSignUp } from "./API";
@@ -141,8 +141,6 @@ const SignUp: React.FC<Props> = ({ setSignUpTry }) => {
 };
 
 export default SignUp;
-
-const styles = StyleSheet.create({});
 
 const isValid = (
 	state: typeof initialState,

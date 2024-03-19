@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StyledButton 스냅샷 테스트 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "borderColor": "#ffffff",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "margin": 10,
+          "minHeight": 45,
+          "padding": 10,
+        },
+        false,
+        {
+          "backgroundColor": "#8DE0F8",
+        },
+      ]
+    }
+    testID="button"
+  >
+    <Text
+      style={
+        [
+          {
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "textAlign": "center",
+            "width": "auto",
+          },
+          {
+            "color": "#121212",
+          },
+        ]
+      }
+    >
+      value
+    </Text>
+  </View>
+</View>
+`;

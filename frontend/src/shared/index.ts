@@ -13,10 +13,8 @@ export {
 	useIsLogin,
 } from "./zustand/userStore";
 
-// UI
-export { default as BorderBottomInput } from "./Common/BorderBottomInput";
-export { default as StyledButton } from "./Common/StyledButton";
-export { default as TextButton } from "./Common/TextButton";
-
 // styleSheet
-export { SHADOW } from "./Common/commonStyleSheet";
+export { SHADOW } from "./styles/commonStyleSheet";
+
+// constant
+export { COLORS, FONTSIZE } from "./styles/STYLES";

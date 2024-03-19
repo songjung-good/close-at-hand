@@ -4,29 +4,50 @@ import {
 	HistoryMainScreen,
 	LandryMainScreen,
 	ManagementMainScreen,
+	RecentCoordyDetailScreen,
+	RecentCoordyListScreen,
 } from "../../screens";
 
 export type MangeMentParamList = {
 	managementMain: undefined;
-	LaundryMain: undefined;
-	History: undefined;
+	laundryMain: undefined;
+	history: undefined;
+	recentCoordyList: undefined;
+	recentCoordyDetail: { outfitId: number };
 };
 
 const Stack = createNativeStackNavigator<MangeMentParamList>();
 
 const ManagementNav = () => {
 	return (
-		<Stack.Navigator>
+		<Stack.Navigator
+			screenOptions={{ headerTitleStyle: { fontWeight: "bold" } }}
+		>
 			<Stack.Screen
 				name="managementMain"
 				component={ManagementMainScreen}
 				options={{ headerShown: false }}
-			></Stack.Screen>
+			/>
 			<Stack.Screen
-				name="LaundryMain"
+				name="laundryMain"
 				component={LandryMainScreen}
-			></Stack.Screen>
-			<Stack.Screen name="History" component={HistoryMainScreen}></Stack.Screen>
+				options={{ title: "빨래 바구니" }}
+			/>
+			<Stack.Screen
+				name="history"
+				component={HistoryMainScreen}
+				options={{ title: "옷 관리" }}
+			/>
+			<Stack.Screen
+				name="recentCoordyList"
+				component={RecentCoordyListScreen}
+				options={{ title: "최근 코디" }}
+			/>
+			<Stack.Screen
+				name="recentCoordyDetail"
+				component={RecentCoordyDetailScreen}
+				options={{ title: "최근 코디" }}
+			/>
 		</Stack.Navigator>
 	);
 };

@@ -1,6 +1,5 @@
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RouteProp } from "@react-navigation/native";
+import { RouteProp as A } from "@react-navigation/native";
 
 import type { RootParamList } from "./navigation/AppNav";
 import type { HomeParamList } from "./navigation/HomeNav";
@@ -16,21 +15,21 @@ type NativeStackParamList = RootParamList &
 	SettingsParamList &
 	OnBoardingParamList;
 
-type RootScreenType = {
+type AllScreen = {
 	[key in keyof NativeStackParamList]: NativeStackParamList[key];
 };
+type Route<T extends keyof AllScreen> = A<AllScreen, T>;
 
 declare global {
-	interface RootNav extends BottomTabNavigationProp<RootParamList> {}
-	interface HomeNav extends NativeStackNavigationProp<HomeParamList> {}
-	interface ClosetNav extends NativeStackNavigationProp<ClosetParamList> {}
-	interface ManageMentNav
-		extends NativeStackNavigationProp<MangeMentParamList> {}
-	interface SettingsNav extends NativeStackNavigationProp<SettingsParamList> {}
-	interface OnBoardingNav
-		extends NativeStackNavigationProp<OnBoardingParamList> {}
-	interface RootScreenProps {
-		navigation: NativeStackNavigationProp<RootScreenType>;
-		route: RouteProp<RootScreenType>;
+	interface Navigation extends NativeStackNavigationProp<AllScreen> {}
+	interface RootRouteProp<T extends keyof AllScreen> {
+		route: Route<T>;
+	}
+	interface RootNavigaionProp {
+		navigation: NativeStackNavigationProp<AllScreen>;
+	}
+	interface RootScreenProp<T extends keyof AllScreen> {
+		navigation: NativeStackNavigationProp<AllScreen>;
+		route: Route<T>;
 	}
 }

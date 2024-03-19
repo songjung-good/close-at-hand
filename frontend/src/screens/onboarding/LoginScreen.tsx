@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native";
-import { SignUp, SignIn } from "../../components";
+import { SignUp, SignIn, TextButton } from "../../components";
 import { useState } from "react";
-import { TextButton } from "../../shared";
 
 const LoginScreen = () => {
 	const [signUpTry, setSignUpTry] = useState(false);
