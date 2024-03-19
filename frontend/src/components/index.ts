@@ -1,8 +1,13 @@
 // 옷 관리
 export { default as ManagementMenuList } from "./managementMenuList/ManagementMenuList";
+
+// 옷 관리 - 옷 기록
 export { default as ClothesHistoryList } from "./clothesHistory/ClothesHistoryList";
 export { default as CoordyList } from "./coordyList/CoordyList";
 export { default as RecentCoordyDetail } from "./recentCoordyDetail/RecentCoordyDetail";
+
+// 옷 관리 - 세탁
+export { default as LaudryButton } from "./buttons/LaudryButton";
 
 // OnBoarding
 export { default as SignIn } from "./signIn/SignIn";
