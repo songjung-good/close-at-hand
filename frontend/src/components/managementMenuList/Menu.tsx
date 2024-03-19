@@ -15,9 +15,13 @@ export const Menu: React.FC<Props> = ({
 	onPress,
 }) => {
 	return (
-		<Pressable onPress={onPress} style={SHADOW}>
+		<Pressable onPress={onPress}>
 			<View
-				style={[styles.container, { backgroundColor: COLORS[backgroundColor] }]}
+				style={[
+					SHADOW,
+					styles.container,
+					{ backgroundColor: COLORS[backgroundColor] },
+				]}
 			>
 				<Image style={styles.image} source={image} />
 				<View style={styles.textContainer}>

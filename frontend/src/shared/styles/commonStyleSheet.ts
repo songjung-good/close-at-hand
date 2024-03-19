@@ -4,6 +4,9 @@ import { COLORS } from "./STYLES";
 const styles = StyleSheet.create({
 	shadow: {
 		backgroundColor: COLORS.White,
+
+		elevation: 5,
+
 		shadowColor: COLORS.Black,
 		shadowOffset: { width: 1, height: 1 },
 		shadowOpacity: 0.75,

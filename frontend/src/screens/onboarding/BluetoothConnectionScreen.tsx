@@ -1,7 +1,9 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { COLORS, FONTSIZE } from "../../shared";
 
-const BluetoothConnection: React.FC<RootNavigaionProp> = ({ navigation }) => {
+const BluetoothConnectionScreen: React.FC<RootNavigaionProp> = ({
+	navigation,
+}) => {
 	return (
 		<View style={styles.container}>
 			<Text style={[styles.title, styles.textCenter]}>
@@ -19,7 +21,7 @@ const BluetoothConnection: React.FC<RootNavigaionProp> = ({ navigation }) => {
 	);
 };
 
-export default BluetoothConnection;
+export default BluetoothConnectionScreen;
 
 const styles = StyleSheet.create({
 	container: {
