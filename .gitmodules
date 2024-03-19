@@ -1,0 +1,6 @@
+[submodule "embedded/MagicMirror/modules/MMM-page-indicator"]
+	path = embedded/MagicMirror/modules/MMM-page-indicator
+	url = https://github.com/edward-shen/MMM-page-indicator.git
+[submodule "embedded/MagicMirror/modules/MMM-pages"]
+	path = embedded/MagicMirror/modules/MMM-pages
+	url = https://github.com/edward-shen/MMM-pages.git
