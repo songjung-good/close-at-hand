@@ -6,6 +6,7 @@ import {
 	ManagementMainScreen,
 	RecentCoordyDetailScreen,
 	RecentCoordyListScreen,
+	LaundryBasketScreen,
 } from "../../screens";
 
 export type MangeMentParamList = {
@@ -14,6 +15,7 @@ export type MangeMentParamList = {
 	history: undefined;
 	recentCoordyList: undefined;
 	recentCoordyDetail: { outfitId: number };
+	laundaryBasket: { basket: string };
 };
 
 const Stack = createNativeStackNavigator<MangeMentParamList>();
@@ -46,8 +48,9 @@ const ManagementNav = () => {
 			<Stack.Screen
 				name="recentCoordyDetail"
 				component={RecentCoordyDetailScreen}
-				options={{ title: "최근 코디" }}
+				options={{ title: "빨래 바구니" }}
 			/>
+			<Stack.Screen name="laundaryBasket" component={LaundryBasketScreen} />
 		</Stack.Navigator>
 	);
 };
