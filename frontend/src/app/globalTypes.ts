@@ -15,21 +15,21 @@ type NativeStackParamList = RootParamList &
 	SettingsParamList &
 	OnBoardingParamList;
 
-type AllScreen = {
-	[key in keyof NativeStackParamList]: NativeStackParamList[key];
-};
-type Route<T extends keyof AllScreen> = A<AllScreen, T>;
+type Route<T extends keyof NativeStackParamList> = A<NativeStackParamList, T>;
 
 declare global {
-	interface Navigation extends NativeStackNavigationProp<AllScreen> {}
-	interface RootRouteProp<T extends keyof AllScreen> {
+	type Navigation = NativeStackNavigationProp<{
+		[K in keyof NativeStackParamList]: NativeStackParamList[K];
+	}>;
+	interface RootRouteProp<T extends keyof NativeStackParamList> {
 		route: Route<T>;
 	}
-	interface RootNavigaionProp {
-		navigation: NativeStackNavigationProp<AllScreen>;
-	}
-	interface RootScreenProp<T extends keyof AllScreen> {
-		navigation: NativeStackNavigationProp<AllScreen>;
+	type RootNavigaionProp = {
+		navigation: Navigation;
+	};
+	interface RootScreenProp<T extends keyof NativeStackParamList> {
+		navigation: Navigation;
 		route: Route<T>;
 	}
+	type ScreenNametype = keyof NativeStackParamList;
 }
