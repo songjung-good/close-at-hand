@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { fetchDetail } from "./API";
 import LoadingOrError from "../fetchHelper/LoadingOrError";
 import DetailUI from "./DetailUI";

@@ -1,4 +1,4 @@
-import { StyledButton } from "../../components";
+import StyledButton from "../buttons/StyledButton";
 
 const Blutooth = () => {
 	function hanldeCancel() {}

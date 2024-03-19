@@ -1,7 +1,11 @@
-import { ClothesFetchListResponse } from "../types";
+interface CotainsClothes {
+	clothesId: number;
+	clothesImgUrl: string;
+}
 
 export interface CoordyDetail {
-	contains: ClothesFetchListResponse[];
+	contains: CotainsClothes[];
 	outfitUrl: string;
 	weather: string;
+	date: string;
 }
