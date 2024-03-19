@@ -4,10 +4,14 @@ import subprocess
 import os
 import time
 
+current_dir = os.path.dirname(os.path.realpath(__file__))
+
+
+
 # 여러 사진의 파일 경로
 image_paths = [
-    "/home/damaskrose/MagicMirror/modules/MMM-Face-Recognition-SMAI/public/face1.png",
-    "/home/damaskrose/MagicMirror/modules/MMM-Face-Recognition-SMAI/public/face2.png",
+    os.path.join(current_dir, "public/face1.png"),
+    os.path.join(current_dir, "public/face2.png"),
     # 여기에 더 많은 이미지 경로를 추가할 수 있습니다.
 ]
 
@@ -49,15 +53,16 @@ while True:
             print("No known faces detected.")
         
         # 인식 결과를 파일에 쓰기
-        with open("/home/damaskrose/MagicMirror/modules/MMM-Face-Recognition-SMAI/sample.txt", "w") as f:
+        with open(os.path.join(current_dir, "sample.txt"), "w") as f:
             f.write(name)
 
         # 시간 지연
         time.sleep(15)
 
     # 얼굴 인식 실패 시 기본값으로 파일에 쓰기
-    if not face_encodings:
-        with open("/home/damaskrose/MagicMirror/modules/MMM-Face-Recognition-SMAI/sample.txt", "w") as f:
+    # if not face_encodings:
+    if not face_locations:
+        with open(os.path.join(current_dir, "sample.txt"), "w") as f:
             f.write(name)
 
 # import face_recognition
