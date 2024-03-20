@@ -3,6 +3,7 @@ import { COLORS, FONTSIZE } from "../../shared/styles/STYLES";
 
 const colorMatch = {
 	SkyBlue: COLORS.Black,
+	Turquoise: COLORS.Black,
 	CarrotRed: COLORS.White,
 	Black: COLORS.White,
 	White: COLORS.Black,
