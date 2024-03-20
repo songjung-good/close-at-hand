@@ -4,3 +4,6 @@
 [submodule "embedded/MagicMirror/modules/MMM-pages"]
 	path = embedded/MagicMirror/modules/MMM-pages
 	url = https://github.com/edward-shen/MMM-pages.git
+[submodule "embedded/MagicMirror/modules/MMM-EasyPix"]
+	path = embedded/MagicMirror/modules/MMM-EasyPix
+	url = https://github.com/KristjanESPERANTO/MMM-EasyPix
