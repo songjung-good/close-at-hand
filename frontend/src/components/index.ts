@@ -8,6 +8,7 @@ export { default as RecentCoordyDetail } from "./recentCoordyDetail/RecentCoordy
 
 // 옷 관리 - 세탁
 export { default as LaudryButton } from "./buttons/LaudryButton";
+export { default as Bascket } from "./laudryBascket/Bascket";
 
 // OnBoarding
 export { default as SignIn } from "./signIn/SignIn";
