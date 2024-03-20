@@ -1,7 +1,7 @@
 import { Image, StyleSheet, View } from "react-native";
 import { LaudryButton } from "../../components";
 
-const LandryMainScreen: React.FC<RootNavigaionProp> = ({ navigation }) => {
+const LandryMainScreen: React.FC<RootNavigationProp> = ({ navigation }) => {
 	function handleButtonPress(basket: string) {
 		navigation.navigate("laundaryBasket", { basket });
 	}
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		flex: 1,
 		alignSelf: "center",
-		marginTop: "45%",
 		zIndex: 999,
 	},
 	image: {
