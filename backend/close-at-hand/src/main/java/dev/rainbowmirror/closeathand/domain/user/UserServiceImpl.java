@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.domain.user;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService{
     private final UserStore userStore;
     private final UserReader userReader;
@@ -27,24 +29,21 @@ public class UserServiceImpl implements UserService{
     public UserInfo updateUser(UserCommand.UpdateCommand command) {
         User beforeUser = userReader.getUser(command.getUserToken());
         beforeUser.update(command);
-        User user = userStore.store(beforeUser);
-        return new UserInfo(user);
+        return new UserInfo(beforeUser);
     }
 
     @Override
     public UserInfo enableUser(String userToken) {
         User beforeUser = userReader.getUser(userToken);
         beforeUser.enable();
-        User user = userStore.store(beforeUser);
-        return new UserInfo(user);
+        return new UserInfo(beforeUser);
     }
 
     @Override
     public UserInfo disableUser(String userToken) {
         User beforeUser = userReader.getUser(userToken);
         beforeUser.disable();
-        User user = userStore.store(beforeUser);
-        return new UserInfo(user);
+        return new UserInfo(beforeUser);
     }
 
     @Override
