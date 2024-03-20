@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -20,6 +21,7 @@ import java.util.Set;
 @Getter
 @Entity
 @NoArgsConstructor
+@ToString
 @Table(name = "ootd")
 public class Ootd extends AbstractEntity {
 
@@ -30,26 +32,48 @@ public class Ootd extends AbstractEntity {
     @Column(nullable = false)
     private String ootdImgUrl;
 
-    @OneToMany(mappedBy = "ootd",fetch = FetchType.LAZY)
-    private List<OotdClothes> ootd_clothes = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "ootd_detail",
+            joinColumns = @JoinColumn(name = "ootd_id"),
+            inverseJoinColumns = @JoinColumn(name = "clothes_id"))
+    private Set<Clothes> clothes = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userToken", insertable = false, updatable = false)
+    @JoinColumn(name = "user_token", updatable = false)
     private User user;
 
-    @Column(nullable = false)
-    private String userToken;
-
     @Builder
-    public Ootd(String ootdImgUrl, String userToken) {
-        if (!StringUtils.hasLength(userToken)) throw new RuntimeException("empty userToken");
-        else this.userToken = userToken;
+    public Ootd(String ootdImgUrl, Set<Clothes> clothes, User user) {
+        if (user == null) throw new RuntimeException("check User");
+        else {
+            this.user = user;
+        }
         if (!StringUtils.hasLength(ootdImgUrl)) this.ootdImgUrl = "noImage.jpg";
         else this.ootdImgUrl = ootdImgUrl;
+        this.clothes = clothes;
     }
 
     public void updateImg(String ootdImgUrl){
         this.ootdImgUrl = ootdImgUrl;
     }
 
+    public void updateClothes(Set<Clothes> clothes){
+        this.clothes = clothes;
+    }
+
+    public void addClothes(Clothes clothes) {
+        for (Clothes clothing : this.clothes){
+            if (clothing.getClothesId().equals(clothes.getClothesId())) {return;}
+        }
+        this.clothes.add(clothes);
+    }
+
+    public void popClothes(Clothes clothes) {
+        for (Clothes clothing : this.clothes){
+            if (clothing.getClothesId().equals(clothes.getClothesId())){
+                this.clothes.remove(clothing);
+                return;
+            }
+        }
+    }
 }
