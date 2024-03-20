@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { COLORS, FONTSIZE } from "../../shared";
 
-const BluetoothConnectionScreen: React.FC<RootNavigaionProp> = ({
+const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 	navigation,
 }) => {
 	return (

@@ -1,6 +1,6 @@
 import { StyledButton } from "../../components";
 
-const ForDebug: React.FC<RootNavigaionProp> = ({ navigation }) => {
+const ForDebug: React.FC<RootNavigationProp> = ({ navigation }) => {
 	function hanldeLogin() {
 		navigation.navigate("login");
 	}
