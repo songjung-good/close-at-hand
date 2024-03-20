@@ -15,13 +15,11 @@ public class OotdCommand {
         private final String ootdImgUrl;
         private final String ootdName;
         private final String userToken;
-        @Setter
-        private User user;
+
         public Preset toEntity(){
             return Preset.builder()
                     .presetImgUrl(ootdImgUrl)
                     .presetName(ootdName)
-                    .user(user)
                     .build();
         }
     }

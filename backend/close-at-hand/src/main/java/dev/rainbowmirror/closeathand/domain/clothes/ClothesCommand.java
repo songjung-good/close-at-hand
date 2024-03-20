@@ -22,9 +22,6 @@ public class ClothesCommand {
         private final ZonedDateTime lastWashDate;
         private final Integer price;
 
-        @Setter // fk로 user를 가지고 있으니 일단 넣어둠
-        private final User user;
-
         public Clothes toEntity() {
             return Clothes.builder()
                     .clothesImgUrl(clothesImgUrl)

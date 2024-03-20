@@ -9,21 +9,21 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommonResponse<T> {
+public class CommonResponse {
     private Result result;
-    private T data;
+    private Object data;
     private String message;
     private String errorCode;
 
-    public static <T> CommonResponse<T> success(T data, String message) {
-        return (CommonResponse<T>) CommonResponse.builder()
+    public static <T> CommonResponse success(T data, String message) {
+        return CommonResponse.builder()
                 .result(Result.SUCCESS)
                 .data(data)
                 .message(message)
                 .build();
     }
 
-    public static <T> CommonResponse<T> success(T data) {
+    public static <T> CommonResponse success(T data) {
         return success(data, null);
     }
 
