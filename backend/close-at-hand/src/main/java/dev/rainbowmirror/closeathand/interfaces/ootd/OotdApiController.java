@@ -27,10 +27,10 @@ public class OotdApiController {
     private final OotdFacade ootdFacade;
 
     @Operation(summary = "오늘 날짜 Ootd 저장", description = "오늘날짜의 Ootd 저장, 이미 있다면 갱신합니다 이전값은 삭제됨")
-    @ApiResponses(
-            @ApiResponse(responseCode = "200", description = "success",
-                    content = {@Content(schema = @Schema(implementation = OotdInfo.class))})
-    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", useReturnTypeSchema = true,
+                    content = @Content( schema = @Schema(implementation = OotdInfo.class)))
+    })
     @PostMapping
     public CommonResponse saveOotd(@RequestBody OotdDto.CreateRequest request){
         System.out.println(request);

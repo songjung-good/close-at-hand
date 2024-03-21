@@ -4,6 +4,7 @@ import dev.rainbowmirror.closeathand.application.clothes.ClothesFacade;
 import dev.rainbowmirror.closeathand.common.response.CommonResponse;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/clothes")
+@Tag(name = "Clothes",
+        description = "Clothes 관련 api")
 public class ClothesApiController {
     private final ClothesFacade clothesFacade;
 
