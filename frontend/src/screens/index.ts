@@ -20,6 +20,5 @@ export { default as SettingsScreen } from "./settingsScreen/SettingsScreen";
 
 // 온보딩
 export { default as LoginScreen } from "./onboarding/LoginScreen";
-export { default as ControllerScreen } from "./home/ControllerScreen";
 export { default as ForDebug } from "./onboarding/ForDebug";
 export { default as BluetoothConnectionScreen } from "./onboarding/BluetoothConnectionScreen";
