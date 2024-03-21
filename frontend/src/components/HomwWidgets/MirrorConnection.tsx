@@ -10,10 +10,8 @@ interface ButtonProps {
 
 const ButtonBlock: React.FC<ButtonProps> = ({ title, onPress }) => {
 	return (
-		<Pressable onPress={onPress}>
-			<View style={[SHADOW, styles.button]}>
-				<Text style={styles.buttonFont}>{title}</Text>
-			</View>
+		<Pressable style={[SHADOW, styles.button]} onPress={onPress}>
+			<Text style={styles.buttonFont}>{title}</Text>
 		</Pressable>
 	);
 };
@@ -28,6 +26,7 @@ const Overlay = () => {
 	function handleCloseAtHandIoT(identifier: string) {
 		// 블루투스로 명령보내는 거
 	}
+
 	return (
 		<View style={[styles.container, styles.overlay]}>
 			<View style={styles.buttonGroup}>
@@ -109,10 +108,11 @@ const styles = StyleSheet.create({
 	buttonGroup: {
 		flexDirection: "row",
 		justifyContent: "space-around",
+		margin: 10,
 	},
 	button: {
 		flex: 1,
-		margin: 3,
+		marginHorizontal: 10,
 		backgroundColor: COLORS.Gray,
 		borderWidth: 1,
 		borderRadius: 30,
@@ -121,7 +121,6 @@ const styles = StyleSheet.create({
 	},
 	buttonFont: {
 		fontSize: FONTSIZE.Small,
-		alignSelf: "center",
 		textAlign: "center",
 	},
 });

@@ -1,9 +1,21 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 import { COLORS } from "../../shared";
 import { useQuery } from "@tanstack/react-query";
 import { fetchToday } from "./API";
+
+interface ImageProps {
+	imageUrl: string;
+}
+
+const DataExist: React.FC<ImageProps> = ({ imageUrl }) => {
+	return (
+		<View testID="data-box">
+			<Image source={{ uri: imageUrl }} />
+		</View>
+	);
+};
 
 interface StyledTextProps {
 	content: string;
@@ -33,7 +45,7 @@ const TodayHome = () => {
 		if ("noResponse" in data) {
 			content = <StyledText content={data.message} />;
 		} else {
-			content = <StyledText content="데이터 표시하기" />;
+			content = <DataExist imageUrl={"데이터 표시"} />;
 		}
 	}
 

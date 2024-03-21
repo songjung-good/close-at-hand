@@ -51,8 +51,8 @@ describe("TodayHome", () => {
 		});
 
 		// 컴포넌트를 렌더링하고 데이터를 확인합니다.
-		const { getByText } = render(<TodayHome />);
-		expect(getByText("데이터 표시하기")).toBeDefined();
+		const { getByTestId } = render(<TodayHome />);
+		expect(getByTestId("data-box")).toBeDefined();
 	});
 
 	describe("204 상황", () => {

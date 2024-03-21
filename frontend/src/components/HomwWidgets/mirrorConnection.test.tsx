@@ -1,6 +1,8 @@
 import { render, fireEvent } from "@testing-library/react-native";
 import MirrorConnection from "./MirrorConnection";
 
+jest.mock("@react-navigation/native");
+
 describe("MirrorConnection 컴포넌트", () => {
 	it("버튼을 누르면 mode가 변경되어 overlay가 나타난다", () => {
 		const { getByText, queryByText } = render(<MirrorConnection />);
