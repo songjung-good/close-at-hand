@@ -11,7 +11,7 @@ interface Props {
 const RecentCoordyDetail: React.FC<Props> = ({ outfitId }) => {
 	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["recentCoordyList", outfitId],
-		queryFn: fetchDetail.bind(this, outfitId),
+		queryFn: async ({ signal }) => fetchDetail({ signal, outfitId }),
 	});
 	return (
 		<>

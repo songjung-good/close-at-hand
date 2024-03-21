@@ -1,8 +1,13 @@
 import { API } from "../../shared";
 import { CoordyDetail } from "./types";
 
-export async function fetchDetail(outfitId: number) {
-	return API.get(`outfit/${outfitId}`)
+interface FetchDetailInterface {
+	signal: AbortSignal;
+	outfitId: number;
+}
+
+export async function fetchDetail({ signal, outfitId }: FetchDetailInterface) {
+	return API.get(`outfit/${outfitId}`, { signal })
 		.then((response) => response.data as CoordyDetail)
 		.catch((error) => {
 			if (error.response) {

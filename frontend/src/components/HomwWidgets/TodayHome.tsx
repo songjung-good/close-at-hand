@@ -14,17 +14,24 @@ const StyledText: React.FC<StyledTextProps> = ({ content }) => {
 };
 
 const TodayHome = () => {
-	const { data, isLoading, isError } = useQuery({
+	const { data, isLoading, isError, refetch } = useQuery({
 		queryKey: ["today"],
 		queryFn: fetchToday,
 		staleTime: 1000 * 60 * 60 * 60, // 1시간
 	});
 
+	function handlePress() {
+		console.log(data);
+		if (isError || (data && "noResponse" in data)) {
+			refetch({ throwOnError: true });
+		}
+	}
+
 	let content;
 
 	if (data) {
-		if (typeof data === "string") {
-			content = <StyledText content={data} />;
+		if ("noResponse" in data) {
+			content = <StyledText content={data.message} />;
 		} else {
 			content = <StyledText content="데이터 표시하기" />;
 		}
@@ -41,7 +48,11 @@ const TodayHome = () => {
 	}
 
 	return (
-		<Pressable style={styles.container}>
+		<Pressable
+			style={styles.container}
+			onPress={handlePress}
+			testID="pressible"
+		>
 			<View style={styles.innerContainer}>
 				<AntDesign name="pluscircle" size={80} color={COLORS.PupleBlue} />
 				{content}

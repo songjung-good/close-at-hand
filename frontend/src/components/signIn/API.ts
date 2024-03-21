@@ -1,11 +1,11 @@
 import { API } from "../../shared";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-interface FetchLogin {
+interface FetchLoginInterface {
 	accountId: string;
 	password: string;
 }
 
-export async function fetchLogin({ accountId, password }: FetchLogin) {
+export async function fetchLogin({ accountId, password }: FetchLoginInterface) {
 	return API.post("login", {
 		accountId,
 		password,
