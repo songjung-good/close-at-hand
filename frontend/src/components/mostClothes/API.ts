@@ -1,13 +1,9 @@
 import { AxiosError } from "axios";
 import { API } from "../../shared";
+import { MostClothes } from "./type";
 
 interface FetchMostclothesData {
 	signal: AbortSignal;
-}
-
-interface MostClothes {
-	clothesImageUrl: string;
-	clothesId: number;
 }
 
 export async function fetchMostClothes({ signal }: FetchMostclothesData) {

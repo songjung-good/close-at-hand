@@ -1,15 +1,17 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, View } from "react-native";
 import Card from "./Card";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMostClothes } from "./API";
 import LoadingOrError from "../fetchHelper/LoadingOrError";
 import { useNavigation } from "@react-navigation/native";
+import { placeholderData } from "./constant";
 
 const MostClothes = () => {
 	const navigation = useNavigation<Navigation>();
 	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["mostclothes"],
 		queryFn: fetchMostClothes,
+		placeholderData,
 	});
 
 	function hadlePress(clothesId: number) {
@@ -35,5 +37,3 @@ const MostClothes = () => {
 };
 
 export default MostClothes;
-
-const styles = StyleSheet.create({});
