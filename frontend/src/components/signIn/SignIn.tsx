@@ -16,9 +16,8 @@ const SignIn = () => {
 		onSuccess: () => {
 			navigation.navigate("0");
 		},
-		onError: () => {
-			Alert.alert("로그인 실패", "아이디 또는 비밀번호를 다시 확인해주세요");
-			setAccountId("");
+		onError: (error) => {
+			Alert.alert(error.message, "아이디 또는 비밀번호를 다시 확인해주세요");
 			setPassword("");
 		},
 	});
@@ -46,6 +45,7 @@ const SignIn = () => {
 				onChangeText={setPassword}
 				value={password}
 				placeholder="비밀번호"
+				secureTextEntry={true}
 			/>
 			<StyledButton title="로그인" onPress={hanldeLogin} />
 		</>
