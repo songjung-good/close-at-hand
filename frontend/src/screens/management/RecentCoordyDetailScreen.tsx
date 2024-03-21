@@ -1,7 +1,7 @@
 import { RecentCoordyDetail } from "../../components";
 
 const RecentCoordyDetailScreen: React.FC<
-	RootRouteProp<"recentCoordyDetail">
+	RootScreenProp<"recentCoordyDetail">
 > = ({ route }) => {
 	return <RecentCoordyDetail outfitId={route.params.outfitId} />;
 };
