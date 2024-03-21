@@ -26,14 +26,13 @@ const StyledText: React.FC<StyledTextProps> = ({ content }) => {
 };
 
 const TodayHome = () => {
-	const { data, isLoading, isError, refetch } = useQuery({
-		queryKey: ["today"],
+	const { data, isLoading, isError, error, refetch } = useQuery({
+		queryKey: ["home", "today", new Date().toISOString().split("T")[0]],
 		queryFn: fetchToday,
-		staleTime: 1000 * 60 * 60 * 60, // 1시간
+		staleTime: 1000 * 60 * 60 * 60 * 10, // 10시간
 	});
 
 	function handlePress() {
-		console.log(data);
 		if (isError || (data && "noResponse" in data)) {
 			refetch({ throwOnError: true });
 		}
@@ -56,7 +55,9 @@ const TodayHome = () => {
 			/>
 		);
 	} else if (isError) {
-		content = <StyledText content="인터넷 연결을 확인하여 주세요" />;
+		content = (
+			<StyledText content={error.message ?? "인터넷 연결을 확인하여 주세요"} />
+		);
 	}
 
 	return (
