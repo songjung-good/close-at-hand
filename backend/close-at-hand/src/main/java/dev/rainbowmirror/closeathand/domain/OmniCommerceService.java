@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import dev.rainbowmirror.closeathand.interfaces.clothes.OmniBodyDto;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -27,26 +29,15 @@ public class OmniCommerceService {
     private String url = "https://api.kr.omnicommerce.ai/2022-08/management/products";
 
 
-    public String postClothes(String id, String clothesImgUrl, String userToken) throws JsonProcessingException {
-        RestTemplate restTemplate = new RestTemplate();
-
-        // Header set
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.add("X-Api-Key", XApiKey);
-        // Body set
+    public int postClothes(String id, String clothesImgUrl, String userToken){
         OmniBodyDto bodyDto = new OmniBodyDto(id, clothesImgUrl, userToken);
-        // Message
-        HttpEntity<?> requestMessage = new HttpEntity<>(bodyDto.toJson(), httpHeaders);
 
-        // Request
-        HttpEntity<String> response = restTemplate.postForEntity(url, requestMessage, String.class);
-
-        // Response 파싱
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-
-        return response.toString();
+        HttpResponse<String> response = Unirest.post(url)
+                .header("Content-Type", "application/json")
+                .header("X-Api-Key", XApiKey)
+                .body(bodyDto.toJson())
+                .asString();
+        return response.getStatus();
     }
 
 }

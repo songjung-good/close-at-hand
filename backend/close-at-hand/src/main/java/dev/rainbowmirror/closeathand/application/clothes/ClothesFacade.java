@@ -20,14 +20,19 @@ public class ClothesFacade {
     private final OmniCommerceService omniCommerceService;
 
     public ClothesInfo createClothes(ClothesCommand.CreateCommand createCommand) throws IOException {
-        // 옴니커머스로 데이터 보내고 정보 받아오기
-        String url = createCommand.getFilename();
+        String filename = createCommand.getFilename();
 
-        String clothesImgUrl = s3UploadService.saveFile(createCommand.getClothesImage(), url);
+        String clothesImgUrl = s3UploadService.saveFile(createCommand.getClothesImage(), filename);
+        int statusCode = omniCommerceService.postClothes(createCommand.getClothesToken(), clothesImgUrl, createCommand.getUserToken());
+        if ( 200 != statusCode){
+            s3UploadService.deleteFile(filename);
+            throw new RuntimeException("이미지 탐색에 실패했습니다.");
+        }
 
-        System.out.printf(omniCommerceService.postClothes(createCommand.getClothesToken(), clothesImgUrl, createCommand.getUserToken()));
-
-        ClothesInfo clothesInfo = clothesService.createClothes(createCommand);
+        ClothesInfo clothesInfo = clothesService.createClothes(ClothesCommand.CreateCommand.builder()
+                        .userToken(createCommand.getUserToken())
+                        .clothesImgUrl(clothesImgUrl)
+                        .build());
         return clothesInfo;
     }
 

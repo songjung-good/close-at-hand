@@ -31,4 +31,8 @@ public class S3UploadService {
         amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), metadata);
         return amazonS3.getUrl(bucket, fileName).toString();
     }
+
+    public void deleteFile(String fileName) throws IOException{
+        amazonS3.deleteObject(bucket, fileName);
+    }
 }
