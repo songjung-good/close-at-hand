@@ -1,0 +1,39 @@
+/* MagicMirror² Custom CSS Sample
+ *
+ * Change color and fonts here.
+ *
+ * Beware that properties cannot be unitless, so for example write '--gap-body: 0px;' instead of just '--gap-body: 0;'
+ *
+ * MIT Licensed.
+ */
+
+/* Uncomment and adjust accordingly if you want to import another font from the google-fonts-api: */
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700&display=swap'); */
+
+
+.my-svg-image {
+  width: auto;
+  height: 100%;
+  margin-right: -1px; /* Move your picture using these */
+  margin-left: -1px; /* Move your picture using these */
+  margin-top: -1px; /* Move your picture using these */
+  margin-bottom: -1px; /* Move your picture using these */
+  float: center; /* Left, center or right */
+}
+
+.blue-notification {
+  color: var(--color-text-blue);
+  margin-bottom: 10px;
+}
+
+
+.left {
+  left: 0;
+  position: absolute;
+  width: auto;
+}
+
+.gesture-size {
+  width: 72px;
+  height: auto;
+}
