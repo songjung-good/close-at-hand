@@ -4,6 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 
 jest.mock("@react-navigation/native");
 
+const mockUseNavigation = useNavigation as jest.Mock;
+
 describe("CordiCard 컴포넌트", () => {
 	it("Pressable을 누르면 navigate 함수 호출", () => {
 		const mockNavigation = {
@@ -12,7 +14,7 @@ describe("CordiCard 컴포넌트", () => {
 
 		const testId = 1;
 
-		(useNavigation as jest.Mock).mockReturnValue(mockNavigation);
+		mockUseNavigation.mockReturnValue(mockNavigation);
 
 		const { getByTestId } = render(
 			<CordiCard outfitId={testId} outfitUrl="test-url" />,
@@ -33,7 +35,7 @@ describe("CordiCard 컴포넌트", () => {
 
 		const testId = 1;
 
-		(useNavigation as jest.Mock).mockReturnValue(mockNavigation);
+		mockUseNavigation.mockReturnValue(mockNavigation);
 
 		const { getByTestId } = render(
 			<CordiCard outfitId={testId} outfitUrl="test-url" noOnPress={true} />,
