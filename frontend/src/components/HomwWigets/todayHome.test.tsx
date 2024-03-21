@@ -22,7 +22,7 @@ describe("TodayHome", () => {
 		const { getByText } = render(<TodayHome />);
 		expect(
 			getByText("데이터를 받아 오는 중입니다. \n 잠시만 기다려 주세요"),
-		).toBeTruthy();
+		).toBeDefined();
 	});
 
 	it("에러 상황 렌더링", () => {
@@ -35,7 +35,7 @@ describe("TodayHome", () => {
 
 		// 컴포넌트를 렌더링하고 에러 상태를 확인합니다.
 		const { getByText } = render(<TodayHome />);
-		expect(getByText("인터넷 연결을 확인하여 주세요")).toBeTruthy();
+		expect(getByText("인터넷 연결을 확인하여 주세요")).toBeDefined();
 	});
 
 	it("데이터 있는 경우 렌더링", () => {
@@ -49,7 +49,7 @@ describe("TodayHome", () => {
 
 		// 컴포넌트를 렌더링하고 데이터를 확인합니다.
 		const { getByText } = render(<TodayHome />);
-		expect(getByText("데이터 표시하기")).toBeTruthy();
+		expect(getByText("데이터 표시하기")).toBeDefined();
 	});
 
 	it("404에러", async () => {

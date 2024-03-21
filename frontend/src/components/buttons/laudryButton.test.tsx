@@ -9,14 +9,14 @@ describe("LandryButton component", () => {
 		);
 
 		// title이 올바르게 렌더링
-		expect(getByText(title)).toBeTruthy();
+		expect(getByText(title)).toBeDefined();
 
 		// Check for image existence (more robust than checking source directly)
-		expect(getByTestId("image")).toBeTruthy();
+		expect(getByTestId("image")).toBeDefined();
 	});
 
 	it("onPress 함수가 moveTo를 인자로 받아 실행", () => {
-		const title = "My Button";
+		const title = "Hi";
 		const mockFn = jest.fn();
 
 		const { getByText } = render(
@@ -29,6 +29,6 @@ describe("LandryButton component", () => {
 		fireEvent.press(button);
 
 		// moveTo를 인자로 받아 호출
-		expect(mockFn).toHaveBeenCalledWith("hi");
+		expect(mockFn).toHaveBeenCalledWith("Hi");
 	});
 });

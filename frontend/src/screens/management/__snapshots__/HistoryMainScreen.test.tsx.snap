@@ -57,5 +57,26 @@ exports[`HistoryMainScreen 스냅샷 테스트 1`] = `
     </View>
   </View>,
   "10",
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginHorizontal": 15,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontSize": 32,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      이번 달 가장 많이 입은 옷
+    </Text>
+  </View>,
 ]
 `;

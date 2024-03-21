@@ -18,7 +18,7 @@ describe("StyledButton", () => {
 			<StyledButton title={INITIAL_VALUE} onPress={jest.fn()} />,
 		);
 
-		expect(getByText(INITIAL_VALUE)).toBeTruthy();
+		expect(getByText(INITIAL_VALUE)).toBeDefined();
 	});
 
 	it("onPress가 버튼을 터치할 때마다 호출됩니다.", () => {

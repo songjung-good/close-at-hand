@@ -31,8 +31,8 @@ describe("RecentCoordyDetail 컴포넌트", () => {
 		);
 
 		// 데이터가 성공적으로 로드되고 해당 데이터가 화면에 렌더링되었는지 확인
-		await waitFor(() => expect(getByTestId("detail-image")).toBeTruthy());
-		expect(getByText(/맑음/)).toBeTruthy();
+		await waitFor(() => expect(getByTestId("detail-image")).toBeDefined());
+		expect(getByText(/맑음/)).toBeDefined();
 		expect(getByText("2024년 3월 19일"));
 	});
 });

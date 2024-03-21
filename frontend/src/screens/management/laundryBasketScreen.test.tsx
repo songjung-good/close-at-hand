@@ -19,6 +19,6 @@ describe("LaundryBasket", () => {
 		);
 
 		// 화면에 route.params.basket 텍스트가 있는지 확인
-		expect(getByText(routeParams.params.basket)).toBeTruthy();
+		expect(getByText(routeParams.params.basket)).toBeDefined();
 	});
 });

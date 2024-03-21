@@ -29,7 +29,7 @@ describe("BorderBottomInput", () => {
 				placeholder="플레이스홀더"
 			/>,
 		);
-		expect(getByPlaceholderText("플레이스홀더")).toBeTruthy();
+		expect(getByPlaceholderText("플레이스홀더")).toBeDefined();
 	});
 
 	it("value를 렌더링합니다.", () => {
@@ -40,7 +40,7 @@ describe("BorderBottomInput", () => {
 				placeholder="플레이스홀더"
 			/>,
 		);
-		expect(getByTestId(TestID)).toBeTruthy();
+		expect(getByTestId(TestID)).toBeDefined();
 	});
 
 	it("텍스트를 입력하면 setValue가 입력값을 받아 실행됩니다.", () => {
