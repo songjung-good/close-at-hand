@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { ClothesHistoryList } from "../../components/";
@@ -13,7 +13,7 @@ const HistoryMainScreen = () => {
 	}
 
 	return (
-		<>
+		<ScrollView>
 			<View style={styles.titleContainer}>
 				<Text style={styles.text}>최근 코디</Text>
 				<Pressable onPress={handleRecentPress}>
@@ -24,7 +24,7 @@ const HistoryMainScreen = () => {
 			<View style={styles.titleContainer}>
 				<Text style={styles.text}>이번 달 가장 많이 입은 옷</Text>
 			</View>
-		</>
+		</ScrollView>
 	);
 };
 
