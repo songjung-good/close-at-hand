@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { ControllerScreen, HomeScreen } from "../../screens";
+import { HomeScreen } from "../../screens";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export type HomeParamList = {
@@ -19,7 +19,6 @@ const HomeNav = () => {
 					component={HomeScreen}
 					options={{ headerShown: false }}
 				/>
-				<Stack.Screen name="controller" component={ControllerScreen} />
 			</Stack.Navigator>
 		</SafeAreaProvider>
 	);

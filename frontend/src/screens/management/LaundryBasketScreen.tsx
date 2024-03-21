@@ -9,7 +9,6 @@ const LaundryBasket: React.FC<RootScreenProp<"laundaryBasket">> = ({
 }) => {
 	useEffect(() => {
 		navigation.setOptions({ headerTitle: route.params.basket });
-		console.log(route.params);
 	}, []);
 	return (
 		<>
