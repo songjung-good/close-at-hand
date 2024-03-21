@@ -29,7 +29,8 @@ export async function fetchToday({
 		.catch((error) => {
 			if (error.response) {
 				throw new Error(error.response.data?.message ?? "네트워크 에러");
+			} else {
+				throw new Error("인터넷 연결을 확인해주세요.");
 			}
-			throw new Error("인터넷 연결을 확인해주세요.");
 		});
 }
