@@ -9,6 +9,10 @@ Module.register("helloworld", {
 	defaults: {
 		text: "Hello World!"
 	},
+	
+	getStyles: function() {
+		return ["helloworld.css"];
+	},
 
 	getTemplate () {
 		return "helloworld.njk";
@@ -16,5 +20,5 @@ Module.register("helloworld", {
 
 	getTemplateData () {
 		return this.config;
-	}
+	},
 });

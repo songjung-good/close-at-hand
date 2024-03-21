@@ -8,11 +8,11 @@ Module.register("compliments", {
 	// Module config defaults.
 	defaults: {
 		compliments: {
-			anytime: ["Hello!"],
-			morning: ["Good morning!", "Enjoy your day!", "How was your sleep?"],
-			afternoon: ["Hello, beauty!", "Cheer up!!", "Looking good today!"],
-			evening: ["Wow, you look tired. Sleep early!", "You look nice!", "Good night~~~"],
-			"....-01-01": ["Happy new year!"]
+			anytime: ["안녕하세요!"],
+			morning: ["좋은 아침이에요!", "오늘 하루도 잘 보내요!", "잘 잤나요?"],
+			afternoon: ["안녕, beauty!", "힘내요!!", "오늘 좋아보이시네요?"],
+			evening: ["피곤해 보이시네요.\n일찍 주무세요!", "당신은 멋져요!", "좋은 밤 되세요."],
+			"....-01-01": ["새해 복 많이 받으세요!"]
 		},
 		updateInterval: 30000,
 		remoteFile: null,
@@ -147,7 +147,7 @@ Module.register("compliments", {
 	// Override dom generator.
 	getDom () {
 		const wrapper = document.createElement("div");
-		wrapper.className = this.config.classes ? this.config.classes : "thin xlarge bright pre-line";
+		wrapper.className = this.config.classes ? this.config.classes : "thin large bright pre-line";
 		// get the compliment text
 		const complimentText = this.getRandomCompliment();
 		// split it into parts on newline text
