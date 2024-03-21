@@ -35,7 +35,6 @@ const MirrorConnection = () => {
 		setMode((prev) => !prev);
 	}
 
-	console.log(mode);
 	return (
 		<View style={styles.outerContainer}>
 			<Pressable

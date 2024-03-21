@@ -8,7 +8,6 @@ describe("MirrorConnection 컴포넌트", () => {
 		// overlay가 처음에는 보이지 않아야 함
 		expect(queryByText("클로젯 핸드\n레이아웃 변경")).toBeNull();
 
-		// 버튼을 누름
 		fireEvent.press(getByText("Close-At-Hand가 연결되었어요!"));
 
 		// overlay가 나타나야 함
@@ -21,7 +20,6 @@ describe("MirrorConnection 컴포넌트", () => {
 		// overlay가 처음에는 보이지 않아야 함
 		expect(queryByText("클로젯 핸드\n레이아웃 변경")).toBeNull();
 
-		// 버튼을 누름
 		fireEvent.press(getByText("Close-At-Hand가 연결되었어요!"));
 
 		// overlay가 나타나야 함

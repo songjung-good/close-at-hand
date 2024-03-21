@@ -27,7 +27,7 @@ describe("TodayHome", () => {
 
 	it("에러 상황 렌더링", () => {
 		// 이 테스트를 위해 useQuery를 모의(mock)하고 isError를 true로 설정합니다.
-		(useQuery as jest.Mock).mockReturnValue({
+		mockUseQuery.mockReturnValue({
 			data: null,
 			isLoading: false,
 			isError: true,
@@ -39,7 +39,6 @@ describe("TodayHome", () => {
 	});
 
 	it("데이터 있는 경우 렌더링", () => {
-		// 이 테스트를 위해 useQuery를 모의(mock)하고 데이터를 설정합니다.
 		const mockData = { message: "Test message" };
 		mockUseQuery.mockReturnValue({
 			data: mockData,
@@ -53,7 +52,6 @@ describe("TodayHome", () => {
 	});
 
 	it("404에러", async () => {
-		// 모의(mock)된 axios.get 함수에 대한 응답을 설정합니다.
 		mockAPI.mockResolvedValueOnce({ status: 404 });
 
 		const result = await fetchToday();
