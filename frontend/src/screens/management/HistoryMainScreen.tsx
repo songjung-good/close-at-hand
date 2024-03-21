@@ -1,7 +1,7 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { ClothesHistoryList } from "../../components/";
+import { ClothesHistoryList, MostClothes } from "../../components/";
 import { FONTSIZE } from "../../shared";
 import { useNavigation } from "@react-navigation/native";
 
@@ -24,6 +24,7 @@ const HistoryMainScreen = () => {
 			<View style={styles.titleContainer}>
 				<Text style={styles.text}>이번 달 가장 많이 입은 옷</Text>
 			</View>
+			<MostClothes />
 		</ScrollView>
 	);
 };
