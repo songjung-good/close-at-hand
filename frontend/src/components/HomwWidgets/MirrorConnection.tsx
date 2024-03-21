@@ -1,28 +1,50 @@
 import { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { COLORS, FONTSIZE } from "../../shared";
+import { COLORS, FONTSIZE, SHADOW } from "../../shared";
+import { useNavigation } from "@react-navigation/native";
 
 interface ButtonProps {
 	title: string;
+	onPress: () => void;
 }
 
-const ButtonBlock: React.FC<ButtonProps> = ({ title }) => {
+const ButtonBlock: React.FC<ButtonProps> = ({ title, onPress }) => {
 	return (
-		<View style={styles.button}>
-			<Text style={styles.buttonFont}>{title}</Text>
-		</View>
+		<Pressable onPress={onPress}>
+			<View style={[SHADOW, styles.button]}>
+				<Text style={styles.buttonFont}>{title}</Text>
+			</View>
+		</Pressable>
 	);
 };
 
 const Overlay = () => {
+	const navigation = useNavigation<Navigation>();
+
+	function handleChangeLayout() {
+		navigation.navigate("0");
+	}
+
+	function handleCloseAtHandIoT(identifier: string) {
+		// 블루투스로 명령보내는 거
+	}
 	return (
 		<View style={[styles.container, styles.overlay]}>
 			<View style={styles.buttonGroup}>
-				<ButtonBlock title={"클로젯 핸드\n레이아웃 변경"} />
-				<ButtonBlock title="AR 코디하기" />
+				<ButtonBlock
+					title={"클로젯 핸드\n레이아웃 변경"}
+					onPress={handleChangeLayout}
+				/>
+				<ButtonBlock
+					title="AR 코디하기"
+					onPress={handleCloseAtHandIoT.bind(this, "AR")}
+				/>
 			</View>
 			<View style={styles.buttonGroup}>
-				<ButtonBlock title={"클로젯핸드로\n스타일 등록하기"} />
+				<ButtonBlock
+					title={"클로젯핸드로\n스타일 등록하기"}
+					onPress={handleCloseAtHandIoT.bind(this, "style")}
+				/>
 			</View>
 		</View>
 	);
