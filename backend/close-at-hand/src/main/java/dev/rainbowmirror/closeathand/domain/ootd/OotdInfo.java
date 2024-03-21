@@ -1,18 +1,47 @@
 package dev.rainbowmirror.closeathand.domain.ootd;
 
+import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @ToString
+@AllArgsConstructor
+@Schema(title = "Ootd 요약 정보:DTO")
 public class OotdInfo {
-    private Long ootdId;
-    private String ootdImgUrl;
+    private final Long ootdId;
+    private final String ootdImgUrl;
 
     @Builder
     public OotdInfo(Ootd ootd){
         this.ootdId = ootd.getOotdId();
         this.ootdImgUrl = ootd.getOotdImgUrl();
+    }
+
+    @Getter
+    @ToString
+    @AllArgsConstructor
+    @Schema(title = "Ootd 상세 정보:DTO")
+    public static class Detail{
+        private final Long ootdId;
+        private final String ootdImgUrl;
+        private final Set<ClothesInfo> clothes = new HashSet<>();
+
+        @Builder
+        public Detail(Ootd ootd){
+            this.ootdId = ootd.getOotdId();
+            this.ootdImgUrl = ootd.getOotdImgUrl();
+            for (Clothes clothes:ootd.getClothes()){
+                this.clothes.add(new ClothesInfo(clothes));
+            }
+        }
     }
 }

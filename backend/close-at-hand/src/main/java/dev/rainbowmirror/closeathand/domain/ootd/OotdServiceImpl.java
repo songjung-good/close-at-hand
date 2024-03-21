@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -26,8 +23,12 @@ public class OotdServiceImpl implements OotdService{
     private final UserReader userReader;
     private final ClothesReader clothesReader;
     @Override
-    public List<OotdInfo> getOotds(OotdCommand.SearchCommand command) {
-        return null;
+    public List<OotdInfo> getOotds(String userToken) {
+        List<OotdInfo> ootdInfoList = new ArrayList<>();
+        for (Ootd ootd:ootdReader.getAllOotd(userToken)){
+            ootdInfoList.add(new OotdInfo(ootd));
+        }
+        return ootdInfoList;
     }
 
     @Override
@@ -36,16 +37,18 @@ public class OotdServiceImpl implements OotdService{
     }
 
     @Override
-    public OotdInfo getTodayOotd(String userToken) {
-        ZonedDateTime today = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
-        today.withHour(0); today.withMinute(0); today.withSecond(0); today.withNano(0);
+    public OotdInfo.Detail getTodayOotd(String userToken) {
+        ZonedDateTime today = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0);
         User user = userReader.getUser(userToken);
         Ootd ootd = ootdReader.getOotdBetween(today, today.plusDays(1), userToken)
-                .orElse(ootdStore.store(Ootd.builder()
+                .orElse(Ootd.builder()
                         .user(user)
-                        .build())
+                        .build()
         );
-        return new OotdInfo(ootd);
+        return new OotdInfo.Detail(ootd);
     }
 
     @Override
@@ -57,15 +60,15 @@ public class OotdServiceImpl implements OotdService{
                 .withSecond(0);
         // 없을경우 만들 ootd >  builder로 고쳐야 함
         User user = userReader.getUser(command.getUserToken());
-        Set<Clothes> clothesSet = new HashSet<>();
-        for (Long clothesId: command.getClothesIdList()){
-            clothesSet.add(clothesReader.findClothes(clothesId));
-        }
-        Ootd initOotd = command.toEntity(user,clothesSet);
+        Ootd initOotd = command.toEntity(user,new HashSet<>());
 
         Ootd ootd = ootdReader.getOotdBetween(today, today.plusDays(1), user.getUserToken())
                 .orElse(initOotd);
-        System.out.println(ootd);
+        ootd.getClothes().clear();
+        for (Long clothesId: command.getClothesIdList()){
+            ootd.addClothes(clothesReader.findClothes(clothesId));
+        }
+
         return new OotdInfo(ootdStore.store(ootd));
     }
 

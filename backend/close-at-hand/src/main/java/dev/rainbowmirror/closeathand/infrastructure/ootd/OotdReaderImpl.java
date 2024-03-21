@@ -22,7 +22,7 @@ public class OotdReaderImpl implements OotdReader {
 
     @Override
     public List<Ootd> getAllOotd(String userToken) {
-        return null;
+        return ootdRepository.findByUserUserToken(userToken);
     }
 
     @Override
