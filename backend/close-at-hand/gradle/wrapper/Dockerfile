@@ -1,4 +1,14 @@
+FROM openjdk:17-alpine AS builder
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+RUN chmod +x ./gradlew
+RUN ./gradlew bootJar
+
 FROM openjdk:17-alpine
-ADD gradle-wrapper.jar back.jar
-ENV JAVA_OPTS=""
-ENTRYPOINT ["java", "-jar", "back.jar"]
+COPY --from=builder build/libs/*.jar back.jar
+
+#EXPOSE 8080 # 컨테이너 Port 노출
+ENTRYPOINT ["java","-jar","/back.jar"]
