@@ -15,7 +15,7 @@
 		"lint:fix": "eslint --fix ."
 	},
 	"dependencies": {
-		"@react-native-async-storage/async-storage": "^1.23.1",
+		"@react-native-async-storage/async-storage": "1.21.0",
 		"@react-navigation/bottom-tabs": "^6.5.16",
 		"@react-navigation/native": "^6.1.14",
 		"@react-navigation/native-stack": "^6.9.22",
@@ -32,8 +32,8 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.20.0",
-		"@react-native-community/datetimepicker": "^7.6.3",
-		"@react-native-community/slider": "^4.5.0",
+		"@react-native-community/datetimepicker": "7.6.1",
+		"@react-native-community/slider": "4.4.2",
 		"@react-native-esbuild/cli": "^0.1.0-beta.12",
 		"@storybook/addon-ondevice-actions": "^7.6.15",
 		"@storybook/addon-ondevice-controls": "^7.6.15",
@@ -60,7 +60,7 @@
 		"jest-expo": "~50.0.4",
 		"prettier": "3.2.5",
 		"react-dom": "^18.2.0",
-		"react-native-safe-area-context": "^4.9.0",
+		"react-native-safe-area-context": "4.8.2",
 		"tailwindcss": "3.3.2",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.4.2"
