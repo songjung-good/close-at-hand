@@ -1,3 +1,8 @@
+// 홈
+export { default as MirrorConnection } from "./HomwWigets/MirrorConnection";
+export { default as TodayHome } from "./HomwWigets/TodayHome";
+export { default as HomeInfo } from "./HomwWigets/HomeInfo";
+
 // 옷 관리
 export { default as ManagementMenuList } from "./managementMenuList/ManagementMenuList";
 
