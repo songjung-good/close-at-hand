@@ -23,3 +23,15 @@ springdoc:
   api-docs:
     path: /api-docs
   show-actuator: true
+cloud:
+  aws:
+    s3:
+      bucket: rainmirror
+    credentials:
+      access-key: ${S3ACCESS_KEY}
+      secret-key: ${S3SECRET_KEY}
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

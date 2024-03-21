@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.ZonedDateTime;
 
@@ -17,6 +18,7 @@ public class ClothesCommand {
     @ToString
     public static class CreateCommand {
         private final String clothesImgUrl;
+        private final MultipartFile clothesImage;
         private final String userToken;
         private final String detection;
         private final ZonedDateTime lastWashDate;

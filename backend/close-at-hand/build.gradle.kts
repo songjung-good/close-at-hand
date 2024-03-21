@@ -39,6 +39,8 @@ dependencies {
 	// NotEmpty
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
+	// S3
+	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
 //	implementation("org.springframework.boot:spring-boot-starter-security")
 	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 	runtimeOnly("com.mysql:mysql-connector-j")

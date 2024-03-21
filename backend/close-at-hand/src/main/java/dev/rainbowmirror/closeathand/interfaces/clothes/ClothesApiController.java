@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -16,7 +17,8 @@ public class ClothesApiController {
     private final ClothesFacade clothesFacade;
 
     @PostMapping // post 요청이 올 경우
-    public CommonResponse createClothes(@RequestBody ClothesDto.CreateRequest request) {
+    public CommonResponse createClothes(@RequestBody ClothesDto.CreateRequest request,
+                                        @RequestParam("image") MultipartFile image) {
         var command = request.toCommand();
         ClothesInfo clothesInfo = clothesFacade.createClothes(command);
         var response = new ClothesDto.CreateResponse(clothesInfo);
