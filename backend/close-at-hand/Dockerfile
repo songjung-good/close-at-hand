@@ -1,4 +1,9 @@
 FROM openjdk:17-alpine AS builder
+
+ENV MYSQL_URL=${MYSQL_URL}
+ENV MYSQL_USERNAME=${MYSQL_USERNAME}
+ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle.kts .
