@@ -2,11 +2,10 @@ package dev.rainbowmirror.closeathand.domain.user;
 
 
 import dev.rainbowmirror.closeathand.common.AbstractEntity;
-import dev.rainbowmirror.closeathand.common.exception.util.TokenGenrator;
+import dev.rainbowmirror.closeathand.common.util.TokenGenrator;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
 @Slf4j

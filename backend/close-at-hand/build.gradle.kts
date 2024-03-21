@@ -41,6 +41,11 @@ dependencies {
 
 	// S3
 	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
+	// RestTemplate
+	implementation("org.apache.httpcomponents:httpcore:4.4.15")
+	implementation("org.apache.httpcomponents:httpclient:4.5.13")
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	implementation("com.google.code.gson:gson:2.10.1")
 //	implementation("org.springframework.boot:spring-boot-starter-security")
 	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 	runtimeOnly("com.mysql:mysql-connector-j")

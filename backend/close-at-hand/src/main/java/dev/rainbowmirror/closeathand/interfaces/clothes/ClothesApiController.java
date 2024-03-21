@@ -2,12 +2,15 @@ package dev.rainbowmirror.closeathand.interfaces.clothes;
 
 import dev.rainbowmirror.closeathand.application.clothes.ClothesFacade;
 import dev.rainbowmirror.closeathand.common.response.CommonResponse;
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Slf4j
 @RestController
@@ -16,10 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class ClothesApiController {
     private final ClothesFacade clothesFacade;
 
-    @PostMapping // post 요청이 올 경우
-    public CommonResponse createClothes(@RequestBody ClothesDto.CreateRequest request,
-                                        @RequestParam("image") MultipartFile image) {
-        var command = request.toCommand();
+    @PostMapping(produces = "application/json", consumes = "multipart/form-data") // post 요청이 올 경우
+    public CommonResponse createClothes(@RequestHeader String userToken, @RequestPart(name = "clothesImg") MultipartFile clothesImg) throws IOException {
+        var command = ClothesCommand.CreateCommand.builder()
+                .clothesImage(clothesImg)
+                .userToken(userToken)
+                .build();
         ClothesInfo clothesInfo = clothesFacade.createClothes(command);
         var response = new ClothesDto.CreateResponse(clothesInfo);
         return CommonResponse.success(response);

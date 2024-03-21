@@ -17,6 +17,7 @@ public class ClothesDto {
     public static class CreateRequest { // 등록요청왔을때
         @NotEmpty(message = "check clothesImg")
         private MultipartFile clothesImg;
+
         private String clothesImgUrl;
 
         @NotEmpty(message = "check userToken")

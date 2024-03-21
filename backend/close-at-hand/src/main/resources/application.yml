@@ -28,8 +28,8 @@ cloud:
     s3:
       bucket: rainmirror
     credentials:
-      access-key: ${S3ACCESS_KEY}
-      secret-key: ${S3SECRET_KEY}
+      access-key: AKIAV4KMUIH6OSIDLCOV
+      secret-key: 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
     region:
       static: ap-northeast-2
       auto: false
