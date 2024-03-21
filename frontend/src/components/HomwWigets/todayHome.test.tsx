@@ -51,8 +51,8 @@ describe("TodayHome", () => {
 		expect(getByText("데이터 표시하기")).toBeDefined();
 	});
 
-	it("404에러", async () => {
-		mockAPI.mockResolvedValueOnce({ status: 404 });
+	it("204에러", async () => {
+		mockAPI.mockResolvedValueOnce({ status: 204 });
 
 		const result = await fetchToday();
 
