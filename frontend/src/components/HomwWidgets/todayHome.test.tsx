@@ -31,15 +31,17 @@ describe("TodayHome", () => {
 
 	it("에러 상황 렌더링", () => {
 		// 이 테스트를 위해 useQuery를 모의(mock)하고 isError를 true로 설정합니다.
+		const errorMessage = "에러 발생";
 		mockUseQuery.mockReturnValue({
 			data: null,
 			isLoading: false,
 			isError: true,
+			error: new Error(errorMessage),
 		});
 
 		// 컴포넌트를 렌더링하고 에러 상태를 확인합니다.
 		const { getByText } = render(<TodayHome />);
-		expect(getByText("인터넷 연결을 확인하여 주세요")).toBeDefined();
+		expect(getByText(errorMessage)).toBeDefined();
 	});
 
 	it("데이터 있는 경우 렌더링", () => {
@@ -103,6 +105,7 @@ describe("TodayHome", () => {
 			data: undefined,
 			isLoading: false,
 			isError: true,
+			error: new Error("에러 발생"),
 			refetch,
 		});
 
