@@ -144,7 +144,9 @@ let config = {
 			config: {
 			  picName: "guideline-img.svg",            // Enter the picture file name.
 			  className: "my-svg-image",                // Size picture precisely. Retains aspect ratio.
-			}
+			},
+			classes: "AR-guideline"
+
 		},
 		{
 			module: "helloworld",
@@ -199,7 +201,7 @@ let config = {
 			module: "MMM-pages",
 			config: {
 				modules: [
-					["AR_Header", "test", "AR_category", "MMM-EasyPix", "notification_AR"],  // page 0: AR
+					["AR_Header", "AR_category", "AR-guideline", "notification_AR"],  // page 0: AR
 					["alert", "MMM-Face-Recognition-SMAI", "updatenotification", "clock", "compliments", "weather"],  // page 1: Home
 					["OOTD_Header", "handgesture", "notification_OOTD", "navi4"]  // page 1: OOTD
 				],
