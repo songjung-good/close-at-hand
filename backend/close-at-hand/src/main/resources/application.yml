@@ -35,3 +35,6 @@ cloud:
       auto: false
     stack:
       auto: false
+omni:
+  X-Api-Key: test-2XPioSKYZtt4MzHXH3QGoB938xTCbqxqChHT9Z8L
+  url: https://api.kr.omnicommerce.ai/2022-08/management/products
