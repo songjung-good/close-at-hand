@@ -37,4 +37,4 @@ cloud:
       auto: false
 omni:
   X-Api-Key:
-  url: 
+  url:
