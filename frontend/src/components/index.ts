@@ -14,13 +14,16 @@ export { default as MostClothes } from "./mostClothes/MostClothes";
 
 // 옷 관리 - 세탁
 export { default as LaudryButton } from "./buttons/LaudryButton";
-export { default as Bascket } from "./laudryBascket/Bascket";
+export { default as LaundryBascket } from "./laudryBascket/LaundryBascket";
 
 // OnBoarding
 export { default as SignIn } from "./signIn/SignIn";
 export { default as SignUp } from "./signUp/SignUp";
 export { default as Bluetooth } from "./ble/Blutooth";
 export { default as ReactCordiCard } from "./cordiCard/CordiCard";
+
+// 설정 화면
+export { default as SettingsButton } from "./buttons/SettingsButton";
 
 // UI
 export { default as BorderBottomInput } from "./inputs/BorderBottomInput";

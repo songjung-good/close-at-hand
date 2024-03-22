@@ -7,13 +7,6 @@ interface Props {
 	onPress: (title: string) => void;
 }
 
-/**
- * 세탁 관련 버튼을 나타내는 컴포넌트
- *
- * @param title 버튼에 표시될 텍스트
- * @param moveTo 이동할 스크린 이름
- * @param onPress moveTo를 첫 번째 인자로 가지고 호출되는 함수
- */
 const LaudryButton: React.FC<Props> = ({ title, bubble1, onPress }) => {
 	return (
 		<Pressable onPress={onPress.bind(this, title)}>

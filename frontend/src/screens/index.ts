@@ -17,6 +17,7 @@ export { default as LaundryBasketScreen } from "./management/LaundryBasketScreen
 
 // 세팅
 export { default as SettingsScreen } from "./settingsScreen/SettingsScreen";
+export { default as AlramScreen } from "./settingsScreen/AlramScreen";
 
 // 온보딩
 export { default as LoginScreen } from "./onboarding/LoginScreen";

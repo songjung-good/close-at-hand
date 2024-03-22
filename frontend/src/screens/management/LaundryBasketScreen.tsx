@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { FONTSIZE } from "../../shared";
-import { Bascket } from "../../components";
+import { LaundryBascket } from "../../components";
 
 const LaundryBasket: React.FC<RootScreenProp<"laundaryBasket">> = ({
 	navigation,
@@ -17,7 +17,7 @@ const LaundryBasket: React.FC<RootScreenProp<"laundaryBasket">> = ({
 				<Image source={require("../../../assets/image/bubble.png")} />
 				<View style={styles.imageContainer}></View>
 			</View>
-			<Bascket />
+			<LaundryBascket />
 		</>
 	);
 };

@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import { StyledButton } from "../buttons";
 
-const Bascket = () => {
+const LaundryBascket = () => {
+	// 세탁 중 데이터에 있는 sqlite에서 연결
 	function handleDoLaundry() {
 		// 세탁 중 데이터 베이스 삭제
 	}
@@ -31,7 +32,7 @@ const Bascket = () => {
 	);
 };
 
-export default Bascket;
+export default LaundryBascket;
 
 const styles = StyleSheet.create({
 	container: {
