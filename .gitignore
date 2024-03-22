@@ -534,4 +534,8 @@ xcuserdata/
 
 storybook-static/
 
+### Exclude project management and task tracking files
+*.task
+
+
 # End of https://www.toptal.com/developers/gitignore/api/java,reactnative,python,storybookjs,node
