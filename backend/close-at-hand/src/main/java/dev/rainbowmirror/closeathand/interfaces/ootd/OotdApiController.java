@@ -20,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/ootd")
 @Tag(name = "Ootd")
+@CrossOrigin("*")
 public class OotdApiController {
     private final OotdFacade ootdFacade;
 
