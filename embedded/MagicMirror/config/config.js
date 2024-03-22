@@ -52,6 +52,13 @@ let config = {
 				dateFormat: "M월 D일, dddd"
 			}
 		},
+		{
+			module: "MMM-Face-Recognition-SMAI",
+			position: "top_left",
+			config: {
+				prompt: "",
+			}
+		},
 		// {
 		// 	module: "calendar",
 		// 	header: "US Holidays",
@@ -137,7 +144,9 @@ let config = {
 			config: {
 			  picName: "guideline-img.svg",            // Enter the picture file name.
 			  className: "my-svg-image",                // Size picture precisely. Retains aspect ratio.
-			}
+			},
+			classes: "AR-guideline"
+
 		},
 		{
 			module: "helloworld",
@@ -162,7 +171,7 @@ let config = {
 		},
 		{
 			module: "MMM-EasyPix",
-			position: "top_left",
+			position: "top_right",
 			config: {
 			  picName: "hand-gesture.gif",
 			  className: "gesture-size"
@@ -171,24 +180,13 @@ let config = {
 		},
 		{
 			module: "helloworld",
-			position: "bottom_bar",
+			position: "top_right",
 			config: {
-				text: "왼쪽 위 손동작을 따라하면 찰영돼요!",
-				customClass: "medium bright"
+				text: "손동작을 따라하면 찰영돼요!",
+				customClass: "medium bright hand-color"
 			},
 			classes: "notification_OOTD"
 		},
-		{
-			module: "MMM-EasyPix",
-			position: "middle_center",
-			config: {
-			  picName: "to-home-img-2.svg",
-			  className: "left"
-			},
-			classes: "navi4"
-		},
-
-
 
 
 
@@ -203,8 +201,8 @@ let config = {
 			module: "MMM-pages",
 			config: {
 				modules: [
-					["AR_Header", "AR_category", "MMM-EasyPix", "notification_AR"],  // page 0: AR
-					["alert", "updatenotification", "clock", "compliments", "weather"],  // page 1: Home
+					["AR_Header", "AR_category", "AR-guideline", "notification_AR"],  // page 0: AR
+					["alert", "MMM-Face-Recognition-SMAI", "updatenotification", "clock", "compliments", "weather"],  // page 1: Home
 					["OOTD_Header", "handgesture", "notification_OOTD", "navi4"]  // page 1: OOTD
 				],
 				fixed: ["MMM-page-indicator"],
@@ -217,6 +215,8 @@ let config = {
 		},
 	]
 };
+
+//테스트용1111
 
 /*************** DO NOT EDIT THE LINE BELOW ***************/
 if (typeof module !== "undefined") { module.exports = config; }
