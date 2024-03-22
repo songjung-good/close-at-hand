@@ -1,11 +1,11 @@
 package dev.rainbowmirror.closeathand.domain.clothes;
 
-
+import dev.rainbowmirror.closeathand.common.util.TokenGenrator;
 import dev.rainbowmirror.closeathand.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.ZonedDateTime;
 
@@ -16,13 +16,18 @@ public class ClothesCommand {
     @Builder
     @ToString
     public static class CreateCommand {
+        private final String clothesToken = TokenGenrator.randomChracterWithPrefix("clo_");
         private final String clothesImgUrl;
+        private final MultipartFile clothesImage;
         private final String userToken;
         private final String detection;
         private final ZonedDateTime lastWashDate;
         private final Integer price;
 
-        public Clothes toEntity() {
+        public String getFilename(){
+            return "clothes/" + clothesToken;
+        }
+        public Clothes toEntity(String clothesImgUrl) {
             return Clothes.builder()
                     .clothesImgUrl(clothesImgUrl)
                     .userToken(userToken)

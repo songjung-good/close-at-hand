@@ -448,6 +448,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+
+*.yml
+
 ### ReactNative.Node Stack ###
 # Logs
 

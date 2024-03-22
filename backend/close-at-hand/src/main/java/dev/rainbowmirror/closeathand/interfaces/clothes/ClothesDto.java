@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.ZonedDateTime;
 
@@ -14,7 +15,9 @@ public class ClothesDto {
     @Setter
     @ToString
     public static class CreateRequest { // 등록요청왔을때
-        @NotEmpty(message = "check clothesImgUrl")
+        @NotEmpty(message = "check clothesImg")
+        private MultipartFile clothesImg;
+
         private String clothesImgUrl;
 
         @NotEmpty(message = "check userToken")
@@ -26,6 +29,7 @@ public class ClothesDto {
 
         public ClothesCommand.CreateCommand toCommand() {
             return ClothesCommand.CreateCommand.builder()
+                    .clothesImage(clothesImg)
                     .clothesImgUrl(clothesImgUrl)
                     .userToken(userToken)
                     .detection(detection)

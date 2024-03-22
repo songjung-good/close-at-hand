@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Preset", description = "프리셋 관련 api")
 @RequestMapping("/preset")
+@Tag(name = "Preset")
 public class PresetApiController {
     private final PresetFacade presetFacade;
 
@@ -24,7 +24,7 @@ public class PresetApiController {
         description = "새로운 preset을 생성합니다. " +
                 "presetName과 presetImgUrl은 default값이 있습니다.")
     @PostMapping
-    public CommonResponse insertPreset(@RequestBody PresetDto.InsertRequestDto request){
+    public CommonResponse<PresetDto.InsertResponseDto> insertPreset(@RequestBody PresetDto.InsertRequestDto request){
         var command = request.toCommand();
         PresetInfo presetInfo = presetFacade.insertPreset(command);
         var response = new PresetDto.InsertResponseDto(presetInfo);

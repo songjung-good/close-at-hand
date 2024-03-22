@@ -1,4 +1,4 @@
-package dev.rainbowmirror.closeathand.common.exception.util;
+package dev.rainbowmirror.closeathand.common.util;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
