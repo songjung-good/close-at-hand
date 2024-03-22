@@ -1,18 +1,25 @@
-// metro.config.js
 const path = require("path");
 const { getDefaultConfig } = require("expo/metro-config");
-
 const { generate } = require("@storybook/react-native/scripts/generate");
 
 generate({
-  configPath: path.resolve(__dirname, "./.storybook"),
+	configPath: path.resolve(__dirname, "./.storybook"),
 });
 
-/** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(__dirname);
+module.exports = (async () => {
+	const config = await getDefaultConfig(__dirname);
+	config.transformer.unstable_allowRequireContext = true;
+	config.resolver.sourceExts.push("mjs");
 
-config.transformer.unstable_allowRequireContext = true;
+	// Add SVG support
+	const {
+		resolver: { sourceExts, assetExts },
+	} = config;
+	config.transformer.babelTransformerPath = require.resolve(
+		"react-native-svg-transformer",
+	);
+	config.resolver.assetExts = assetExts.filter((ext) => ext !== "svg");
+	config.resolver.sourceExts = [...sourceExts, "svg"];
 
-config.resolver.sourceExts.push("mjs");
-
-module.exports = config;
+	return config;
+})();
