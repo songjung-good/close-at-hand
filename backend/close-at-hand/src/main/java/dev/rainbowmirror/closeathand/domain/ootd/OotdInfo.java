@@ -2,20 +2,17 @@ package dev.rainbowmirror.closeathand.domain.ootd;
 
 import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
 @ToString
 @AllArgsConstructor
-@Schema(title = "Ootd 요약 정보:DTO")
 public class OotdInfo {
     private final Long ootdId;
     private final String ootdImgUrl;
@@ -29,7 +26,6 @@ public class OotdInfo {
     @Getter
     @ToString
     @AllArgsConstructor
-    @Schema(title = "Ootd 상세 정보:DTO")
     public static class Detail{
         private final Long ootdId;
         private final String ootdImgUrl;

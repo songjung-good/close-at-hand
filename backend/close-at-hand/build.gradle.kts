@@ -49,7 +49,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 	runtimeOnly("com.mysql:mysql-connector-j")
 	// swagger
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")

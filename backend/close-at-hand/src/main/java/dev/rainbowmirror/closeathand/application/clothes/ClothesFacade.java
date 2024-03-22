@@ -24,8 +24,9 @@ public class ClothesFacade {
 
         String clothesImgUrl = s3UploadService.saveFile(createCommand.getClothesImage(), filename);
         int statusCode = omniCommerceService.postClothes(createCommand.getClothesToken(), clothesImgUrl, createCommand.getUserToken());
-        if ( 200 != statusCode){
+        if ( 202 != statusCode){
             s3UploadService.deleteFile(filename);
+            System.out.println(statusCode);
             throw new RuntimeException("이미지 탐색에 실패했습니다.");
         }
 

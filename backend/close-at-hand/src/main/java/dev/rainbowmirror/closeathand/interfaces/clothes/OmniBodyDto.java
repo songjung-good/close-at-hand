@@ -22,8 +22,8 @@ public class OmniBodyDto {
 
     public String toJson(){
         String sb = "{\"products\":\n" +
-                "    [{\"id\":"+ id +",\n" +
-                "    \"url\":"+ url +",\n" +
+                "    [{\"id\":\""+ id +"\",\n" +
+                "    \"url\":\""+ url +"\",\n" +
                 "    \"detection\":\"AUTO_DETECT\",\n" +
                 "    \"salesUrl\":\""+ salesUrl +"\"}]}";
         return sb;
