@@ -26,15 +26,15 @@ springdoc:
 cloud:
   aws:
     s3:
-      bucket: rainmirror
+      bucket:
     credentials:
-      access-key: AKIAV4KMUIH6OSIDLCOV
-      secret-key: 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
+      access-key:
+      secret-key:
     region:
       static: ap-northeast-2
       auto: false
     stack:
       auto: false
 omni:
-  X-Api-Key: test-2XPioSKYZtt4MzHXH3QGoB938xTCbqxqChHT9Z8L
-  url: https://api.kr.omnicommerce.ai/2022-08/management/products
+  X-Api-Key:
+  url: 
