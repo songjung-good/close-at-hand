@@ -27,6 +27,7 @@ export { default as SettingsButton } from "./buttons/SettingsButton";
 
 // UI
 export { default as BorderBottomInput } from "./inputs/BorderBottomInput";
+export { default as ProfileInput } from "./inputs/ProfileInput";
 export { default as StyledButton } from "./buttons/StyledButton";
 export { default as TextButton } from "./buttons/TextButton";
 export { default as LoadingOrError } from "./fetchHelper/LoadingOrError";

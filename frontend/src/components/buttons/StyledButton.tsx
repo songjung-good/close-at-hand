@@ -23,6 +23,7 @@ const StyledButton: React.FC<Props> = ({ title, onPress, backgroundColor }) => {
 					styles.button,
 					pressed && styles.pressed,
 					{ backgroundColor: COLORS[backgroundColor ?? "SkyBlue"] },
+					backgroundColor === "White" && styles.whiteBackground,
 				]}
 				onPress={onPress}
 				testID="button"
@@ -62,5 +63,10 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		fontWeight: "bold",
 		width: "auto",
+	},
+	whiteBackground: {
+		borderWidth: 1,
+		borderRadius: 5,
+		borderColor: COLORS.Gray,
 	},
 });

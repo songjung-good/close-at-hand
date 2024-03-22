@@ -7,7 +7,7 @@ import { COLORS, FONTSIZE, SHADOW } from "../../shared";
 import { useNavigation } from "@react-navigation/native";
 
 interface Props {
-	name: "wifi" | "alram" | "profile";
+	name: "bluetooth" | "alram" | "profile";
 	title: string;
 }
 
