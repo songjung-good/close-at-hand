@@ -3,6 +3,7 @@ export { default as HomeScreen } from "./home/HomeScreen";
 
 // 옷장
 export { default as ClosetScreen } from "./closet/ClosetScreen";
+export { default as ClothInfoScreen } from "./closet/ClothInfoScreen";
 
 //옷 관리
 export { default as ManagementMainScreen } from "./management/ManagementMainScreen";
