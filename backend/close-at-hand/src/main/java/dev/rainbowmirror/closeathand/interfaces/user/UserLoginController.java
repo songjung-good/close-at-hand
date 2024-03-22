@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/login")
 @Tag(name = "login")
+@CrossOrigin("*")
 public class UserLoginController {
     private final UserFacade userFacade;
 
