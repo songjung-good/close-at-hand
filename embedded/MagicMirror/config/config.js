@@ -106,8 +106,8 @@ let config = {
 			config: {
 				feeds: [
 					{
-						title: "New York Times",
-						url: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
+						title: "오늘의 뉴스",
+						url: "https://fs.jtbc.co.kr/RSS/newsflash.xml"
 					}
 				],
 				showSourceTitle: true,
@@ -187,6 +187,14 @@ let config = {
 			},
 			classes: "notification_OOTD"
 		},
+		{
+			disabled: false,
+			module: "MMM-Selfieshot",
+			position: "bottom_left",
+			config: {
+			  displayButton: "portrait"
+			}
+		},
 
 
 
@@ -202,8 +210,8 @@ let config = {
 			config: {
 				modules: [
 					["AR_Header", "AR_category", "AR-guideline", "notification_AR"],  // page 0: AR
-					["alert", "MMM-Face-Recognition-SMAI", "updatenotification", "clock", "compliments", "weather"],  // page 1: Home
-					["OOTD_Header", "handgesture", "notification_OOTD", "navi4"]  // page 1: OOTD
+					["alert", "MMM-Face-Recognition-SMAI", "updatenotification", "clock", "compliments", "weather", "newsfeed"],  // page 1: Home
+					["OOTD_Header", "handgesture", "notification_OOTD", "navi4", "MMM-Selfieshot"]  // page 1: OOTD
 				],
 				fixed: ["MMM-page-indicator"],
 				hiddenPages: {
