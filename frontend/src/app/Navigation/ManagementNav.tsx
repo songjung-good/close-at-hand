@@ -9,16 +9,15 @@ import {
 	LaundryBasketScreen,
 } from "../../screens";
 
-export type MangeMentParamList = {
+export type ManagementParamList = {
 	managementMain: undefined;
 	laundryMain: undefined;
 	history: undefined;
 	recentCoordyList: undefined;
 	recentCoordyDetail: { outfitId: number };
-	laundaryBasket: { basket: string };
+	laundryBasket: { basket: string };
 };
-
-const Stack = createNativeStackNavigator<MangeMentParamList>();
+const Stack = createNativeStackNavigator<ManagementParamList>();
 
 const ManagementNav = () => {
 	return (
@@ -50,7 +49,7 @@ const ManagementNav = () => {
 				component={RecentCoordyDetailScreen}
 				options={{ title: "빨래 바구니" }}
 			/>
-			<Stack.Screen name="laundaryBasket" component={LaundryBasketScreen} />
+			<Stack.Screen name="laundryBasket" component={LaundryBasketScreen} />
 		</Stack.Navigator>
 	);
 };

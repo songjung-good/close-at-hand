@@ -1,7 +1,7 @@
 // 홈
-export { default as MirrorConnection } from "./HomwWidgets/MirrorConnection";
-export { default as TodayHome } from "./HomwWidgets/TodayHome";
-export { default as HomeInfo } from "./HomwWidgets/HomeInfo";
+export { default as MirrorConnection } from "./HomeWidgets/MirrorConnection";
+export { default as TodayHome } from "./HomeWidgets/TodayHome";
+export { default as HomeInfo } from "./HomeWidgets/HomeInfo";
 
 // 옷 관리
 export { default as ManagementMenuList } from "./managementMenuList/ManagementMenuList";
@@ -13,14 +13,13 @@ export { default as RecentCoordyDetail } from "./recentCoordyDetail/RecentCoordy
 export { default as MostClothes } from "./mostClothes/MostClothes";
 
 // 옷 관리 - 세탁
-export { default as LaudryButton } from "./buttons/LaudryButton";
-export { default as LaundryBascket } from "./laudryBascket/LaundryBascket";
+export { default as LaundryButton } from "./buttons/LaundryButton";
+export { default as LaundryBasket } from "./laundryBasket/LaundryBasket";
 
 // OnBoarding
 export { default as SignIn } from "./signIn/SignIn";
 export { default as SignUp } from "./signUp/SignUp";
-export { default as Bluetooth } from "./ble/Blutooth";
-export { default as ReactCordiCard } from "./cordiCard/CordiCard";
+export { default as Bluetooth } from "./ble/Bluetooth";
 
 // 설정 화면
 export { default as SettingsButton } from "./buttons/SettingsButton";

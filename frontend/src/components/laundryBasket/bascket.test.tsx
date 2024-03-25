@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react-native";
-import Bascket from "./LaundryBascket";
+import Bascket from "./LaundryBasket";
 
 afterEach(() => {
 	// restore the spy created with spyOn

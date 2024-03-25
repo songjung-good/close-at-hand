@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@testing-library/react-native";
-import CordiCard from "./CordiCard";
+import CoordyCard from "./CoordyCard";
 import { useNavigation } from "@react-navigation/native";
 
 jest.mock("@react-navigation/native");
@@ -17,7 +17,7 @@ describe("CordiCard 컴포넌트", () => {
 		mockUseNavigation.mockReturnValue(mockNavigation);
 
 		const { getByTestId } = render(
-			<CordiCard outfitId={testId} outfitUrl="test-url" />,
+			<CoordyCard outfitId={testId} outfitUrl="test-url" />,
 		);
 
 		const pressable = getByTestId("card-1");
@@ -38,7 +38,7 @@ describe("CordiCard 컴포넌트", () => {
 		mockUseNavigation.mockReturnValue(mockNavigation);
 
 		const { getByTestId } = render(
-			<CordiCard outfitId={testId} outfitUrl="test-url" noOnPress={true} />,
+			<CoordyCard outfitId={testId} outfitUrl="test-url" noOnPress={true} />,
 		);
 
 		const pressable = getByTestId("card-1");

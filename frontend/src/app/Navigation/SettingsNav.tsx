@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { AlramScreen, SettingsScreen, ProfileScreen } from "../../screens";
+import { AlarmScreen, SettingsScreen, ProfileScreen } from "../../screens";
 
 export type SettingsParamList = {
 	settings: undefined;
 	wifi: undefined;
-	alram: undefined;
+	alarm: undefined;
 	profile: undefined;
 };
 
@@ -16,8 +16,8 @@ const SettingsNav = () => {
 		<Stack.Navigator>
 			<Stack.Screen name="settings" component={SettingsScreen} />
 			<Stack.Screen
-				name="alram"
-				component={AlramScreen}
+				name="alarm"
+				component={AlarmScreen}
 				options={{ headerTitle: "알람 설정" }}
 			/>
 			<Stack.Screen

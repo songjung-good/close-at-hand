@@ -4,14 +4,14 @@ import { RouteProp as A } from "@react-navigation/native";
 import type { RootParamList } from "./navigation/AppNav";
 import type { HomeParamList } from "./navigation/HomeNav";
 import type { ClosetParamList } from "./navigation/ClosetNav";
-import type { MangeMentParamList } from "./navigation/ManagementNav";
+import type { ManagementParamList } from "./navigation/ManagementNav";
 import type { SettingsParamList } from "./navigation/SettingsNav";
 import type { OnBoardingParamList } from "./navigation/OnBoardingNav";
 
 type NativeStackParamList = RootParamList &
 	HomeParamList &
 	ClosetParamList &
-	MangeMentParamList &
+	ManagementParamList &
 	SettingsParamList &
 	OnBoardingParamList;
 
@@ -26,5 +26,5 @@ declare global {
 		navigation: Navigation;
 		route: Route<T>;
 	}
-	type ScreenNametype = keyof NativeStackParamList;
+	type ScreenNameType = keyof NativeStackParamList;
 }

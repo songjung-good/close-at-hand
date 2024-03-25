@@ -67,7 +67,7 @@ const TodayHome = () => {
 			testID="pressible"
 		>
 			<View style={styles.innerContainer}>
-				<AntDesign name="pluscircle" size={80} color={COLORS.PupleBlue} />
+				<AntDesign name="pluscircle" size={80} color={COLORS.PurpleBlue} />
 				{content}
 			</View>
 		</Pressable>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 	innerContainer: {
 		margin: 15,
 		borderWidth: 5,
-		borderColor: COLORS.PupleBlue,
+		borderColor: COLORS.PurpleBlue,
 		borderRadius: 10,
 		borderStyle: "dashed",
 		alignItems: "center",
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	statusText: {
-		color: COLORS.PupleBlue,
+		color: COLORS.PurpleBlue,
 		textAlign: "center",
 		fontWeight: "bold",
 	},

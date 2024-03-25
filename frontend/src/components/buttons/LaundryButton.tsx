@@ -7,7 +7,7 @@ interface Props {
 	onPress: (title: string) => void;
 }
 
-const LaudryButton: React.FC<Props> = ({ title, bubble1, onPress }) => {
+const LaundryButton: React.FC<Props> = ({ title, bubble1, onPress }) => {
 	return (
 		<Pressable onPress={onPress.bind(this, title)}>
 			<View style={styles.container}>
@@ -26,7 +26,7 @@ const LaudryButton: React.FC<Props> = ({ title, bubble1, onPress }) => {
 	);
 };
 
-export default LaudryButton;
+export default LaundryButton;
 
 const styles = StyleSheet.create({
 	container: {

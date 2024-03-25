@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { FONTSIZE } from "../../shared";
-import { LaundryBascket } from "../../components";
+import { LaundryBasket } from "../../components";
 
-const LaundryBasket: React.FC<RootScreenProp<"laundaryBasket">> = ({
+const LaundryBasketScreen: React.FC<RootScreenProp<"laundryBasket">> = ({
 	navigation,
 	route,
 }) => {
@@ -17,12 +17,12 @@ const LaundryBasket: React.FC<RootScreenProp<"laundaryBasket">> = ({
 				<Image source={require("../../../assets/image/bubble.png")} />
 				<View style={styles.imageContainer}></View>
 			</View>
-			<LaundryBascket />
+			<LaundryBasket />
 		</>
 	);
 };
 
-export default LaundryBasket;
+export default LaundryBasketScreen;
 
 const styles = StyleSheet.create({
 	container: {

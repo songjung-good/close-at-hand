@@ -52,6 +52,7 @@ exports[`StyledButton 스냅샷 테스트 1`] = `
         {
           "backgroundColor": "#8DE0F8",
         },
+        false,
       ]
     }
     testID="button"

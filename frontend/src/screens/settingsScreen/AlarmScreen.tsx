@@ -29,7 +29,7 @@ const ListItem: React.FC<ListItemProps> = ({ title }) => {
 	);
 };
 
-const AlramScreen = () => {
+const AlarmScreen = () => {
 	return (
 		<View>
 			<ListItem title="귀가 후 세탁 알림" />
@@ -40,7 +40,7 @@ const AlramScreen = () => {
 	);
 };
 
-export default AlramScreen;
+export default AlarmScreen;
 
 const styles = StyleSheet.create({
 	listContainer: {

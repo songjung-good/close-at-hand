@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import "@react-navigation/native";
 
 import ClothesHistoryList from "./ClothesHistoryList";
-import Card from "../cordiCard/CordiCard";
+import Card from "../coordyCard/CoordyCard";
 import { ClothesFetchListResponse } from "../types";
 
 jest.mock("@react-navigation/native");

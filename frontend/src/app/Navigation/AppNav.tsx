@@ -45,7 +45,7 @@ const AppNav = () => {
 							<Ionicons
 								name="home"
 								size={size}
-								color={focused ? COLORS.PupleBlue : COLORS.Black}
+								color={focused ? COLORS.PurpleBlue : COLORS.Black}
 							/>
 						),
 					}}
@@ -59,7 +59,7 @@ const AppNav = () => {
 							<FontAwesome5
 								name={focused ? "door-open" : "door-closed"}
 								size={size}
-								color={focused ? COLORS.PupleBlue : COLORS.Black}
+								color={focused ? COLORS.PurpleBlue : COLORS.Black}
 							/>
 						),
 					}}
@@ -73,7 +73,7 @@ const AppNav = () => {
 							<FontAwesome5
 								name={focused ? "box-open" : "box"}
 								size={size}
-								color={focused ? COLORS.PupleBlue : COLORS.Black}
+								color={focused ? COLORS.PurpleBlue : COLORS.Black}
 							/>
 						),
 					}}
@@ -87,7 +87,7 @@ const AppNav = () => {
 							<Ionicons
 								name="settings"
 								size={size}
-								color={focused ? COLORS.PupleBlue : COLORS.Black}
+								color={focused ? COLORS.PurpleBlue : COLORS.Black}
 							/>
 						),
 					}}

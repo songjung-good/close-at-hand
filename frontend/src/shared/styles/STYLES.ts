@@ -4,7 +4,7 @@ export const COLORS = {
 	SkyBlue: "#8DE0F8",
 	Mint: "#98DCE0",
 	LightMint: "#E2FAFC",
-	PupleBlue: "#7687F5",
+	PurpleBlue: "#7687F5",
 	LightViolet: "#EBEDFF",
 	CarrotRed: "#EB731C",
 	Gray: "#C4C4C4",

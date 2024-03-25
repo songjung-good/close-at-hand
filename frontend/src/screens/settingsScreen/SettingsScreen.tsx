@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		fontSize: FONTSIZE.ExtarLarge,
-		color: COLORS.PupleBlue,
+		color: COLORS.PurpleBlue,
 		textAlign: "center",
 	},
 	imageContainer: {

@@ -19,7 +19,7 @@ describe("LandryMainScreen", () => {
 		fireEvent.press(normalWashButton);
 
 		// navigate 함수가 호출되었는지 확인
-		expect(navigationMock.navigate).toHaveBeenCalledWith("laundaryBasket", {
+		expect(navigationMock.navigate).toHaveBeenCalledWith("laundryBasket", {
 			basket: "일반 세탁",
 		});
 	});

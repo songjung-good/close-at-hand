@@ -1,9 +1,9 @@
 import { Image, StyleSheet, View } from "react-native";
-import { LaudryButton } from "../../components";
+import { LaundryButton } from "../../components";
 
 const LandryMainScreen: React.FC<RootNavigationProp> = ({ navigation }) => {
 	function handleButtonPress(basket: string) {
-		navigation.navigate("laundaryBasket", { basket });
+		navigation.navigate("laundryBasket", { basket });
 	}
 	return (
 		<View>
@@ -12,19 +12,19 @@ const LandryMainScreen: React.FC<RootNavigationProp> = ({ navigation }) => {
 					style={styles.image}
 					source={require("../../../assets/image/foam.png")}
 				/>
-				<LaudryButton
+				<LaundryButton
 					title="일반 세탁"
 					bubble1={true}
 					onPress={handleButtonPress}
 				/>
 			</View>
 			<View style={styles.row}>
-				<LaudryButton
+				<LaundryButton
 					title="울 / 캐시미어"
 					bubble1={true}
 					onPress={handleButtonPress}
 				/>
-				<LaudryButton
+				<LaundryButton
 					title="기능성 소재"
 					bubble1={false}
 					onPress={handleButtonPress}

@@ -22,7 +22,7 @@ const ManagementMenuList = () => {
 			<Menu
 				title="옷 관리"
 				onPress={handleHistoryPress}
-				backgroundColor="PupleBlue"
+				backgroundColor="PurpleBlue"
 				image={require("../../../assets/image/diary.png")}
 			/>
 		</>

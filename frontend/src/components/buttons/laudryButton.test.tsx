@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import LandryButton from "./LaudryButton"; // Assuming LandryButton is in the same directory
+import LandryButton from "./LaundryButton"; // Assuming LandryButton is in the same directory
 
 describe("LandryButton component", () => {
 	it("렌더링 테스트", () => {

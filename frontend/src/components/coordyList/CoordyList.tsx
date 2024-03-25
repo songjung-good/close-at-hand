@@ -2,7 +2,7 @@ import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchCoordyList } from "./API";
-import CordiCard from "../cordiCard/CordiCard";
+import CordiCard from "../coordyCard/CoordyCard";
 import LoadingOrError from "../fetchHelper/LoadingOrError";
 
 const CoordyList = () => {

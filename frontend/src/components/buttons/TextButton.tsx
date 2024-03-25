@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 		opacity: 0.75,
 	},
 	text: {
-		color: COLORS.PupleBlue,
+		color: COLORS.PurpleBlue,
 		backgroundColor: COLORS.White,
 	},
 });
