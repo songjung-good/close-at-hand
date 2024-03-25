@@ -1,5 +1,7 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { COLORS, FONTSIZE } from "../../shared";
+import { useNavigation } from "@react-navigation/native";
+import { HomeParamList } from "../../app/navigation/HomeNav";
 
 interface TitleProps {
 	title: string;
@@ -12,22 +14,32 @@ export const Title: React.FC<TitleProps> = ({ title }) => {
 		</View>
 	);
 };
-const Bascket = () => {
+
+type MoveTo = "laundryMain" | "closet";
+
+interface widget {
+	onPress(moveTo: MoveTo): void;
+}
+
+const Basket: React.FC<widget> = ({ onPress }) => {
 	return (
-		<View style={styles.container}>
+		<Pressable
+			style={styles.container}
+			onPress={onPress.bind(null, "laundryMain")}
+		>
 			<Text style={[styles.text, { fontSize: FONTSIZE.Large }]}>{50}%</Text>
 			<Image
 				style={[styles.image, styles.center]}
 				source={require("../../../assets/image/laundry-basket-full.png")}
 			/>
 			<Title title="빨래 바구니" />
-		</View>
+		</Pressable>
 	);
 };
 
-const Closet = () => {
+const Closet: React.FC<widget> = ({ onPress }) => {
 	return (
-		<View style={styles.container}>
+		<Pressable style={styles.container} onPress={onPress.bind(null, "closet")}>
 			<View style={styles.rowContainer}>
 				<Image
 					style={styles.image}
@@ -44,15 +56,24 @@ const Closet = () => {
 				<Text style={styles.text}>{"(옷 개수)"}개</Text>
 			</View>
 			<Title title="옷장" />
-		</View>
+		</Pressable>
 	);
 };
 
 const HomeInfo = () => {
+	const navigation = useNavigation<Navigation>();
+
+	function handleWidgetPress(title: MoveTo) {
+		if (title === "closet") {
+			navigation.navigate("1", { screen: title });
+		} else {
+			navigation.navigate("2", { screen: title });
+		}
+	}
 	return (
-		<View style={styles.outercontainer}>
-			<Bascket />
-			<Closet />
+		<View style={styles.outerContainer}>
+			<Basket onPress={handleWidgetPress} />
+			<Closet onPress={handleWidgetPress} />
 		</View>
 	);
 };
@@ -60,7 +81,7 @@ const HomeInfo = () => {
 export default HomeInfo;
 
 const styles = StyleSheet.create({
-	outercontainer: {
+	outerContainer: {
 		marginTop: 15,
 		flexDirection: "row",
 		width: "100%",

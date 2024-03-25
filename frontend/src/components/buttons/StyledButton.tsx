@@ -11,7 +11,7 @@ const colorMatch = {
 
 interface Props {
 	title: string;
-	onPress: () => void;
+	onPress(): void;
 	backgroundColor?: keyof typeof colorMatch;
 }
 

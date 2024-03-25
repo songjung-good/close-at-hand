@@ -5,7 +5,7 @@ interface Props {
 	image: ReturnType<typeof require>;
 	title: string;
 	backgroundColor: keyof typeof COLORS;
-	onPress: () => void;
+	onPress(): void;
 }
 
 export const Menu: React.FC<Props> = ({

@@ -2,7 +2,7 @@ import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchRecentCoordyListList } from "./API";
-import CordiCard from "../coordyCard/CoordyCard";
+import CoordiCard from "../coordyCard/CoordyCard";
 import LoadingOrError from "../fetchHelper/LoadingOrError";
 
 const RecentCoordyList = () => {
@@ -20,7 +20,7 @@ const RecentCoordyList = () => {
 				<FlatList
 					data={data}
 					renderItem={({ item }) => (
-						<CordiCard {...item} widthMathToScreen={true} />
+						<CoordiCard {...item} widthMathToScreen={true} />
 					)}
 					keyExtractor={(item) => item.outfitId.toString()}
 					numColumns={3}

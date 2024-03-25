@@ -49,7 +49,11 @@ const ManagementNav = () => {
 				component={RecentCoordyDetailScreen}
 				options={{ title: "빨래 바구니" }}
 			/>
-			<Stack.Screen name="laundryBasket" component={LaundryBasketScreen} />
+			<Stack.Screen
+				name="laundryBasket"
+				component={LaundryBasketScreen}
+				options={{ title: "세탁하기" }}
+			/>
 		</Stack.Navigator>
 	);
 };

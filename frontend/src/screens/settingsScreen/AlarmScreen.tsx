@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { COLORS, FONTSIZE } from "../../shared";
 
@@ -10,13 +10,17 @@ interface ListItemProps {
 
 const ListItem: React.FC<ListItemProps> = ({ title }) => {
 	// 기본값은 로컬에서 가져오기
-	const [isEnabled, setIsEnabled] = useState(false);
+	const [isEnabled, setIsEnabled] = useState(true);
 	function toggleSwitch() {
 		setIsEnabled((prev) => !prev);
 	}
 	return (
 		<View style={styles.listContainer}>
-			<FontAwesome name="circle" size={FONTSIZE.Medium} color={COLORS.Black} />
+			<Ionicons
+				name={isEnabled ? "notifications-circle" : "notifications-off-circle"}
+				size={FONTSIZE.Medium}
+				color={COLORS.Black}
+			/>
 			<Text style={styles.text}>{title}</Text>
 			<Switch
 				style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}

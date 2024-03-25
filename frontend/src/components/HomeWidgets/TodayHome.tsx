@@ -1,8 +1,8 @@
 import { Pressable, StyleSheet, Text, View, Image } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { useQuery } from "@tanstack/react-query";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 import { COLORS } from "../../shared";
-import { useQuery } from "@tanstack/react-query";
 import { fetchToday } from "./API";
 
 interface ImageProps {

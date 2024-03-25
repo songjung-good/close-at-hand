@@ -1,22 +1,23 @@
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-import HomeNav from "./HomeNav";
-import ClosetNav from "./ClosetNav";
-import ManagementNav from "./ManagementNav";
-import SettingsNav from "./SettingsNav";
+import HomeNav, { HomeParamList } from "./HomeNav";
+import ClosetNav, { ClosetParamList } from "./ClosetNav";
+import ManagementNav, { ManagementParamList } from "./ManagementNav";
+import SettingsNav, { SettingsParamList } from "./SettingsNav";
 
 import OnBoardingNav from "./OnBoardingNav";
 import { COLORS } from "../../shared";
 
 // type
 export type RootParamList = {
-	"0": undefined;
-	"1": undefined;
-	"2": undefined;
-	"3": undefined;
+	"0": { screen: keyof HomeParamList };
+	"1": { screen: keyof ClosetParamList };
+	"2": { screen: keyof ManagementParamList };
+	"3": { screen: keyof SettingsParamList };
 	onboarding: undefined;
 };
 

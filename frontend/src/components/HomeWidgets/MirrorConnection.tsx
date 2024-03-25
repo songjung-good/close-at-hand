@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 
 interface ButtonProps {
 	title: string;
-	onPress: () => void;
+	onPress(): void;
 }
 
 const ButtonBlock: React.FC<ButtonProps> = ({ title, onPress }) => {

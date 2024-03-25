@@ -3,7 +3,7 @@ import { COLORS } from "../../shared/styles/STYLES";
 
 interface Props {
 	text: string;
-	onPress: () => void;
+	onPress(): void;
 }
 
 const TextButton: React.FC<Props> = ({ text, onPress }) => {
