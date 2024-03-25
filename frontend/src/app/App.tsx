@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RealmProvider } from "@realm/react";
 
 import AppNav from "./navigation/AppNav";
 import { queryClient, useUserActions } from "../shared/index";
+import { LaundryDB } from "../shared/DB-Realm/realm";
 
 export default function App() {
 	const { setRefreshToken } = useUserActions();
@@ -26,8 +28,10 @@ export default function App() {
 	}, []);
 
 	return (
-		<QueryClientProvider client={queryClient}>
-			<AppNav />
-		</QueryClientProvider>
+		<RealmProvider schema={[LaundryDB]}>
+			<QueryClientProvider client={queryClient}>
+				<AppNav />
+			</QueryClientProvider>
+		</RealmProvider>
 	);
 }

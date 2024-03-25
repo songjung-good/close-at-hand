@@ -1,62 +1,48 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
+import { useQuery, useRealm } from "@realm/react";
+
 import { StyledButton } from "../buttons";
 import Laundries from "./Laundries";
-import { Clothes } from "../types";
 import { useState } from "react";
+import { LaundryDB } from "../../shared";
 
-const tempData = [
-	{
-		clothesId: 0,
-		clothesImgUrl:
-			"https://news.nateimg.co.kr/orgImg/sh/2023/11/17/6845706_1054038_4316.jpg",
-	},
-	{
-		clothesId: 1,
-		clothesImgUrl:
-			"https://news.nateimg.co.kr/orgImg/sh/2023/11/17/6845706_1054038_4316.jpg",
-	},
-	{
-		clothesId: 2,
-		clothesImgUrl:
-			"https://news.nateimg.co.kr/orgImg/sh/2023/11/17/6845706_1054038_4316.jpg",
-	},
-	{
-		clothesId: 3,
-		clothesImgUrl:
-			"https://news.nateimg.co.kr/orgImg/sh/2023/11/17/6845706_1054038_4316.jpg",
-	},
-	{
-		clothesId: 4,
-		clothesImgUrl:
-			"https://news.nateimg.co.kr/orgImg/sh/2023/11/17/6845706_1054038_4316.jpg",
-	},
-];
+interface Props {
+	textures: string;
+}
 
-const LaundryBasket = () => {
-	const laundries = tempData;
-	const [selectedLaundries, setSelectedLaundries] = useState<Set<number>>(
+const LaundryBasket: React.FC<Props> = ({ textures }) => {
+	const realm = useRealm();
+	const laundries = useQuery(LaundryDB, (laundry) =>
+		laundry.filtered("textures == $0", textures),
+	);
+
+	const [selectedLaundries, setSelectedLaundries] = useState<Set<LaundryDB>>(
 		new Set(),
 	);
 
-	console.log(selectedLaundries);
-
-	// 세탁 중 데이터에 있는 sqlite에서 연결
 	function handleDoLaundry() {
-		// 세탁 중 데이터 베이스 삭제
+		selectedLaundries.forEach((laundry) => {
+			realm.write(() => {
+				realm.delete(laundry);
+			});
+		});
 	}
 
-	function handleGotoCloset() {
-		// 세탁 안하고 옷장으로 이동
-		// 세탁 중 데이터 베이스 삭제
-	}
+	// function handleGotoCloset() {
+	// 	selectedLaundries.forEach((laundry) => {
+	// 		realm.write(() => {
+	// 			realm.delete(laundry);
+	// 		});
+	// 	});
+	// }
 
-	function hadleSelect(clothesId: number) {
-		if (selectedLaundries.has(clothesId)) {
+	function handleSelect(laundry: LaundryDB) {
+		if (selectedLaundries.has(laundry)) {
 			setSelectedLaundries(
-				new Set([...selectedLaundries].filter((id) => id !== clothesId)),
+				new Set([...selectedLaundries].filter((e) => e !== laundry)),
 			);
 		} else {
-			setSelectedLaundries(new Set(selectedLaundries).add(clothesId));
+			setSelectedLaundries(new Set(selectedLaundries).add(laundry));
 		}
 	}
 
@@ -67,9 +53,9 @@ const LaundryBasket = () => {
 				data={laundries}
 				renderItem={({ item }) => (
 					<Laundries
-						{...item}
-						onPress={hadleSelect}
-						isSelected={selectedLaundries.has(item.clothesId)}
+						clothesId={item.clothesId}
+						onPress={handleSelect}
+						isSelected={selectedLaundries.has(item)}
 					/>
 				)}
 				keyExtractor={(item) => item.clothesId.toString()}
@@ -84,11 +70,11 @@ const LaundryBasket = () => {
 					backgroundColor="SkyBlue"
 					onPress={handleDoLaundry}
 				/>
-				<StyledButton
+				{/* <StyledButton
 					title="옷장으로"
 					backgroundColor="Turquoise"
 					onPress={handleGotoCloset}
-				/>
+				/> */}
 			</View>
 		</View>
 	);

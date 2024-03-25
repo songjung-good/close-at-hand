@@ -1,23 +1,21 @@
 import { Dimensions, Image, Pressable, StyleSheet } from "react-native";
-import { Clothes } from "../types";
+import { useObject } from "@realm/react";
+import { LaundryDB } from "../../shared";
 
 const screenWidth = Dimensions.get("window").width;
 const itemWidth = screenWidth / 3;
 
-interface Props extends Clothes {
+interface Props {
+	clothesId: number;
 	isSelected: boolean;
-	onPress(clothesId: number): void;
+	onPress(clothesId: LaundryDB): void;
 }
 
-const Laundries: React.FC<Props> = ({
-	clothesId,
-	clothesImgUrl,
-	isSelected,
-	onPress,
-}) => {
+const Laundries: React.FC<Props> = ({ clothesId, onPress }) => {
+	const laundry = useObject(LaundryDB, clothesId)!;
 	return (
-		<Pressable style={styles.container} onPress={() => onPress(clothesId)}>
-			<Image style={styles.img} source={{ uri: clothesImgUrl }} />
+		<Pressable style={styles.container} onPress={() => onPress(laundry)}>
+			<Image style={styles.img} source={{ uri: laundry.clothesImgUrl }} />
 		</Pressable>
 	);
 };

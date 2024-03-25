@@ -13,6 +13,9 @@ export {
 	useIsLogin,
 } from "./zustand/userStore";
 
+// realm
+export { LaundryDB } from "./DB-Realm/realm";
+
 // styleSheet
 export { SHADOW } from "./styles/commonStyleSheet";
 

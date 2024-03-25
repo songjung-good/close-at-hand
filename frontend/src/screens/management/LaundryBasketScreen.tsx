@@ -7,17 +7,18 @@ const LaundryBasketScreen: React.FC<RootScreenProp<"laundryBasket">> = ({
 	navigation,
 	route,
 }) => {
+	const textures = route.params.basket;
 	useEffect(() => {
-		navigation.setOptions({ headerTitle: route.params.basket });
+		navigation.setOptions({ headerTitle: textures });
 	}, []);
 	return (
 		<View style={styles.container}>
 			<View style={styles.bubbleContainer}>
-				<Text style={styles.overlayText}>{route.params.basket}</Text>
+				<Text style={styles.overlayText}>{textures}</Text>
 				<Image source={require("../../../assets/image/bubble.png")} />
 				<View style={styles.imageContainer}></View>
 			</View>
-			<LaundryBasket />
+			<LaundryBasket textures={textures} />
 		</View>
 	);
 };
