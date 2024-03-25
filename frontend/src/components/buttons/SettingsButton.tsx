@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import Wifi from "../../../assets/image/Wifi.svg";
 import Alarm from "../../../assets/image/alarm.svg";
 import Profile from "../../../assets/image/Profile.svg";
-import { COLORS, FONTSIZE, SHADOW } from "../../shared";
+import { COLORS, FONTSIZE, ROW, SHADOW } from "../../shared";
 import { useNavigation } from "@react-navigation/native";
 
 interface Props {
@@ -24,7 +24,7 @@ const SettingsButton: React.FC<Props> = ({ name, title }) => {
 	}
 	return (
 		<Pressable onPress={() => navigation.navigate(name)}>
-			<View style={[styles.container, SHADOW]}>
+			<View style={[SHADOW, ROW, styles.container]}>
 				{content}
 				<Text style={styles.text}>{title}</Text>
 			</View>
@@ -37,7 +37,6 @@ export default SettingsButton;
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: COLORS.White,
-		flexDirection: "row",
 		alignItems: "center",
 		height: FONTSIZE.Large * 2.5,
 		marginVertical: 10,

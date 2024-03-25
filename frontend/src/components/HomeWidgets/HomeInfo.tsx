@@ -1,7 +1,8 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { COLORS, FONTSIZE } from "../../shared";
 import { useNavigation } from "@react-navigation/native";
-import { HomeParamList } from "../../app/navigation/HomeNav";
+
+import { COLORS, FONTSIZE } from "../../shared";
+import { ROW } from "../../shared";
 
 interface TitleProps {
 	title: string;
@@ -40,7 +41,7 @@ const Basket: React.FC<widget> = ({ onPress }) => {
 const Closet: React.FC<widget> = ({ onPress }) => {
 	return (
 		<Pressable style={styles.container} onPress={onPress.bind(null, "closet")}>
-			<View style={styles.rowContainer}>
+			<View style={[ROW, styles.rowContainer]}>
 				<Image
 					style={styles.image}
 					source={require("../../../assets/image/tshirt.png")}
@@ -48,7 +49,7 @@ const Closet: React.FC<widget> = ({ onPress }) => {
 				<Text style={styles.text}>{"(옷 개수)"}개</Text>
 			</View>
 			<View style={styles.line} />
-			<View style={styles.rowContainer}>
+			<View style={[ROW, styles.rowContainer]}>
 				<Image
 					style={styles.image}
 					source={require("../../../assets/image/pant.png")}
@@ -71,7 +72,7 @@ const HomeInfo = () => {
 		}
 	}
 	return (
-		<View style={styles.outerContainer}>
+		<View style={[ROW, styles.outerContainer]}>
 			<Basket onPress={handleWidgetPress} />
 			<Closet onPress={handleWidgetPress} />
 		</View>
@@ -83,7 +84,6 @@ export default HomeInfo;
 const styles = StyleSheet.create({
 	outerContainer: {
 		marginTop: 15,
-		flexDirection: "row",
 		width: "100%",
 	},
 	container: {
@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 3,
 	},
 	rowContainer: {
-		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
 	},

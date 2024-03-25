@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { COLORS, FONTSIZE } from "../../shared";
+import { COLORS, FONTSIZE, ROW } from "../../shared";
 
 interface ListItemProps {
 	title: ReactNode;
@@ -15,7 +15,7 @@ const ListItem: React.FC<ListItemProps> = ({ title }) => {
 		setIsEnabled((prev) => !prev);
 	}
 	return (
-		<View style={styles.listContainer}>
+		<View style={[ROW, styles.listContainer]}>
 			<Ionicons
 				name={isEnabled ? "notifications-circle" : "notifications-off-circle"}
 				size={FONTSIZE.Medium}
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
 		borderBottomColor: COLORS.Gray,
 		paddingVertical: 15,
 		paddingHorizontal: 10,
-		flexDirection: "row",
 		alignItems: "center",
 		marginHorizontal: 10,
 		marginVertical: 5,

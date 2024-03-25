@@ -1,21 +1,25 @@
 import { Dimensions, Image, Pressable, StyleSheet } from "react-native";
-import { useObject } from "@realm/react";
-import { LaundryDB } from "../../shared";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+
+import { FONTSIZE, LaundryDB } from "../../shared";
 
 const screenWidth = Dimensions.get("window").width;
 const itemWidth = screenWidth / 3;
 
 interface Props {
-	clothesId: number;
+	laundry: LaundryDB;
 	isSelected: boolean;
 	onPress(clothesId: LaundryDB): void;
 }
 
-const Laundries: React.FC<Props> = ({ clothesId, onPress }) => {
-	const laundry = useObject(LaundryDB, clothesId)!;
+const Laundries: React.FC<Props> = ({ laundry, isSelected, onPress }) => {
 	return (
 		<Pressable style={styles.container} onPress={() => onPress(laundry)}>
 			<Image style={styles.img} source={{ uri: laundry.clothesImgUrl }} />
+			<FontAwesome
+				name={isSelected ? "check-circle-o" : "circle-o"}
+				size={FONTSIZE.Medium}
+			/>
 		</Pressable>
 	);
 };
@@ -25,6 +29,8 @@ export default Laundries;
 const styles = StyleSheet.create({
 	container: {
 		marginVertical: 5,
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	img: {
 		resizeMode: "contain",

@@ -12,6 +12,19 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.75,
 		shadowRadius: 5,
 	},
+
+	row: {
+		flexDirection: "row",
+		justifyContent: "center",
+	},
+
+	center: {
+		justifyContent: "center",
+		alignItems: "center",
+		textAlign: "center",
+	},
 });
 
 export const SHADOW = styles.shadow;
+export const ROW = styles.row;
+export const CENTER = styles.center;

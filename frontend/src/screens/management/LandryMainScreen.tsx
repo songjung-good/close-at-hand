@@ -1,13 +1,18 @@
 import { Image, StyleSheet, View } from "react-native";
 import { LaundryButton } from "../../components";
+import { ROW } from "../../shared";
+import { useState } from "react";
+import { DoLaundry } from "../../components";
 
 const LandryMainScreen: React.FC<RootNavigationProp> = ({ navigation }) => {
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	function handleButtonPress(basket: string) {
 		navigation.navigate("laundryBasket", { basket });
 	}
 	return (
 		<View>
-			<View style={styles.row}>
+			{isModalOpen && <DoLaundry />}
+			<View style={[ROW, styles.center]}>
 				<Image
 					style={styles.image}
 					source={require("../../../assets/image/foam.png")}
@@ -18,7 +23,7 @@ const LandryMainScreen: React.FC<RootNavigationProp> = ({ navigation }) => {
 					onPress={handleButtonPress}
 				/>
 			</View>
-			<View style={styles.row}>
+			<View style={[ROW, styles.center]}>
 				<LaundryButton
 					title="울 / 캐시미어"
 					bubble1={true}
@@ -41,8 +46,7 @@ const LandryMainScreen: React.FC<RootNavigationProp> = ({ navigation }) => {
 export default LandryMainScreen;
 
 const styles = StyleSheet.create({
-	row: {
-		flexDirection: "row",
+	center: {
 		justifyContent: "space-around",
 		alignItems: "center",
 		marginVertical: 10,

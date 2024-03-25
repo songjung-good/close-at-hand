@@ -5,6 +5,7 @@ export class LaundryDB extends Realm.Object {
 	clothesImgUrl!: string;
 	textures!: Realm.Set<string>;
 	colors!: Realm.Set<string>;
+	lastDayOfWear!: Date;
 	lastWash?: Date = new Date();
 
 	static generate(
@@ -20,6 +21,7 @@ export class LaundryDB extends Realm.Object {
 			textures,
 			colors,
 			lastWash,
+			lastDayOfWear: new Date(),
 		};
 	}
 
@@ -31,6 +33,7 @@ export class LaundryDB extends Realm.Object {
 			textures: "string<>",
 			colors: "string<>",
 			lastWash: "date",
+			lastDayOfWear: "date",
 		},
 		primaryKey: "clothesId",
 	};

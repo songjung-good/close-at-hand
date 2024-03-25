@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { COLORS, FONTSIZE, SHADOW } from "../../shared";
 import { useNavigation } from "@react-navigation/native";
+import { ROW } from "../../shared";
 
 interface ButtonProps {
 	title: string;
@@ -29,7 +30,7 @@ const Overlay = () => {
 
 	return (
 		<View style={[styles.container, styles.overlay]}>
-			<View style={styles.buttonGroup}>
+			<View style={[ROW, styles.buttonGroup]}>
 				<ButtonBlock
 					title={"클로젯 핸드\n레이아웃 변경"}
 					onPress={handleChangeLayout}
@@ -39,7 +40,7 @@ const Overlay = () => {
 					onPress={handleCloseAtHandIoT.bind(this, "AR")}
 				/>
 			</View>
-			<View style={styles.buttonGroup}>
+			<View style={[ROW, styles.buttonGroup]}>
 				<ButtonBlock
 					title={"클로젯핸드로\n스타일 등록하기"}
 					onPress={handleCloseAtHandIoT.bind(this, "style")}
@@ -63,7 +64,7 @@ const MirrorConnection = () => {
 				hitSlop={mode ? 1080 : 0}
 				style={styles.container}
 			>
-				<View style={styles.innerContainer}>
+				<View style={[ROW, styles.innerContainer]}>
 					<Image source={require("../../../assets/image/mirror.png")} />
 					<View style={styles.textContainer}>
 						<Text>Close-At-Hand가 연결되었어요!</Text>
@@ -91,7 +92,6 @@ const styles = StyleSheet.create({
 	},
 	innerContainer: {
 		padding: 20,
-		flexDirection: "row",
 		justifyContent: "space-around",
 	},
 	textContainer: {
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
 		height: "100%",
 	},
 	buttonGroup: {
-		flexDirection: "row",
 		justifyContent: "space-around",
 		margin: 10,
 	},

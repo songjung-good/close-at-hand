@@ -1,5 +1,5 @@
 import { Image, Pressable, View, StyleSheet, Text } from "react-native";
-import { SHADOW, COLORS, FONTSIZE } from "../../shared";
+import { SHADOW, COLORS, FONTSIZE, ROW } from "../../shared";
 
 interface Props {
 	image: ReturnType<typeof require>;
@@ -19,6 +19,7 @@ export const Menu: React.FC<Props> = ({
 			<View
 				style={[
 					SHADOW,
+					ROW,
 					styles.container,
 					{ backgroundColor: COLORS[backgroundColor] },
 				]}
@@ -36,7 +37,6 @@ export default Menu;
 
 const styles = StyleSheet.create({
 	container: {
-		flexDirection: "row",
 		borderRadius: 10,
 		marginVertical: 10,
 		marginHorizontal: 5,

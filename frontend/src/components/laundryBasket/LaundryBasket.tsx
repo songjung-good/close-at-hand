@@ -4,7 +4,7 @@ import { useQuery, useRealm } from "@realm/react";
 import { StyledButton } from "../buttons";
 import Laundries from "./Laundries";
 import { useState } from "react";
-import { LaundryDB } from "../../shared";
+import { LaundryDB, ROW } from "../../shared";
 
 interface Props {
 	textures: string;
@@ -53,7 +53,7 @@ const LaundryBasket: React.FC<Props> = ({ textures }) => {
 				data={laundries}
 				renderItem={({ item }) => (
 					<Laundries
-						clothesId={item.clothesId}
+						laundry={item}
 						onPress={handleSelect}
 						isSelected={selectedLaundries.has(item)}
 					/>
@@ -64,7 +64,7 @@ const LaundryBasket: React.FC<Props> = ({ textures }) => {
 			<Text style={styles.text}>
 				세탁하기를 누르면 빨래 바구니의 옷들을 세탁 상태로 설정합니다.
 			</Text>
-			<View style={styles.row}>
+			<View style={[ROW, styles.center]}>
 				<StyledButton
 					title="세탁하기"
 					backgroundColor="SkyBlue"
@@ -92,8 +92,7 @@ const styles = StyleSheet.create({
 	text: {
 		alignSelf: "center",
 	},
-	row: {
-		flexDirection: "row",
+	center: {
 		justifyContent: "center",
 	},
 });

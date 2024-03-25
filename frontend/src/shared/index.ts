@@ -17,7 +17,7 @@ export {
 export { LaundryDB } from "./DB-Realm/realm";
 
 // styleSheet
-export { SHADOW } from "./styles/commonStyleSheet";
+export { SHADOW, ROW, CENTER } from "./styles/commonStyleSheet";
 
 // constant
 export { COLORS, FONTSIZE } from "./styles/STYLES";

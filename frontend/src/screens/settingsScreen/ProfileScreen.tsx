@@ -1,11 +1,12 @@
 import { Alert, Image, StyleSheet, Text, View } from "react-native";
 import { ProfileInput, StyledButton } from "../../components";
 import { useState } from "react";
-import { FONTSIZE } from "../../shared";
+import { FONTSIZE, ROW } from "../../shared";
+
+import img from "../../../assets/image/foam.png";
 
 const gender = "남성";
 const id = "myIdentifier";
-const img = require("../../../assets/image/foam.png");
 
 const ProfileScreen = () => {
 	const [nickname, setNickname] = useState("");
@@ -38,7 +39,7 @@ const ProfileScreen = () => {
 	return (
 		<View style={styles.main}>
 			<View style={styles.main}>
-				<View style={styles.row}>
+				<View style={[ROW, styles.margin]}>
 					<View style={styles.container}>
 						<Image style={styles.img} source={img} />
 						<StyledButton
@@ -57,7 +58,7 @@ const ProfileScreen = () => {
 						/>
 					</View>
 				</View>
-				<View style={styles.row}>
+				<View style={[ROW, styles.margin]}>
 					<View style={styles.container}>
 						<Text style={styles.text}>성별</Text>
 						<ProfileInput value={gender} />
@@ -72,7 +73,7 @@ const ProfileScreen = () => {
 						/>
 					</View>
 				</View>
-				<View style={styles.row}>
+				<View style={[ROW, styles.margin]}>
 					<View style={styles.container}>
 						<Text style={styles.text}>가입 아이디</Text>
 						<ProfileInput value={id} />
@@ -100,8 +101,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		marginTop: 30,
 	},
-	row: {
-		flexDirection: "row",
+	margin: {
 		marginVertical: 15,
 	},
 	container: {
