@@ -30,7 +30,6 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         //csrf disable
         http
                 .csrf((auth) -> auth.disable());
@@ -38,7 +37,6 @@ public class SecurityConfig {
         //From 로그인 방식 disable
         http
                 .formLogin((auth) -> auth.disable());
-
         //http basic 인증 방식 disable
         http
                 .httpBasic((auth) -> auth.disable());
@@ -46,7 +44,7 @@ public class SecurityConfig {
         //경로별 인가 작업
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/user").permitAll()
+                        .requestMatchers("/login", "/", "/user", "/swagger", "/swagger-ui/index.html").permitAll()
                         .anyRequest().authenticated());
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration))    , UsernamePasswordAuthenticationFilter.class);

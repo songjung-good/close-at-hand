@@ -18,9 +18,9 @@ public class UserLoginController {
 
     @Operation(summary = "로그인 요청")
     @PostMapping
-    public CommonResponse login(@RequestBody String jwt){
+    public CommonResponse login(@RequestPart UserDto.LoginRequest request){
         // make command
-        // facade make response(jwt)
+
         return CommonResponse.success("tempToken");
     }
 
