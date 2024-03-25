@@ -18,7 +18,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @RequestMapping("/clothes")
 @Tag(name = "Clothes")
-@CrossOrigin("*")
 public class ClothesApiController {
     private final ClothesFacade clothesFacade;
 
