@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService{
         if (isExist != null) { throw new IllegalArgumentException("이미 존재하는 계정입니다.");}
         
         User initUser = command.toEntity();
+        initUser.encodePassword(bCryptPasswordEncoder);
         User user = userStore.store(initUser);
         return new UserInfo(user);
     }
