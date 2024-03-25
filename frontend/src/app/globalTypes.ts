@@ -19,6 +19,7 @@ type Route<T extends keyof NativeStackParamList> = A<NativeStackParamList, T>;
 
 declare global {
 	type Navigation = NativeStackNavigationProp<NativeStackParamList>;
+
 	type RootNavigationProp = {
 		navigation: Navigation;
 	};
