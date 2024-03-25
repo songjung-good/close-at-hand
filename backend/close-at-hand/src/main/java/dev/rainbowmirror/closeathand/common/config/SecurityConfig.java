@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.common.config;
 
+import dev.rainbowmirror.closeathand.common.jwt.JWTUtil;
 import dev.rainbowmirror.closeathand.common.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,11 +15,15 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final JWTUtil jwtUtil;
 
+    public SecurityConfig(AuthenticationConfiguration auth, JWTUtil jwtUtil){
+        this.authenticationConfiguration = auth;
+        this.jwtUtil = jwtUtil;
+    }
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -47,7 +52,7 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/", "/user", "/swagger", "/swagger-ui/index.html").permitAll()
                         .anyRequest().authenticated());
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration))    , UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil)    , UsernamePasswordAuthenticationFilter.class);
         //세션 설정
         http
                 .sessionManagement((session) -> session
