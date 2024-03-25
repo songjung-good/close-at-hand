@@ -3,6 +3,7 @@ package dev.rainbowmirror.closeathand.domain.user;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService{
     private final UserStore userStore;
     private final UserReader userReader;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public UserInfo getUserInfo(String userToken) {
         User user = userReader.getUser(userToken);
