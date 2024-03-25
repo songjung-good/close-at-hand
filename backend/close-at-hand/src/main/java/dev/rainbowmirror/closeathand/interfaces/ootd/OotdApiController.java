@@ -11,8 +11,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -28,9 +31,9 @@ public class OotdApiController {
             @ApiResponse(responseCode = "200", description = "success", useReturnTypeSchema = true,
                     content = @Content( schema = @Schema(implementation = OotdInfo.class)))
     })
-    @PostMapping
-    public CommonResponse<OotdInfo> saveOotd(@RequestBody OotdDto.CreateRequest request){
-        OotdInfo ootdInfo = ootdFacade.saveOotd(request.toCommand());
+    @PostMapping(produces = "application/json", consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
+    public CommonResponse<OotdInfo> saveOotd(@RequestPart OotdDto.CreateRequest request, @RequestPart("ootdImg") MultipartFile ootdImg) throws IOException {
+        OotdInfo ootdInfo = ootdFacade.saveOotd(request.toCommand(ootdImg));
         return CommonResponse.success(ootdInfo);
     }
 
@@ -46,5 +49,12 @@ public class OotdApiController {
     public CommonResponse<List<OotdInfo>> getOotds(@RequestHeader String userToken){
         List<OotdInfo> ootdInfoList = ootdFacade.getOotds(userToken);
         return CommonResponse.success(ootdInfoList);
+    }
+
+    @Operation(summary = "Ootd 삭제", description = "Ootd 삭제")
+    @DeleteMapping("/{ootdId}")
+    public CommonResponse<OotdInfo> deleteOotd(@PathVariable Long ootdId){
+        ootdFacade.deleteOotd(ootdId);
+        return CommonResponse.success(null);
     }
 }

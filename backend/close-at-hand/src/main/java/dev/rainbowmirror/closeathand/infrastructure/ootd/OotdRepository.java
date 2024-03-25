@@ -11,4 +11,5 @@ public interface OotdRepository extends JpaRepository<Ootd, Long> {
     Optional<Ootd> findByCreatedAtBetweenAndUserUserToken(ZonedDateTime before, ZonedDateTime after, String userToken);
 
     List<Ootd> findByUserUserToken(String userToken);
+    void deleteByOotdId(Long OotdId);
 }
