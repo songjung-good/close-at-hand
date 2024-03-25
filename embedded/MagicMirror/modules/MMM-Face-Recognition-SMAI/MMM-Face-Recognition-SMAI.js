@@ -35,7 +35,7 @@ Module.register("MMM-Face-Recognition-SMAI", {
     return element
   },
   
-  //Create Socket Connnection with nodehelper.js
+  //Create Socket Connnection with nodehelper.
   notificationReceived: function(notification, payload, sender) {
     switch(notification) {
       case "DOM_OBJECTS_CREATED":
@@ -54,7 +54,7 @@ Module.register("MMM-Face-Recognition-SMAI", {
       //Store Image Here
   
           var elem = document.getElementById("COUNT")
-          elem.innerHTML = "Welcome back, " + payload
+          elem.innerHTML = "반가워요, " + payload + "님!"
 
           if (!this.is_login) {
             this.sound.play();
@@ -77,7 +77,7 @@ Module.register("MMM-Face-Recognition-SMAI", {
         }
 
         var elem = document.getElementById("COUNT")
-        elem.innerHTML = "Welcome back, User"
+        elem.innerHTML = "안녕하세요!"
   
           //Creat Image Element Image
         elem.classList.add(this.config.position);
