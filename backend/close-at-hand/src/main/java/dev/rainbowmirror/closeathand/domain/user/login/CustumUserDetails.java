@@ -22,7 +22,7 @@ public class CustumUserDetails implements UserDetails {
             @Override
             public String getAuthority() {
 
-                return user.getStatus();
+                return user.getStatus().toString();
             }
         });
 
