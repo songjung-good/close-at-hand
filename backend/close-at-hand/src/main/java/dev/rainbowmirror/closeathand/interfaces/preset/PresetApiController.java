@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/preset")
 @Tag(name = "Preset")
-@CrossOrigin("*")
 public class PresetApiController {
     private final PresetFacade presetFacade;
 

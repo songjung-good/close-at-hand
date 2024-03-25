@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 @Tag(name = "User")
-@CrossOrigin("*")
 public class UserApiController {
     private final UserFacade userFacade;
 
