@@ -1,5 +1,5 @@
-const MonthlyCoordi = () => {
+const MonthlyCoordy = () => {
 	return <></>;
 };
 
-export default MonthlyCoordi;
+export default MonthlyCoordy;

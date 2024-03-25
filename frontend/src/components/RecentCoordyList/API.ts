@@ -1,10 +1,12 @@
 import { API } from "../../shared";
 import { ClothesFetchListResponse } from "../types";
 
-interface FetchCoordyListInterface {
+interface FetchRecentCoordyListInterface {
 	signal: AbortSignal;
 }
-export async function fetchCoordyList({ signal }: FetchCoordyListInterface) {
+export async function fetchRecentCoordyListList({
+	signal,
+}: FetchRecentCoordyListInterface) {
 	return API.get("outfit", { signal })
 		.then((response) => response.data as ClothesFetchListResponse[])
 		.catch((error) => {

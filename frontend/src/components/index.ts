@@ -8,7 +8,7 @@ export { default as ManagementMenuList } from "./managementMenuList/ManagementMe
 
 // 옷 관리 - 옷 기록
 export { default as ClothesHistoryList } from "./clothesHistory/ClothesHistoryList";
-export { default as CoordyList } from "./coordyList/CoordyList";
+export { default as RecentCoordyList } from "./RecentCoordyList/RecentCoordyList";
 export { default as RecentCoordyDetail } from "./recentCoordyDetail/RecentCoordyDetail";
 export { default as MostClothes } from "./mostClothes/MostClothes";
 

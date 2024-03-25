@@ -1,14 +1,14 @@
 import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchCoordyList } from "./API";
+import { fetchRecentCoordyListList } from "./API";
 import CordiCard from "../coordyCard/CoordyCard";
 import LoadingOrError from "../fetchHelper/LoadingOrError";
 
-const CoordyList = () => {
+const RecentCoordyList = () => {
 	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["recentCoordyList"],
-		queryFn: fetchCoordyList,
+		queryFn: fetchRecentCoordyListList,
 	});
 
 	return (
@@ -30,4 +30,4 @@ const CoordyList = () => {
 	);
 };
 
-export default CoordyList;
+export default RecentCoordyList;

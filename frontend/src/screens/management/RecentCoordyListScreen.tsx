@@ -1,7 +1,7 @@
-import { CoordyList } from "../../components";
+import { RecentCoordyList } from "../../components";
 
 const RecentCoordyListScreen = () => {
-	return <CoordyList />;
+	return <RecentCoordyList />;
 };
 
-export default RecentCoordyListScreen;
+export default RecentCoordyList;
