@@ -1,41 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, FlatList, TouchableOpacity, Text } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, StyleSheet, TouchableOpacity, Text, FlatList } from "react-native";
 
 import SearchModal from "../../components/closet/SearchModal";
+import ClosetItem from "../../components/closet/ClosetItem";
 import { FONTSIZE, COLORS } from "../../shared";
+// 임시데이터
+import { clothList, recommendedClothes } from "./clothInfo";
 // import API from "../../shared/axios/axios";
-
-// 옷 아이템 컴포넌트
-const ClothItem: React.FC<clothInfo> = ({ id, name, image }) => {
-  const navigation = useNavigation<Navigation>()
-  const handleClothItemClick = () => {
-    // ClothInfoScreen으로 이동하는 코드
-    navigation.navigate('cloth', { id }); // ClothInfoScreen으로 cloth의 id 전달
-  };
-
-  return (
-    <TouchableOpacity onPress={handleClothItemClick}>
-      <View style={styles.clothesItem}>
-        <Text>{name}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 // 옷 인터페이스
 interface clothInfo {
   id: number;
   name: string;
   image: string;
+  color: string;
+  size: string;
+  price: number;
+  material: string;
 }
 
 const ClosetScreen: React.FC <RootScreenProp<"closet">> = ({navigation}) => {
-  const [clothes, setClothes] = useState<clothInfo[]>([]);  
+  const [clothes, setClothes] = useState<clothInfo[]>(clothList);  
   const [searchModalVisible, setSearchModalVisible] = useState(false); // 검색 모달의 가시성 상태를 관리합니다.
   const [selectedButton, setSelectedButton] = useState("closet");
-  const [recommendedClothes, setRecommendedClothes] = useState<clothInfo[]>([]);
-
+  const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>(recommendedClothes);
+  const [selectedTags, setSelectedTags] = useState<any[]>([]);
+  
   useEffect(() => {
     // 서버로부터 옷 목록 데이터를 가져오는 API 호출
   //   const fetchData = async () => {
@@ -46,65 +36,55 @@ const ClosetScreen: React.FC <RootScreenProp<"closet">> = ({navigation}) => {
   //   fetchData();
   // }, []);
     // 임시 데이터
-    const tempClothesData: clothInfo[] = [
-      { id: 1, name: "티셔츠", image: "url" },
-      { id: 2, name: "바지", image: "url" },
-      { id: 3, name: "원피스", image: "url" },
-      { id: 4, name: "재킷", image: "url" },
-      { id: 5, name: "스커트", image: "url" },
-    ];
-    setClothes(tempClothesData);
-
-    // 임시 데이터
-    const tempRecommendedClothesData: clothInfo[] = [
-      { id: 4, name: "재킷", image: "url" },
-      { id: 5, name: "스커트", image: "url" },
-    ];
-    setRecommendedClothes(tempRecommendedClothesData);
   }, []);
 
-    // 검색 버튼을 눌렀을 때 검색 모달을 열도록 합니다.
-    const handleSearchButtonClick = () => {
-      setSearchModalVisible(true);
-    };
-
+  // 검색 버튼을 눌렀을 때 검색 모달을 열도록 합니다.
+  const handleSearchButtonClick = () => {
+    setSearchModalVisible(true);
+  };
+  // 옷장화면 랜더링
   const handleClosetButtonClick = () => {
     setSelectedButton("closet");
   };
-
+  // 코디화면 랜더링
   const handleCodyButtonClick = () => {
     setSelectedButton("coordi");
   };
 
+  // 검색 모달에서 선택된 태그를 받아옵니다.
+  const handleSaveTags = (tags: any[]) => {
+    setSelectedTags(tags);
+  };
+
+  // 옷장화면 옷 리스트 구성
   const RenderClothes = () => {
-    return clothes.filter((cloth) => {
-      // return cloth.name.toLowerCase().includes(searchQuery.toLowerCase());
-    }).map((cloth) => (
-      <View style={styles.clothesItem}>
-        <ClothItem key={cloth.id} {...cloth} />
+    const filteredClothes = clothes.filter((cloth) => {
+      // 선택된 태그를 가지고 있는 옷만 필터링합니다.
+      return selectedTags.some((tag) => cloth.color.includes(tag));
+    });
+
+    return filteredClothes.map((cloth) => (
+      <View style={styles.clothesItem} key={cloth.id}>
+        <ClosetItem {...cloth} />
       </View>
     ));
   };
+  //   return clothes.map((cloth) => (
+  //     <View style={styles.clothesItem} key={cloth.id}>
+  //       <ClosetItem {...cloth} />
+  //     </View>
+  //   ));
+  // };
 
   const RenderRecommendedClothes = () => {
     return (
       <View>
-        <View>
-          <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
-          <View style={styles.header}>
-              {/* 검색 버튼 */}
-            <TouchableOpacity onPress={handleSearchButtonClick}>
-              <SearchModal visible={searchModalVisible} onClose={() => setSearchModalVisible(false)} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.clothesItemContainner}>
+        <View style={styles.recommendedDiv}>
           <FlatList
             numColumns={3}
-            data={recommendedClothes}
-            renderItem={({ item }) => <ClothItem key={item.id} {...item} />}
+            data={recommendClothes}
+            renderItem={({ item }) => <ClosetItem key={item.id} {...item} />}
             keyExtractor={(item) => item.id.toString()}
-            style={styles.recommendedDiv}
           />
         </View>
       </View>
@@ -123,15 +103,19 @@ const ClosetScreen: React.FC <RootScreenProp<"closet">> = ({navigation}) => {
       </View>
       {selectedButton === "closet" && (
         <View>
+          <View style={styles.header}>
+            <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
+            <View>
+                {/* 검색 버튼 */}
+              <TouchableOpacity onPress={handleSearchButtonClick}>
+                <SearchModal visible={searchModalVisible} onClose={() => setSearchModalVisible(false)} onSaveTags={handleSaveTags} />
+              </TouchableOpacity>
+            </View>
+          </View>
           <View>
             <RenderRecommendedClothes />
           </View>
           <View>
-            {/* <FlatList
-              data={clothes}
-              renderItem={({ item }) => <ClothItem key={item.id} cloth={item} />}
-              keyExtractor={(item) => item.id.toString()}
-            /> */}
             <RenderClothes />
           </View>
         </View>
@@ -150,7 +134,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "flex-end", // 검색 버튼을 오른쪽으로 정렬합니다.
+    justifyContent: "space-between", // 검색 버튼을 오른쪽으로 정렬합니다.
     padding: 10,
   },
   backButtonText: {
@@ -158,21 +142,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.Black,
   },
-  searchInput: {
-    width: 200,
-    height: 40,
-    borderColor: COLORS.Gray,
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 10,
-  },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 10
+    justifyContent: "space-evenly",
+    padding: 10,
   },
   button: {
     padding: 10,
+    width: 100,
     borderColor: COLORS.CarrotRed,
     borderWidth: 1,
     borderRadius: 5,
@@ -180,6 +157,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#000",
     fontSize: FONTSIZE.ExtraSmall,
+    textAlign: "center",
   },
   selectedButton: {
     backgroundColor: COLORS.CarrotRed,
@@ -192,6 +170,7 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.Small,
     fontWeight: "bold",
     marginBottom: 10,
+    paddingLeft: 10,
   },
   clothesItem: {
     padding: 10,
@@ -208,7 +187,6 @@ const styles = StyleSheet.create({
     margin: 10,
     borderWidth: 2,
     borderRadius: 5,
-    // flexWrap: 'wrap',
   },
 });
 
