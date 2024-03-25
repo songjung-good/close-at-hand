@@ -14,7 +14,7 @@ const SettingsScreen = () => {
 			</View>
 			<View style={styles.buttonContainer}>
 				<SettingsButton name="bluetooth" title="클로젯 핸드 연결하기" />
-				<SettingsButton name="alram" title="알람 설정" />
+				<SettingsButton name="alarm" title="알람 설정" />
 				<SettingsButton name="profile" title="회원 정보" />
 			</View>
 		</View>

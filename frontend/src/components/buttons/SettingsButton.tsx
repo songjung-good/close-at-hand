@@ -1,13 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import Wifi from "../../../assets/image/Wifi.svg";
-import Alram from "../../../assets/image/Alram.svg";
+import Alarm from "../../../assets/image/alarm.svg";
 import Profile from "../../../assets/image/Profile.svg";
 import { COLORS, FONTSIZE, SHADOW } from "../../shared";
 import { useNavigation } from "@react-navigation/native";
 
 interface Props {
-	name: "bluetooth" | "alram" | "profile";
+	name: "bluetooth" | "alarm" | "profile";
 	title: string;
 }
 
@@ -15,8 +15,8 @@ const SettingsButton: React.FC<Props> = ({ name, title }) => {
 	const navigation = useNavigation<Navigation>();
 
 	let content;
-	if (name === "alram") {
-		content = <Alram with={100} height={100} />;
+	if (name === "alarm") {
+		content = <Alarm with={100} height={100} />;
 	} else if (name === "profile") {
 		content = <Profile with={100} height={100} />;
 	} else {
