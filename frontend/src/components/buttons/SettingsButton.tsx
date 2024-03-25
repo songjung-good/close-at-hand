@@ -16,11 +16,11 @@ const SettingsButton: React.FC<Props> = ({ name, title }) => {
 
 	let content;
 	if (name === "alarm") {
-		content = <Alarm with={100} height={100} />;
+		content = <Alarm height={100} />;
 	} else if (name === "profile") {
-		content = <Profile with={100} height={100} />;
+		content = <Profile height={100} />;
 	} else {
-		content = <Wifi with={100} height={100} />;
+		content = <Wifi height={100} />;
 	}
 	return (
 		<Pressable onPress={() => navigation.navigate(name)}>
