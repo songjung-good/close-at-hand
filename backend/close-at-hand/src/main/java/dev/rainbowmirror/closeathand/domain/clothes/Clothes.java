@@ -2,6 +2,7 @@ package dev.rainbowmirror.closeathand.domain.clothes;
 
 import com.google.common.collect.Lists;
 import dev.rainbowmirror.closeathand.common.AbstractEntity;
+import dev.rainbowmirror.closeathand.common.util.TokenGenrator;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroup;
 import dev.rainbowmirror.closeathand.domain.preset.Preset;
 import dev.rainbowmirror.closeathand.domain.user.User;
@@ -32,8 +33,14 @@ public class Clothes extends AbstractEntity {
     private ZonedDateTime lastWashDate;
     private Integer price;
 
-    @Enumerated
-    private Status status;
+    @Column(nullable = false, unique = true)
+    private String clothesToken;
+
+    @Enumerated(EnumType.STRING)
+    private Clothes.Status status;
+
+    @Enumerated(EnumType.STRING)
+    private Clothes.Location location;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -47,18 +54,33 @@ public class Clothes extends AbstractEntity {
 
     @Getter
     @RequiredArgsConstructor
-    public enum Status {
+    public enum Location {
         ENABLE("옷장"), DISABLE("세탁 바구니");
 
 
         private final String description;
     }
 
-    public void enable(){ this.status = Status.ENABLE; }
-    public void disable(){ this.status = Status.DISABLE; }
+    public void enable(){ this.location = Location.ENABLE; }
+    public void disable(){ this.location = Location.DISABLE; }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Status { // status: api에서 정보를 받아왔는지 여부 표시
+        AIDONE( "정보저장완료"), BASIC("정보필요");
+
+        private final String description;
+    }
+
+    public void aidone() {
+        this.status = Clothes.Status.AIDONE;
+    }
 
     @Builder
     public Clothes(String clothesImgUrl, User user, String userToken,
+                   String clothesToken,
+                   Status status,
+                   Location location,
                    String detection,
                    ZonedDateTime lastWashDate,
                    Integer price) {
@@ -72,11 +94,26 @@ public class Clothes extends AbstractEntity {
         if(clothesImgUrl == null) throw new RuntimeException("no ImgUrl");
         else this.clothesImgUrl = clothesImgUrl;
 
+
+        if (StringUtils.hasLength(clothesToken)){
+            this.clothesToken = clothesToken;
+            this.status = status; // 이미 token이 있다면 status는 그대로
+        }
+        // 생성은 command에서 일단 할거니 주석처리 해둠
+        else {
+            final String CLOTHES_PREFIX = "clo_";
+            this.clothesToken = TokenGenrator.randomChracterWithPrefix(CLOTHES_PREFIX);
+            this.status = Status.BASIC;
+        }
+
+        // 최초 등록 시 위치를 옷장으로
+        if (location == null) this.location = Location.ENABLE;
+        else this.location = location;
+
         this.detection = detection;
         this.lastWashDate = lastWashDate;
         this.price = price;
     }
 
-
-
+    
 }
