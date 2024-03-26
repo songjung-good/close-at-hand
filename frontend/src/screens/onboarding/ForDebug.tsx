@@ -10,11 +10,14 @@ const ForDebug: React.FC<RootNavigationProp> = ({ navigation }) => {
 	}
 
 	function handleLaundry() {
-		navigation.navigate("laundryMain");
+		navigation.navigate("2", { screen: "laundryMain" });
 	}
 
 	function handleAddLaundry() {
-		// navigation.navigate("2", { screen: "ToDoLaundry" });
+		navigation.navigate("2", {
+			screen: "laundryMain",
+			params: { fromNoti: true },
+		});
 	}
 
 	return (

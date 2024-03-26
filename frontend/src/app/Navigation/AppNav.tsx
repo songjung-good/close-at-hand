@@ -14,10 +14,22 @@ import { COLORS } from "../../shared";
 
 // type
 export type RootParamList = {
-	"0": { screen: keyof HomeParamList };
-	"1": { screen: keyof ClosetParamList };
-	"2": { screen: keyof ManagementParamList };
-	"3": { screen: keyof SettingsParamList };
+	"0": {
+		screen: keyof HomeParamList;
+		params?: HomeParamList[keyof HomeParamList];
+	};
+	"1": {
+		screen: keyof ClosetParamList;
+		params?: ClosetParamList[keyof ClosetParamList];
+	};
+	"2": {
+		screen: keyof ManagementParamList;
+		params?: ManagementParamList[keyof ManagementParamList];
+	};
+	"3": {
+		screen: keyof SettingsParamList;
+		params?: SettingsParamList[keyof SettingsParamList];
+	};
 	onboarding: undefined;
 };
 

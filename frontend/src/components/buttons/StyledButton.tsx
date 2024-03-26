@@ -9,6 +9,14 @@ const colorMatch = {
 	White: COLORS.Black,
 };
 
+const rippleMatch = {
+	SkyBlue: COLORS.LightMint,
+	Turquoise: COLORS.SkyBlue,
+	CarrotRed: COLORS.CarrotRedRipple,
+	Black: COLORS.White,
+	White: COLORS.LightGray,
+};
+
 interface Props {
 	title: string;
 	onPress(): void;
@@ -25,6 +33,7 @@ const StyledButton: React.FC<Props> = ({ title, onPress, backgroundColor }) => {
 					{ backgroundColor: COLORS[backgroundColor ?? "SkyBlue"] },
 					backgroundColor === "White" && styles.whiteBackground,
 				]}
+				android_ripple={{ color: rippleMatch[backgroundColor ?? "SkyBlue"] }}
 				onPress={onPress}
 				testID="button"
 			>

@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useQuery, useRealm } from "@realm/react";
 
 import { StyledButton } from "../buttons";
 import Laundries from "./Laundries";
-import { useState } from "react";
 import { LaundryDB, ROW } from "../../shared";
 
 interface Props {
@@ -38,9 +38,8 @@ const LaundryBasket: React.FC<Props> = ({ textures }) => {
 
 	function handleSelect(laundry: LaundryDB) {
 		if (selectedLaundries.has(laundry)) {
-			setSelectedLaundries(
-				new Set([...selectedLaundries].filter((e) => e !== laundry)),
-			);
+			selectedLaundries.delete(laundry);
+			setSelectedLaundries(new Set(selectedLaundries));
 		} else {
 			setSelectedLaundries(new Set(selectedLaundries).add(laundry));
 		}

@@ -7,6 +7,7 @@ export const COLORS = {
 	PurpleBlue: "#7687F5",
 	LightViolet: "#EBEDFF",
 	CarrotRed: "#EB731C",
+	CarrotRedRipple: "#FC842D",
 	Gray: "#C4C4C4",
 	LightGray: "#e7e7e7",
 	Turquoise: "#538392",

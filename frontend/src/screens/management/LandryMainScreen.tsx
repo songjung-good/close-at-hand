@@ -1,17 +1,31 @@
+import { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
+
 import { LaundryButton } from "../../components";
 import { ROW } from "../../shared";
-import { useState } from "react";
 import { DoLaundry } from "../../components";
 
-const LandryMainScreen: React.FC<RootNavigationProp> = ({ navigation }) => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
+const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
+	navigation,
+	route,
+}) => {
+	const [isModalOpen, setIsModalOpen] = useState(
+		route.params?.fromNoti ?? false,
+	);
+
+	console.log(isModalOpen);
+
 	function handleButtonPress(basket: string) {
 		navigation.navigate("laundryBasket", { basket });
 	}
+
+	function HandleModalButtonPress() {
+		setIsModalOpen(false);
+	}
+
 	return (
 		<View>
-			{isModalOpen && <DoLaundry />}
+			{isModalOpen && <DoLaundry onPress={HandleModalButtonPress} />}
 			<View style={[ROW, styles.center]}>
 				<Image
 					style={styles.image}
