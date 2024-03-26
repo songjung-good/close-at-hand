@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { ClosetScreen, ClothInfoScreen } from "../../screens";
+import { ClosetMainScreen, ClothInfoScreen } from "../../screens";
 
 export type ClosetParamList = {
 	closet: undefined;
@@ -14,8 +14,8 @@ const ClosetNav = () => {
 		<Stack.Navigator
 			screenOptions={{ headerTitleStyle: { fontWeight: "bold" } }}
 		>
-			<Stack.Screen name="closet" component={ClosetScreen} options={{ title: "내 옷장" }}/>
-			<Stack.Screen name="cloth" component={ClothInfoScreen} options={{ title: "옷장으로" }}/>
+			<Stack.Screen name="closet" component={ClosetMainScreen} options={{ title: "내 옷장" }}/>
+			<Stack.Screen name="cloth" component={ClothInfoScreen} options={{ title: "옷 정보" }}/>
 		</Stack.Navigator>
 	);
 };

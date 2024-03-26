@@ -6,27 +6,25 @@ import { FONTSIZE, COLORS } from "../../shared";
 
 // 옷 인터페이스
 interface clothInfo {
-  id: number;
-  name: string;
-  image: string;
-  color: string;
-  size: string;
-  price: number;
-  material: string;
+  clothesId: "number",
+  clothesImgUrl: "string",
+  detection: "string",
+  lastWashDate: "string",
+  price: "number"
 }
 
-const ClosetItem: React.FC<clothInfo> = ({ id, name, image }) => {
+const ClosetItem: React.FC<clothInfo> = ({ clothesId, clothesImgUrl, detection, lastWashDate, price }) => {
   const navigation = useNavigation<Navigation>()
   const handleClothItemClick = () => {
     // ClothInfoScreen으로 이동하는 코드
-    navigation.navigate('cloth', { id }); // ClothInfoScreen으로 cloth의 id 전달
+    navigation.navigate('cloth', { clothesId }); // ClothInfoScreen으로 cloth의 id 전달
   };
 
   return (
     <TouchableOpacity onPress={handleClothItemClick}>
       <View style={styles.clothesItem}>
-        <Text>{name}</Text>
-        <Image source={{ uri: image }} />
+        <Text>{detection}</Text>
+        <Image source={{ uri: clothesImgUrl }} />
       </View>
     </TouchableOpacity>
   );

@@ -1,44 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { FONTSIZE, COLORS } from "../../shared";
 
+import { clothList } from "./clothInfo";
+
+interface clothInfo {
+  clothesId: "number",
+  clothesImgUrl: "string",
+  detection: "string",
+  lastWashDate: "string",
+  price: "number"
+}
+
 const ClothInfoScreen: React.FC<{ route: any }> = ({ route }) => {
-  // route.params에서 옷 정보를 가져옵니다.
   const { clothId } = route.params;
+  const [ clothesInfo, setClothesInfo ] = useState< clothInfo | null > (null);
 
-  // 예시로 옷 정보를 가져오는 함수를 호출하고, clothId를 기반으로 정보를 가져옵니다.
-  const fetchClothInfo = () => {
-    // clothId를 사용하여 서버에서 해당 옷의 정보를 가져옵니다.
-    // 예시로 사용할 데이터를 리턴합니다.
-    return {
-      id: clothId,
-      name: "티셔츠",
-      image: "https://thumb.mtstarnews.com/06/2024/02/2024022309364792507_1.jpg/dims/optimize",
-      color: "블랙",
-      size: "M",
-      brand: "Nike",
-      price: 30000,
-      material: "코튼",
+  useEffect(() => {
+    // clothId를 기반으로 해당 옷 정보를 가져옵니다.
+    const fetchClothInfo = () => {
+      // clothList에서 clothId와 일치하는 옷 정보를 찾습니다.
+      const foundCloth = clothList.find((cloth) => cloth.clothesId === clothId);
+      if (foundCloth) {
+        // 옷 정보를 설정합니다.
+        setClothesInfo(foundCloth);
+      }
     };
-  };
 
-  // 옷 정보를 가져옵니다.
-  const clothInfo = fetchClothInfo();
+    fetchClothInfo();
+  }, [clothId]);
 
   return (
+    <>
+    {clothesInfo && (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: clothInfo.image }} style={styles.image} />
+        <Image source={{ uri: clothesInfo.clothesImgUrl }} style={styles.image} />
       </View>
       <ScrollView style={styles.infoContainer}>
-        <Text style={styles.infoText}>이름: {clothInfo.name}</Text>
-        <Text style={styles.infoText}>색상: {clothInfo.color}</Text>
-        <Text style={styles.infoText}>사이즈: {clothInfo.size}</Text>
-        <Text style={styles.infoText}>브랜드: {clothInfo.brand}</Text>
-        <Text style={styles.infoText}>가격: {clothInfo.price}원</Text>
-        <Text style={styles.infoText}>소재: {clothInfo.material}</Text>
+        {/* <Text style={styles.infoText}>이름: {clothInfo.name}</Text> */}
+        {/* <Text style={styles.infoText}>색상: {clothInfo.color}</Text> */}
+        {/* <Text style={styles.infoText}>사이즈: {clothInfo.size}</Text> */}
+        {/* <Text style={styles.infoText}>브랜드: {clothInfo.brand}</Text> */}
+        <Text style={styles.infoText}>종류: {clothesInfo.detection}</Text>
+        <Text style={styles.infoText}>가격: {clothesInfo.price}원</Text>
+        {/* <Text style={styles.infoText}>소재: {clothInfo.material}</Text> */}
       </ScrollView>
     </View>
+    )}
+    </>
   );
 };
 
