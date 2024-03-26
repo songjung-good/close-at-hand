@@ -26,13 +26,12 @@ const ClothInfoScreen: React.FC<{ route: any }> = ({ route }) => {
         setClothesInfo(foundCloth);
       }
     };
-
     fetchClothInfo();
   }, [clothId]);
 
   return (
     <>
-    {clothesInfo && (
+    {clothesInfo ? (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: clothesInfo.clothesImgUrl }} style={styles.image} />
@@ -44,9 +43,14 @@ const ClothInfoScreen: React.FC<{ route: any }> = ({ route }) => {
         {/* <Text style={styles.infoText}>브랜드: {clothInfo.brand}</Text> */}
         <Text style={styles.infoText}>종류: {clothesInfo.detection}</Text>
         <Text style={styles.infoText}>가격: {clothesInfo.price}원</Text>
+        <Text style={styles.infoText}>마지막 세탁일: {clothesInfo.lastWashDate}원</Text>
         {/* <Text style={styles.infoText}>소재: {clothInfo.material}</Text> */}
       </ScrollView>
     </View>
+    ) : (
+      <View>
+        <Text>옷 정보를 가져오는 중입니다...</Text>
+      </View>
     )}
     </>
   );
