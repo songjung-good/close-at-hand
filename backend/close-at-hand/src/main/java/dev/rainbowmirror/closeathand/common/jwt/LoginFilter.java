@@ -1,6 +1,6 @@
 package dev.rainbowmirror.closeathand.common.jwt;
 
-import dev.rainbowmirror.closeathand.domain.user.login.CustumUserDetails;
+import dev.rainbowmirror.closeathand.domain.user.login.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -8,11 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.Collection;
-import java.util.Iterator;
 
 
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -33,12 +29,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication){
-        CustumUserDetails custumUserDetails = (CustumUserDetails) authentication.getPrincipal();
+        CustomUserDetails custumUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String username = custumUserDetails.getUsername();
-//
-//        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-//        Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
-//        GrantedAuthority auth = iterator.next();
 
         String token = jwtUtil.createJwt(username, 60*60*10L);
 

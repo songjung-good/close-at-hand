@@ -4,6 +4,7 @@ import dev.rainbowmirror.closeathand.application.user.UserFacade;
 import dev.rainbowmirror.closeathand.common.response.CommonResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,9 @@ public class UserLoginController {
 
     @Operation(summary = "로그인 요청")
     @PostMapping(consumes = "application/x-www-form-urlencoded")
-    public CommonResponse<String> login(@RequestPart UserDto.LoginRequest request){
+    public CommonResponse<String> login(@RequestPart UserDto.LoginRequest request, HttpServletResponse response){
         System.out.println(request);
-
-        return CommonResponse.success("tempToken");
+        return CommonResponse.success(response.getHeader("Authorization"));
     }
 
     @Operation(summary = "jwt 무효화 요청", description = "지금은 그냥 OK나가요")

@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.common.config;
 
+import dev.rainbowmirror.closeathand.common.jwt.JWTFilter;
 import dev.rainbowmirror.closeathand.common.jwt.JWTUtil;
 import dev.rainbowmirror.closeathand.common.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
@@ -49,8 +50,11 @@ public class SecurityConfig {
         //경로별 인가 작업
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/user", "/swagger", "/swagger-ui/index.html").permitAll()
+                        .requestMatchers("/login/**", "/",
+                                "/swagger/**", "/swagger-ui/index.html").permitAll()
                         .anyRequest().authenticated());
+        http
+                .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil)    , UsernamePasswordAuthenticationFilter.class);
         //세션 설정

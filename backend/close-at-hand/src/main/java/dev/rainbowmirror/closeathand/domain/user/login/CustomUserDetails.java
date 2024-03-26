@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class CustumUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
     private final User user;
 
-    public CustumUserDetails(User user){
+    public CustomUserDetails(User user){
         this.user = user;
     }
     @Override
