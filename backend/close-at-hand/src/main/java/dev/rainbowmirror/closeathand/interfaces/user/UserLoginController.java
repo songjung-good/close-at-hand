@@ -3,6 +3,7 @@ package dev.rainbowmirror.closeathand.interfaces.user;
 import dev.rainbowmirror.closeathand.application.user.UserFacade;
 import dev.rainbowmirror.closeathand.common.response.CommonResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,10 @@ public class UserLoginController {
 
     @Operation(summary = "로그인 요청")
     @PostMapping(consumes = "application/x-www-form-urlencoded")
-    public CommonResponse<String> login(@RequestPart UserDto.LoginRequest request, HttpServletResponse response){
+    @ApiResponse(responseCode = "200", description = "success")
+    public String login(@RequestPart UserDto.LoginRequest request, HttpServletResponse response){
         System.out.println(request);
-        return CommonResponse.success(response.getHeader("Authorization"));
+        return response.getHeader("Authorization");
     }
 
     @Operation(summary = "jwt 무효화 요청", description = "지금은 그냥 OK나가요")

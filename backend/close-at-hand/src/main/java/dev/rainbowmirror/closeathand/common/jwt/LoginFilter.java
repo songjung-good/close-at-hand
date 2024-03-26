@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import java.io.IOException;
 
 
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -35,9 +36,17 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String token = jwtUtil.createJwt(username, 60*60*10L);
 
         response.addHeader("Authorization", "Bearer " + token);
+        response.setContentType("application/json");
+        try {
+            response.getWriter().println("{\"result\" : \""+"SUCCESS"+"\"}");
+        }catch (IOException e) { return; }
     }
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed){
+        response.setContentType("application/json");
+        try {
+            response.getWriter().println("{\"result\" : \""+"FAIL"+"\"}");
+        }catch (IOException ignored) { }
         response.setStatus(401);
     }
 }
