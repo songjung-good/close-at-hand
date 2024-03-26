@@ -12,10 +12,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 @Slf4j
@@ -39,14 +44,30 @@ public class OotdApiController {
 
     @Operation(summary = "오늘 날짜 Ootd 상세", description = "당일 Ootd를 조회합니다, 없을시 noImage")
     @GetMapping("/today")
-    public CommonResponse<OotdInfo.Detail> getTodayOotd(@RequestHeader String userToken){
+    public CommonResponse<OotdInfo.Detail> getTodayOotd(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+
+        String userToken = auth.getAuthority();
+
         OotdInfo.Detail ootdInfo = ootdFacade.getTodayOotd(userToken);
         return CommonResponse.success(ootdInfo);
     }
 
     @Operation(summary = "Ootd 전체조회", description = "Ootd를 조회")
     @GetMapping
-    public CommonResponse<List<OotdInfo>> getOotds(@RequestHeader String userToken){
+    public CommonResponse<List<OotdInfo>> getOotds(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+
+        String userToken = auth.getAuthority();
+
         List<OotdInfo> ootdInfoList = ootdFacade.getOotds(userToken);
         return CommonResponse.success(ootdInfoList);
     }

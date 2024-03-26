@@ -21,8 +21,8 @@ public class CustomUserDetails implements UserDetails {
         collection.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-
-                return user.getStatus().toString();
+                System.out.println(user);
+                return user.getUserToken();
             }
         });
 
@@ -39,6 +39,7 @@ public class CustomUserDetails implements UserDetails {
         return user.getAccount();
     }
 
+    public String getUserToken() { return user.getUserToken(); }
     @Override
     public boolean isAccountNonExpired() {
         return true;
