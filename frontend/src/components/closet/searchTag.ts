@@ -1,27 +1,27 @@
 export const Tag =[
   {
     id : 'Category',
-    name: ['블라우스', '셔츠'],
+    name: ['dress', 'pants'],
   // '캐주얼상의', '코트', '드레스', '재킷', '청바지', '점퍼'
   },
   {
     id: 'Color',
-    name: '빨강',
+    name: 'pants',
     // '노랑', '파랑', '초록',
   },
   {
     id: 'Detail',
-    name: 'roll-up',
+    name: 'skirts',
     // 'cable', 'drop-shoulder',
   },
   {
     id: 'Fit',
-    name: 'normal',
+    name: 'sweater',
     // 'loose', 'skinny', 'slim',
   },
   {
     id: 'Texture',
-    name: 'knit',
+    name: '1',
     // 'jean', 'wool', 'leather',
   }
 ]

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, FlatList } from "react-native";
 
-import SearchModal from "../../components/closet/SearchModal";
-import ClosetItem from "../../components/closet/ClosetItem";
+import { SearchModal } from "../../components";
+import { ClosetItem } from "../../components";
 import { FONTSIZE, COLORS } from "../../shared";
 // 임시데이터
 import { clothList, recommendedClothes } from "./clothInfo";
@@ -17,11 +17,11 @@ interface clothInfo {
   price: "number"
 }
 
-const ClosetScreen: React.FC <RootScreenProp<"closet">> = ({navigation}) => {
+const ClosetScreen: React.FC = () => {
   const [clothes, setClothes] = useState<clothInfo[]>(clothList);  
-  const [searchModalVisible, setSearchModalVisible] = useState(false); // 검색 모달의 가시성 상태를 관리합니다.
-
   const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>(recommendedClothes);
+  // 검색 모달과 태그
+  const [searchModalVisible, setSearchModalVisible] = useState(false); // 검색 모달의 가시성 상태를 관리합니다.
   const [selectedTags, setSelectedTags] = useState<any[]>([]);
   
   useEffect(() => {
@@ -33,7 +33,6 @@ const ClosetScreen: React.FC <RootScreenProp<"closet">> = ({navigation}) => {
 
     // fetchData();
   // }, []);
-
   }, []);
 
   // 검색 버튼을 눌렀을 때 검색 모달을 열도록 합니다.
@@ -46,33 +45,14 @@ const ClosetScreen: React.FC <RootScreenProp<"closet">> = ({navigation}) => {
     setSelectedTags(tags);
   };
 
-  // 옷장화면 옷 리스트 구성
-  const RenderClothes = () => {
-    const filteredClothes = clothes.filter((cloth) => {
-      // 선택된 태그를 가지고 있는 옷만 필터링합니다.
-      return selectedTags.some((tag) => cloth.includes(tag));
-    });
-
-    return filteredClothes.map((cloth) => (
-      <View style={styles.clothesItem} key={cloth.clothesId}>
-        <ClosetItem {...cloth} />
-      </View>
-    ));
-  };
-  //   return clothes.map((cloth) => (
-  //     <View style={styles.clothesItem} key={cloth.id}>
-  //       <ClosetItem {...cloth} />
-  //     </View>
-  //   ));
-  // };
-
+  // 추천 옷 리스트
   const RenderRecommendedClothes = () => {
     return (
       <View>
         <View style={styles.recommendedDiv}>
           <FlatList
-            style={styles.clothDiv}
             numColumns={3}
+            contentContainerStyle={styles.flatListContent}
             data={recommendClothes}
             renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
             keyExtractor={(item) => item.clothesId}
@@ -82,21 +62,50 @@ const ClosetScreen: React.FC <RootScreenProp<"closet">> = ({navigation}) => {
     );
   };
 
+  // 옷장화면 옷 리스트 구성
+  const RenderClothes = () => {
+    const filteredClothes = clothes.filter((cloth) => {
+      // 선택된 태그와 모든 구성 요소가 일치하는 옷만 필터링합니다.
+      return selectedTags.every((tag) => {
+        return (
+          cloth.detection === tag ||
+          cloth.clothesId === tag ||
+          cloth.clothesImgUrl === tag ||
+          cloth.lastWashDate === tag ||
+          cloth.price === tag
+        );
+      });
+    });
+  
+    return (
+      <View>
+        <FlatList
+          numColumns={3}
+          contentContainerStyle={styles.flatListContent}
+          data={filteredClothes}
+          renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
+          keyExtractor={(item) => item.clothesId}
+        />
+      </View>
+    )
+  };
+
   return (
     <View>
-      <View style={styles.header}>
-        <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
-        <View>
-            {/* 검색 버튼 */}
-          <TouchableOpacity onPress={handleSearchButtonClick}>
-            <SearchModal visible={searchModalVisible} onClose={() => setSearchModalVisible(false)} onSaveTags={handleSaveTags} />
-          </TouchableOpacity>
+      <View style={styles.listDiv}>
+        <View style={styles.header}>
+          <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
+          <View>
+              {/* 검색 버튼 */}
+            <TouchableOpacity onPress={handleSearchButtonClick}>
+              <SearchModal visible={searchModalVisible} onClose={() => setSearchModalVisible(false)} onSaveTags={handleSaveTags} />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      <View>
         <RenderRecommendedClothes />
       </View>
-      <View>
+      <View style={styles.listDiv}>
+        <Text style={styles.clothesTitle}>옷장</Text>
         <RenderClothes />
       </View>
     </View>
@@ -109,20 +118,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between", // 검색 버튼을 오른쪽으로 정렬합니다.
     padding: 10,
   },
-  backButtonText: {
-    fontSize: FONTSIZE.ExtraSmall,
-    fontWeight: "bold",
-    color: COLORS.Black,
-  },
-  searchButtonText: {
-    fontSize: FONTSIZE.Medium,
-    color: COLORS.CarrotRed,
-  },
   recommendedTitle: {
     fontSize: FONTSIZE.Small,
     fontWeight: "bold",
     marginBottom: 10,
     paddingLeft: 10,
+  },
+  clothesTitle: {
+    fontSize: FONTSIZE.Small,
+    fontWeight: "bold",
+    marginBottom: 20,
+    marginLeft: 10,
   },
   clothesItem: {
     padding: 10,
@@ -132,13 +138,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    width: '30%',
+  },
+  listDiv: {
+    width: '90%',
+    marginLeft: '5%',
+    marginVertical: '5%',
   },
   recommendedDiv: {
     borderColor: COLORS.CarrotRed,
     margin: 10,
     borderWidth: 2,
     borderRadius: 5,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+  },
+  flatListContent: {
+    marginLeft: '5%',
+    // alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

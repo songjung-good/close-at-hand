@@ -51,4 +51,11 @@ export const recommendedClothes = [
     lastWashDate: "2024-03-25T07:44:37.979Z",
     price: 30000,
   },
+  {
+    clothesId: 1,
+    clothesImgUrl: "https://sitem.ssgcdn.com/05/49/07/item/1000569074905_i1_750.jpg",
+    detection: "pants",
+    lastWashDate: "2024-03-25T07:44:37.979Z",
+    price: 30000,
+  },
 ];

@@ -23,23 +23,32 @@ const ClosetItem: React.FC<clothInfo> = ({ clothesId, clothesImgUrl, detection, 
   return (
     <TouchableOpacity onPress={handleClothItemClick}>
       <View style={styles.clothesItem}>
-        <Text>{detection}</Text>
-        <Image source={{ uri: clothesImgUrl }} />
+        <Image source={{ uri: clothesImgUrl }} style={{ width: 50, height: 50, borderRadius: 50 }} />
+        <Text style={styles.clothesText}>{detection}</Text>
       </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  clothesText: {
+    fontSize: FONTSIZE.ExtraSmall,
+    color: COLORS.Black,
+    textAlign: "center",
+  },
   clothesItem: {
-    padding: 10,
-    margin: 5,
+    paddingHorizontal: 15,
+    paddingVertical: 3,
+    marginHorizontal: 10,
+    marginVertical: 5,
     borderColor: COLORS.CarrotRed,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    width: '90%',
+    marginLeft: '5%',
+    // width: '30%',
   },
 });
 

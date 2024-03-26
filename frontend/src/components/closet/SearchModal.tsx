@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 
 import { Tag } from './searchTag'
@@ -7,13 +7,15 @@ import { COLORS, FONTSIZE } from '../../shared/styles/STYLES'
 interface SearchModalProps {
   visible: boolean;
   onClose: () => void;
+  onTagsSelected: (tags: number[]) => void; // 클릭된 태그 ID 정보를 상위 컴포넌트로 전달하기 위한 콜백 함수
 }
 
-const TagItem: React.FC<{ tag: any }> = ({ tag }) => {
+const TagItem: React.FC<{ tag: any, onClick: (id: number) => void }> = ({ tag, onClick }) => {
   const [clicked, setClicked] = useState(false);
 
   const addTag = () => {
     setClicked(!clicked); // 클릭된 상태를 토글합니다.
+    onClick(tag.id); // 클릭된 태그의 ID를 상위 컴포넌트로 전달합니다.
   }
 
   return (
@@ -25,17 +27,33 @@ const TagItem: React.FC<{ tag: any }> = ({ tag }) => {
   )
 }
 
-const TagList: React.FC = () => {
+const TagList: React.FC<{ onTagsSelected: (tags: number[]) => void }> = ({ onTagsSelected }) => {
+  const [selectedTags, setSelectedTags] = useState<number[]>([]); // 선택된 태그의 ID를 저장하는 상태
+
+  // 클릭된 태그의 ID를 저장하고 전달하는 함수
+  const handleTagClick = (tagId: number) => {
+    if (selectedTags.includes(tagId)) {
+      setSelectedTags(selectedTags.filter((id) => id !== tagId)); // 이미 선택된 경우 해당 태그를 제거합니다.
+    } else {
+      setSelectedTags([...selectedTags, tagId]); // 선택되지 않은 경우 해당 태그를 추가합니다.
+    }
+  };
+
+  // 클릭된 태그 ID 정보를 상위 컴포넌트로 전달합니다.
+  useEffect(() => {
+    onTagsSelected(selectedTags);
+  }, [selectedTags]);
+
   return (
     <View style={styles.tagContainer}>
       {Tag.map((tag) => (
-          <TagItem key={tag.id} tag={tag} />
+        <TagItem key={tag.id} tag={tag} onClick={handleTagClick} />
       ))}
     </View>
   );
 };
 
-const SearchModal: React.FC<SearchModalProps> = ({ visible, onClose }) => {
+const SearchModal: React.FC<SearchModalProps> = ({ visible, onClose, onTagsSelected }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -43,11 +61,9 @@ const SearchModal: React.FC<SearchModalProps> = ({ visible, onClose }) => {
       <Modal
         animationType="none"
         transparent={true}
-        visible={modalVisible}
+        visible={visible}
         onRequestClose={() => {
-          // 여기에 modal값을 검색로직으로 넘겨야한다.
-          // Alert.alert('모달이 닫혔습니다.');
-          setModalVisible(!modalVisible);
+          onClose();
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -55,11 +71,14 @@ const SearchModal: React.FC<SearchModalProps> = ({ visible, onClose }) => {
               <Text style={styles.modalText}>검색</Text>
               <Pressable
                 style={[styles.button]}
-                onPress={() => setModalVisible(!modalVisible)}>
+                onPress={() => {
+                  onClose();
+                  setModalVisible(!modalVisible);
+                }}>
                 <Text style={styles.textStyle}>🔍</Text>
               </Pressable>
             </View>
-            <TagList />
+            <TagList onTagsSelected={onTagsSelected} />
           </View>
         </View>
       </Modal>
