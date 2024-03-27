@@ -1,95 +1,56 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TextInput, FlatList, TouchableOpacity, Text } from "react-native";
-import { FONTSIZE, COLORS } from "../../shared";
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-// 옷 아이템 컴포넌트
-const ClothItem: React.FC<clothInfo> = ({ id, name, image }) => {
-  const navigation = useNavigation<Navigation>();
-  const handleClothItemClick = () => {
-    // ClothInfoScreen으로 이동하는 코드
-    navigation.navigate('cloth', { id }); // ClothInfoScreen으로 cloth의 id 전달
-  };
+import { COLORS, FONTSIZE } from '../../shared/';
+import { PresetItem } from '../../components';
+// 임시데이터
+import { presetList } from './presetInfo';
 
-  return (
-    <TouchableOpacity onPress={handleClothItemClick}>
-      <View style={styles.clothesItem}>
-        <Text>{name}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-// 옷 인터페이스
-interface clothInfo {
-  id: number;
-  name: string;
-  image: string;
-}
-
-// 프리셋 정보 인터페이스
+// 임시 데이터
 interface presetInfo {
-  id: number;
-  name: string;
-  description: string;
-  clothIds: number[];
+  presetId: "number",
+  presetName: "string",
+  clothes: "list",
 }
 
 const CoordiScreen: React.FC = () => {
-  const [presets, setPresets] = useState<presetInfo[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [preset, setPreset] = useState<presetInfo[]>(presetList);
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    // 서버로부터 프리셋 목록 데이터를 가져오는 API 호출
-    // const fetchData = async () => {
-    //   const response = await API.get("/presets");
-    //   setPresets(response.data);
-    // };
-
-    // fetchData();
-  }, []);
-
-  const handleBackButtonClick = () => {
-    // 메인 페이지로 이동하는 코드
-    navigation.navigate('home'); // 예시로 'home'으로 이동하도록 설정
+  const handleCreatePreset = () => {
+    // 새로운 프리셋을 만들 수 있는 기능 추가
   };
 
-  const handleSearchInputChange = (e: string) => {
-    setSearchQuery(e);
-  };
-
-  const renderPresets = () => {
-    return presets.filter((preset) => {
-      return preset.name.toLowerCase().includes(searchQuery.toLowerCase());
-    }).map((preset) => (
-      <PresetItem key={preset.id} {...preset} />
-    ));
-  };
+  const RenderPresetList: React.FC = () => {
+    return (
+      <FlatList
+        data={presetList}
+        keyExtractor={(item) => item.presetId.toString()}
+        renderItem={({ item }) => {
+          return (
+            <PresetItem
+              preset={item}
+              onPress={() => {
+                // 프리셋을 누르면 해당 프리셋의 옷 목록을 보여줄 수 있는 기능 추가
+              }}
+            />
+          );
+        }}
+      />
+    );
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleBackButtonClick}>
-          <Text style={styles.backButtonText}>뒤로가기 이미지</Text>
-        </TouchableOpacity>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="검색어를 입력하세요"
-          value={searchQuery}
-          onChangeText={handleSearchInputChange}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleAddPresetItemClick} style={styles.button}>
-          <Text style={styles.buttonText}>새로운 코디 만들기</Text>
+        <Text style={styles.title}>프리셋 목록</Text>
+        <TouchableOpacity onPress={handleCreatePreset} style={styles.addButton}>
+          <Text style={styles.buttonText}>새로 만들기</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.presetsList}>
-        <FlatList
-          data={presets}
-          renderItem={({ item }) => <PresetItem key={item.id} {...item} />}
-          keyExtractor={(item) => item.id.toString()}
-        />
+      <View>
+        <RenderPresetList />
       </View>
     </View>
   );
@@ -97,33 +58,40 @@ const CoordiScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: '90%',
+    marginLeft: '5%',
+    marginVertical: '5%',
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     padding: 10,
   },
-  backButtonText: {
-    fontSize: FONTSIZE.ExtraSmall,
-    fontWeight: "bold",
-    color: COLORS.Black,
+  title: {
+    fontSize: FONTSIZE.Medium,
+    fontWeight: 'bold',
   },
-  searchInput: {
-    width: 200,
-    height: 40,
-    borderColor: COLORS.Gray,
-  },
-  buttonContainer: {
-
-  },
-  button: {
-
+  addButton: {
+    backgroundColor: COLORS.CarrotRed,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 5,
   },
   buttonText: {
-
+    color: COLORS.White,
+    fontSize: FONTSIZE.ExtraSmall,
+    fontWeight: 'bold',
   },
-  presetsList: {
-
+  presetContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    padding: '20%',
+    marginTop: '5%',
+    borderColor: COLORS.CarrotRed,
+    borderWidth: 1,
+    borderRadius: 5,
   },
 });
+
+export default CoordiScreen;

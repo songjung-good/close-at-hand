@@ -4,6 +4,7 @@ export { default as HomeScreen } from "./home/HomeScreen";
 // 옷장
 export { default as ClosetMainScreen } from "./closet/ClosetMainScreen";
 export { default as ClothInfoScreen } from "./closet/ClothInfoScreen";
+export { default as CoordiPresetScreen } from "./closet/CoordiPresetScreen";
 
 //옷 관리
 export { default as ManagementMainScreen } from "./management/ManagementMainScreen";

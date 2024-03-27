@@ -5,26 +5,23 @@ import { useNavigation } from "@react-navigation/native";
 import { FONTSIZE, COLORS } from "../../shared";
 
 // 옷 인터페이스
-interface clothInfo {
-  clothesId: "number",
-  clothesImgUrl: "string",
-  detection: "string",
-  lastWashDate: "string",
-  price: "number"
+interface presetInfo {
+  presetId:	"number",
+  presetImgUrl:	"string",
+  presetName:	"string",
+  clothes: "string",
 }
 
-const ClosetItem: React.FC<clothInfo> = ({ clothesId, clothesImgUrl, detection, lastWashDate, price }) => {
+const PresetItem: React.FC<presetInfo> = ({ presetId }) => {
   const navigation = useNavigation<Navigation>()
-  const handleClothItemClick = () => {
-    // ClothInfoScreen으로 이동하는 코드
-    navigation.navigate('cloth', { clothesId }); // ClothInfoScreen으로 cloth의 id 전달
+  const handlePresetNavigation = () => {
+    navigation.navigate('preset', { presetId });
   };
 
   return (
-    <TouchableOpacity onPress={handleClothItemClick}>
-      <View style={styles.clothesItem}>
-        <Image source={{ uri: clothesImgUrl }} style={{ width: 50, height: 50, borderRadius: 50 }} />
-        <Text style={styles.clothesText}>{detection}</Text>
+    <TouchableOpacity onPress={() => handlePresetNavigation(presetId)}>
+      <View style={styles.presetContainer}>
+        <Text>preset Item</Text>
       </View>
     </TouchableOpacity>
   );
@@ -52,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ClosetItem;
+export default PresetItem;

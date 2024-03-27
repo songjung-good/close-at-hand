@@ -1,6 +1,7 @@
 // 옷장
 export { default as ClosetItem } from "./closet/ClosetItem";
 export { default as SearchModal } from "./closet/SearchModal";
+export { default as PresetItem } from "./closet/PresetItem"
 
 // 옷 관리
 export { default as ManagementMenuList } from "./managementMenuList/ManagementMenuList";

@@ -18,7 +18,7 @@ interface clothInfo {
 };
 
 const ClosetScreen: React.FC = () => {
-  const [clothes, setClothes] = useState<clothInfo[]>(clothList);  
+  const [clothes, setClothes] = useState<clothInfo[]>(clothList);
   const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>(recommendedClothes);
   // 검색 모달과 태그
   // const [searchModalVisible, setSearchModalVisible] = useState(false); // 검색 모달의 가시성 상태를 관리합니다.
@@ -34,11 +34,6 @@ const ClosetScreen: React.FC = () => {
     // fetchData();
   // }, []);
   }, []);
-
-  // 검색 버튼을 눌렀을 때 검색 모달을 열도록 합니다.
-  const handleSearchButtonClick = () => {
-    setSearchModalVisible(true);
-  };
 
   // 검색 모달에서 선택된 태그를 받아옵니다.
   const handleSaveTags = (tags: any[]) => {
@@ -93,7 +88,7 @@ const ClosetScreen: React.FC = () => {
         <View style={styles.header}>
           <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
             {/* 검색 버튼 */}
-          <TouchableOpacity onPress={handleSearchButtonClick}>
+          <TouchableOpacity>
             <SearchModal onTagsSelected={handleSaveTags} />
           </TouchableOpacity>
         </View>
@@ -101,7 +96,9 @@ const ClosetScreen: React.FC = () => {
       </View>
       <View style={styles.listDiv}>
         <Text style={styles.clothesTitle}>옷장</Text>
-        <RenderClothes />
+        <View style={styles.clothesDiv}>
+          <RenderClothes />
+        </View>
       </View>
     </View>
   );
@@ -115,43 +112,33 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   recommendedTitle: {
-    fontSize: FONTSIZE.Small,
+    fontSize: FONTSIZE.Medium,
     fontWeight: "bold",
     marginBottom: 10,
     paddingLeft: 10,
   },
   clothesTitle: {
-    fontSize: FONTSIZE.Small,
+    fontSize: FONTSIZE.Medium,
     fontWeight: "bold",
     marginBottom: 20,
     marginLeft: 10,
-  },
-  clothesItem: {
-    padding: 10,
-    margin: 5,
-    borderColor: COLORS.CarrotRed,
-    borderWidth: 1,
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '30%',
   },
   listDiv: {
     width: '90%',
     marginLeft: '5%',
     marginVertical: '5%',
   },
+  clothesDiv:{
+    marginLeft: '3%',
+  },
   recommendedDiv: {
     borderColor: COLORS.CarrotRed,
     margin: 10,
     borderWidth: 2,
     borderRadius: 5,
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
   flatListContent: {
     marginLeft: '5%',
-    // alignItems: 'center',
     justifyContent: 'center',
   },
 });
