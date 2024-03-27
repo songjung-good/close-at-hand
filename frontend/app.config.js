@@ -1,13 +1,13 @@
 module.exports = {
 	expo: {
-		name: "Front",
-		slug: "Front",
+		name: "Close At Hand",
+		slug: "Close At Hand",
 		version: "0.0.1",
 		orientation: "portrait",
 		icon: "./assets/icon.png",
 		userInterfaceStyle: "light",
 		splash: {
-			image: "./assets/splash.png",
+			image: "./assets/splash.svg",
 			resizeMode: "contain",
 			backgroundColor: "#ffffff",
 		},

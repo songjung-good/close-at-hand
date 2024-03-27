@@ -1,14 +1,18 @@
 import { render } from "@testing-library/react-native";
-import Bascket from "./LaundryBasket";
+import "@realm/react";
 
-afterEach(() => {
-	// restore the spy created with spyOn
-	jest.restoreAllMocks();
-});
+import Basket from "./LaundryBasket";
 
-describe("Bascket", () => {
+jest.mock("@realm/react");
+
+describe("LaundryBasket", () => {
+	afterEach(() => {
+		// restore the spy created with spyOn
+		jest.restoreAllMocks();
+	});
+
 	it("렌더링 테스트", () => {
-		const { getByText } = render(<Bascket />);
+		const { getByText } = render(<Basket textures="텍스처" />);
 
 		//버튼 렌더링
 		const button = getByText("세탁하기");

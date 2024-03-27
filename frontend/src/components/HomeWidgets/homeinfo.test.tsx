@@ -1,5 +1,8 @@
 import { render } from "@testing-library/react-native";
 import HomeInfo, { Title } from "./HomeInfo";
+import "@react-navigation/native";
+
+jest.mock("@react-navigation/native");
 
 describe("Bascket 컴포넌트", () => {
 	test("% 텍스트가 렌더링되는지 확인", () => {

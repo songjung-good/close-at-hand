@@ -10,7 +10,7 @@ const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 	route,
 }) => {
 	const [isModalOpen, setIsModalOpen] = useState(
-		route.params?.fromNoti ?? false,
+		route?.params.fromNoti ?? false,
 	);
 
 	console.log(isModalOpen);

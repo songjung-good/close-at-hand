@@ -1,12 +1,12 @@
 import Realm from "realm";
 
-export class LaundryDB extends Realm.Object {
+export class LaundryDB extends Realm.Object<LaundryDB> {
 	clothesId!: number;
 	clothesImgUrl!: string;
 	textures!: Realm.Set<string>;
 	colors!: Realm.Set<string>;
 	lastDayOfWear!: Date;
-	lastWash?: Date = new Date();
+	lastWash?: Date;
 
 	static generate(
 		clothesId: number,

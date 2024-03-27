@@ -5,7 +5,8 @@ import { RealmProvider } from "@realm/react";
 
 import AppNav from "./navigation/AppNav";
 import { queryClient, useUserActions } from "../shared/index";
-import { LaundryDB } from "../shared/DB-Realm/realm";
+import { LaundryDB } from "../shared/realm/realm";
+import { getNotificationPermission, scheduleDailyAlarm } from "../shared";
 
 export default function App() {
 	const { setRefreshToken } = useUserActions();
@@ -25,6 +26,8 @@ export default function App() {
 		}
 
 		getLoginInfo();
+		getNotificationPermission();
+		scheduleDailyAlarm();
 	}, []);
 
 	return (

@@ -1,4 +1,8 @@
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import {
+	NavigationContainer,
+	DefaultTheme,
+	createNavigationContainerRef,
+} from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -10,7 +14,8 @@ import ManagementNav, { ManagementParamList } from "./ManagementNav";
 import SettingsNav, { SettingsParamList } from "./SettingsNav";
 
 import OnBoardingNav from "./OnBoardingNav";
-import { COLORS } from "../../shared";
+import { COLORS, notification } from "../../shared";
+import { useEffect } from "react";
 
 // type
 export type RootParamList = {
@@ -35,9 +40,23 @@ export type RootParamList = {
 
 const Tab = createBottomTabNavigator<RootParamList>();
 
+export const navigationRef = createNavigationContainerRef<RootParamList>();
+
 const AppNav = () => {
+	useEffect(() => {
+		if (notification.id && navigationRef.isReady()) {
+			console.log(notification);
+			if (notification.id === "HomeArrived") {
+				navigationRef.navigate("2", {
+					screen: "laundryMain",
+					params: { fromNoti: true },
+				});
+			}
+		}
+	}, []);
 	return (
 		<NavigationContainer
+			ref={navigationRef}
 			theme={{
 				...DefaultTheme,
 				colors: { ...DefaultTheme.colors, background: "#fff" },

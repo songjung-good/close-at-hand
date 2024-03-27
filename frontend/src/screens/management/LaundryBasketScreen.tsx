@@ -8,9 +8,11 @@ const LaundryBasketScreen: React.FC<RootScreenProp<"laundryBasket">> = ({
 	route,
 }) => {
 	const textures = route.params.basket;
+
 	useEffect(() => {
 		navigation.setOptions({ headerTitle: textures });
 	}, []);
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.bubbleContainer}>

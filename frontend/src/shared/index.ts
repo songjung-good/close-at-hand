@@ -14,10 +14,17 @@ export {
 } from "./zustand/userStore";
 
 // realm
-export { LaundryDB } from "./DB-Realm/realm";
+export { LaundryDB } from "./realm/realm";
 
 // styleSheet
 export { SHADOW, ROW, CENTER } from "./styles/commonStyleSheet";
 
 // constant
 export { COLORS, FONTSIZE } from "./styles/STYLES";
+
+// notifee
+export {
+	getNotificationPermission,
+	notification,
+	scheduleDailyAlarm,
+} from "./notifee/notifee";
