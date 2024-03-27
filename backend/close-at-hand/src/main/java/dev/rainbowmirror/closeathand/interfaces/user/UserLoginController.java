@@ -21,9 +21,8 @@ public class UserLoginController {
     @Operation(summary = "로그인 요청")
     @PostMapping(consumes = "application/x-www-form-urlencoded")
     @ApiResponse(responseCode = "200", description = "success")
-    public String login(@RequestPart UserDto.LoginRequest request, HttpServletResponse response){
-        System.out.println(request);
-        return response.getHeader("Authorization");
+    public String login(@RequestParam("account") String account, @RequestParam("password") String password){
+        return "SUCCESS";
     }
 
     @Operation(summary = "jwt 무효화 요청", description = "지금은 그냥 OK나가요")
