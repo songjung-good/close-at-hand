@@ -35,12 +35,14 @@ public class PresetApiController {
         return CommonResponse.success(response);
     }
 
+    @Operation(summary = "preset 상세 조회")
     @GetMapping({"/{presetId}"})
     public CommonResponse<PresetInfo> getPreset(@PathVariable Long presetId){
         PresetInfo presetInfo = presetFacade.getPreset(presetId);
         return CommonResponse.success(presetInfo);
     }
 
+    @Operation(summary = "preset 전체 조회")
     @GetMapping
     public CommonResponse<List<PresetInfo>> getPresets(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -54,12 +56,14 @@ public class PresetApiController {
         return CommonResponse.success(list);
     }
 
+    @Operation(summary = "preset에 clothes 추가")
     @PutMapping("/add")
     public CommonResponse<PresetInfo> addClothes(@RequestBody PresetDto.UpdateRequestDto request){
         PresetInfo presetInfo = presetFacade.addClothes(request);
         return CommonResponse.success(presetInfo);
     }
 
+    @Operation(summary = "preset의 clothes 제거")
     @PutMapping("/pop")
     public CommonResponse<PresetInfo> popClothes(@RequestBody PresetDto.UpdateRequestDto request){
         PresetInfo presetInfo = presetFacade.popClothes(request);
