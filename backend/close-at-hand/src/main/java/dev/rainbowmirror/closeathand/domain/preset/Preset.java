@@ -42,6 +42,7 @@ public class Preset extends AbstractEntity {
     @Builder
     public Preset(String presetImgUrl, String presetName, User user) {
         if (user == null) throw new RuntimeException("empty user");
+        this.user = user;
 
         if (!StringUtils.hasLength(presetName)) this.presetName = "이름없는 프리셋";
         else this.presetName = presetName;
@@ -50,9 +51,11 @@ public class Preset extends AbstractEntity {
         else this.presetImgUrl = presetImgUrl;
     }
 
-    // update
-    public void update(PresetCommand.UpdateCommand command){
+    public void changeImg(String presetImgUrl) {this.presetImgUrl = presetImgUrl;}
+    public void changeName(String presetName) {this.presetName = presetName;}
 
+    public void addClothes(Set<Clothes> clothes){
+        this.clothes.addAll(clothes);
     }
 
 }

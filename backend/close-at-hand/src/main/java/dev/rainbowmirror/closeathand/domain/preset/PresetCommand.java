@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 
@@ -14,7 +15,10 @@ public class PresetCommand {
     @Builder
     @ToString
     public static class InsertCommand{
-        private final String presetImgUrl;
+        private final MultipartFile presetImg;
+        @Setter
+        private String presetImgUrl;
+
         private final String presetName;
         private final String userToken;
         @Setter
@@ -26,12 +30,5 @@ public class PresetCommand {
                     .user(user)
                     .build();
         }
-    }
-
-    @Getter
-    @Builder
-    @ToString
-    public static class UpdateCommand{
-
     }
 }

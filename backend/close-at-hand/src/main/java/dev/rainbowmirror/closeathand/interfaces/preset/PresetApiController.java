@@ -7,7 +7,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -26,5 +33,24 @@ public class PresetApiController {
         PresetInfo presetInfo = presetFacade.insertPreset(command);
         var response = new PresetDto.InsertResponseDto(presetInfo);
         return CommonResponse.success(response);
+    }
+
+    @GetMapping({"/{presetId}"})
+    public CommonResponse<PresetInfo> getPreset(@PathVariable Long presetId){
+        PresetInfo presetInfo = presetFacade.getPreset(presetId);
+        return CommonResponse.success(presetInfo);
+    }
+
+    @GetMapping
+    public CommonResponse<List<PresetInfo>> getPresets(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+
+        String userToken = auth.getAuthority();
+        List<PresetInfo> list = presetFacade.getPresets(userToken);
+        return CommonResponse.success(list);
     }
 }

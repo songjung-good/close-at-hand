@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -27,17 +28,16 @@ public class PresetServiceImpl implements PresetService{
 
     @Override
     public List<PresetInfo> getPresetByUserToken(String userToken) {
-        return null;
+        List<Preset> list = presetReader.getPresets(userToken);
+        List<PresetInfo> presetInfos = new ArrayList<>();
+        for (Preset preset: list) {presetInfos.add(new PresetInfo(preset));}
+        return presetInfos;
     }
 
     @Override
     public PresetInfo getPreset(Long presetId) {
-        return null;
-    }
-
-    @Override
-    public PresetInfo updatePreset(PresetCommand.UpdateCommand command) {
-        return null;
+        Preset preset = presetReader.getPreset(presetId);
+        return new PresetInfo(preset);
     }
 
     @Override

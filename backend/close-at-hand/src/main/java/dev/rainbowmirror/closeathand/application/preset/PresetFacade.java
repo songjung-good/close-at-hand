@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -16,5 +18,14 @@ public class PresetFacade {
     public PresetInfo insertPreset(PresetCommand.InsertCommand command){
         PresetInfo presetInfo = presetService.insertPreset(command);
         return presetInfo;
+    }
+
+    public PresetInfo getPreset(Long presetId){
+        PresetInfo presetInfo = presetService.getPreset(presetId);
+        return presetInfo;
+    }
+
+    public List<PresetInfo> getPresets(String userToken){
+        return presetService.getPresetByUserToken(userToken);
     }
 }
