@@ -7,19 +7,29 @@ module.exports = {
 		icon: "./assets/icon.png",
 		userInterfaceStyle: "light",
 		splash: {
-			image: "./assets/splash.svg",
+			image: "./assets/splashA.png",
 			resizeMode: "contain",
-			backgroundColor: "#ffffff",
+			backgroundColor: "#fdd087",
 		},
 		assetBundlePatterns: ["**/*"],
 		ios: {
 			supportsTablet: true,
+			splash: {
+				image: "./assets/splashA.png",
+				resizeMode: "contain",
+				backgroundColor: "#fdd087",
+			},
 		},
 		android: {
 			package: "com.closeAtHand",
 			adaptiveIcon: {
-				foregroundImage: "./assets/adaptive-icon.png",
+				foregroundImage: "./assets/adaptive-iconA.png",
 				backgroundColor: "#ffffff",
+			},
+			splash: {
+				image: "./assets/splashA.png",
+				resizeMode: "contain",
+				backgroundColor: "#fdd087",
 			},
 		},
 		web: {

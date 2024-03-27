@@ -8,7 +8,11 @@ import { queryClient, useUserActions } from "../shared/index";
 import { LaundryDB } from "../shared/realm/realm";
 import { getNotificationPermission, scheduleDailyAlarm } from "../shared";
 
-export default function App() {
+interface Props {
+	readyNow(ready: boolean): void;
+}
+
+const App: React.FC<Props> = ({ readyNow }) => {
 	const { setRefreshToken } = useUserActions();
 
 	useEffect(() => {
@@ -20,6 +24,7 @@ export default function App() {
 					setRefreshToken({ token, exp });
 					// access Token을 얻는 로직 작성
 				}
+				readyNow(true);
 			} catch (error) {
 				console.log(error);
 			}
@@ -37,4 +42,6 @@ export default function App() {
 			</QueryClientProvider>
 		</RealmProvider>
 	);
-}
+};
+
+export default App;
