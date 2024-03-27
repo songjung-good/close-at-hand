@@ -45,4 +45,12 @@ public class PresetDto {
             this.clothes = presetInfo.getClothes();
         }
     }
+    @Getter
+    @Setter
+    @ToString
+    public static class UpdateRequestDto{
+        private Long presetId;
+        private Long[] clothesIdList;
+
+    }
 }

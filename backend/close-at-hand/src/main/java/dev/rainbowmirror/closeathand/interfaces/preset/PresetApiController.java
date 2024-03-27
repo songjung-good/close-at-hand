@@ -53,4 +53,10 @@ public class PresetApiController {
         List<PresetInfo> list = presetFacade.getPresets(userToken);
         return CommonResponse.success(list);
     }
+
+    @PutMapping("/add")
+    public CommonResponse<PresetInfo> addClothes(@RequestBody PresetDto.UpdateRequestDto request){
+        PresetInfo presetInfo = presetFacade.addClothes(request);
+        return CommonResponse.success(presetInfo);
+    }
 }

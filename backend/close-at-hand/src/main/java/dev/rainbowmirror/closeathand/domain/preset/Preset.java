@@ -57,6 +57,9 @@ public class Preset extends AbstractEntity {
     public void addClothes(Set<Clothes> clothes){
         this.clothes.addAll(clothes);
     }
+    public void popClothes(Set<Clothes> clothes) {
+        this.clothes.removeAll(clothes);
+    }
 
     public String getFilename(){
         return "preset/" + presetId;

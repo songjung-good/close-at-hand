@@ -65,4 +65,26 @@ public class PresetServiceImpl implements PresetService{
     public PresetInfo deletePreset(Long presetId) {
         return null;
     }
+
+    @Override
+    public PresetInfo addClothes(Long presetId, Long[] clothesIdList) {
+        Set<Clothes> clothes = new HashSet<>();
+        for (Long clothesId: clothesIdList){
+            clothes.add(clothesReader.findClothes(clothesId));
+        }
+        Preset preset = presetReader.getPreset(presetId);
+        preset.addClothes(clothes);
+        return new PresetInfo(preset);
+    }
+
+    @Override
+    public PresetInfo popClothes(Long presetId, Long[] clothesIdList) {
+        Set<Clothes> clothes = new HashSet<>();
+        for (Long clothesId: clothesIdList){
+            clothes.add(clothesReader.findClothes(clothesId));
+        }
+        Preset preset = presetReader.getPreset(presetId);
+        preset.popClothes(clothes);
+        return new PresetInfo(preset);
+    }
 }

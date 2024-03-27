@@ -5,6 +5,7 @@ import dev.rainbowmirror.closeathand.domain.S3UploadService;
 import dev.rainbowmirror.closeathand.domain.preset.PresetCommand;
 import dev.rainbowmirror.closeathand.domain.preset.PresetInfo;
 import dev.rainbowmirror.closeathand.domain.preset.PresetService;
+import dev.rainbowmirror.closeathand.interfaces.preset.PresetDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,9 @@ public class PresetFacade {
 
     public List<PresetInfo> getPresets(String userToken){
         return presetService.getPresetByUserToken(userToken);
+    }
+
+    public PresetInfo addClothes(PresetDto.UpdateRequestDto request){
+        return presetService.addClothes(request.getPresetId(), request.getClothesIdList());
     }
 }
