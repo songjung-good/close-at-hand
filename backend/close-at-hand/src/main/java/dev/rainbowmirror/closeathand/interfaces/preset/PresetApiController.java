@@ -59,4 +59,10 @@ public class PresetApiController {
         PresetInfo presetInfo = presetFacade.addClothes(request);
         return CommonResponse.success(presetInfo);
     }
+
+    @PutMapping("/pop")
+    public CommonResponse<PresetInfo> popClothes(@RequestBody PresetDto.UpdateRequestDto request){
+        PresetInfo presetInfo = presetFacade.popClothes(request);
+        return CommonResponse.success(presetInfo);
+    }
 }
