@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     padding: 10,
+    marginTop: 2,
   },
   button: {
     padding: 10,
@@ -68,14 +69,6 @@ const styles = StyleSheet.create({
   selectedButton: {
     backgroundColor: COLORS.CarrotRed,
   },
-})
+});
 
 export default ClosetMainScreen;
-
-// 내 옷장 페이지를 출력
-
-// 버튼을 통해 옷장과 코디를 랜더링
-
-// 옷장: 추천 옷과 내 옷 목록을 랜더링, 검색 기능도 구현
-
-// 코디: 저장된 코디 셋을 랜더링, 코디셋 추가기능 구현

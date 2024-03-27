@@ -35,7 +35,7 @@ interface presetInfo {
   clothIds: number[];
 }
 
-const CoordiScreen: React.FC <RootScreenProp<"coordi">> = ({navigation}) => {
+const CoordiScreen: React.FC = () => {
   const [presets, setPresets] = useState<presetInfo[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 

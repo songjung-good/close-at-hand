@@ -15,13 +15,13 @@ interface clothInfo {
   detection: "string",
   lastWashDate: "string",
   price: "number"
-}
+};
 
 const ClosetScreen: React.FC = () => {
   const [clothes, setClothes] = useState<clothInfo[]>(clothList);  
   const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>(recommendedClothes);
   // 검색 모달과 태그
-  const [searchModalVisible, setSearchModalVisible] = useState(false); // 검색 모달의 가시성 상태를 관리합니다.
+  // const [searchModalVisible, setSearchModalVisible] = useState(false); // 검색 모달의 가시성 상태를 관리합니다.
   const [selectedTags, setSelectedTags] = useState<any[]>([]);
   
   useEffect(() => {
@@ -46,26 +46,23 @@ const ClosetScreen: React.FC = () => {
   };
 
   // 추천 옷 리스트
-  const RenderRecommendedClothes = () => {
+  const RenderRecommendedClothes: React.FC = () => {
     return (
-      <View>
-        <View style={styles.recommendedDiv}>
-          <FlatList
-            numColumns={3}
-            contentContainerStyle={styles.flatListContent}
-            data={recommendClothes}
-            renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
-            keyExtractor={(item) => item.clothesId}
-          />
-        </View>
+      <View style={styles.recommendedDiv}>
+        <FlatList
+          numColumns={3}
+          contentContainerStyle={styles.flatListContent}
+          data={recommendClothes}
+          renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
+          keyExtractor={(item) => item.clothesId.toString()}
+        />
       </View>
     );
   };
 
   // 옷장화면 옷 리스트 구성
-  const RenderClothes = () => {
+  const RenderClothes: React.FC = () => {
     const filteredClothes = clothes.filter((cloth) => {
-      // 선택된 태그와 모든 구성 요소가 일치하는 옷만 필터링합니다.
       return selectedTags.every((tag) => {
         return (
           cloth.detection === tag ||
@@ -84,10 +81,10 @@ const ClosetScreen: React.FC = () => {
           contentContainerStyle={styles.flatListContent}
           data={filteredClothes}
           renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
-          keyExtractor={(item) => item.clothesId}
+          keyExtractor={(item) => item.clothesId.toString()}
         />
       </View>
-    )
+    );
   };
 
   return (
@@ -95,12 +92,10 @@ const ClosetScreen: React.FC = () => {
       <View style={styles.listDiv}>
         <View style={styles.header}>
           <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
-          <View>
-              {/* 검색 버튼 */}
-            <TouchableOpacity onPress={handleSearchButtonClick}>
-              <SearchModal visible={searchModalVisible} onClose={() => setSearchModalVisible(false)} onSaveTags={handleSaveTags} />
-            </TouchableOpacity>
-          </View>
+            {/* 검색 버튼 */}
+          <TouchableOpacity onPress={handleSearchButtonClick}>
+            <SearchModal onTagsSelected={handleSaveTags} />
+          </TouchableOpacity>
         </View>
         <RenderRecommendedClothes />
       </View>
@@ -116,6 +111,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between", // 검색 버튼을 오른쪽으로 정렬합니다.
+    alignItems: "center", // 검색 버��을 중��으로 정��합니다.
     padding: 10,
   },
   recommendedTitle: {

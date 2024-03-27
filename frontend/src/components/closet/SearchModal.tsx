@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 
-import { Tag } from './searchTag'
-import { COLORS, FONTSIZE } from '../../shared/styles/STYLES'
+import { Tag } from './searchTag';
+import { COLORS, FONTSIZE } from '../../shared/styles/STYLES';
 
 interface SearchModalProps {
   visible: boolean;
   onClose: () => void;
   onTagsSelected: (tags: number[]) => void; // 클릭된 태그 ID 정보를 상위 컴포넌트로 전달하기 위한 콜백 함수
-}
+};
 
 const TagItem: React.FC<{ tag: any, onClick: (id: number) => void }> = ({ tag, onClick }) => {
   const [clicked, setClicked] = useState(false);
@@ -16,7 +16,7 @@ const TagItem: React.FC<{ tag: any, onClick: (id: number) => void }> = ({ tag, o
   const addTag = () => {
     setClicked(!clicked); // 클릭된 상태를 토글합니다.
     onClick(tag.id); // 클릭된 태그의 ID를 상위 컴포넌트로 전달합니다.
-  }
+  };
 
   return (
     <View style={styles.tagTitle}>
@@ -24,8 +24,8 @@ const TagItem: React.FC<{ tag: any, onClick: (id: number) => void }> = ({ tag, o
         <Text style={styles.tagText}>{tag.name}</Text>
       </Pressable>
     </View>
-  )
-}
+  );
+};
 
 const TagList: React.FC<{ onTagsSelected: (tags: number[]) => void }> = ({ onTagsSelected }) => {
   const [selectedTags, setSelectedTags] = useState<number[]>([]); // 선택된 태그의 ID를 저장하는 상태
@@ -53,7 +53,7 @@ const TagList: React.FC<{ onTagsSelected: (tags: number[]) => void }> = ({ onTag
   );
 };
 
-const SearchModal: React.FC<SearchModalProps> = ({ visible, onClose, onTagsSelected }) => {
+const SearchModal: React.FC<SearchModalProps> = ({ onTagsSelected }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -61,20 +61,14 @@ const SearchModal: React.FC<SearchModalProps> = ({ visible, onClose, onTagsSelec
       <Modal
         animationType="none"
         transparent={true}
-        visible={visible}
-        onRequestClose={() => {
-          onClose();
-        }}>
+        visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalText}>검색</Text>
               <Pressable
                 style={[styles.button]}
-                onPress={() => {
-                  onClose();
-                  setModalVisible(!modalVisible);
-                }}>
+                onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={styles.textStyle}>🔍</Text>
               </Pressable>
             </View>
@@ -161,7 +155,7 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.ExtraSmall,
     padding: 5,
     // borderRadius: 10,
-  }
+  },
 });
 
 export default SearchModal;
