@@ -5,15 +5,15 @@ import { FONTSIZE, COLORS } from "../../shared";
 import { clothList } from "./clothInfo";
 
 interface clothInfo {
-  clothesId: "number",
-  clothesImgUrl: "string",
-  detection: "string",
-  lastWashDate: "string",
-  price: "number"
+  clothesId: number,
+  clothesImgUrl: string,
+  detection: string,
+  lastWashDate: string,
+  price: number,
 }
 
 const ClothInfoScreen: React.FC<{ route: any }> = ({ route }) => {
-  const { clothId } = route.params;
+  const clothId = route.params.id;
   const [ clothesInfo, setClothesInfo ] = useState< clothInfo | null > (null);
 
   useEffect(() => {
@@ -49,6 +49,7 @@ const ClothInfoScreen: React.FC<{ route: any }> = ({ route }) => {
     </View>
     ) : (
       <View>
+        {/* <Text> { clothId } </Text> */}
         <Text>옷 정보를 가져오는 중입니다...</Text>
       </View>
     )}

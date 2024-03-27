@@ -5,11 +5,11 @@ import { FONTSIZE, COLORS } from "../../shared";
 import { presetList } from "./presetInfo";
 
 interface presetInfo {
-  clothesId: "number",
-  clothesImgUrl: "string",
-  detection: "string",
-  lastWashDate: "string",
-  price: "number"
+  clothesId: number,
+  clothesImgUrl: string,
+  detection: string,
+  lastWashDate: string,
+  price: number,
 }
 
 const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {

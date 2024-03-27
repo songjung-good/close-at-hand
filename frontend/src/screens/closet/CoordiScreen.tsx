@@ -9,14 +9,14 @@ import { presetList } from './presetInfo';
 
 // 임시 데이터
 interface presetInfo {
-  presetId: "number",
-  presetName: "string",
-  clothes: "list",
+  presetId: number,
+  presetName: string,
+  clothes: string[],
 }
 
 const CoordiScreen: React.FC = () => {
   const [preset, setPreset] = useState<presetInfo[]>(presetList);
-  const navigation = useNavigation();
+  const navigation = useNavigation<Navigation>();
 
   const handleCreatePreset = () => {
     // 새로운 프리셋을 만들 수 있는 기능 추가

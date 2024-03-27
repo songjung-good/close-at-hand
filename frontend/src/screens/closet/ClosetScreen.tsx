@@ -10,11 +10,11 @@ import { clothList, recommendedClothes } from "./clothInfo";
 
 // 옷 인터페이스
 interface clothInfo {
-  clothesId: "number",
-  clothesImgUrl: "string",
-  detection: "string",
-  lastWashDate: "string",
-  price: "number"
+  clothesId: number,
+  clothesImgUrl: string,
+  detection: string,
+  lastWashDate: string,
+  price: number,
 };
 
 const ClosetScreen: React.FC = () => {

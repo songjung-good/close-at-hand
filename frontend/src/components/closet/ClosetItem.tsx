@@ -6,18 +6,18 @@ import { FONTSIZE, COLORS } from "../../shared";
 
 // 옷 인터페이스
 interface clothInfo {
-  clothesId: "number",
-  clothesImgUrl: "string",
-  detection: "string",
-  lastWashDate: "string",
-  price: "number"
+  clothesId: number,
+  clothesImgUrl: string,
+  detection: string,
+  lastWashDate: string,
+  price: number,
 }
 
 const ClosetItem: React.FC<clothInfo> = ({ clothesId, clothesImgUrl, detection, lastWashDate, price }) => {
   const navigation = useNavigation<Navigation>()
   const handleClothItemClick = () => {
     // ClothInfoScreen으로 이동하는 코드
-    navigation.navigate('cloth', { clothesId }); // ClothInfoScreen으로 cloth의 id 전달
+    navigation.navigate('cloth', { id: clothesId }); // ClothInfoScreen으로 cloth의 id 전달
   };
 
   return (

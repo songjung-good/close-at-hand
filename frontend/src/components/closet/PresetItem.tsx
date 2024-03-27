@@ -6,20 +6,20 @@ import { FONTSIZE, COLORS } from "../../shared";
 
 // 옷 인터페이스
 interface presetInfo {
-  presetId:	"number",
-  presetImgUrl:	"string",
-  presetName:	"string",
-  clothes: "string",
+  id:	number,
+  presetImgUrl:	string,
+  presetName:	string,
+  clothes: string,
 }
 
-const PresetItem: React.FC<presetInfo> = ({ presetId }) => {
+const PresetItem: React.FC<presetInfo> = ({ id }) => {
   const navigation = useNavigation<Navigation>()
   const handlePresetNavigation = () => {
-    navigation.navigate('preset', { presetId });
+    navigation.navigate('preset', { id });
   };
 
   return (
-    <TouchableOpacity onPress={() => handlePresetNavigation(presetId)}>
+    <TouchableOpacity onPress={handlePresetNavigation}>
       <View style={styles.presetContainer}>
         <Text>preset Item</Text>
       </View>
@@ -46,6 +46,11 @@ const styles = StyleSheet.create({
     width: '90%',
     // marginLeft: '5%',
     // width: '30%',
+  },
+  presetContainer: {
+    width: '90%',
+    marginLeft: '5%',
+    marginVertical: '5%',
   },
 });
 
