@@ -19,10 +19,10 @@ public class PresetDto {
         private String presetName;
         @NotEmpty(message = "check userToken")
         private String userToken;
+        private Long[] clothesIdList;
 
         public PresetCommand.InsertCommand toCommand(){
             return PresetCommand.InsertCommand.builder()
-                    .presetImgUrl(presetImgUrl)
                     .presetName(presetName)
                     .userToken(userToken)
                     .build();

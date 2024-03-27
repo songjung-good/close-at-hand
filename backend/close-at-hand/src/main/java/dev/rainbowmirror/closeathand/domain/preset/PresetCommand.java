@@ -16,16 +16,15 @@ public class PresetCommand {
     @ToString
     public static class InsertCommand{
         private final MultipartFile presetImg;
-        @Setter
-        private String presetImgUrl;
-
         private final String presetName;
         private final String userToken;
+        private final Long[] clothesIdList;
         @Setter
         private User user;
+        @Setter
+        private Set<Clothes> clothes;
         public Preset toEntity(){
             return Preset.builder()
-                    .presetImgUrl(presetImgUrl)
                     .presetName(presetName)
                     .user(user)
                     .build();

@@ -51,11 +51,14 @@ public class Preset extends AbstractEntity {
         else this.presetImgUrl = presetImgUrl;
     }
 
-    public void changeImg(String presetImgUrl) {this.presetImgUrl = presetImgUrl;}
+    public void changeImgUrl(String presetImgUrl) {this.presetImgUrl = presetImgUrl;}
     public void changeName(String presetName) {this.presetName = presetName;}
 
     public void addClothes(Set<Clothes> clothes){
         this.clothes.addAll(clothes);
     }
 
+    public String getFilename(){
+        return "preset/" + presetId;
+    }
 }
