@@ -24,7 +24,7 @@ const ClosetItem: React.FC<clothInfo> = ({ clothesId, clothesImgUrl, detection, 
     <TouchableOpacity onPress={handleClothItemClick}>
       <View style={styles.clothesItem}>
         <Image source={{ uri: clothesImgUrl }} style={{ width: 50, height: 50, borderRadius: 50 }} />
-        <Text style={styles.clothesText}>{detection}</Text>
+        <Text style={styles.clothesText} numberOfLines={1}>{detection}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -47,8 +47,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
-    // marginLeft: '5%',
-    // width: '30%',
   },
 });
 

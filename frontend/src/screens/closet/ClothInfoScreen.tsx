@@ -43,7 +43,7 @@ const ClothInfoScreen: React.FC<{ route: any }> = ({ route }) => {
         {/* <Text style={styles.infoText}>브랜드: {clothInfo.brand}</Text> */}
         <Text style={styles.infoText}>종류: {clothesInfo.detection}</Text>
         <Text style={styles.infoText}>가격: {clothesInfo.price}원</Text>
-        <Text style={styles.infoText}>마지막 세탁일: {clothesInfo.lastWashDate}원</Text>
+        <Text style={styles.infoText}>마지막 세탁일: {clothesInfo.lastWashDate}</Text>
         {/* <Text style={styles.infoText}>소재: {clothInfo.material}</Text> */}
       </ScrollView>
     </View>

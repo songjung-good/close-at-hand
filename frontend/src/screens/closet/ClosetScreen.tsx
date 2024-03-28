@@ -69,21 +69,19 @@ const ClosetScreen: React.FC = () => {
     });
   
     return (
-      <View>
-        <FlatList
-          numColumns={3}
-          contentContainerStyle={styles.flatListContent}
-          data={filteredClothes}
-          renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
-          keyExtractor={(item) => item.clothesId.toString()}
-        />
-      </View>
+      <FlatList
+        numColumns={3}
+        contentContainerStyle={styles.flatListContent}
+        data={filteredClothes}
+        renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
+        keyExtractor={(item) => item.clothesId.toString()}
+      />
     );
   };
 
   return (
     <View>
-      <View style={styles.listDiv}>
+      <View style={styles.recommendlistDiv}>
         <View style={styles.header}>
           <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
             {/* 검색 버튼 */}
@@ -93,7 +91,7 @@ const ClosetScreen: React.FC = () => {
         </View>
         <RenderRecommendedClothes />
       </View>
-      <View style={styles.listDiv}>
+      <View style={styles.clotheslistDiv}>
         <Text style={styles.clothesTitle}>옷장</Text>
         <View style={styles.clothesDiv}>
           <RenderClothes />
@@ -122,7 +120,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 10,
   },
-  listDiv: {
+  recommendlistDiv: {
+    width: '90%',
+    marginLeft: '5%',
+    marginVertical: '5%',
+  },
+  clotheslistDiv: {
     width: '90%',
     marginLeft: '5%',
     marginVertical: '5%',
