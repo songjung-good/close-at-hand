@@ -47,7 +47,6 @@ const App: React.FC<Props> = ({ readyNow }) => {
 					notificationJson,
 				) as NotificationType;
 				Object.entries(notificationSettings).forEach(([key, value]) => {
-					console.log(key, value);
 					if (key === "CloseAtHandHomeAlarm" && !value) {
 						deleteNotification(key);
 					} else if (key === "CloseAtHandHomeAlarm") {

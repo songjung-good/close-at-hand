@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { COLORS, FONTSIZE } from "../../shared";
 import { ROW } from "../../shared";
+import { countLaundries } from "./API";
 
 interface TitleProps {
 	title: string;
@@ -23,15 +24,18 @@ interface widget {
 }
 
 const Basket: React.FC<widget> = ({ onPress }) => {
+	const count = countLaundries();
+	const full = require("../../../assets/image/laundry-basket-full.png");
+	const empty = require("../../../assets/image/laundry-basket-empty.png");
 	return (
 		<Pressable
 			style={styles.container}
 			onPress={onPress.bind(null, "laundryMain")}
 		>
-			<Text style={[styles.text, { fontSize: FONTSIZE.Large }]}>{50}%</Text>
+			<Text style={[styles.text, { fontSize: FONTSIZE.Large }]}>{count}개</Text>
 			<Image
 				style={[styles.image, styles.center]}
-				source={require("../../../assets/image/laundry-basket-full.png")}
+				source={count > 10 ? full : empty}
 			/>
 			<Title title="빨래 바구니" />
 		</Pressable>
@@ -68,7 +72,7 @@ const HomeInfo = () => {
 		if (title === "closet") {
 			navigation.navigate("1", { screen: title });
 		} else {
-			navigation.navigate("2", { screen: title });
+			navigation.navigate("2", { screen: title, params: { fromNoti: false } });
 		}
 	}
 	return (

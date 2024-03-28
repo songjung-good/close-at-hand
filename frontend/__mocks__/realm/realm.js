@@ -43,16 +43,12 @@ export default class Realm {
 		const modelObject = object;
 		const properties = this.schema[schemaName].properties;
 		Object.keys(properties).forEach((key) => {
-			if (modelObject[key] && modelObject[key].model) {
+			if (modelObject[key]?.model) {
 				this.data[modelObject[key].model][modelObject[key].id] = this.create(
 					modelObject[key].model,
 					modelObject[key],
 				);
-			} else if (
-				modelObject[key] &&
-				modelObject[key].length &&
-				modelObject[key][0].model
-			) {
+			} else if (modelObject[key]?.length && modelObject[key][0].model) {
 				modelObject[key].forEach((obj) => {
 					this.data[modelObject[key][0].model][obj.id] = obj;
 				});

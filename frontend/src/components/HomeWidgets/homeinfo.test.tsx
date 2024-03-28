@@ -1,13 +1,20 @@
 import { render } from "@testing-library/react-native";
 import HomeInfo, { Title } from "./HomeInfo";
 import "@react-navigation/native";
+import "@realm/react";
+import "./API";
 
 jest.mock("@react-navigation/native");
+jest.mock("@realm/react");
+jest.mock("./API", () => ({
+	...jest.requireActual("@realm/react"),
+	countLaundries: jest.fn().mockReturnValue(0),
+}));
 
 describe("Bascket 컴포넌트", () => {
-	test("% 텍스트가 렌더링되는지 확인", () => {
+	test("개수 텍스트가 렌더링되는지 확인", () => {
 		const { getByText } = render(<HomeInfo />);
-		expect(getByText(/%/)).toBeDefined();
+		expect(getByText(/\d+/)).toBeDefined();
 	});
 });
 

@@ -10,7 +10,7 @@ const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 	route,
 }) => {
 	const [isModalOpen, setIsModalOpen] = useState(
-		route?.params.fromNoti ?? false,
+		route.params?.fromNoti ?? false,
 	);
 
 	console.log(isModalOpen);
@@ -51,7 +51,7 @@ const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 			</View>
 			<Image
 				style={styles.laudaryBasket}
-				source={require("../../../assets/image/laundry_Bascket.png")}
+				source={require("../../../assets/image/laundry_Basket.png")}
 			/>
 		</View>
 	);

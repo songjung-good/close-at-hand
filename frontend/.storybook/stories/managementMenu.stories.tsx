@@ -11,7 +11,7 @@ type Story = StoryObj<typeof meta>;
 
 export const 옷관리_메뉴 = {
 	args: {
-		image: require("../../assets/image/laundry_Bascket.png"),
+		image: require("../../assets/image/laundry_Basket.png"),
 		title: "빨래 바구니",
 		backgroundColor: "SkyBlue",
 	},

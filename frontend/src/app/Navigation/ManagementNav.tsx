@@ -11,7 +11,7 @@ import {
 
 export type ManagementParamList = {
 	managementMain: undefined;
-	laundryMain: { fromNoti?: boolean };
+	laundryMain: { fromNoti: boolean };
 	history: undefined;
 	recentCoordyList: undefined;
 	recentCoordyDetail: { outfitId: number };
