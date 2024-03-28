@@ -8,14 +8,14 @@ import { PresetItem } from '../../components';
 import { presetList } from './presetInfo';
 
 // 임시 데이터
-interface presetInfo {
+interface presetItem {
   presetId: number,
   presetName: string,
   clothes: string[],
 }
 
 const CoordiScreen: React.FC = () => {
-  const [preset, setPreset] = useState<presetInfo[]>(presetList);
+  const [preset, setPreset] = useState<presetItem[]>(presetList);
   const navigation = useNavigation<Navigation>();
 
   const handleCreatePreset = () => {
@@ -26,17 +26,8 @@ const CoordiScreen: React.FC = () => {
     return (
       <FlatList
         data={presetList}
+        renderItem={({ item }) => <PresetItem key={item.presetId} {...item} />}
         keyExtractor={(item) => item.presetId.toString()}
-        renderItem={({ item }) => {
-          return (
-            <PresetItem
-              preset={item}
-              onPress={() => {
-                // 프리셋을 누르면 해당 프리셋의 옷 목록을 보여줄 수 있는 기능 추가
-              }}
-            />
-          );
-        }}
       />
     );
   }

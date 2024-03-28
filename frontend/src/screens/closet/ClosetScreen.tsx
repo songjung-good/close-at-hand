@@ -21,7 +21,6 @@ const ClosetScreen: React.FC = () => {
   const [clothes, setClothes] = useState<clothInfo[]>(clothList);
   const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>(recommendedClothes);
   // 검색 모달과 태그
-  // const [searchModalVisible, setSearchModalVisible] = useState(false); // 검색 모달의 가시성 상태를 관리합니다.
   const [selectedTags, setSelectedTags] = useState<any[]>([]);
   
   useEffect(() => {
@@ -107,7 +106,7 @@ const ClosetScreen: React.FC = () => {
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
-    justifyContent: "space-between", // 검색 버튼을 오른쪽으로 정렬합니다.
+    justifyContent: "space-between",
     alignItems: "center", // 검색 버��을 중��으로 정��합니다.
     padding: 10,
   },

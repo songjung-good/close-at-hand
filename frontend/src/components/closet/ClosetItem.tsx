@@ -11,7 +11,7 @@ interface clothInfo {
   detection: string,
   lastWashDate: string,
   price: number,
-}
+};
 
 const ClosetItem: React.FC<clothInfo> = ({ clothesId, clothesImgUrl, detection, lastWashDate, price }) => {
   const navigation = useNavigation<Navigation>()

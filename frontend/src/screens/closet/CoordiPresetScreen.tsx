@@ -5,15 +5,18 @@ import { FONTSIZE, COLORS } from "../../shared";
 import { presetList } from "./presetInfo";
 
 interface presetInfo {
-  clothesId: number,
-  clothesImgUrl: string,
-  detection: string,
-  lastWashDate: string,
-  price: number,
+  presetId: number,
+  clothes: [
+    clothesId: number,
+    clothesImgUrl: string,
+    detection: string,
+    lastWashDate: string,
+    price: number,
+  ]
 }
 
 const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
-  const { clothId } = route.params;
+  const presetId = route.params.id;
   const [ presetInfo, setPresetInfo ] = useState< presetInfo | null > (null);
 
   const handlePresetNavigation = (presetId: number) => {
@@ -26,7 +29,7 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
     // clothId를 기반으로 해당 옷 정보를 가져옵니다.
     const fetchClothInfo = () => {
       // clothList에서 clothId와 일치하는 옷 정보를 찾습니다.
-      const foundCloth = clothList.find((cloth) => cloth.clothesId === clothId);
+      const foundCloth = presetList.find((cloth) => cloth.clothesId === clothId);
       if (foundCloth) {
         // 옷 정보를 설정합니다.
         setClothesInfo(foundCloth);
