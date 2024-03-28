@@ -1,6 +1,7 @@
 package dev.rainbowmirror.closeathand.interfaces.preset;
 
 import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
 import dev.rainbowmirror.closeathand.domain.preset.PresetCommand;
 import dev.rainbowmirror.closeathand.domain.preset.PresetInfo;
 import jakarta.validation.constraints.NotEmpty;
@@ -37,7 +38,7 @@ public class PresetDto {
         private final Long presetId;
         private final String presetImgUrl;
         private final String presetName;
-        private final Set<Clothes> clothes;
+        private final Set<ClothesInfo> clothes;
 
         public InsertResponseDto(PresetInfo presetInfo){
             this.presetId = presetInfo.getPresetId();

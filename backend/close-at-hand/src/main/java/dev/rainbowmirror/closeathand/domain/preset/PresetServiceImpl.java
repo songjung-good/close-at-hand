@@ -35,6 +35,7 @@ public class PresetServiceImpl implements PresetService{
         Preset preset = Preset.builder()
                 .user(user)
                 .clothes(new HashSet<>())
+                .presetName(command.getPresetName())
                 .build();
 
         System.out.println("1111 ");

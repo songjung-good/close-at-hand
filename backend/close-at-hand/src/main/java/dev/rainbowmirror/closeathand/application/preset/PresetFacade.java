@@ -1,7 +1,5 @@
 package dev.rainbowmirror.closeathand.application.preset;
 
-import dev.rainbowmirror.closeathand.domain.OmniCommerceService;
-import dev.rainbowmirror.closeathand.domain.S3UploadService;
 import dev.rainbowmirror.closeathand.domain.preset.PresetCommand;
 import dev.rainbowmirror.closeathand.domain.preset.PresetInfo;
 import dev.rainbowmirror.closeathand.domain.preset.PresetService;
@@ -10,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 
 @Slf4j
