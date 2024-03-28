@@ -4,10 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 
 import { COLORS, FONTSIZE } from '../../shared/';
 import { PresetItem } from '../../components';
+import { NewPreset } from '../../components';
+
 // 임시데이터
 import { presetList } from './presetInfo';
 
-// 임시 데이터
 interface presetItem {
   presetId: number,
   presetName: string,
@@ -17,9 +18,10 @@ interface presetItem {
 const CoordiScreen: React.FC = () => {
   const [preset, setPreset] = useState<presetItem[]>(presetList);
   const navigation = useNavigation<Navigation>();
+  const [isModalVisible, setIsModalVisible] = useState(false); // 모달 상태 관리
 
   const handleCreatePreset = () => {
-    // 새로운 프리셋을 만들 수 있는 기능 추가
+    setIsModalVisible(true); // 모달 열기
   };
 
   const RenderPresetList: React.FC = () => {
@@ -43,6 +45,10 @@ const CoordiScreen: React.FC = () => {
       <View>
         <RenderPresetList />
       </View>
+      <NewPreset // 모달 내부에 CoordiNewScreen 컴포넌트 렌더링
+        isVisible={isModalVisible} // 모달 상태에 따라 표시 여부 결정
+        onClose={() => setIsModalVisible(false)} // 닫기 기능 전달
+      />
     </View>
   );
 };

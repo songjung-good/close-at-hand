@@ -6,7 +6,7 @@ export { default as ClosetMainScreen } from "./closet/ClosetMainScreen";
 export { default as ClothInfoScreen } from "./closet/ClothInfoScreen";
 export { default as CoordiPresetScreen } from "./closet/CoordiPresetScreen";
 
-//옷 관리
+// 옷 관리
 export { default as ManagementMainScreen } from "./management/ManagementMainScreen";
 // 옷 관리 - 옷 기록
 export { default as HistoryMainScreen } from "./management/HistoryMainScreen";

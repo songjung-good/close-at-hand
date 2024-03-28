@@ -1,7 +1,9 @@
 // 옷장
 export { default as ClosetItem } from "./closet/ClosetItem";
 export { default as SearchModal } from "./closet/SearchModal";
-export { default as PresetItem } from "./closet/PresetItem"
+export { default as PresetItem } from "./closet/PresetItem";
+export { default as NewPreset } from "./closet/NewPreset";
+
 // 홈
 export { default as MirrorConnection } from "./HomeWidgets/MirrorConnection";
 export { default as TodayHome } from "./HomeWidgets/TodayHome";

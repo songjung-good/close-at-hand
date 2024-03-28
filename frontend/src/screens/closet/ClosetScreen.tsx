@@ -29,7 +29,6 @@ const ClosetScreen: React.FC = () => {
     //   const response = API.get("/clothes/{clothes.id}");
     //   setClothes(response.data);
     // };
-
     // fetchData();
   // }, []);
   }, []);

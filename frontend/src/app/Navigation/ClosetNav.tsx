@@ -6,6 +6,7 @@ export type ClosetParamList = {
 	closet: undefined;
 	cloth: {id: number};
 	preset: {id: number}
+	newpreset: undefined;
 };
 
 const Stack = createNativeStackNavigator<ClosetParamList>();
