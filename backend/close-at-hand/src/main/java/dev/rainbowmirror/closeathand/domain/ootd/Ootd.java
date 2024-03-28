@@ -5,10 +5,7 @@ import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
 import dev.rainbowmirror.closeathand.domain.preset.PresetCommand;
 import dev.rainbowmirror.closeathand.domain.user.User;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -30,6 +27,7 @@ public class Ootd extends AbstractEntity {
     private Long ootdId;
 
     @Column(nullable = false)
+    @Setter
     private String ootdImgUrl;
 
     @ManyToMany
@@ -50,7 +48,7 @@ public class Ootd extends AbstractEntity {
         }
         if (!StringUtils.hasLength(ootdImgUrl)) this.ootdImgUrl = "noImage.jpg";
         else this.ootdImgUrl = ootdImgUrl;
-        this.clothes = clothes;
+        if (clothes != null) this.clothes = clothes;
     }
 
     public void updateImg(String ootdImgUrl){

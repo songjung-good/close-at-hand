@@ -16,28 +16,24 @@ public class ClothesCommand {
     @Builder
     @ToString
     public static class CreateCommand {
-        private final String clothesToken = TokenGenrator.randomChracterWithPrefix("clo_");
+        private String clothesToken;  // facade에서 사용하기 때문에
         private final String clothesImgUrl;
         private final MultipartFile clothesImage;
         private final String userToken;
         private final String detection;
         private final ZonedDateTime lastWashDate;
         private final Integer price;
-
+        // 이건 필요없을듯
+//        private final Clothes.Status status;
+//        private final Clothes.Location location;
+        public void newToken(){
+            this.clothesToken = TokenGenrator.randomChracterWithPrefix("clo_");
+        }
         public String getFilename(){
             return "clothes/" + clothesToken;
         }
-        public Clothes toEntity(String clothesImgUrl) {
-            return Clothes.builder()
-                    .clothesImgUrl(clothesImgUrl)
-                    .userToken(userToken)
-                    .detection(detection)
-                    .lastWashDate(lastWashDate)
-                    .price(price)
-                    .build();
-        }
 
-        public Clothes toEntity(User user) {
+        public Clothes toEntity(User user) { // 이건 user 데려가서 연결하기 위해
             return Clothes.builder()
                     .clothesImgUrl(clothesImgUrl)
                     .userToken(userToken)
@@ -45,6 +41,9 @@ public class ClothesCommand {
                     .lastWashDate(lastWashDate)
                     .price(price)
                     .user(user)
+                    .clothesToken(clothesToken)
+//                    .location(location)
+//                    .status(status)
                     .build();
         }
     }

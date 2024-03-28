@@ -6,6 +6,7 @@ import dev.rainbowmirror.closeathand.common.util.TokenGenrator;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
 
 @Slf4j
@@ -83,5 +84,9 @@ public class User extends AbstractEntity {
     }
     public void disable() {
         this.status = Status.DISABLE;
+    }
+
+    public void encodePassword(BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.password = bCryptPasswordEncoder.encode(this.password);
     }
 }

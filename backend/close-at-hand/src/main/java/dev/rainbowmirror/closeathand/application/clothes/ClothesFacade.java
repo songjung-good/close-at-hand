@@ -20,6 +20,7 @@ public class ClothesFacade {
     private final OmniCommerceService omniCommerceService;
 
     public ClothesInfo createClothes(ClothesCommand.CreateCommand createCommand) throws IOException {
+        createCommand.newToken();
         String filename = createCommand.getFilename();
 
         String clothesImgUrl = s3UploadService.saveFile(createCommand.getClothesImage(), filename);
@@ -33,6 +34,7 @@ public class ClothesFacade {
         ClothesInfo clothesInfo = clothesService.createClothes(ClothesCommand.CreateCommand.builder()
                         .userToken(createCommand.getUserToken())
                         .clothesImgUrl(clothesImgUrl)
+                        .clothesToken(createCommand.getClothesToken())
                         .build());
         return clothesInfo;
     }

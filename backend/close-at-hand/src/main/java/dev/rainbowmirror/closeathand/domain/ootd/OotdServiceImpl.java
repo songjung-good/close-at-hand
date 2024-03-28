@@ -1,5 +1,7 @@
 package dev.rainbowmirror.closeathand.domain.ootd;
 
+import dev.rainbowmirror.closeathand.common.exception.EntityNotFoundException;
+import dev.rainbowmirror.closeathand.domain.S3UploadService;
 import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesReader;
 import dev.rainbowmirror.closeathand.domain.user.User;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -22,6 +25,7 @@ public class OotdServiceImpl implements OotdService{
     private final OotdReader ootdReader;
     private final UserReader userReader;
     private final ClothesReader clothesReader;
+    private final S3UploadService s3UploadService;
     @Override
     public List<OotdInfo> getOotds(String userToken) {
         List<OotdInfo> ootdInfoList = new ArrayList<>();
@@ -32,8 +36,10 @@ public class OotdServiceImpl implements OotdService{
     }
 
     @Override
-    public Optional<OotdInfo> getOotd(Long ootdId) {
-        return Optional.empty();
+    public OotdInfo.Detail getOotd(Long ootdId) {
+        Ootd ootd = ootdReader.getOotd(ootdId);
+        OotdInfo.Detail ootdDetail = new OotdInfo.Detail(ootd);
+        return ootdDetail;
     }
 
     @Override
@@ -42,44 +48,44 @@ public class OotdServiceImpl implements OotdService{
                 .withHour(0)
                 .withMinute(0)
                 .withSecond(0);
-        User user = userReader.getUser(userToken);
+
+        // 오늘자 처음 요청인 경우, 빈 Ootd 생성
         Ootd ootd = ootdReader.getOotdBetween(today, today.plusDays(1), userToken)
                 .orElse(Ootd.builder()
-                        .user(user)
+                        .user(userReader.getUser(userToken))
                         .build()
         );
         return new OotdInfo.Detail(ootd);
     }
 
     @Override
-    public OotdInfo saveOotd(OotdCommand.CreateCommand command) {
+    public OotdInfo saveOotd(OotdCommand.CreateCommand command) throws IOException {
         // 오늘날짜
         ZonedDateTime today = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
                 .withHour(0)
                 .withMinute(0)
                 .withSecond(0);
-        // 없을경우 만들 ootd >  builder로 고쳐야 함
-        User user = userReader.getUser(command.getUserToken());
-        Ootd initOotd = command.toEntity(user,new HashSet<>());
-
-        Ootd ootd = ootdReader.getOotdBetween(today, today.plusDays(1), user.getUserToken())
-                .orElse(initOotd);
+        // 오늘자 이미 있으면 갱신, 아니면 새로 추가
+        Ootd ootd = ootdReader.getOotdBetween(today, today.plusDays(1), command.getUserToken())
+                .orElse(Ootd.builder()
+                        .user(userReader.getUser(command.getUserToken()))
+                        .clothes(new HashSet<>())
+                        .build());
+        // 옷 등록
         ootd.getClothes().clear();
         for (Long clothesId: command.getClothesIdList()){
             ootd.addClothes(clothesReader.findClothes(clothesId));
         }
-
-        return new OotdInfo(ootdStore.store(ootd));
+        ootdStore.store(ootd);
+        // 이미지 저장
+        String ootdImgUrl = s3UploadService.saveFile(command.getOotdImg(), command.getFilename(ootd.getOotdId()));
+        ootd.setOotdImgUrl(ootdImgUrl);
+        return new OotdInfo(ootd);
     }
 
     @Override
-    public OotdInfo deleteOotd(Long ootdId) {
-        return null;
-    }
-
-    @Override
-    public OotdInfo updateOotd(OotdCommand.UpdateCommand command) {
-        return null;
+    public void deleteOotd(Long ootdId) {
+        ootdStore.delete(ootdId);
     }
 
 }

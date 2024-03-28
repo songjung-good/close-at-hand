@@ -14,13 +14,11 @@ public class PresetInfo {
     private final String presetImgUrl;
     private final String presetName;
     private final Set<Clothes> clothes;
-    private final Long userId;
 
     public PresetInfo(Preset preset) {
         this.presetId = preset.getPresetId();
         this.presetImgUrl = preset.getPresetImgUrl();
         this.presetName = preset.getPresetName();
         this.clothes = preset.getClothes();
-        this.userId = preset.getUser().getUserId();
     }
 }
