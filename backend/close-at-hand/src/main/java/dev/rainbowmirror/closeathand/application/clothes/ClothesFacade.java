@@ -5,11 +5,13 @@ import dev.rainbowmirror.closeathand.domain.S3UploadService;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesService;
+import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroupInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -42,5 +44,9 @@ public class ClothesFacade {
     public ClothesInfo findClothes(Long clothesId) {
         ClothesInfo clothesInfo = clothesService.findClothes(clothesId);
         return clothesInfo;
+    }
+
+    public List<ClothesTagGroupInfo> findAllClothesTag(String userToken){
+        return clothesService.findAllClothesTag(userToken);
     }
 }
