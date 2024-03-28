@@ -16,7 +16,7 @@ public class ClothesCommand {
     @Builder
     @ToString
     public static class CreateCommand {
-        private final String clothesToken = TokenGenrator.randomChracterWithPrefix("clo_"); // facade에서 사용하기 때문에
+        private String clothesToken;  // facade에서 사용하기 때문에
         private final String clothesImgUrl;
         private final MultipartFile clothesImage;
         private final String userToken;
@@ -26,7 +26,9 @@ public class ClothesCommand {
         // 이건 필요없을듯
 //        private final Clothes.Status status;
 //        private final Clothes.Location location;
-
+        public void newToken(){
+            this.clothesToken = TokenGenrator.randomChracterWithPrefix("clo_");
+        }
         public String getFilename(){
             return "clothes/" + clothesToken;
         }
@@ -39,7 +41,7 @@ public class ClothesCommand {
                     .lastWashDate(lastWashDate)
                     .price(price)
                     .user(user)
-//                    .clothesToken(clothesToken)
+                    .clothesToken(clothesToken)
 //                    .location(location)
 //                    .status(status)
                     .build();

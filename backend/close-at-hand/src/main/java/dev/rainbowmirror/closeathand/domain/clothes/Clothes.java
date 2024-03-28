@@ -1,20 +1,24 @@
 package dev.rainbowmirror.closeathand.domain.clothes;
 
 import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import dev.rainbowmirror.closeathand.common.AbstractEntity;
 import dev.rainbowmirror.closeathand.common.util.TokenGenrator;
+import dev.rainbowmirror.closeathand.domain.clothes.clothesTag.ClothesTag;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroup;
 import dev.rainbowmirror.closeathand.domain.preset.Preset;
 import dev.rainbowmirror.closeathand.domain.user.User;
 import jakarta.persistence.*;
+import kong.unirest.HttpResponse;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 // entity
 @Slf4j
@@ -57,7 +61,6 @@ public class Clothes extends AbstractEntity {
     public enum Location {
         ENABLE("옷장"), DISABLE("세탁 바구니");
 
-
         private final String description;
     }
 
@@ -97,13 +100,10 @@ public class Clothes extends AbstractEntity {
 
         if (StringUtils.hasLength(clothesToken)){
             this.clothesToken = clothesToken;
-            this.status = status; // 이미 token이 있다면 status는 그대로
         }
-        // 생성은 command에서 일단 할거니 주석처리 해둠
         else {
             final String CLOTHES_PREFIX = "clo_";
             this.clothesToken = TokenGenrator.randomChracterWithPrefix(CLOTHES_PREFIX);
-            this.status = Status.BASIC;
         }
 
         // 최초 등록 시 위치를 옷장으로
@@ -113,7 +113,16 @@ public class Clothes extends AbstractEntity {
         this.detection = detection;
         this.lastWashDate = lastWashDate;
         this.price = price;
+        this.status = Status.BASIC;
     }
 
-    
+
+
+
+    // db를 건드릴거니까 여기(엔티티)에 옷 업데이트를 만든다.
+    public void updateClothes(List<ClothesTagGroup> list) {
+        clothesTagGroupList = list;
+        // status 변경
+        aidone();
+    }
 }
