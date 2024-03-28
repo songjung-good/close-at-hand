@@ -1,6 +1,6 @@
 import { API } from "../../shared";
 
-interface FetchSignUp {
+interface FetchSignUpInterface {
 	accountId: string;
 	password: string;
 	nickname: string;
@@ -10,7 +10,7 @@ export async function fetchSignUp({
 	accountId,
 	password,
 	nickname,
-}: FetchSignUp) {
+}: FetchSignUpInterface) {
 	return API.post("user", { accountId, password, nickname })
 		.then(() => {
 			return true;

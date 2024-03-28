@@ -4,11 +4,7 @@ import "@react-navigation/native";
 import HistoryMainScreen from "./HistoryMainScreen";
 
 jest.mock("@react-navigation/native");
-jest.mock("../../components", () => {
-	return {
-		ClothesHistoryList: jest.fn(() => 10),
-	};
-});
+jest.mock("../../components");
 
 describe("HistoryMainScreen", () => {
 	it("스냅샷 테스트", () => {

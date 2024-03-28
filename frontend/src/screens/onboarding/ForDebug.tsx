@@ -1,31 +1,42 @@
 import { StyledButton } from "../../components";
 
 const ForDebug: React.FC<RootNavigationProp> = ({ navigation }) => {
-	function hanldeLogin() {
+	function handleLogin() {
 		navigation.navigate("login");
 	}
 
-	function hanldeBluetooth() {
-		navigation.navigate("bluetooth");
+	function handleBluetooth() {
+		navigation.navigate("3", { screen: "bluetooth" });
 	}
 
 	function handleLaundry() {
-		navigation.navigate("laundryMain");
+		navigation.navigate("2", { screen: "laundryMain" });
+	}
+
+	function handleAddLaundry() {
+		navigation.navigate("2", {
+			screen: "laundryMain",
+			params: { fromNoti: true },
+		});
 	}
 
 	return (
 		<>
 			<StyledButton
 				title="로그인 화면으로"
-				onPress={hanldeLogin}
+				onPress={handleLogin}
 			></StyledButton>
 			<StyledButton
 				title="블루투스 화면으로"
-				onPress={hanldeBluetooth}
+				onPress={handleBluetooth}
 			></StyledButton>
 			<StyledButton
 				title="세탁 바구니 화면으로"
 				onPress={handleLaundry}
+			></StyledButton>
+			<StyledButton
+				title="세탁물 추가 화면으로"
+				onPress={handleAddLaundry}
 			></StyledButton>
 		</>
 	);

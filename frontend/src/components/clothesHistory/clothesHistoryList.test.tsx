@@ -3,11 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import "@react-navigation/native";
 
 import ClothesHistoryList from "./ClothesHistoryList";
-import Card from "../cordiCard/CordiCard";
+import Card from "../coordyCard/CoordyCard";
 import { ClothesFetchListResponse } from "../types";
 
 jest.mock("@react-navigation/native");
 jest.mock("@tanstack/react-query");
+
+const mockUsequery = useQuery as jest.Mock;
 
 describe("ClothesHistoryList component", () => {
 	it("렌더링 테스트", async () => {
@@ -17,7 +19,7 @@ describe("ClothesHistoryList component", () => {
 		}));
 
 		// useQuery를 mocking
-		(useQuery as jest.Mock).mockReturnValue({
+		mockUsequery.mockReturnValue({
 			data: mockData,
 			isError: false,
 			error: null,
@@ -40,7 +42,7 @@ describe("ClothesHistoryList component", () => {
 		const mockError = new Error("네트워크 에러");
 
 		// 에러 상황의 useQuery를 mocking
-		(useQuery as jest.Mock).mockReturnValue({
+		mockUsequery.mockReturnValue({
 			data: null,
 			isError: true,
 			error: mockError,

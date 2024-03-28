@@ -2,7 +2,7 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { NavigationContainer } from "@react-navigation/native";
 
-import CordiCard from "../../src/components/cordiCard/CordiCard";
+import CordiCard from "../../src/components/coordyCard/CoordyCard";
 
 const meta: Meta = {
 	component: CordiCard,

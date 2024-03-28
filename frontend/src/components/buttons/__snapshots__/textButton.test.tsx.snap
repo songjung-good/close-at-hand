@@ -35,6 +35,7 @@ exports[`TextButton 스냅샷 테스트 1`] = `
     [
       {
         "alignItems": "center",
+        "alignSelf": "center",
         "justifyContent": "center",
       },
       false,

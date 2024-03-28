@@ -1,10 +1,7 @@
-interface CotainsClothes {
-	clothesId: number;
-	clothesImgUrl: string;
-}
+import { Clothes } from "../types";
 
 export interface CoordyDetail {
-	contains: CotainsClothes[];
+	contains: Clothes[];
 	outfitUrl: string;
 	weather: string;
 	date: string;

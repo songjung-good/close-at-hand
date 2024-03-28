@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import CordiCard from "../cordiCard/CordiCard";
+import CordiCard from "../coordyCard/CoordyCard";
 import { useQuery } from "@tanstack/react-query";
 import { fetchList } from "./API";
 import { placeholderData } from "./constant";

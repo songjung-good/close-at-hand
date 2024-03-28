@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import LaudryButton from "../../src/components/buttons/LaudryButton";
+import LaundryButton from "../../src/components/buttons/LaundryButton";
 
 const meta = {
-	component: LaudryButton,
+	component: LaundryButton,
 	title: "버튼",
-} satisfies Meta<typeof LaudryButton>;
+} satisfies Meta<typeof LaundryButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

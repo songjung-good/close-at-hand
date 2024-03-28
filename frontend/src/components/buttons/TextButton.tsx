@@ -3,7 +3,7 @@ import { COLORS } from "../../shared/styles/STYLES";
 
 interface Props {
 	text: string;
-	onPress: () => void;
+	onPress(): void;
 }
 
 const TextButton: React.FC<Props> = ({ text, onPress }) => {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 		opacity: 0.75,
 	},
 	text: {
-		color: COLORS.PupleBlue,
+		color: COLORS.PurpleBlue,
 		backgroundColor: COLORS.White,
 	},
 });

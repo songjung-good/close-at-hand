@@ -5,7 +5,7 @@ const ManagementMenuList = () => {
 	const navigation = useNavigation<Navigation>();
 
 	function handleLaundryPress() {
-		navigation.navigate("laundryMain");
+		navigation.navigate("laundryMain", { fromNoti: false });
 	}
 
 	function handleHistoryPress() {
@@ -17,12 +17,12 @@ const ManagementMenuList = () => {
 				title="빨래 바구니"
 				onPress={handleLaundryPress}
 				backgroundColor="PaleBlue"
-				image={require("../../../assets/image/laundry_Bascket.png")}
+				image={require("../../../assets/image/laundry_Basket.png")}
 			/>
 			<Menu
 				title="옷 관리"
 				onPress={handleHistoryPress}
-				backgroundColor="PupleBlue"
+				backgroundColor="PurpleBlue"
 				image={require("../../../assets/image/diary.png")}
 			/>
 		</>

@@ -11,8 +11,8 @@ describe("Management-ManagementList", () => {
 	it("빨래바구니와 옷 관리 진입 버튼이 렌더링됩니다.", () => {
 		const { getByText } = render(<ManagementMenuList />);
 
-		expect(getByText("빨래 바구니")).toBeTruthy();
-		expect(getByText("옷 관리")).toBeTruthy();
+		expect(getByText("빨래 바구니")).toBeDefined();
+		expect(getByText("옷 관리")).toBeDefined();
 	});
 
 	it("버튼을 누르면 onPress 함수가 실행됩니다.", () => {

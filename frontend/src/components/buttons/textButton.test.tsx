@@ -20,7 +20,7 @@ describe("TextButton", () => {
 
 		const text = getByText(TEXT);
 
-		expect(text).toBeTruthy();
+		expect(text).toBeDefined();
 	});
 
 	it("버튼을 누르면 onPress 함수가 실행됩니다.", () => {

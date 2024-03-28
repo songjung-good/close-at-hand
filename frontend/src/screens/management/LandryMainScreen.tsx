@@ -1,30 +1,49 @@
+import { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { LaudryButton } from "../../components";
 
-const LandryMainScreen: React.FC<RootNavigationProp> = ({ navigation }) => {
+import { LaundryButton } from "../../components";
+import { ROW } from "../../shared";
+import { DoLaundry } from "../../components";
+
+const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
+	navigation,
+	route,
+}) => {
+	const [isModalOpen, setIsModalOpen] = useState(
+		route.params?.fromNoti ?? false,
+	);
+
+	console.log(isModalOpen);
+
 	function handleButtonPress(basket: string) {
-		navigation.navigate("laundaryBasket", { basket });
+		navigation.navigate("laundryBasket", { basket });
 	}
+
+	function HandleModalButtonPress() {
+		setIsModalOpen(false);
+	}
+
 	return (
 		<View>
-			<View style={styles.row}>
+			{isModalOpen && <DoLaundry onPress={HandleModalButtonPress} />}
+			<View style={[ROW, styles.center]}>
 				<Image
 					style={styles.image}
 					source={require("../../../assets/image/foam.png")}
 				/>
-				<LaudryButton
+				<LaundryButton
 					title="일반 세탁"
 					bubble1={true}
 					onPress={handleButtonPress}
 				/>
 			</View>
-			<View style={styles.row}>
-				<LaudryButton
+			<View style={[ROW, styles.center]}>
+				<LaundryButton
 					title="울 / 캐시미어"
 					bubble1={true}
 					onPress={handleButtonPress}
 				/>
-				<LaudryButton
+				<LaundryButton
 					title="기능성 소재"
 					bubble1={false}
 					onPress={handleButtonPress}
@@ -32,7 +51,7 @@ const LandryMainScreen: React.FC<RootNavigationProp> = ({ navigation }) => {
 			</View>
 			<Image
 				style={styles.laudaryBasket}
-				source={require("../../../assets/image/laundry_Bascket.png")}
+				source={require("../../../assets/image/laundry_Basket.png")}
 			/>
 		</View>
 	);
@@ -41,8 +60,7 @@ const LandryMainScreen: React.FC<RootNavigationProp> = ({ navigation }) => {
 export default LandryMainScreen;
 
 const styles = StyleSheet.create({
-	row: {
-		flexDirection: "row",
+	center: {
 		justifyContent: "space-around",
 		alignItems: "center",
 		marginVertical: 10,

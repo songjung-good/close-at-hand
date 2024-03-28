@@ -1,30 +1,61 @@
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import {
+	NavigationContainer,
+	DefaultTheme,
+	createNavigationContainerRef,
+} from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-import HomeNav from "./HomeNav";
-import ClosetNav from "./ClosetNav";
-import ManagementNav from "./ManagementNav";
-import SettingsNav from "./SettingsNav";
+import HomeNav, { HomeParamList } from "./HomeNav";
+import ClosetNav, { ClosetParamList } from "./ClosetNav";
+import ManagementNav, { ManagementParamList } from "./ManagementNav";
+import SettingsNav, { SettingsParamList } from "./SettingsNav";
 
 import OnBoardingNav from "./OnBoardingNav";
-import { COLORS } from "../../shared";
+import { COLORS, notification } from "../../shared";
+import { useEffect } from "react";
 
 // type
 export type RootParamList = {
-	"0": undefined;
-	"1": undefined;
-	"2": undefined;
-	"3": undefined;
+	"0": {
+		screen: keyof HomeParamList;
+		params?: HomeParamList[keyof HomeParamList];
+	};
+	"1": {
+		screen: keyof ClosetParamList;
+		params?: ClosetParamList[keyof ClosetParamList];
+	};
+	"2": {
+		screen: keyof ManagementParamList;
+		params?: ManagementParamList[keyof ManagementParamList];
+	};
+	"3": {
+		screen: keyof SettingsParamList;
+		params?: SettingsParamList[keyof SettingsParamList];
+	};
 	onboarding: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootParamList>();
 
+export const navigationRef = createNavigationContainerRef<RootParamList>();
+
 const AppNav = () => {
+	useEffect(() => {
+		if (notification.id && navigationRef.isReady()) {
+			if (notification.id === "CloseAtHandHomeAlarm") {
+				navigationRef.navigate("2", {
+					screen: "laundryMain",
+					params: { fromNoti: true },
+				});
+			}
+		}
+	}, []);
 	return (
 		<NavigationContainer
+			ref={navigationRef}
 			theme={{
 				...DefaultTheme,
 				colors: { ...DefaultTheme.colors, background: "#fff" },
@@ -45,7 +76,7 @@ const AppNav = () => {
 							<Ionicons
 								name="home"
 								size={size}
-								color={focused ? COLORS.PupleBlue : COLORS.Black}
+								color={focused ? COLORS.PurpleBlue : COLORS.Black}
 							/>
 						),
 					}}
@@ -59,7 +90,7 @@ const AppNav = () => {
 							<FontAwesome5
 								name={focused ? "door-open" : "door-closed"}
 								size={size}
-								color={focused ? COLORS.PupleBlue : COLORS.Black}
+								color={focused ? COLORS.PurpleBlue : COLORS.Black}
 							/>
 						),
 					}}
@@ -73,7 +104,7 @@ const AppNav = () => {
 							<FontAwesome5
 								name={focused ? "box-open" : "box"}
 								size={size}
-								color={focused ? COLORS.PupleBlue : COLORS.Black}
+								color={focused ? COLORS.PurpleBlue : COLORS.Black}
 							/>
 						),
 					}}
@@ -87,7 +118,7 @@ const AppNav = () => {
 							<Ionicons
 								name="settings"
 								size={size}
-								color={focused ? COLORS.PupleBlue : COLORS.Black}
+								color={focused ? COLORS.PurpleBlue : COLORS.Black}
 							/>
 						),
 					}}

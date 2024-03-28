@@ -1,43 +1,46 @@
 import { useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { FONTSIZE } from "../../shared";
-import { Bascket } from "../../components";
+import { LaundryBasket } from "../../components";
 
-const LaundryBasket: React.FC<RootScreenProp<"laundaryBasket">> = ({
+const LaundryBasketScreen: React.FC<RootScreenProp<"laundryBasket">> = ({
 	navigation,
 	route,
 }) => {
+	const textures = route.params.basket;
+
 	useEffect(() => {
-		navigation.setOptions({ headerTitle: route.params.basket });
-		console.log(route.params);
+		navigation.setOptions({ headerTitle: textures });
 	}, []);
+
 	return (
-		<>
-			<View style={styles.container}>
-				<Text style={styles.overlayText}>{route.params.basket}</Text>
+		<View style={styles.container}>
+			<View style={styles.bubbleContainer}>
+				<Text style={styles.overlayText}>{textures}</Text>
 				<Image source={require("../../../assets/image/bubble.png")} />
 				<View style={styles.imageContainer}></View>
 			</View>
-			<Bascket />
-		</>
+			<LaundryBasket textures={textures} />
+		</View>
 	);
 };
 
-export default LaundryBasket;
+export default LaundryBasketScreen;
 
 const styles = StyleSheet.create({
 	container: {
+		justifyContent: "space-between",
+	},
+	bubbleContainer: {
 		alignItems: "center",
 		marginTop: 30,
 	},
-
 	overlayText: {
 		position: "absolute",
 		flex: 1,
 		alignSelf: "center",
 		marginTop: "8%",
 		zIndex: 999,
-
 		fontSize: FONTSIZE.Large,
 		fontWeight: "bold",
 	},
