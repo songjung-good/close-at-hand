@@ -7,11 +7,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -27,11 +30,22 @@ public class PresetApiController {
     @Operation(summary = "새로운 preset 생성",
         description = "새로운 preset을 생성합니다. " +
                 "presetName과 presetImgUrl은 default값이 있습니다.")
-    @PostMapping
-    public CommonResponse<PresetDto.InsertResponseDto> insertPreset(@RequestBody PresetDto.InsertRequestDto request){
-        var command = request.toCommand();
+//    @PostMapping(produces = "application/json", consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(produces = "application/json", consumes = "multipart/form-data")
+    public CommonResponse<PresetDto.InsertResponseDto> insertPreset(@RequestPart PresetDto.InsertRequestDto request, @RequestPart(value = "presetImg", required = false) MultipartFile presetImg) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+
+        String userToken = auth.getAuthority();
+
+//        System.out.println("adfdf"+ request.getClothesIdList()); // 너냐?
+        var command = request.toCommand(userToken, presetImg);
         PresetInfo presetInfo = presetFacade.insertPreset(command);
         var response = new PresetDto.InsertResponseDto(presetInfo);
+//        System.out.println(response);
         return CommonResponse.success(response);
     }
 
