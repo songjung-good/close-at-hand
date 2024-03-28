@@ -37,7 +37,6 @@ public class ClothesApiController {
     @GetMapping("/{clothesId}")
     public CommonResponse<ClothesDto.FindResponse> findClothes(@PathVariable Long clothesId) {
         ClothesInfo clothesInfo = clothesFacade.findClothes(clothesId);
-        var response = new ClothesDto.FindResponse(clothesInfo);
-        return CommonResponse.success(response);
+        return CommonResponse.success(clothesInfo);
     }
 }

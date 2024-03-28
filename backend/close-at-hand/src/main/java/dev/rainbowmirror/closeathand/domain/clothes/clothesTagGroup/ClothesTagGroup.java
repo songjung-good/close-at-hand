@@ -60,7 +60,7 @@ public class ClothesTagGroup {
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject tagGroupObject = (JsonObject) jsonArray.get(i);
             JsonElement tagArray = tagGroupObject.get("name");
-            String tagName = tagArray.toString();
+            String tagName = tagArray.toString().replaceAll("\"","");
 
             // 태그 만들기
             ClothesTag clothesTag = ClothesTag.builder()
