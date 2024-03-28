@@ -3,9 +3,7 @@ package dev.rainbowmirror.closeathand.domain.clothes;
 import dev.rainbowmirror.closeathand.common.util.JsonTagPaser;
 import dev.rainbowmirror.closeathand.domain.OmniCommerceService;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroup;
-import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroupInfo;
 import dev.rainbowmirror.closeathand.domain.user.UserReader;
-import dev.rainbowmirror.closeathand.infrastructure.clothes.ClothesTagGroupRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import kong.unirest.HttpResponse;
@@ -14,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,7 +24,6 @@ public class ClothesServiceImpl implements ClothesService{
     private final UserReader userReader;
     private final ClothesReader clothesReader;
     private final OmniCommerceService omniCommerceService;
-    private final ClothesTagGroupRepository clothesTagGroupRepository;
     @Autowired
     private EntityManager em;
 
@@ -65,7 +61,8 @@ public class ClothesServiceImpl implements ClothesService{
     }
 
     public List<String> findAllClothesTag(String userToken){
-        List<String> list = clothesTagGroupRepository.findAllByClothesUserUserToken(userToken);
-        return list;
+//        List<String> list = clothesTagGroupRepository.findAllByClothesUserUserToken(userToken);
+//        return list;
+        return null;
     }
 }
