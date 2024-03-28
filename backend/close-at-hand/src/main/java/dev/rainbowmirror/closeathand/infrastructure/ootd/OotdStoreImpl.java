@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.infrastructure.ootd;
 
+import dev.rainbowmirror.closeathand.common.exception.EntityNotFoundException;
 import dev.rainbowmirror.closeathand.domain.ootd.Ootd;
 import dev.rainbowmirror.closeathand.domain.ootd.OotdStore;
 import lombok.RequiredArgsConstructor;
@@ -15,4 +16,7 @@ public class OotdStoreImpl implements OotdStore {
     public Ootd store(Ootd initOotd) {
         return ootdRepository.save(initOotd);
     }
+
+    @Override
+    public void delete(Long ootdId) {ootdRepository.deleteByOotdId(ootdId);}
 }

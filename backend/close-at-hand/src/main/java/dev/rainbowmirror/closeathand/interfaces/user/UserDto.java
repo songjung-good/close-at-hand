@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 public class UserDto {
-
     @Getter
     @Setter
     @ToString
@@ -82,6 +81,12 @@ public class UserDto {
             this.height = userInfo.getHeight();
             this.gender = userInfo.getGender();
         }
+    }
+    @Getter
+    @ToString
+    public static class LoginRequest{
+        private String account;
+        private String password;
     }
 
     @Getter

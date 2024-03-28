@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.infrastructure.ootd;
 
+import dev.rainbowmirror.closeathand.common.exception.EntityNotFoundException;
 import dev.rainbowmirror.closeathand.domain.ootd.Ootd;
 import dev.rainbowmirror.closeathand.domain.ootd.OotdReader;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,8 @@ import java.util.Optional;
 public class OotdReaderImpl implements OotdReader {
     private final OotdRepository ootdRepository;
     @Override
-    public Optional<Ootd> getOotd(String userToken, Long ootdId) {
-        return ootdRepository.findById(ootdId);
+    public Ootd getOotd(Long ootdId) {
+        return ootdRepository.findById(ootdId).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
