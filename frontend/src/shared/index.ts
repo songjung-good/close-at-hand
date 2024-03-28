@@ -27,4 +27,5 @@ export {
 	getNotificationPermission,
 	notification,
 	scheduleDailyAlarm,
+	NotificationType,
 } from "./notifee/notifee";

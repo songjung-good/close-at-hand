@@ -9,10 +9,8 @@ import { useEffect, useState } from "react";
 notifee.onBackgroundEvent(async ({ type, detail }) => {
 	if (type === EventType.PRESS && detail.notification) {
 		const { notificationType } = detail.notification.data!;
-		console.log(navigationRef.isReady());
 		if (navigationRef.isReady()) {
-			if (notificationType === "HomeArrived") {
-				console.log("스크린 이동");
+			if (notificationType === "CloseAtHandHomeAlarm") {
 				notification.id = notificationType;
 				navigationRef.navigate("2", {
 					screen: "laundryMain",
@@ -44,7 +42,7 @@ function App() {
 		</>
 	);
 }
-console.log(process.env);
+
 const AppEntryPoint = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED
 	? require("./.storybook").default
 	: App;

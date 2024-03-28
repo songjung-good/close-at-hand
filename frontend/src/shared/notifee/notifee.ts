@@ -5,10 +5,18 @@ import notifee, {
 	Trigger,
 	RepeatFrequency,
 } from "@notifee/react-native";
+
 import { COLORS } from "../styles/STYLES";
 
-const NotificationType = {
-	HomeArrived: "HomeArrived",
+const NotificationKey = {
+	CloseAtHandHomeAlarm: "CloseAtHandHomeAlarm",
+	CloseAtHandLaundryAlarm: "CloseAtHandLaundryAlarm",
+	CloseAtHandClothesAlarm: "CloseAtHandClothesAlarm",
+	CloseAtHandAirDresserAlarm: "CloseAtHandAirDresserAlarm",
+};
+
+export type NotificationType = {
+	[key in keyof typeof NotificationKey]: boolean;
 };
 
 // 알람 권한
@@ -16,7 +24,7 @@ export async function getNotificationPermission() {
 	await notifee.requestPermission();
 }
 
-function getRandomHour(min: number, max: number): number {
+function getRandomNum(min: number, max: number): number {
 	// min (포함)와 max (제외) 시(hour) 사이의 랜덤 시간
 	return Math.floor(Math.random() * (max - min) + min);
 }
@@ -24,8 +32,10 @@ function getRandomHour(min: number, max: number): number {
 // 알람 설정
 export async function scheduleDailyAlarm() {
 	const date = new Date();
-	const randomHour = getRandomHour(18, 25); // 6PM (18)와 8PM (20) 사이의 랜덤한 시간
-	date.setHours(2, 44, 15);
+	const randomHour = getRandomNum(18, 25); // 6PM (18)와 8PM (20) 사이의 랜덤한 시간
+	const randomMinute = getRandomNum(0, 60);
+	const randomSecond = getRandomNum(0, 60);
+	date.setHours(randomHour, randomMinute, randomSecond);
 
 	const trigger: Trigger = {
 		type: TriggerType.TIMESTAMP,
@@ -34,8 +44,8 @@ export async function scheduleDailyAlarm() {
 	};
 
 	const channelId: string = await notifee.createChannel({
-		id: NotificationType.HomeArrived,
-		name: NotificationType.HomeArrived,
+		id: NotificationKey.CloseAtHandHomeAlarm,
+		name: NotificationKey.CloseAtHandHomeAlarm,
 		importance: AndroidImportance.DEFAULT,
 	} as AndroidChannel);
 
@@ -48,10 +58,14 @@ export async function scheduleDailyAlarm() {
 				color: COLORS.LightMint,
 				pressAction: { id: "default" },
 			},
-			data: { notificationType: NotificationType.HomeArrived },
+			data: { notificationType: NotificationKey.CloseAtHandHomeAlarm },
 		},
 		trigger,
 	);
 }
 
-export const notification: { id: null | "HomeArrived" } = { id: null };
+export const notification: { id: null | "CloseAtHandHomeAlarm" } = { id: null };
+
+export async function deleteNotification(channelId: string) {
+	notifee.deleteChannel(channelId);
+}

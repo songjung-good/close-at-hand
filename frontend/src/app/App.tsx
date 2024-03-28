@@ -4,10 +4,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RealmProvider } from "@realm/react";
 
 import AppNav from "./navigation/AppNav";
-import { queryClient, useUserActions } from "../shared/index";
 import { LaundryDB } from "../shared/realm/realm";
-import { getNotificationPermission, scheduleDailyAlarm } from "../shared";
-
+import {
+	getNotificationPermission,
+	scheduleDailyAlarm,
+	queryClient,
+	useUserActions,
+	NotificationType,
+} from "../shared";
+import { deleteNotification } from "../shared/notifee/notifee";
 interface Props {
 	readyNow(ready: boolean): void;
 }
@@ -29,10 +34,29 @@ const App: React.FC<Props> = ({ readyNow }) => {
 				console.log(error);
 			}
 		}
-
 		getLoginInfo();
+
 		getNotificationPermission();
-		scheduleDailyAlarm();
+
+		async function setNotifications() {
+			const notificationJson = await AsyncStorage.getItem(
+				"CloseAtHandNotifications",
+			);
+			if (notificationJson) {
+				const notificationSettings = JSON.parse(
+					notificationJson,
+				) as NotificationType;
+				Object.entries(notificationSettings).forEach(([key, value]) => {
+					console.log(key, value);
+					if (key === "CloseAtHandHomeAlarm" && !value) {
+						deleteNotification(key);
+					} else if (key === "CloseAtHandHomeAlarm") {
+						scheduleDailyAlarm();
+					}
+				});
+			}
+		}
+		setNotifications();
 	}, []);
 
 	return (

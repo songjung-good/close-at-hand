@@ -45,8 +45,7 @@ export const navigationRef = createNavigationContainerRef<RootParamList>();
 const AppNav = () => {
 	useEffect(() => {
 		if (notification.id && navigationRef.isReady()) {
-			console.log(notification);
-			if (notification.id === "HomeArrived") {
+			if (notification.id === "CloseAtHandHomeAlarm") {
 				navigationRef.navigate("2", {
 					screen: "laundryMain",
 					params: { fromNoti: true },
