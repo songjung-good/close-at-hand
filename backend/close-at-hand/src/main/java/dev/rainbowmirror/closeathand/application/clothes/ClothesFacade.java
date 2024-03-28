@@ -46,7 +46,7 @@ public class ClothesFacade {
         return clothesInfo;
     }
 
-    public List<ClothesTagGroupInfo> findAllClothesTag(String userToken){
+    public List<String> findAllClothesTag(String userToken){
         return clothesService.findAllClothesTag(userToken);
     }
 }

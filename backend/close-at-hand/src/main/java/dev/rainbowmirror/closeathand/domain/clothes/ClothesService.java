@@ -7,5 +7,5 @@ import java.util.List;
 public interface ClothesService {
     ClothesInfo createClothes(ClothesCommand.CreateCommand command);
     ClothesInfo findClothes(Long clothesId);
-    List<ClothesTagGroupInfo> findAllClothesTag(String userToken);
+    List<String> findAllClothesTag(String userToken);
 }

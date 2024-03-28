@@ -64,10 +64,8 @@ public class ClothesServiceImpl implements ClothesService{
         return new ClothesInfo(clothes);
     }
 
-    public List<ClothesTagGroupInfo> findAllClothesTag(String userToken){
-        List<ClothesTagGroup> list = clothesTagGroupRepository.findAllByClothesUserUserToken(userToken);
-        List<ClothesTagGroupInfo> result = new ArrayList<>();
-        for (ClothesTagGroup tg:list) {result.add(new ClothesTagGroupInfo(tg));}
-        return result;
+    public List<String> findAllClothesTag(String userToken){
+        List<String> list = clothesTagGroupRepository.findAllByClothesUserUserToken(userToken);
+        return list;
     }
 }
