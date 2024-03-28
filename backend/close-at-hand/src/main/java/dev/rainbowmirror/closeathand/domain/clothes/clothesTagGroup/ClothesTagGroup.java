@@ -11,6 +11,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
 @Slf4j
 @Getter
 @Entity
+@ToString
 @NoArgsConstructor
 @Table(name = "clothes_tag_group")
 public class ClothesTagGroup {
@@ -55,7 +57,6 @@ public class ClothesTagGroup {
     // 얘를 전부 리스트에 넣어서
     // 태그그룹 빌드할때 사용. (옷id, 태그리스트, 이름)
     public void maketag(JsonArray jsonArray, String tagGroupName) {
-        System.out.println(tagGroupName);
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject tagGroupObject = (JsonObject) jsonArray.get(i);
             JsonElement tagArray = tagGroupObject.get("name");
@@ -64,6 +65,7 @@ public class ClothesTagGroup {
             // 태그 만들기
             ClothesTag clothesTag = ClothesTag.builder()
                     .tagName(tagName)
+                    .clothesTagGroup(this)
                     .build();
             // list에 추가
             clothesTagList.add(clothesTag);

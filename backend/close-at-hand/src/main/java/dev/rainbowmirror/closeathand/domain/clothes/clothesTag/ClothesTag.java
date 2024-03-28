@@ -27,7 +27,8 @@ public class ClothesTag {
 
     // 이것도 이렇게 하는건가? 태그 만들기
     @Builder
-    public ClothesTag(String tagName) {
+    public ClothesTag(String tagName, ClothesTagGroup clothesTagGroup) {
         this.tagName = tagName;
+        this.clothesTagGroup = clothesTagGroup;
     }
 }

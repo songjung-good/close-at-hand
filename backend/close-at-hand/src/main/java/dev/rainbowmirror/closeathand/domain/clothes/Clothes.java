@@ -61,7 +61,6 @@ public class Clothes extends AbstractEntity {
     public enum Location {
         ENABLE("옷장"), DISABLE("세탁 바구니");
 
-
         private final String description;
     }
 
@@ -121,118 +120,9 @@ public class Clothes extends AbstractEntity {
 
 
     // db를 건드릴거니까 여기(엔티티)에 옷 업데이트를 만든다.
-    public void updateClothes(String responseBody) {
-        System.out.println(responseBody);
-        // 받아온 정보들을 파싱해서 여기에 넣기
-        JsonParser jsonParser = new JsonParser();
-//        JsonArray jsonArray = (JsonArray) jsonParser.parse(responseBody);
-        JsonObject jsonObject = (JsonObject) jsonParser.parse(responseBody);
-        JsonArray matchedObjectsArray = (JsonArray) jsonObject.get("matchedObjects");
-        System.out.println("arr" + matchedObjectsArray);
-
-        for (int i = 0; i < matchedObjectsArray.size(); i++) { // matchedObjects가 여러 개 일 경우를 대비
-            JsonObject matchedObject = (JsonObject) matchedObjectsArray.get(i);
-//            System.out.println("mo " + matchedObject);
-            JsonElement typeElement = matchedObject.get("type");
-            System.out.println("type: "+ typeElement);
-            JsonArray tagsArray = (JsonArray) matchedObject.get("tags");
-            for (int j = 0; j < tagsArray.size(); j++) {
-                JsonObject tagsObject = (JsonObject) tagsArray.get(j);
-                System.out.println("tot"+tagsObject);
-                // 넣을목록(소재, 색, 분류,
-                JsonArray colorArray = (JsonArray) tagsObject.get("colors");
-                JsonArray textureArray = (JsonArray) tagsObject.get("textures");
-                JsonArray lookArray = (JsonArray) tagsObject.get("looks"); // clothing에만 있음
-                JsonArray printArray = (JsonArray) tagsObject.get("prints");
-
-                JsonObject categoryObject = (JsonObject) tagsObject.get("category");
-                if (categoryObject!=null) {
-                    JsonArray categoryArray = new JsonArray();
-                    categoryArray.add(categoryObject);
-                    System.out.println(categoryArray);
-                    // taggroup build해
-                    // mapping 되고있어서 안넣어도 옷이 들어감
-                    ClothesTagGroup category = ClothesTagGroup.builder()
-                            .clothesTagGroupName("category")
-                            .build();
-                    // 아까 넘긴 메서드를 실행
-                    category.maketag(categoryArray, "category");
-                    System.out.println(category.getClothesTagList());
-                    // 빌드된걸 this.태그그룹리스트에 add
-                    this.clothesTagGroupList.add(category);
-                }
-
-                JsonObject itemObject = (JsonObject) tagsObject.get("item");
-                if (itemObject!=null) {
-                    JsonArray itemArray = new JsonArray();
-                    itemArray.add(itemObject);
-                    ClothesTagGroup item = ClothesTagGroup.builder()
-                            .clothesTagGroupName("item")
-                            .build();
-                    item.maketag(itemArray, "item");
-                    this.clothesTagGroupList.add(item);
-                }
-
-                JsonObject shoeObject = (JsonObject) tagsObject.get("toetype"); // shoes에만 있음
-                if (shoeObject!=null) {
-                    JsonArray shoeArray = new JsonArray();
-                    shoeArray.add(itemObject);
-                    ClothesTagGroup toetype = ClothesTagGroup.builder()
-                                            .clothesTagGroupName("toetype")
-                                            .build();
-                    toetype.maketag(shoeArray, "toetype");
-                    this.clothesTagGroupList.add(toetype);
-                }
-
-
-                // jsonArray
-                if (colorArray!=null) {
-                    ClothesTagGroup colors = ClothesTagGroup.builder()
-                            .clothesTagGroupName("colors")
-                            .build();
-                    colors.maketag(colorArray,"colors");
-                    this.clothesTagGroupList.add(colors);
-                }
-                if (textureArray!=null) {
-                    ClothesTagGroup textures = ClothesTagGroup.builder()
-                            .clothesTagGroupName("textures")
-                            .build();
-                    textures.maketag(textureArray,"textures");
-                    this.clothesTagGroupList.add(textures);
-
-                }
-                if (lookArray!=null) {
-                    ClothesTagGroup looks = ClothesTagGroup.builder()
-                            .clothesTagGroupName("looks")
-                            .build();
-                    looks.maketag(lookArray,"looks");
-                    this.clothesTagGroupList.add(looks);
-
-                }
-                if (printArray!=null) {
-                    ClothesTagGroup prints = ClothesTagGroup.builder()
-                            .clothesTagGroupName("prints")
-                            .build();
-                    prints.maketag(printArray,"prints");
-                    this.clothesTagGroupList.add(prints);
-
-                }
-
-
-                System.out.println("colors "+colorArray);
-                System.out.println("textures "+textureArray);
-                System.out.println("looks "+lookArray);
-                System.out.println("prints "+printArray);
-                System.out.println("category "+categoryObject);
-                System.out.println("item "+itemObject);
-                System.out.println("toe "+shoeObject); // shoe인 경우에만 들어옴.
-//                System.out.println(Arrays.toString(clothesTagGroupList));
-                clothesTagGroupList.forEach(System.out::println);
-            }
-
-        }
-
+    public void updateClothes(List<ClothesTagGroup> list) {
+        clothesTagGroupList = list;
         // status 변경
-//        aidone();
+        aidone();
     }
 }
