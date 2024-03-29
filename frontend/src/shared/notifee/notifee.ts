@@ -37,6 +37,8 @@ export async function scheduleDailyAlarm() {
 	const randomSecond = getRandomNum(0, 60);
 	date.setHours(randomHour, randomMinute, randomSecond);
 
+	console.debug("alarm set at", date.getTime());
+
 	const trigger: Trigger = {
 		type: TriggerType.TIMESTAMP,
 		timestamp: date.getTime(),
