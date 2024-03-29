@@ -15,7 +15,7 @@ import java.util.Arrays;
 @Configuration
 @OpenAPIDefinition(
         servers = {@Server(url = "https://j10e207.p.ssafy.io/api/v1", description = "Ec2 Server URL"),
-        @Server(url = "https://localhost:3000/api/v1", description = "localtest Server URL")})
+        @Server(url = "http://localhost:3000/api/v1", description = "localtest Server URL")})
 public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
