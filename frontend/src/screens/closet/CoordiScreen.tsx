@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
+// 컴포넌트 불러오기
 import { COLORS, FONTSIZE } from '../../shared/';
-import { PresetItem } from '../../components';
-import { NewPreset } from '../../components';
-
+import { PresetItem, NewPreset } from '../../components';
 // 임시데이터
 import { presetList } from './presetInfo';
 
@@ -17,12 +14,12 @@ interface presetItem {
 
 const CoordiScreen: React.FC = () => {
   const [preset, setPreset] = useState<presetItem[]>(presetList);
-  const navigation = useNavigation<Navigation>();
-  const [isModalVisible, setIsModalVisible] = useState(false); // 모달 상태 관리
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const handleCreatePreset = () => {
-    setIsModalVisible(true); // 모달 열기
-  };
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  }
+
 
   const RenderPresetList: React.FC = () => {
     return (
@@ -38,17 +35,16 @@ const CoordiScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>프리셋 목록</Text>
-        <TouchableOpacity onPress={handleCreatePreset} style={styles.addButton}>
-          <Text style={styles.buttonText}>새로 만들기</Text>
+        <TouchableOpacity>
+          {/* <Text style={styles.buttonText}>새로 만들기</Text> */}
+          <NewPreset 
+            onClose={toggleModal}
+          />
         </TouchableOpacity>
       </View>
       <View>
         <RenderPresetList />
       </View>
-      <NewPreset // 모달 내부에 CoordiNewScreen 컴포넌트 렌더링
-        isVisible={isModalVisible} // 모달 상태에 따라 표시 여부 결정
-        onClose={() => setIsModalVisible(false)} // 닫기 기능 전달
-      />
     </View>
   );
 };

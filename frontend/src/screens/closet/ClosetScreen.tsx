@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, FlatList } from "react-native";
-
-import { SearchModal } from "../../components";
-import { ClosetItem } from "../../components";
+// 컴포넌트 불러오기
+import { SearchModal, ClosetItem } from "../../components";
 import { FONTSIZE, COLORS } from "../../shared";
+// import API from "../../shared/axios/axios";
 // 임시데이터
 import { clothList, recommendedClothes } from "./clothInfo";
-// import API from "../../shared/axios/axios";
+
 
 // 옷 인터페이스
 interface clothInfo {
@@ -22,6 +22,7 @@ const ClosetScreen: React.FC = () => {
   const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>(recommendedClothes);
   // 검색 모달과 태그
   const [selectedTags, setSelectedTags] = useState<any[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
   
   useEffect(() => {
     // 서버로부터 옷 목록 데이터를 가져오는 API 호출
@@ -36,6 +37,11 @@ const ClosetScreen: React.FC = () => {
   // 검색 모달에서 선택된 태그를 받아옵니다.
   const handleSaveTags = (tags: any[]) => {
     setSelectedTags(tags);
+  };
+
+  // 모달의 현재 상태
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
   };
 
   // 추천 옷 리스트
@@ -85,7 +91,10 @@ const ClosetScreen: React.FC = () => {
           <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
             {/* 검색 버튼 */}
           <TouchableOpacity>
-            <SearchModal onTagsSelected={handleSaveTags} />
+            <SearchModal
+              onClose={toggleModal}
+              onTagsSelected={handleSaveTags} 
+            />
           </TouchableOpacity>
         </View>
         <RenderRecommendedClothes />

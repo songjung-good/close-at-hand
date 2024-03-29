@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, StyleSheet, Text, Pressable, View } from 'react-native';
-
-import { Tag } from './searchTag';
+// 컴포넌트
 import { COLORS, FONTSIZE } from '../../shared/styles/STYLES';
+// 임시데이터
+import { Tag } from './searchTag';
 
 interface SearchModalProps {
-  visible: boolean;
   onClose: () => void;
   onTagsSelected: (tags: number[]) => void; // 클릭된 태그 ID 정보를 상위 컴포넌트로 전달하기 위한 콜백 함수
 };
