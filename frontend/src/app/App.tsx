@@ -12,6 +12,7 @@ import {
 	useUserActions,
 	NotificationType,
 	LaundryDB,
+	handleAndroidBluetoothPermissions,
 } from "../shared";
 import { deleteNotification } from "../shared/notifee/notifee";
 interface Props {
@@ -53,9 +54,13 @@ const App: React.FC<Props> = ({ readyNow }) => {
 						scheduleDailyAlarm();
 					}
 				});
+			} else {
+				scheduleDailyAlarm();
 			}
 		}
 		setNotifications();
+
+		handleAndroidBluetoothPermissions();
 	}, []);
 
 	return (

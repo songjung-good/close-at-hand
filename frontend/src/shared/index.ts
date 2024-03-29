@@ -1,3 +1,5 @@
+export { handleAndroidBluetoothPermissions } from "./bleManager/bleManager";
+
 // Axios
 export { API } from "./axios/axios";
 
