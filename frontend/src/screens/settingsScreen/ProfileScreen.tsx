@@ -1,6 +1,7 @@
-import { Alert, Image, StyleSheet, Text, View } from "react-native";
-import { ProfileInput, StyledButton } from "../../components";
 import { useState } from "react";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
+
+import { ProfileInput, StyledButton } from "../../components";
 import { FONTSIZE, ROW } from "../../shared";
 
 import img from "../../../assets/image/foam.png";

@@ -19,7 +19,10 @@ const Stack = createNativeStackNavigator<SettingsParamList>();
 
 const SettingsNav = () => {
 	return (
-		<Stack.Navigator screenOptions={{ title: "설정" }}>
+		<Stack.Navigator
+			screenOptions={{ title: "설정" }}
+			initialRouteName="settings"
+		>
 			<Stack.Screen name="settings" component={SettingsScreen} />
 			<Stack.Screen
 				name="alarm"
