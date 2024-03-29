@@ -29,22 +29,31 @@ public class PresetServiceImpl implements PresetService{
     @Override
     public PresetInfo insertPreset(PresetCommand.InsertCommand command) {
         var user = userReader.getUser(command.getUserToken());
-        command.setUser(user);
-        Set<Clothes> clothes = new HashSet<>();
+//        command.setUser(user);
+//        Set<Clothes> clothes = new HashSet<>();
+
+        Preset preset = Preset.builder()
+                .user(user)
+                .clothes(new HashSet<>())
+                .presetName(command.getPresetName())
+                .build();
+
+        System.out.println("1111 ");
         for (Long clothesId: command.getClothesIdList()){
-            clothes.add(clothesReader.findClothes(clothesId));
+            preset.addClothes(clothesReader.findClothes(clothesId));
         }
-        command.setClothes(clothes);
-        var initPreset = command.toEntity();
-        var preset = presetStore.store(initPreset);
+        System.out.println("22222");
+        presetStore.store(preset);
+        System.out.println("3333");
+        // 파일이 있으면 업로드 하고 없으면 기본이미지 제공하는걸로 바꿔!
         try {
             String presetImgUrl = s3UploadService.saveFile(command.getPresetImg(), preset.getFilename());
             preset.changeImgUrl(presetImgUrl);
-            PresetInfo presetInfo = new PresetInfo(preset);
-            return presetInfo;
+            return new PresetInfo(preset);
         } catch (IOException e){
             throw new RuntimeException("이미지 저장 실패");
         }
+
     }
 
     @Override

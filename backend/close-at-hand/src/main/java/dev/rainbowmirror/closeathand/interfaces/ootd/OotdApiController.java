@@ -36,9 +36,17 @@ public class OotdApiController {
             @ApiResponse(responseCode = "200", description = "success", useReturnTypeSchema = true,
                     content = @Content( schema = @Schema(implementation = OotdInfo.class)))
     })
-    @PostMapping(produces = "application/json", consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(produces = "application/json", consumes = "multipart/form-data")
     public CommonResponse<OotdInfo> saveOotd(@RequestPart OotdDto.CreateRequest request, @RequestPart("ootdImg") MultipartFile ootdImg) throws IOException {
-        OotdInfo ootdInfo = ootdFacade.saveOotd(request.toCommand(ootdImg));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+
+        String userToken = auth.getAuthority();
+
+        OotdInfo ootdInfo = ootdFacade.saveOotd(request.toCommand(userToken, ootdImg));
         return CommonResponse.success(ootdInfo);
     }
 

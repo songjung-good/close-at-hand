@@ -40,15 +40,24 @@ public class Preset extends AbstractEntity {
     private User user;
 
     @Builder
-    public Preset(String presetImgUrl, String presetName, User user) {
+    public Preset(String presetImgUrl, String presetName, Set<Clothes> clothes,User user) {
         if (user == null) throw new RuntimeException("empty user");
         this.user = user;
 
         if (!StringUtils.hasLength(presetName)) this.presetName = "이름없는 프리셋";
         else this.presetName = presetName;
 
+        if (clothes != null) this.clothes = clothes;
+
         if (!StringUtils.hasLength(presetImgUrl)) this.presetImgUrl = "noImage.jpg";
         else this.presetImgUrl = presetImgUrl;
+    }
+
+    public void addClothes(Clothes clothes) {
+        for (Clothes clothing : this.clothes){
+            if (clothing.getClothesId().equals(clothes.getClothesId())) {return;}
+        }
+        this.clothes.add(clothes);
     }
 
     public void changeImgUrl(String presetImgUrl) {this.presetImgUrl = presetImgUrl;}
