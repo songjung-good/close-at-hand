@@ -26,7 +26,6 @@ public class ClothesServiceImpl implements ClothesService{
     private final ClothesStore clothesStore;
     private final UserReader userReader;
     private final ClothesReader clothesReader;
-    private final ClothesRepository clothesRepository;
     private final ClothesUpdateTool clothesUpdateTool;
 
     @Override
@@ -57,13 +56,13 @@ public class ClothesServiceImpl implements ClothesService{
     public List<ClothesListInfo> findAllClothes(String userToken) {
         List<Clothes> clothesList = clothesReader.findAllClothes(userToken);
         List<ClothesListInfo> result = new ArrayList<>();
-        for (Clothes clothes: clothesList){result.add(new ClothesListInfo(clothes));}
+        for (Clothes clothes: clothesList){ result.add(new ClothesListInfo(clothes)); }
         return result;
     }
 
     public List<String> findAllClothesTag(String userToken){
         List<String> list = new ArrayList<>();
-        for (ClothesTag cLothesTag: clothesRepository.findDistinctTagByUserToken(userToken)){
+        for (ClothesTag cLothesTag: clothesReader.findDistinctTagByUserToken(userToken)){
             list.add(cLothesTag.getTagName());
         }
         return list;
