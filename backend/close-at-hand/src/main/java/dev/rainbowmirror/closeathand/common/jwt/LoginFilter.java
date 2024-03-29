@@ -9,9 +9,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Enumeration;
+import java.util.Iterator;
 
 
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -45,7 +49,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         CustomUserDetails custumUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String username = custumUserDetails.getUsername();
 
-        String token = jwtUtil.createJwt(username, 60*60*10L);
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+
+        String userToken = auth.getAuthority();
+
+        String token = jwtUtil.createJwt(username, userToken, 90*24*60*60*10L);
 
         response.addHeader("Authorization", "Bearer " + token);
         response.setContentType("application/json");
