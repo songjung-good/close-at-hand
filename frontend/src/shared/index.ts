@@ -6,11 +6,11 @@ export { queryClient } from "./tanstackquery/tanstackQuery";
 
 // zustand
 export {
+	useUser,
 	useToken,
 	useRefreshToken,
 	useNickName,
 	useUserActions,
-	useIsLogin,
 } from "./zustand/userStore";
 
 // realm

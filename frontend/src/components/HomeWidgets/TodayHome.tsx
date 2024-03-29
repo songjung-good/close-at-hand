@@ -2,8 +2,9 @@ import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
-import { COLORS } from "../../shared";
+import { COLORS, LaundryDB } from "../../shared";
 import { fetchToday } from "./API";
+import { useRealm } from "@realm/react";
 
 interface ImageProps {
 	imageUrl: string;
@@ -12,7 +13,7 @@ interface ImageProps {
 const DataExist: React.FC<ImageProps> = ({ imageUrl }) => {
 	return (
 		<View testID="data-box">
-			<Image source={{ uri: imageUrl }} />
+			<Image style={styles.img} source={{ uri: imageUrl }} />
 		</View>
 	);
 };
@@ -26,15 +27,21 @@ const StyledText: React.FC<StyledTextProps> = ({ content }) => {
 };
 
 const TodayHome = () => {
+	const realm = useRealm();
 	const { data, isLoading, isError, error, refetch } = useQuery({
 		queryKey: ["home", "today", new Date().toISOString().split("T")[0]],
 		queryFn: fetchToday,
-		staleTime: 1000 * 60 * 60 * 60 * 10, // 10시간
+		gcTime: 1000 * 60 * 60 * 60 * 10, // 10시간
+		placeholderData: {
+			message:
+				"기록된 오늘의 코디가 없어요! \n 터치하여 오늘의 코디를 받아보세요.",
+			noResponse: true,
+		},
 	});
 
 	function handlePress() {
 		if (isError || (data && "noResponse" in data)) {
-			refetch({ throwOnError: true });
+			refetch();
 		}
 	}
 
@@ -44,7 +51,22 @@ const TodayHome = () => {
 		if ("noResponse" in data) {
 			content = <StyledText content={data.message} />;
 		} else {
-			content = <DataExist imageUrl={"데이터 표시"} />;
+			content = <DataExist imageUrl={data.ootdImgUrl} />;
+			const textures: string[] = [];
+
+			data.clothes.forEach((e) => {
+				realm.write(() => {
+					realm.create(
+						"LaundryDB",
+						LaundryDB.generate(
+							e.clothesId,
+							e.clothesImgUrl,
+							textures,
+							new Date(e.lastWashDate),
+						),
+					);
+				});
+			});
 		}
 	}
 
@@ -97,5 +119,8 @@ const styles = StyleSheet.create({
 		color: COLORS.PurpleBlue,
 		textAlign: "center",
 		fontWeight: "bold",
+	},
+	img: {
+		resizeMode: "contain",
 	},
 });

@@ -23,6 +23,7 @@ const ManagementNav = () => {
 	return (
 		<Stack.Navigator
 			screenOptions={{ headerTitleStyle: { fontWeight: "bold" } }}
+			initialRouteName="managementMain"
 		>
 			<Stack.Screen
 				name="managementMain"

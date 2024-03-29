@@ -1,21 +1,30 @@
-import { FlatList } from "react-native";
-import CordiCard from "../coordyCard/CoordyCard";
+import { useEffect } from "react";
+import { FlatList, StyleSheet, Text } from "react-native";
 import { useQuery } from "@tanstack/react-query";
+
+import CordiCard from "../coordyCard/CoordyCard";
 import { fetchList } from "./API";
 import { placeholderData } from "./constant";
 import LoadingOrError from "../fetchHelper/LoadingOrError";
+import { FONTSIZE } from "../../shared";
 
-const ClothesHistoryList = () => {
-	const { data, isError, error, isLoading } = useQuery({
+interface Props {
+	refreshing: boolean;
+}
+const ClothesHistoryList: React.FC<Props> = ({ refreshing }) => {
+	const { data, isError, error, isLoading, refetch } = useQuery({
 		queryKey: ["clothesList"],
 		queryFn: fetchList,
 		placeholderData,
-		staleTime: 1000 * 60 * 60 * 60, // 1시간
 	});
+
+	useEffect(() => {
+		refetch();
+	}, [refreshing]);
 
 	return (
 		<>
-			{data && (
+			{data && data.length ? (
 				<FlatList
 					horizontal={true}
 					data={data}
@@ -24,8 +33,10 @@ const ClothesHistoryList = () => {
 					)}
 					keyExtractor={(item) => item.outfitId.toString()}
 				/>
+			) : (
+				<Text style={styles.text}>저장된 최근 코디가 없습니다.</Text>
 			)}
-			{isError && (
+			{(isError || isLoading) && (
 				<LoadingOrError isLoading={false} isError={isError} error={error} />
 			)}
 		</>
@@ -33,3 +44,10 @@ const ClothesHistoryList = () => {
 };
 
 export default ClothesHistoryList;
+
+const styles = StyleSheet.create({
+	text: {
+		fontSize: FONTSIZE.Medium,
+		textAlign: "center",
+	},
+});

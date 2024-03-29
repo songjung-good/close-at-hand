@@ -3,23 +3,20 @@ import Realm from "realm";
 export class LaundryDB extends Realm.Object<LaundryDB> {
 	clothesId!: number;
 	clothesImgUrl!: string;
-	textures!: Realm.Set<string>;
-	colors!: Realm.Set<string>;
+	textures!: string[];
 	lastDayOfWear!: Date;
 	lastWash?: Date;
 
 	static generate(
 		clothesId: number,
-		clothesImgUrl: number,
-		textures: Realm.Set<string>,
-		colors: Realm.Set<string>,
+		clothesImgUrl: string,
+		textures: string[],
 		lastWash: Date,
 	) {
 		return {
 			clothesId,
 			clothesImgUrl,
 			textures,
-			colors,
 			lastWash,
 			lastDayOfWear: new Date(),
 		};
@@ -30,8 +27,7 @@ export class LaundryDB extends Realm.Object<LaundryDB> {
 		properties: {
 			clothesId: "int",
 			clothesImgUrl: "string",
-			textures: "string<>",
-			colors: "string<>",
+			textures: "string[]",
 			lastWash: "date",
 			lastDayOfWear: "date",
 		},

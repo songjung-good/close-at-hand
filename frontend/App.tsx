@@ -1,10 +1,11 @@
-import Index from "./src/app/App";
+import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import notifee, { EventType } from "@notifee/react-native";
-import { navigationRef } from "./src/app/navigation/AppNav";
 import * as SplashScreen from "expo-splash-screen";
+
+import Index from "./src/app/App";
+import { navigationRef } from "./src/app/navigation/AppNav";
 import { notification } from "./src/shared";
-import { useEffect, useState } from "react";
 
 notifee.onBackgroundEvent(async ({ type, detail }) => {
 	if (type === EventType.PRESS && detail.notification) {
@@ -21,7 +22,11 @@ notifee.onBackgroundEvent(async ({ type, detail }) => {
 	}
 });
 
-SplashScreen.preventAutoHideAsync();
+const isStorybook = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED ? true : false;
+
+if (!isStorybook) {
+	SplashScreen.preventAutoHideAsync();
+}
 
 function App() {
 	const [isReady, setIsReady] = useState(false);
@@ -35,6 +40,7 @@ function App() {
 
 		prepare();
 	}, [isReady]);
+
 	return (
 		<>
 			<StatusBar style="auto" />
@@ -43,8 +49,6 @@ function App() {
 	);
 }
 
-const AppEntryPoint = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED
-	? require("./.storybook").default
-	: App;
+const AppEntryPoint = isStorybook ? require("./.storybook").default : App;
 
 export default AppEntryPoint;

@@ -7,7 +7,7 @@ interface FetchRecentCoordyListInterface {
 export async function fetchRecentCoordyListList({
 	signal,
 }: FetchRecentCoordyListInterface) {
-	return API.get("outfit", { signal })
+	return API.get("ootd", { signal })
 		.then((response) => response.data as ClothesFetchListResponse[])
 		.catch((error) => {
 			if (error.response) {
