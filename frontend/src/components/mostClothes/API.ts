@@ -8,7 +8,7 @@ interface FetchMostclothesData {
 
 export async function fetchMostClothes({ signal }: FetchMostclothesData) {
 	try {
-		const response = await API.get("주소", { signal });
+		const response = await API.get("가장 많이 입은 옷", { signal });
 		return response.data as MostClothes[];
 	} catch (error) {
 		throw new Error(
