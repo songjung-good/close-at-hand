@@ -60,16 +60,12 @@ public class ClothesDto {
     public static class FindResponse {
         private final Long clothesId;
         private final String clothesImgUrl;
-        private final String detection;
         private final ZonedDateTime lastWashDate;
-        private final Integer price;
 
         public FindResponse(ClothesInfo clothesInfo) {
             this.clothesId = clothesInfo.getClothesId();
             this.clothesImgUrl = clothesInfo.getClothesImgUrl();
-            this.detection = clothesInfo.getDetection();
             this.lastWashDate = clothesInfo.getLastWashDate();
-            this.price = clothesInfo.getPrice();
         }
 
     }

@@ -15,18 +15,16 @@ import java.util.List;
 public class ClothesInfo {
     private final Long clothesId;
     private final String clothesImgUrl;
-    private final String detection;
     private final ZonedDateTime lastWashDate;
-    private final Integer price;
+//    private final Integer price;
     private final List<ClothesTagGroupInfo> clothesTagGroupList = new ArrayList<>();
 //    private final User user;
 
     public ClothesInfo(Clothes clothes) {
         this.clothesId = clothes.getClothesId();
         this.clothesImgUrl = clothes.getClothesImgUrl();
-        this.detection = clothes.getDetection();
         this.lastWashDate = clothes.getLastWashDate();
-        this.price = clothes.getPrice();
+//        this.price = clothes.getPrice();
         for (ClothesTagGroup clothesTagGroup: clothes.getClothesTagGroupList()){
             this.clothesTagGroupList.add(new ClothesTagGroupInfo(clothesTagGroup));
         }
