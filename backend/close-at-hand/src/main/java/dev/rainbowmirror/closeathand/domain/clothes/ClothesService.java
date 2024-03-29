@@ -8,4 +8,5 @@ public interface ClothesService {
     ClothesInfo createClothes(ClothesCommand.CreateCommand command);
     ClothesInfo findClothes(Long clothesId);
     List<String> findAllClothesTag(String userToken);
+    ClothesInfo updateClothes(ClothesCommand.UpdateCommand command);
 }

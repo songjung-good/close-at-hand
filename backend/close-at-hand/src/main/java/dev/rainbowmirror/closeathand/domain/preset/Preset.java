@@ -49,7 +49,7 @@ public class Preset extends AbstractEntity {
 
         if (clothes != null) this.clothes = clothes;
 
-        if (!StringUtils.hasLength(presetImgUrl)) this.presetImgUrl = "noImage.jpg";
+        if (!StringUtils.hasLength(presetImgUrl)) this.presetImgUrl = "https://rainmirror.s3.ap-northeast-2.amazonaws.com/preset/noImg.png";
         else this.presetImgUrl = presetImgUrl;
     }
 

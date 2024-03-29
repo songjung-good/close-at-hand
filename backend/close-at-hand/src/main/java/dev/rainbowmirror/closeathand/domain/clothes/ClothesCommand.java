@@ -53,8 +53,6 @@ public class ClothesCommand {
     @ToString
     public static class UpdateCommand {
         private final String clothesImgUrl;
-        private final String userToken;
-        private final String detection;
         private final ZonedDateTime lastWashDate;
         private final Integer price;
     }

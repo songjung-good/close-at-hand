@@ -52,4 +52,10 @@ public class ClothesServiceImpl implements ClothesService{
         }
         return list;
     }
+
+    @Override
+    public ClothesInfo updateClothes(ClothesCommand.UpdateCommand command) {
+
+        return null;
+    }
 }
