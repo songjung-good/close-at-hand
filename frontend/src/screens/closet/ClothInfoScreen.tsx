@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+// 컴포넌트
 import { FONTSIZE, COLORS } from "../../shared";
-
+// API
+import { AxiosError } from "axios";
+import { API } from "../../shared";
+// 임시데이터
 import { clothList } from "./clothInfo";
 
 interface clothInfo {
@@ -17,13 +21,26 @@ const ClothInfoScreen: React.FC<{ route: any }> = ({ route }) => {
   const [ clothesInfo, setClothesInfo ] = useState< clothInfo | null > (null);
 
   useEffect(() => {
-    // clothId를 기반으로 해당 옷 정보를 가져옵니다.
+    // 임시데이터
     const fetchClothInfo = () => {
       // clothList에서 clothId와 일치하는 옷 정보를 찾습니다.
       const foundCloth = clothList.find((cloth) => cloth.clothesId === clothId);
       if (foundCloth) {
         // 옷 정보를 설정합니다.
         setClothesInfo(foundCloth);
+    // axios요청
+    // const fetchClothInfo = async () => {
+    //   try {
+    //     const response = await API.get(`clothes/${clothId}`);
+    //     if (response.data.result === "SUCCESS") {
+    //       const clothData = response.data.data;
+    //       setClothesInfo(clothData);
+    //     } else {
+    //       // API 호출 실패 시 예외 처리
+    //       console.error("옷 정보를 받아오지 못했어요... 서버 나빠!");
+    //     }
+    //   } catch (error) {
+    //     console.error("오류:", error);
       }
     };
     fetchClothInfo();

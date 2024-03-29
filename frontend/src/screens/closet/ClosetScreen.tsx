@@ -3,7 +3,9 @@ import { View, StyleSheet, TouchableOpacity, Text, FlatList } from "react-native
 // 컴포넌트 불러오기
 import { SearchModal, ClosetItem } from "../../components";
 import { FONTSIZE, COLORS } from "../../shared";
-// import API from "../../shared/axios/axios";
+// API
+import { AxiosError } from "axios";
+import { API } from "../../shared";
 // 임시데이터
 import { clothList, recommendedClothes } from "./clothInfo";
 
@@ -17,24 +19,32 @@ interface clothInfo {
 };
 
 const ClosetScreen: React.FC = () => {
+  // 임시데이터
   const [clothes, setClothes] = useState<clothInfo[]>(clothList);
   const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>(recommendedClothes);
+  // const [clothes, setClothes] = useState<clothInfo[]>([]); // 옷 목록 데이터 상태 변경
+  // const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>([]); // 추천 옷 데이터 상태 변경
   // 검색 모달과 태그
   const [selectedTags, setSelectedTags] = useState<any[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   
   useEffect(() => {
     // 서버로부터 옷 목록 데이터를 가져오는 API 호출
-    // const fetchData = async () => {
-    //   const response = API.get("/clothes/{clothes.id}");
-    //   setClothes(response.data);
-    // };
-    // fetchData();
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await API.get("/clothes");
+  //       setClothes(response.data.data);
+  //     } catch (error) {
+  //       console.error("에러메시지:", error as AxiosError);
+  //     }
+  //   };
+  //   fetchData();
   // }, []);
   }, []);
 
   // 검색 모달에서 선택된 태그를 받아옵니다.
   const handleSaveTags = (tags: any[]) => {
+    console.log(tags)
     setSelectedTags(tags);
   };
 
@@ -96,8 +106,10 @@ const ClosetScreen: React.FC = () => {
             />
           </TouchableOpacity>
         </View>
+            {/* 추천 옷 */}
         <RenderRecommendedClothes />
       </View>
+            {/* 옷 리스트 */}
       <View style={styles.clotheslistDiv}>
         <Text style={styles.clothesTitle}>옷장</Text>
         <View style={styles.clothesDiv}>
@@ -112,7 +124,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center", // 검색 버��을 중��으로 정��합니다.
+    alignItems: "center",
     padding: 10,
   },
   recommendedTitle: {

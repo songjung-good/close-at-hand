@@ -15,7 +15,7 @@ const TagItem: React.FC<{ tag: any, onClick: (id: number) => void }> = ({ tag, o
 
   const addTag = () => {
     setClicked(!clicked); // 클릭된 상태를 토글합니다.
-    onClick(tag.id); // 클릭된 태그의 ID를 상위 컴포넌트로 전달합니다.
+    onClick(tag.name); // 클릭된 태그의 ID를 상위 컴포넌트로 전달합니다.
   };
 
   return (
@@ -55,6 +55,18 @@ const TagList: React.FC<{ onTagsSelected: (tags: number[]) => void }> = ({ onTag
 
 const SearchModal: React.FC<SearchModalProps> = ({ onTagsSelected }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTags, setSelectedTags] = useState<number[]>([]); // 선택된 태그 상태 추가
+
+  // 모달이 열릴 때 이전에 선택된 태그를 복원합니다.
+  useEffect(() => {
+    if (modalVisible) {
+      // 이전에 선택된 태그를 가져옵니다.
+      const storedTags = JSON.parse(
+        localStorage.getItem("selectedTags") || "[]"
+      );
+      setSelectedTags(storedTags);
+    }
+  }, [modalVisible]);
 
   return (
     <View>
@@ -91,6 +103,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
   },
+  modalHeader: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent:'space-between',
+  },
   modalView: {
     marginTop: 20,
     backgroundColor: COLORS.White,
@@ -100,11 +118,11 @@ const styles = StyleSheet.create({
     borderBottomColor: COLORS.Black,
     borderBottomWidth: 1,
   },
-  modalHeader: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent:'space-between',
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: FONTSIZE.Medium,
+    fontWeight: "bold",
   },
   button: {
     borderRadius: 20,
@@ -119,12 +137,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-    fontSize: FONTSIZE.Medium,
-    fontWeight: "bold",
-  },
   tagContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -137,12 +149,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  tagItemClicked: {
-    backgroundColor: COLORS.CarrotRed,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderColor: COLORS.Black,
+    borderWidth: 1,
+    marginTop: 5,
   },
   tagTitle: {
     flexDirection: 'row',
@@ -150,6 +159,12 @@ const styles = StyleSheet.create({
     justifyContent:'space-around',
     alignItems: 'center',
     marginHorizontal: 15,
+  },
+  tagItemClicked: {
+    backgroundColor: COLORS.SkyBlue,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   tagText: {
     fontSize: FONTSIZE.ExtraSmall,

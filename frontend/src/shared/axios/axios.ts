@@ -2,7 +2,6 @@ import axios from "axios";
 import { useUser } from "../zustand/userStore";
 
 const URL = process.env.API_URL;
-
 export const API = axios.create({
 	baseURL: URL,
 	withCredentials: true,
