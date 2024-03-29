@@ -14,10 +14,10 @@ public class OotdDto {
     @Setter
     @ToString
     public static class CreateRequest{
-        private String userToken;
+//        private String userToken;
         @NotEmpty
         private List<Long> clothesIdList;
-        public OotdCommand.CreateCommand toCommand(MultipartFile ootdImg){
+        public OotdCommand.CreateCommand toCommand(String userToken, MultipartFile ootdImg){
             return OotdCommand.CreateCommand.builder()
                     .userToken(userToken)
                     .ootdImg(ootdImg)

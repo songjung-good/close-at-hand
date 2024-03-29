@@ -81,7 +81,7 @@ public class OotdServiceImpl implements OotdService{
         String ootdImgUrl = s3UploadService.saveFile(command.getOotdImg(), command.getFilename(ootd.getOotdId()));
         ootd.setOotdImgUrl(ootdImgUrl);
         return new OotdInfo(ootd);
-    }
+}
 
     @Override
     public void deleteOotd(Long ootdId) {

@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.common.jwt;
 
+import dev.rainbowmirror.closeathand.common.exception.InvalidParamException;
 import dev.rainbowmirror.closeathand.domain.user.login.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import java.io.IOException;
+import java.util.Enumeration;
 
 
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -22,10 +24,20 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        String account = request.getParameterValues("account")[0];
-        String password = request.getParameterValues("password")[0];
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(account, password, null);
-        return authenticationManager.authenticate(authToken);
+        try {
+            String account = request.getParameterValues("account")[0];
+            String password = request.getParameterValues("password")[0];
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(account, password, null);
+            return authenticationManager.authenticate(authToken);
+        } catch (Exception e){
+            Enumeration<String> params = request.getParameterNames();
+            while(params.hasMoreElements()) {
+                String name = params.nextElement();
+                System.out.print(name + " : " + request.getParameter(name) + "     ");
+            }
+            System.out.println();
+            throw new InvalidParamException("요청을 확인해 주세요");
+        }
     }
 
     @Override

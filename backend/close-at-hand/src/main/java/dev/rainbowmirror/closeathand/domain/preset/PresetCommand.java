@@ -27,6 +27,7 @@ public class PresetCommand {
             return Preset.builder()
                     .presetName(presetName)
                     .user(user)
+//                    .presetImgUrl(presetImgUrl)
                     .build();
         }
     }

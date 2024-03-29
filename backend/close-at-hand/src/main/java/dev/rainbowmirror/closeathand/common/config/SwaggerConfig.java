@@ -1,5 +1,7 @@
 package dev.rainbowmirror.closeathand.common.config;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -11,6 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 @Configuration
+@OpenAPIDefinition(
+        servers = {@Server(url = "https://j10e207.p.ssafy.io/api/v1", description = "Ec2 Server URL"),
+        @Server(url = "https://localhost:3000/api/v1", description = "localtest Server URL")})
 public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
