@@ -46,6 +46,14 @@ public class ClothesServiceImpl implements ClothesService{
     }
 
     @Override
+    public ClothesInfo findClothesByClothesToken(String clothesToken) { // clothesToken으로 옷 검색
+        Clothes clothesOrigin = clothesReader.findClothesByClothesToken(clothesToken);
+        if ( clothesOrigin == null ) return null; // db에 없을 경우 null 반환
+        Clothes clothes = clothesUpdateTool.update(clothesOrigin);
+        return new ClothesInfo(clothes);
+    }
+
+    @Override
     public List<ClothesListInfo> findAllClothes(String userToken) {
         List<Clothes> clothesList = clothesReader.findAllClothes(userToken);
         List<ClothesListInfo> result = new ArrayList<>();

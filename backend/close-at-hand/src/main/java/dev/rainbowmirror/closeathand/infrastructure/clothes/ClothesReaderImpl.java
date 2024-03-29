@@ -20,6 +20,8 @@ public class ClothesReaderImpl implements ClothesReader {
     }
 
     @Override
+    public Clothes findClothesByClothesToken(String clothesToken) { return clothesRepository.findByClothesToken(clothesToken);}
+    @Override
     public List<Clothes> findAllClothes(String userToken) {
         return clothesRepository.findAllByUserUserToken(userToken);
     }

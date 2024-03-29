@@ -22,6 +22,12 @@ public class OmniCommerceService {
     @Value("${omni.get-url}")
     private String getUrl;
 
+    @Value("${omni.recommend-url}")
+    private String recommendUrl;
+
+    @Value("${omni.recommend-key}")
+    private String recommendkey;
+
 
     // id == clothesToken
     public int postClothes(String id, String clothesImgUrl, String userToken){
@@ -44,6 +50,18 @@ public class OmniCommerceService {
                 .routeParam("productId", clothesToken)
                 .asString();
         System.out.println(response.getBody());
+//        System.out.println(response.getStatus());
+        return response;
+    }
+
+    // 옴니커머스에 스타일링 추천 요청하기
+    public HttpResponse<String> getRecommendation(String clothesToken) { // clothesToken이 여기서 id가 될거니까
+        HttpResponse<String> response = Unirest.get(recommendUrl)
+                .header("Content-Type", "application/json")
+                .header("X-Api-Key", recommendkey)
+                .routeParam("productId", clothesToken)
+                .asString();
+//        System.out.println(response.getBody());
 //        System.out.println(response.getStatus());
         return response;
     }

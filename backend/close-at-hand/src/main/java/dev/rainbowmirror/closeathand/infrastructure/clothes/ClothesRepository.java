@@ -13,4 +13,7 @@ public interface ClothesRepository extends JpaRepository<Clothes, Long> {
     Set<ClothesTag> findDistinctTagByUserToken(String userToken);
 
     List<Clothes> findAllByUserUserToken(String userToken);
+
+    Clothes findByClothesToken(String clothesToken);
+
 }

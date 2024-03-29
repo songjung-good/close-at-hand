@@ -2,9 +2,12 @@ package dev.rainbowmirror.closeathand.interfaces.clothes;
 
 import dev.rainbowmirror.closeathand.application.clothes.ClothesFacade;
 import dev.rainbowmirror.closeathand.common.response.CommonResponse;
+import dev.rainbowmirror.closeathand.domain.OmniCommerceService;
+import dev.rainbowmirror.closeathand.domain.RecommendService;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesListInfo;
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesRecommendInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroupInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,6 +32,7 @@ import java.util.List;
 @Tag(name = "Clothes")
 public class ClothesApiController {
     private final ClothesFacade clothesFacade;
+    private final RecommendService recommendService;
 
     @Operation(summary = "옷 등록 api")
     @PostMapping(produces = "application/json", consumes = "multipart/form-data") // post 요청이 올 경우
@@ -56,6 +60,7 @@ public class ClothesApiController {
         ClothesInfo clothesInfo = clothesFacade.findClothes(clothesId);
         return CommonResponse.success(clothesInfo);
     }
+
     @Operation(summary = "옷 전체 조회 api")
     @GetMapping
     public CommonResponse<List<ClothesListInfo>> findAllClothes() {
@@ -72,7 +77,7 @@ public class ClothesApiController {
 
     @Operation(summary = "옷 태그리스트 조회")
     @GetMapping("/tag")
-    public CommonResponse<List<String>> findAllClothesTag(){
+    public CommonResponse<List<String>> findAllClothesTag() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -82,5 +87,12 @@ public class ClothesApiController {
         String userToken = auth.getAuthority();
         List<String> list = clothesFacade.findAllClothesTag(userToken);
         return CommonResponse.success(list);
+    }
+
+    @Operation(summary = "추천 옷 받기")
+    @GetMapping("/recommend")
+    public CommonResponse<ClothesRecommendInfo> getRecommend() {
+        ClothesRecommendInfo clothesRecommendInfo = recommendService.getRecommendation();
+        return CommonResponse.success(clothesRecommendInfo);
     }
 }
