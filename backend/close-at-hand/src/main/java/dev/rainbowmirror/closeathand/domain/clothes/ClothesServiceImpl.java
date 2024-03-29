@@ -26,10 +26,8 @@ public class ClothesServiceImpl implements ClothesService{
     private final ClothesStore clothesStore;
     private final UserReader userReader;
     private final ClothesReader clothesReader;
-    private final OmniCommerceService omniCommerceService;
     private final ClothesRepository clothesRepository;
-    @Autowired
-    private EntityManager em;
+    private final ClothesUpdateTool clothesUpdateTool;
 
     @Override
     public ClothesInfo createClothes(ClothesCommand.CreateCommand command) {
@@ -43,24 +41,7 @@ public class ClothesServiceImpl implements ClothesService{
     @Override
     @Transactional
     public ClothesInfo findClothes(Long clothesId) { // command로 안받고 그냥 id받아서 넘기기
-        Clothes clothes = clothesReader.findClothes(clothesId);
-        Clothes.Status status = clothes.getStatus();
-        String clothesToken = clothes.getClothesToken();
-        if (status == Clothes.Status.BASIC) {
-            HttpResponse<String> response = omniCommerceService.getClothes(clothesToken);
-            int statusCode = response.getStatus();
-            
-            if ( 201 == statusCode){ // 정상 응답
-                System.out.println("SUCCESS " + statusCode);
-                // 옷 업데이트 함수를 넣을건데, 업데이트 함수를 따로 만들어야겠지?
-                List<ClothesTagGroup> list = JsonTagPaser.parse(response.getBody(), clothes);
-
-                for (ClothesTagGroup tg : list) {em.persist(tg);}
-                em.flush();
-                clothes.updateClothes(list);
-            }
-            else {throw new RuntimeException("옷 정보를 조회과정에서 문제가 발생했습니다.");};
-        }
+        Clothes clothes = clothesUpdateTool.update(clothesReader.findClothes(clothesId));
         return new ClothesInfo(clothes);
     }
 

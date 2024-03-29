@@ -4,6 +4,7 @@ import dev.rainbowmirror.closeathand.common.exception.EntityNotFoundException;
 import dev.rainbowmirror.closeathand.domain.S3UploadService;
 import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesReader;
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesUpdateTool;
 import dev.rainbowmirror.closeathand.domain.user.User;
 import dev.rainbowmirror.closeathand.domain.user.UserReader;
 import jakarta.transaction.Transactional;
@@ -26,6 +27,7 @@ public class OotdServiceImpl implements OotdService{
     private final UserReader userReader;
     private final ClothesReader clothesReader;
     private final S3UploadService s3UploadService;
+    private final ClothesUpdateTool clothesUpdateTool;
     @Override
     public List<OotdInfo> getOotds(String userToken) {
         List<OotdInfo> ootdInfoList = new ArrayList<>();
@@ -74,7 +76,7 @@ public class OotdServiceImpl implements OotdService{
         // 옷 등록
         ootd.getClothes().clear();
         for (Long clothesId: command.getClothesIdList()){
-            ootd.addClothes(clothesReader.findClothes(clothesId));
+            ootd.addClothes(clothesUpdateTool.update(clothesReader.findClothes(clothesId)));
         }
         ootdStore.store(ootd);
         // 이미지 저장
