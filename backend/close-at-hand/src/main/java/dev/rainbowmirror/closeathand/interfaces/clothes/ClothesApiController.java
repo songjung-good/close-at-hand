@@ -4,6 +4,7 @@ import dev.rainbowmirror.closeathand.application.clothes.ClothesFacade;
 import dev.rainbowmirror.closeathand.common.response.CommonResponse;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesListInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroupInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -54,6 +55,19 @@ public class ClothesApiController {
     public CommonResponse<ClothesDto.FindResponse> findClothes(@PathVariable Long clothesId) {
         ClothesInfo clothesInfo = clothesFacade.findClothes(clothesId);
         return CommonResponse.success(clothesInfo);
+    }
+    @Operation(summary = "옷 전체 조회 api")
+    @GetMapping
+    public CommonResponse<List<ClothesListInfo>> findAllClothes() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+
+        String userToken = auth.getAuthority();
+
+        List<ClothesListInfo> clothesInfoList = clothesFacade.findAllClothes(userToken);
+        return CommonResponse.success(clothesInfoList);
     }
 
     @Operation(summary = "옷 태그리스트 조회")

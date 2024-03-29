@@ -4,6 +4,7 @@ import dev.rainbowmirror.closeathand.domain.OmniCommerceService;
 import dev.rainbowmirror.closeathand.domain.S3UploadService;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesListInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesService;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroupInfo;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,10 @@ public class ClothesFacade {
     public ClothesInfo findClothes(Long clothesId) {
         ClothesInfo clothesInfo = clothesService.findClothes(clothesId);
         return clothesInfo;
+    }
+
+    public List<ClothesListInfo> findAllClothes(String userToken){
+        return clothesService.findAllClothes(userToken);
     }
 
     public List<String> findAllClothesTag(String userToken){

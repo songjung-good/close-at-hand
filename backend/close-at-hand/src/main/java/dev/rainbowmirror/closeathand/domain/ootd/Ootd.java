@@ -46,7 +46,7 @@ public class Ootd extends AbstractEntity {
         else {
             this.user = user;
         }
-        if (!StringUtils.hasLength(ootdImgUrl)) this.ootdImgUrl = "noImage.jpg";
+        if (!StringUtils.hasLength(ootdImgUrl)) this.ootdImgUrl = "https://rainmirror.s3.ap-northeast-2.amazonaws.com/ootd/noImg.png";
         else this.ootdImgUrl = ootdImgUrl;
         if (clothes != null) this.clothes = clothes;
     }

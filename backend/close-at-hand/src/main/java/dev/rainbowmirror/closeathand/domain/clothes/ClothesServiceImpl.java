@@ -45,11 +45,25 @@ public class ClothesServiceImpl implements ClothesService{
         return new ClothesInfo(clothes);
     }
 
+    @Override
+    public List<ClothesListInfo> findAllClothes(String userToken) {
+        List<Clothes> clothesList = clothesReader.findAllClothes(userToken);
+        List<ClothesListInfo> result = new ArrayList<>();
+        for (Clothes clothes: clothesList){result.add(new ClothesListInfo(clothes));}
+        return result;
+    }
+
     public List<String> findAllClothesTag(String userToken){
         List<String> list = new ArrayList<>();
         for (ClothesTag cLothesTag: clothesRepository.findDistinctTagByUserToken(userToken)){
             list.add(cLothesTag.getTagName());
         }
         return list;
+    }
+
+    @Override
+    public ClothesInfo updateClothes(ClothesCommand.UpdateCommand command) {
+
+        return null;
     }
 }

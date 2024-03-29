@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -14,6 +16,11 @@ public class ClothesReaderImpl implements ClothesReader {
 
     @Override
     public Clothes findClothes(Long clothesId) { // 옷 id로 옷 정보 가져오기
-        return this.clothesRepository.getReferenceById(clothesId);
+        return clothesRepository.getReferenceById(clothesId);
+    }
+
+    @Override
+    public List<Clothes> findAllClothes(String userToken) {
+        return clothesRepository.findAllByUserUserToken(userToken);
     }
 }
