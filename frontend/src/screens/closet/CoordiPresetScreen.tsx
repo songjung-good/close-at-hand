@@ -35,12 +35,16 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
     {presetInfo ? (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: presetInfo.clothes.find }} style={styles.image} />
+        <Image source={{ uri: presetInfo.clothes[0].clothesImgUrl }} style={styles.image} />
       </View>
       <ScrollView style={styles.infoContainer}>
-        {/* <Text style={styles.infoText}>종류: {presetInfo.clothes}</Text> */}
-        {/* <Text style={styles.infoText}>가격: {presetInfo.clothes[4]}원</Text> */}
-        {/* <Text style={styles.infoText}>마지막 세탁일: {presetInfo.clothes[3]}</Text> */}
+        {presetInfo.clothes.map((clothes, index) => (
+          <View key={index}>
+            <Text style={styles.infoText}>종류: {clothes.detection}</Text>
+            <Text style={styles.infoText}>가격: {clothes.price}원</Text>
+            <Text style={styles.infoText}>마지막 세탁일: {clothes.lastWashDate}</Text>
+          </View>
+        ))}
       </ScrollView>
     </View>
     ) : (
@@ -55,18 +59,19 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    flex: 1,
   },
   imageContainer: {
     alignItems: "center",
     marginBottom: 20,
-    height: '65%',
+    flex: 2,
   },
   image: {
     width: "100%",
     height: "100%", // 이미지 크기 조절
   },
   infoContainer: {
-    paddingHorizontal: 20,
+    flex: 2,
   },
   infoText: {
     fontSize: FONTSIZE.Medium, // 폰트 크기 조절

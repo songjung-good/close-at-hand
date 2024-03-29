@@ -35,15 +35,14 @@ const CoordiScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>프리셋 목록</Text>
+      </View>
+      <View>
+        <RenderPresetList />
         <TouchableOpacity>
-          {/* <Text style={styles.buttonText}>새로 만들기</Text> */}
           <NewPreset 
             onClose={toggleModal}
           />
         </TouchableOpacity>
-      </View>
-      <View>
-        <RenderPresetList />
       </View>
     </View>
   );
@@ -64,26 +63,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: FONTSIZE.Medium,
     fontWeight: 'bold',
-  },
-  addButton: {
-    backgroundColor: COLORS.CarrotRed,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: COLORS.White,
-    fontSize: FONTSIZE.ExtraSmall,
-    fontWeight: 'bold',
-  },
-  presetContainer: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    padding: '20%',
-    marginTop: '5%',
-    borderColor: COLORS.CarrotRed,
-    borderWidth: 1,
-    borderRadius: 5,
   },
 });
 

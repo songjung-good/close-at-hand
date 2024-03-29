@@ -7,7 +7,6 @@ import { FONTSIZE, COLORS } from "../../shared";
 // 임시데이터
 import { clothList, recommendedClothes } from "./clothInfo";
 
-
 // 옷 인터페이스
 interface clothInfo {
   clothesId: number,
