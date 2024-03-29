@@ -11,20 +11,43 @@ interface NoResponse {
 	noResponse: true;
 }
 
-interface TodayResponse {}
+interface TodayResponse {
+	ootdId: number;
+	ootdImgUrl: "string";
+	clothes: [
+		{
+			clothesId: number;
+			clothesImgUrl: string;
+			detection: string;
+			lastWashDate: string; // "2024-03-28T23:53:59.950Z
+			price: number;
+			clothesTagGroupList: [
+				{
+					clothesTagGroupName: string;
+					clothesTagList: [
+						{
+							clothesTagName: string;
+						},
+					];
+				},
+			];
+		},
+	];
+}
 
 export async function fetchToday({
 	signal,
 }: FetchTodayInterface): Promise<NoResponse | TodayResponse> {
 	try {
-		const response = await API.get("주소", { signal });
-		if (response.status === 204) {
+		const response = await API.get("ootd/today", { signal });
+		if (response.data.data.clothes.length === 0) {
 			return {
-				message: "기록된 오늘의 코디가 없어요! \n 오늘의 코디를 추가해 주세요.",
+				message:
+					"기록된 오늘의 코디가 없어요! \n 클로젯 핸드를 통해 오늘의 코디를 추가해 주세요.",
 				noResponse: true,
 			} as NoResponse;
 		} else {
-			return response.data as TodayResponse;
+			return response.data.data as TodayResponse;
 		}
 	} catch (error) {
 		throw new Error((error as AxiosError).message ?? "네트워크 에러");
