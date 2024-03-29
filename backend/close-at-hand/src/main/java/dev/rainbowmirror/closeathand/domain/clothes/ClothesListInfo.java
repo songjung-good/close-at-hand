@@ -11,4 +11,10 @@ public class ClothesListInfo {
         this.clothesId = clothes.getClothesId();
         this.clothesImgUrl = clothes.getClothesImgUrl();
     }
+    public ClothesListInfo(ClothesInfo clothesInfo) {
+        this.clothesId = clothesInfo.getClothesId();
+        this.clothesImgUrl = clothesInfo.getClothesImgUrl();
+    }
+
+
 }
