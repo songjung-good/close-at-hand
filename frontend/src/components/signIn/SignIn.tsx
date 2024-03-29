@@ -14,7 +14,7 @@ const SignIn = () => {
 	const { mutate } = useMutation({
 		mutationFn: fetchLogin,
 		onSuccess: () => {
-			navigation.navigate("0");
+			navigation.navigate("0", { screen: "home" });
 		},
 		onError: (error) => {
 			Alert.alert(error.message, "아이디 또는 비밀번호를 다시 확인해주세요");
@@ -27,7 +27,7 @@ const SignIn = () => {
 			Alert.alert("입력 오류", "아이디 또는 비밀번호를 입력하세요");
 			return;
 		}
-		mutate({ accountId, password });
+		mutate({ account: accountId, password });
 	}
 
 	function handleIdChange(input: string) {

@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RealmProvider } from "@realm/react";
+import * as Keychain from "react-native-keychain";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import AppNav from "./navigation/AppNav";
-import { LaundryDB } from "../shared/realm/realm";
 import {
 	getNotificationPermission,
 	scheduleDailyAlarm,
 	queryClient,
 	useUserActions,
 	NotificationType,
+	LaundryDB,
 } from "../shared";
 import { deleteNotification } from "../shared/notifee/notifee";
 interface Props {
@@ -18,16 +19,15 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({ readyNow }) => {
-	const { setRefreshToken } = useUserActions();
+	const { setAccessToken } = useUserActions();
 
 	useEffect(() => {
 		async function getLoginInfo() {
 			try {
-				const token = await AsyncStorage.getItem("CloseAtHandrefreshToken");
-				const exp = await AsyncStorage.getItem("CloseAtHandrefreshTokenExp");
-				if (token && exp) {
-					setRefreshToken({ token, exp });
-					// access Token을 얻는 로직 작성
+				const credentials =
+					await Keychain.getInternetCredentials("closeAtHand");
+				if (credentials) {
+					setAccessToken(credentials.password);
 				}
 				readyNow(true);
 			} catch (error) {
