@@ -8,6 +8,7 @@ import { useRealm } from "@realm/react";
 
 interface ImageProps {
 	imageUrl: string;
+	looks: string[];
 }
 
 const DataExist: React.FC<ImageProps> = ({ imageUrl }) => {
@@ -51,8 +52,9 @@ const TodayHome = () => {
 		if ("noResponse" in data) {
 			content = <StyledText content={data.message} />;
 		} else {
-			content = <DataExist imageUrl={data.ootdImgUrl} />;
-			const textures: string[] = [];
+			content = (
+				<DataExist imageUrl={data.ootdImgUrl} looks={data.clothes[0].looks} />
+			);
 
 			data.clothes.forEach((e) => {
 				realm.write(() => {
@@ -61,7 +63,7 @@ const TodayHome = () => {
 						LaundryDB.generate(
 							e.clothesId,
 							e.clothesImgUrl,
-							textures,
+							e.texture,
 							new Date(e.lastWashDate),
 						),
 					);

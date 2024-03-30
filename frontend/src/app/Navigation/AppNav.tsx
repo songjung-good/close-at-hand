@@ -60,9 +60,11 @@ const AppNav = () => {
 			}}
 		>
 			<Tab.Navigator
+				detachInactiveScreens={true}
 				screenOptions={{
 					headerShown: false,
 					tabBarStyle: { height: 80, paddingBottom: 20 },
+					lazy: false,
 				}}
 			>
 				<Tab.Screen

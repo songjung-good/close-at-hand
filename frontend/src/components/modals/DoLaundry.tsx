@@ -40,7 +40,7 @@ const DoLaundry: React.FC<Props> = ({ onPress }) => {
 						renderItem={({ item }) => (
 							<>
 								<Image
-									style={styles.image}
+									style={[SHADOW, styles.image]}
 									source={{ uri: item.clothesImgUrl }}
 								/>
 								<FontAwesome
