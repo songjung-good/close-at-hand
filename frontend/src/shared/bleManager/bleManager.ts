@@ -1,7 +1,13 @@
-import { PermissionsAndroid, Platform } from "react-native";
+import {
+	PERMISSIONS,
+	RESULTS,
+	request,
+	check,
+	Permission,
+} from "react-native-permissions";
 import BleManager from "react-native-ble-manager";
 
-export const handleAndroidBluetoothPermissions = () => {
+export const handleAndroidBluetoothPermissions = async () => {
 	BleManager.start({ showAlert: false })
 		.then(() => {
 			console.debug("BleManager initialized");
@@ -14,50 +20,19 @@ export const handleAndroidBluetoothPermissions = () => {
 		console.debug("Bluetooth is turned on!");
 	});
 
-	if (Platform.OS === "android" && Platform.Version >= 31) {
-		PermissionsAndroid.requestMultiple([
-			PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
-			PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
-		])
-			.then((results) => {
-				const allGranted = Object.values(results).every(
-					(result) => result === PermissionsAndroid.RESULTS.GRANTED,
-				);
-
-				if (allGranted) {
-					console.debug(
-						"[handleAndroidPermissions] User accepts runtime permissions android 12+",
-					);
-				} else {
-					console.error(
-						"[handleAndroidPermissions] User refuses runtime permissions android 12+",
-					);
-				}
-			})
-			.catch((error) => console.log(error));
-	} else if (Platform.OS === "android" && Platform.Version >= 23) {
-		PermissionsAndroid.check(
-			PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-		).then((checkResult) => {
-			if (checkResult) {
-				console.debug(
-					"[handleAndroidPermissions] runtime permission Android <12 already OK",
-				);
-			} else {
-				PermissionsAndroid.request(
-					PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-				).then((requestResult) => {
-					if (requestResult) {
-						console.debug(
-							"[handleAndroidPermissions] User accepts runtime permission android <12",
-						);
-					} else {
-						console.error(
-							"[handleAndroidPermissions] User refuses runtime permission android <12",
-						);
-					}
-				});
+	async function getPermissions(permissions: Permission) {
+		check(permissions).then(async (result) => {
+			switch (result) {
+				case RESULTS.GRANTED:
+					break;
+				case RESULTS.DENIED:
+					await request(permissions);
+					break;
 			}
 		});
 	}
+
+	const a = getPermissions(PERMISSIONS.ANDROID.BLUETOOTH_CONNECT);
+	const b = getPermissions(PERMISSIONS.ANDROID.BLUETOOTH_SCAN);
+	await Promise.allSettled([a, b]);
 };

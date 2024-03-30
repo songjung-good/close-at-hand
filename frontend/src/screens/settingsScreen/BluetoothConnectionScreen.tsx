@@ -58,7 +58,7 @@ const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 				console.error(error);
 			})
 			.finally(() => {
-				console.log("scan done");
+				console.debug("scan done");
 				setIsScanned(true);
 			});
 	}
