@@ -6,14 +6,12 @@ import type { HomeParamList } from "./navigation/HomeNav";
 import type { ClosetParamList } from "./navigation/ClosetNav";
 import type { ManagementParamList } from "./navigation/ManagementNav";
 import type { SettingsParamList } from "./navigation/SettingsNav";
-import type { OnBoardingParamList } from "./navigation/OnBoardingNav";
 
 type NativeStackParamList = RootParamList &
 	HomeParamList &
 	ClosetParamList &
 	ManagementParamList &
-	SettingsParamList &
-	OnBoardingParamList;
+	SettingsParamList;
 
 type Route<T extends keyof NativeStackParamList> = A<NativeStackParamList, T>;
 

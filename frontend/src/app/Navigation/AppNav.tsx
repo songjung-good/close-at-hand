@@ -12,9 +12,7 @@ import HomeNav, { HomeParamList } from "./HomeNav";
 import ClosetNav, { ClosetParamList } from "./ClosetNav";
 import ManagementNav, { ManagementParamList } from "./ManagementNav";
 import SettingsNav, { SettingsParamList } from "./SettingsNav";
-
-import OnBoardingNav from "./OnBoardingNav";
-import { COLORS, notification } from "../../shared";
+import { COLORS, useToken } from "../../shared";
 import { useEffect } from "react";
 
 // type
@@ -43,16 +41,16 @@ const Tab = createBottomTabNavigator<RootParamList>();
 export const navigationRef = createNavigationContainerRef<RootParamList>();
 
 const AppNav = () => {
+	const token = useToken();
+
 	useEffect(() => {
-		if (notification.id && navigationRef.isReady()) {
-			if (notification.id === "CloseAtHandHomeAlarm") {
-				navigationRef.navigate("2", {
-					screen: "laundryMain",
-					params: { fromNoti: true },
-				});
-			}
+		console.log(token);
+		if (navigationRef.isReady() && !token) {
+			console.log("로그인 하세용");
+			navigationRef.navigate("0", { screen: "login" });
 		}
-	}, []);
+	}, [token]);
+
 	return (
 		<NavigationContainer
 			ref={navigationRef}
@@ -123,8 +121,6 @@ const AppNav = () => {
 						),
 					}}
 				/>
-				{/* 아레는 임시*/}
-				<Tab.Screen name="onboarding" component={OnBoardingNav} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	);

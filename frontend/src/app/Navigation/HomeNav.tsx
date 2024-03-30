@@ -18,8 +18,8 @@ const HomeNav = () => {
 				screenOptions={{ headerShown: false }}
 				initialRouteName="home"
 			>
-				<Stack.Screen name="home" component={HomeScreen} />
 				<Stack.Screen name="login" component={LoginScreen} />
+				<Stack.Screen name="home" component={HomeScreen} />
 			</Stack.Navigator>
 		</SafeAreaProvider>
 	);
