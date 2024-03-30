@@ -3,8 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
 import { COLORS, LaundryDB } from "../../shared";
-import { fetchToday } from "./API";
+import { TodayResponse, fetchToday } from "./API";
 import { useRealm } from "@realm/react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface ImageProps {
 	imageUrl: string;
@@ -56,19 +57,42 @@ const TodayHome = () => {
 				<DataExist imageUrl={data.ootdImgUrl} looks={data.clothes[0].looks} />
 			);
 
-			data.clothes.forEach((e) => {
-				realm.write(() => {
-					realm.create(
-						"LaundryDB",
-						LaundryDB.generate(
-							e.clothesId,
-							e.clothesImgUrl,
-							e.texture,
-							new Date(e.lastWashDate),
-						),
-					);
+			function saveDB(data: TodayResponse) {
+				data.clothes.forEach((e) => {
+					let texture = 0;
+					for (let element of e.texture) {
+						if (/울|캐시미어/.test(element)) {
+							texture = 1;
+							break;
+						}
+					}
+
+					realm.write(() => {
+						realm.create(
+							"LaundryDB",
+							LaundryDB.generate(
+								e.clothesId,
+								e.clothesImgUrl,
+								texture,
+								new Date(e.lastWashDate),
+							),
+						);
+					});
 				});
-			});
+			}
+
+			async function check(data: TodayResponse) {
+				const lastSave = await AsyncStorage.getItem("lastSave");
+
+				const today = new Date().toISOString().split("T")[0];
+
+				if (lastSave !== today) {
+					saveDB(data);
+				}
+				await AsyncStorage.setItem("lastSave", today);
+			}
+
+			check(data);
 		}
 	}
 

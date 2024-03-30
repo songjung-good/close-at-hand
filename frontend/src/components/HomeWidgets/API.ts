@@ -11,7 +11,7 @@ interface NoResponse {
 	noResponse: true;
 }
 
-interface TodayResponse {
+export interface TodayResponse {
 	ootdId: number;
 	ootdImgUrl: "string";
 	clothes: [
