@@ -1,72 +1,122 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, StyleSheet, Text, Pressable, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // 컴포넌트
 import { COLORS, FONTSIZE } from '../../shared/styles/STYLES';
 // 임시데이터
-import { Tag } from './searchTag';
+import { ClothesTagGroups } from './searchTag';
+
+interface ClothesTag {
+  clothesTagName: string;
+}
+
+interface ClothesTagGroup {
+  clothesTagGroupName: string;
+  clothesTagList: ClothesTag[];
+}
 
 interface SearchModalProps {
   onClose: () => void;
-  onTagsSelected: (tags: number[]) => void; // 클릭된 태그 ID 정보를 상위 컴포넌트로 전달하기 위한 콜백 함수
+  // 클릭된 태그 정보를 상위 컴포넌트로 전달하기 위한 콜백 함수
+  onTagsSelected: (tags: number[]) => void; 
 };
 
-const TagItem: React.FC<{ tag: any, onClick: (id: number) => void }> = ({ tag, onClick }) => {
+const TagItem: React.FC<{ tag: ClothesTag, onClick: (name: string) => void }> = ({ tag, onClick }) => {
   const [clicked, setClicked] = useState(false);
 
   const addTag = () => {
-    setClicked(!clicked); // 클릭된 상태를 토글합니다.
-    onClick(tag.name); // 클릭된 태그의 ID를 상위 컴포넌트로 전달합니다.
+    setClicked(!clicked);
+    onClick(tag.clothesTagName);
   };
 
   return (
     <View style={styles.tagTitle}>
       <Pressable onPress={addTag} style={[styles.tagItem, clicked ? styles.tagItemClicked : null]}>
-        <Text style={styles.tagText}>{tag.name}</Text>
+        <Text style={styles.tagText}>{tag.clothesTagName}</Text>
       </Pressable>
     </View>
   );
 };
 
 const TagList: React.FC<{ onTagsSelected: (tags: number[]) => void }> = ({ onTagsSelected }) => {
-  const [selectedTags, setSelectedTags] = useState<number[]>([]); // 선택된 태그의 ID를 저장하는 상태
+  // 태그의 상태
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
-  // 클릭된 태그의 ID를 저장하고 전달하는 함수
-  const handleTagClick = (tagId: number) => {
-    if (selectedTags.includes(tagId)) {
-      setSelectedTags(selectedTags.filter((id) => id !== tagId)); // 이미 선택된 경우 해당 태그를 제거합니다.
+  const handleTagClick = (tagName: string) => {
+    if (selectedTags.includes(tagName)) {
+      setSelectedTags(selectedTags.filter(name => name !== tagName));
     } else {
-      setSelectedTags([...selectedTags, tagId]); // 선택되지 않은 경우 해당 태그를 추가합니다.
+      setSelectedTags([...selectedTags, tagName]);
     }
   };
 
-  // 클릭된 태그 ID 정보를 상위 컴포넌트로 전달합니다.
+  // 클릭된 태그 ID 정보를 전달
   useEffect(() => {
-    onTagsSelected(selectedTags);
+    const selectedTagIds: number[] = [];
+    ClothesTagGroups.forEach(group => {
+      group.clothesTagList.forEach(tag => {
+        if (selectedTags.includes(tag.clothesTagName)) {
+          selectedTagIds.push(tag.id);
+        }
+      });
+    });
+    onTagsSelected(selectedTagIds);
   }, [selectedTags]);
 
   return (
     <View style={styles.tagContainer}>
-      {Tag.map((tag) => (
-        <TagItem key={tag.id} tag={tag} onClick={handleTagClick} />
+      {ClothesTagGroups.map(group => (
+        <View key={group.clothesTagGroupName}>
+          <Text style={styles.tagGroupTitle}>{group.clothesTagGroupName}</Text>
+          <View style={styles.tagGroupContainer}>
+            {group.clothesTagList.map(tag => (
+              <TagItem key={tag.clothesTagName} tag={tag} onClick={handleTagClick} />
+            ))}
+          </View>
+        </View>
       ))}
     </View>
   );
 };
 
 const SearchModal: React.FC<SearchModalProps> = ({ onTagsSelected }) => {
+  // 모달상태
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedTags, setSelectedTags] = useState<number[]>([]); // 선택된 태그 상태 추가
+   // 선택된 태그 상태 추가
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
-  // 모달이 열릴 때 이전에 선택된 태그를 복원합니다.
+  // 모달이 열릴 때 이전 선택 태그 복원
   useEffect(() => {
+    const getSelectedTags = async () => {
+      try {
+        const storedTags = await AsyncStorage.getItem('selectedTags');
+        if (storedTags !== null) {
+          setSelectedTags(JSON.parse(storedTags));
+        }
+      } catch (error) {
+        console.error('태그 가져오는데 문제가 생겼어!:', error);
+      }
+    };
+
     if (modalVisible) {
-      // 이전에 선택된 태그를 가져옵니다.
-      const storedTags = JSON.parse(
-        localStorage.getItem("selectedTags") || "[]"
-      );
-      setSelectedTags(storedTags);
+      getSelectedTags();
     }
   }, [modalVisible]);
+
+  // 모달이 닫힐 때 선택된 태그 저장
+  useEffect(() => {
+    const saveSelectedTags = async () => {
+      try {
+        await AsyncStorage.setItem('selectedTags', JSON.stringify(selectedTags));
+      } catch (error) {
+        console.error('태그 저장하는데 문제가 생겼어!:', error);
+      }
+    };
+
+    if (!modalVisible) {
+      saveSelectedTags();
+    }
+  }, [modalVisible, selectedTags]);
 
   return (
     <View>
@@ -138,11 +188,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   tagContainer: {
+    marginHorizontal: 15,
+  },
+  tagGroupTitle: {
+    fontSize: FONTSIZE.Large,
+    fontWeight: 'bold',
+    marginVertical: 10,
+  },
+  tagGroupContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent:'space-around',
-    alignItems: 'center',
-    marginHorizontal: 15,
+    justifyContent: 'space-around',
   },
   tagItem: {
     backgroundColor: COLORS.White,
@@ -158,7 +214,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent:'space-around',
     alignItems: 'center',
-    marginHorizontal: 15,
   },
   tagItemClicked: {
     backgroundColor: COLORS.SkyBlue,
@@ -169,7 +224,6 @@ const styles = StyleSheet.create({
   tagText: {
     fontSize: FONTSIZE.ExtraSmall,
     padding: 5,
-    // borderRadius: 10,
   },
 });
 
