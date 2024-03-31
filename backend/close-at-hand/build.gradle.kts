@@ -39,11 +39,18 @@ dependencies {
 	// NotEmpty
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
-//	implementation("org.springframework.boot:spring-boot-starter-security")
+	// S3
+	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
+	// https://mvnrepository.com/artifact/com.konghq/unirest-java
+	implementation("com.konghq:unirest-java:3.14.5")
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	implementation("com.google.code.gson:gson:2.10.1")
+	// security
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 	runtimeOnly("com.mysql:mysql-connector-j")
 	// swagger
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")

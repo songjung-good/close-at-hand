@@ -40,19 +40,37 @@ public class Preset extends AbstractEntity {
     private User user;
 
     @Builder
-    public Preset(String presetImgUrl, String presetName, User user) {
+    public Preset(String presetImgUrl, String presetName, Set<Clothes> clothes,User user) {
         if (user == null) throw new RuntimeException("empty user");
+        this.user = user;
 
         if (!StringUtils.hasLength(presetName)) this.presetName = "이름없는 프리셋";
         else this.presetName = presetName;
 
-        if (!StringUtils.hasLength(presetImgUrl)) this.presetImgUrl = "noImage.jpg";
+        if (clothes != null) this.clothes = clothes;
+
+        if (!StringUtils.hasLength(presetImgUrl)) this.presetImgUrl = "https://rainmirror.s3.ap-northeast-2.amazonaws.com/preset/noImg.png";
         else this.presetImgUrl = presetImgUrl;
     }
 
-    // update
-    public void update(PresetCommand.UpdateCommand command){
-
+    public void addClothes(Clothes clothes) {
+        for (Clothes clothing : this.clothes){
+            if (clothing.getClothesId().equals(clothes.getClothesId())) {return;}
+        }
+        this.clothes.add(clothes);
     }
 
+    public void changeImgUrl(String presetImgUrl) {this.presetImgUrl = presetImgUrl;}
+    public void changeName(String presetName) {this.presetName = presetName;}
+
+    public void addClothes(Set<Clothes> clothes){
+        this.clothes.addAll(clothes);
+    }
+    public void popClothes(Set<Clothes> clothes) {
+        this.clothes.removeAll(clothes);
+    }
+
+    public String getFilename(){
+        return "preset/" + presetId;
+    }
 }
