@@ -9,25 +9,25 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommonResponse <T>{
+public class CommonResponse<T> {
     private Result result;
     private T data;
     private String message;
     private String errorCode;
 
-    public static <T> CommonResponse success(T data, String message) {
-        return CommonResponse.builder()
+    public static <T> CommonResponse<T> success(T data, String message) {
+        return (CommonResponse<T>) CommonResponse.builder()
                 .result(Result.SUCCESS)
                 .data(data)
                 .message(message)
                 .build();
     }
 
-    public static <T> CommonResponse success(T data) {
+    public static <T> CommonResponse<T> success(T data) {
         return success(data, null);
     }
 
-    public static <T> CommonResponse fail(String message, String errorCode) {
+    public static CommonResponse fail(String message, String errorCode) {
         return CommonResponse.builder()
                 .result(Result.FAIL)
                 .message(message)
@@ -35,7 +35,7 @@ public class CommonResponse <T>{
                 .build();
     }
 
-    public static <T> CommonResponse fail(ErrorCode errorCode) {
+    public static CommonResponse fail(ErrorCode errorCode) {
         return CommonResponse.builder()
                 .result(Result.FAIL)
                 .message(errorCode.getErrorMsg())

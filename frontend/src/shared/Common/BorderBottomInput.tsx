@@ -1,5 +1,5 @@
 import { StyleSheet, TextInput } from "react-native";
-import COLORS from "../../app/constant/COLORS";
+import COLORS from "../constant/COLORS";
 
 interface Props {
 	value: string;

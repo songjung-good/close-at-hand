@@ -35,7 +35,6 @@ public class CommonControllerAdvice {
     public CommonResponse onException(Exception e) {
 //        String eventId = MDC.get(CommonHttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
 //        log.error("eventId = {} ", eventId, e);
-        System.out.println(e);
         return CommonResponse.fail(ErrorCode.COMMON_SYSTEM_ERROR);
     }
 
@@ -71,7 +70,7 @@ public class CommonControllerAdvice {
     @ExceptionHandler(value = {ClientAbortException.class})
     public CommonResponse skipException(Exception e) {
 //        String eventId = MDC.get(CommonHttpRequestInterceptor.HEADER_REQUEST_UUID_KEY);
-        log.warn("[skipException] eventId = {}, cause = {}, errorMsg = {}", NestedExceptionUtils.getMostSpecificCause(e), NestedExceptionUtils.getMostSpecificCause(e).getMessage());
+//        log.warn("[skipException] eventId = {}, cause = {}, errorMsg = {}", eventId, NestedExceptionUtils.getMostSpecificCause(e), NestedExceptionUtils.getMostSpecificCause(e).getMessage());
         return CommonResponse.fail(ErrorCode.COMMON_SYSTEM_ERROR);
     }
 

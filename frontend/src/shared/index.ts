@@ -13,6 +13,9 @@ export {
 	useIsLogin,
 } from "./zustand/userStore";
 
+// constant
+export { default as COLORS } from "./constant/COLORS";
+
 // UI
 export { default as BorderBottomInput } from "./Common/BorderBottomInput";
 export { default as StyledButton } from "./Common/StyledButton";

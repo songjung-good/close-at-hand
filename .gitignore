@@ -448,9 +448,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-
-*.yml
-
 ### ReactNative.Node Stack ###
 # Logs
 
@@ -536,5 +533,8 @@ xcuserdata/
 # website: https://storybook.js.org/
 
 storybook-static/
+
+### Exclude project management and task tracking files
+*.task
 
 # End of https://www.toptal.com/developers/gitignore/api/java,reactnative,python,storybookjs,node

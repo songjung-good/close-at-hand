@@ -6,15 +6,15 @@ import lombok.ToString;
 @Getter
 @ToString
 public class UserInfo {
-    private final Long userId;
+    private final Long user_id;
     private final String userToken;
     private final String userName;
-    private final Float height;
+    private final String height;
     private final String gender;
     private final User.Status status;
 
     public UserInfo(User user) {
-        this.userId = user.getUserId();
+        this.user_id = user.getUserId();
         this.userToken = user.getUserToken();
         this.userName = user.getUserName();
         this.height = user.getHeight();
