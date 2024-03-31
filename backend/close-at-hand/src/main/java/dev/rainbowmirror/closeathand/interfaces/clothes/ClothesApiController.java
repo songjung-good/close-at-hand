@@ -34,6 +34,7 @@ import java.util.Map;
 @Tag(name = "Clothes")
 public class ClothesApiController {
     private final ClothesFacade clothesFacade;
+    private final RecommendService recommendService;
 
     @Operation(summary = "옷 등록 api")
     @PostMapping(produces = "application/json", consumes = "multipart/form-data") // post 요청이 올 경우
@@ -57,7 +58,7 @@ public class ClothesApiController {
 
     @Operation(summary = "옷 조회 api")
     @GetMapping("/{clothesId}")
-    public CommonResponse<ClothesInfo> findClothes(@PathVariable Long clothesId) {
+    public CommonResponse<ClothesDto.FindResponse> findClothes(@PathVariable Long clothesId) {
         ClothesInfo clothesInfo = clothesFacade.findClothes(clothesId);
         return CommonResponse.success(clothesInfo);
     }
@@ -90,4 +91,10 @@ public class ClothesApiController {
         return CommonResponse.success(new ClothesDto.ClothesTagResponse(list));
     }
 
+    @Operation(summary = "추천 옷 받기")
+    @GetMapping("/recommend")
+    public CommonResponse<ClothesRecommendInfo> getRecommend() {
+        ClothesRecommendInfo clothesRecommendInfo = recommendService.getRecommendation();
+        return CommonResponse.success(clothesRecommendInfo);
+    }
 }
