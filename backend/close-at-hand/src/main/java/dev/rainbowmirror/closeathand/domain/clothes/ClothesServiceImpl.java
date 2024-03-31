@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 // 이 파일은 service의 내용을 실제 구현하는거
@@ -78,12 +79,12 @@ public class ClothesServiceImpl implements ClothesService{
             }
         }
         List<ClothesTagAllInfo> result = new ArrayList<>();
-        result.add(new ClothesTagAllInfo("category",clothesTags.get(0)));
-        result.add(new ClothesTagAllInfo("item",clothesTags.get(1)));
-        result.add(new ClothesTagAllInfo("texture",clothesTags.get(2)));
-        result.add(new ClothesTagAllInfo("colors",clothesTags.get(3)));
-        result.add(new ClothesTagAllInfo("looks",clothesTags.get(4)));
-        result.add(new ClothesTagAllInfo("prints",clothesTags.get(5)));
+        result.add(new ClothesTagAllInfo("category",clothesTags.get(0).stream().distinct().collect(Collectors.toList())));
+        result.add(new ClothesTagAllInfo("item",clothesTags.get(1).stream().distinct().collect(Collectors.toList())));
+        result.add(new ClothesTagAllInfo("texture",clothesTags.get(2).stream().distinct().collect(Collectors.toList())));
+        result.add(new ClothesTagAllInfo("colors",clothesTags.get(3).stream().distinct().collect(Collectors.toList())));
+        result.add(new ClothesTagAllInfo("looks",clothesTags.get(4).stream().distinct().collect(Collectors.toList())));
+        result.add(new ClothesTagAllInfo("prints",clothesTags.get(5).stream().distinct().collect(Collectors.toList())));
         return result;
     }
 
