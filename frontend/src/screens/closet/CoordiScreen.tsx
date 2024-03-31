@@ -1,32 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 // 컴포넌트 불러오기
 import { COLORS, FONTSIZE } from '../../shared/';
-import { PresetItem, NewPreset } from '../../components';
-// 임시데이터
-import { presetList } from './presetInfo';
+import { PresetItem, NewPreset, ClosetItem } from '../../components';
+// API
+import { AxiosError } from 'axios';
+import { API } from '../../shared/';
 
-interface presetItem {
-  presetId: number,
-  presetName: string,
-  clothes: string[],
+interface PresetItem {
+  presetId: number;
+  presetImgUrl: string;
+  presetName: string;
+  clothes: {
+    clothesId: number;
+    clothesImgUrl: string;
+    lastWashDate: string;
+    texture: string[];
+    category: string[];
+    item: string[];
+    colors: string[];
+    looks: string[];
+    prints: string[];
+  }[];
+}
+
+interface ClosetItem {
+  clothesId: number;
+  clothesImgUrl: string;
 }
 
 const CoordiScreen: React.FC = () => {
-  const [preset, setPreset] = useState<presetItem[]>(presetList);
+  const [presets, setPresets] = useState<PresetItem[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   }
 
+  useEffect(() => {
+    // 서버로부터 프리셋 목록 데이터를 가져오는 API 호출
+    const fetchPresetData = async () => {
+      try {
+        const response = await API.get("/preset");
+        setPresets(response.data.data);
+      } catch (error) {
+        console.error("에러메시지:", error as AxiosError);
+      }
+    };
+    fetchPresetData();
+  }, []);
 
   const RenderPresetList: React.FC = () => {
     return (
       <FlatList
-        data={presetList}
-        renderItem={({ item }) => <PresetItem key={item.presetId} {...item} />}
-        keyExtractor={(item) => item.presetId.toString()}
+        data={presets.flatMap(preset => preset.clothes)}
+        renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
+        keyExtractor={(item) => item.clothesId.toString()}
       />
     );
   }

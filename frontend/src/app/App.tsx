@@ -59,7 +59,7 @@ const App: React.FC<Props> = ({ readyNow }) => {
 	}, []);
 
 	return (
-		<RealmProvider schema={[LaundryDB]}>
+		<RealmProvider schema={[LaundryDB]} deleteRealmIfMigrationNeeded={true}>
 			<QueryClientProvider client={queryClient}>
 				<AppNav />
 			</QueryClientProvider>

@@ -6,8 +6,6 @@ import { FONTSIZE, COLORS } from "../../shared";
 // API
 import { AxiosError } from "axios";
 import { API } from "../../shared";
-// 임시데이터
-import { clothesList, recommendedClothes } from "./clothInfo";
 
 // 옷 인터페이스
 interface ClothInfo {
@@ -27,18 +25,26 @@ const ClosetScreen: React.FC = () => {
   
   useEffect(() => {
     // 서버로부터 옷 목록 데이터를 가져오는 API 호출
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await API.get("/clothes");
-  //       setClothes(response.data.data);
-  //     } catch (error) {
-  //       console.error("에러메시지:", error as AxiosError);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-    setClothes(clothesList);
-    setRecommendedClothes(recommendedClothes.recommendList);
+    const fetchClothesData = async () => {
+      try {
+        const response = await API.get("/clothes");
+        setClothes(response.data.data);
+      } catch (error) {
+        console.error("옷 데이터가 없어용 ㅠ:", error as AxiosError);
+      }
+    };
+    fetchClothesData();
+    
+    // 서버로부터 추천 옷 데이터를 가져오는 API 호출
+    const fetchRecommendData = async () => {
+      try {
+        const response = await API.get("/recommend/recommend");
+        setRecommendedClothes(response.data.data.recommendList);
+      } catch (error) {
+        console.error("추천 옷 받아오는 거 어렵워용 ㅠㅠ:", error as AxiosError);
+      }
+    };
+    fetchRecommendData();
   }, []);
 
 
