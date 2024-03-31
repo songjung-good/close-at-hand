@@ -27,7 +27,7 @@ export class LaundryDB extends Realm.Object<LaundryDB> {
 		properties: {
 			clothesId: "int",
 			clothesImgUrl: "string",
-			textures: "number",
+			textures: "int",
 			lastWash: "date",
 			lastDayOfWear: "date",
 		},
