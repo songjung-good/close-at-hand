@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { HomeScreen } from "../../screens";
+import { StyleSheet } from "react-native";
+import { Stack } from "./reactNavigations";
+import { HomeScreen } from "../../screen";
 import { ControllerScreen } from "../../screens"; // 추가
 
 export type HomeParamList = {
@@ -10,6 +11,7 @@ export type HomeParamList = {
 
 const Stack = createNativeStackNavigator<HomeParamList>();
 
+
 const HomeNav = () => {
 	return (
 		<Stack.Navigator>
@@ -18,5 +20,6 @@ const HomeNav = () => {
 		</Stack.Navigator>
 	);
 };
+const styles = StyleSheet.create({});
 
 export default HomeNav;

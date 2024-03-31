@@ -1,12 +1,5 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { ClosetScreen } from "../../screens";
-
-export type ClosetParamList = {
-	closet: undefined;
-};
-
-const Stack = createNativeStackNavigator<ClosetParamList>();
+import { ClosetScreen } from "../../screen/index";
+import { Stack } from "./reactNavigations";
 
 const ClosetNav = () => {
 	return (
