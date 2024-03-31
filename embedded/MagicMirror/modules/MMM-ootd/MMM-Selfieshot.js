@@ -22,27 +22,6 @@ Module.register("MMM-Selfieshot", {
 		sendMail: null, // or your email config (option for nodemailer https://nodemailer.com/about/)
 		rotateCountdown: "none", // rotates countdown display. "left", "right", "invert" also options
 		rotatePreview: "none" // rotates preview display. "left", "right", "invert" also options
-		/*
-    sendMail: {
-      transport: {
-        host: 'smtp.gmail.com', // If required.
-        port: 465, // If required.
-        secure: true, // If required.
-        auth: {
-          user: "youremail@gmail.com",
-          pass: "your gmail password"
-        }
-      },
-      message: {
-        from: "youremail@gmail.com"
-        to: "who@where.com",
-        subject: "Selfie",
-        text: "New selfie.",
-      }
-    }
-    */
-		//In some environment (under firewall), you might get Connection Refused error. Allow the port.
-		//gmail has many issues. If possible, use alternative services.
 	},
 
 	getStyles: function() {

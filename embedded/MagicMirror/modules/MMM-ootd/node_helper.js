@@ -107,10 +107,7 @@ module.exports = NodeHelper.create({
 				uri: uri,
 				session: payload.session
 			});
-			
 			this.sendPhotoToBackend(data);
-			this.sendMail(data);
-			
 		});
 	},
 
@@ -134,29 +131,4 @@ module.exports = NodeHelper.create({
 			console.error('Failed to upload photo:', error);
 		});
 	},
-	
-
-	sendMail: function(filepath) {
-		if (this.config.sendMail && typeof this.config.sendMail == "object") {
-			try {
-				var transport = nodemailer.createTransport(this.config.sendMail.transport);
-				var msg = Object.assign({}, this.config.sendMail.message, {attachments: [{path: filepath}]});
-				transport.sendMail(msg, (err)=>{
-					if (err) {
-						log("Failed to send mail.");
-						log("Error:", err);
-						return;
-					}
-					log("Email sent.");
-					return;
-				});
-			} catch (e) {
-				log("Invalid mail account configuration.");
-				log("Error:", e);
-				return;
-			}
-		} else {
-			return;
-		}
-	}
 });
