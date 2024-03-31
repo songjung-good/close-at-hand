@@ -1,18 +1,25 @@
-import { Image, StyleSheet, Text, View, NativeModules } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 
-import { COLORS, FONTSIZE } from "../../shared";
+import {
+	COLORS,
+	FONTSIZE,
+	handleAndroidBluetoothPermissions,
+} from "../../shared";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BluetoothManager, { Peripheral } from "react-native-ble-manager";
 import { StyledButton } from "../../components";
 
-const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
-	navigation,
-}) => {
+const BluetoothConnectionScreen: React.FC<RootNavigationProp> = () => {
 	const [isScanned, setIsScanned] = useState(false);
 
 	useEffect(() => {
-		startScan();
+		async function permission() {
+			await handleAndroidBluetoothPermissions();
+		}
+		permission().then(() => {
+			startScan();
+		});
 
 		return () => {
 			BluetoothManager.stopScan();
@@ -27,20 +34,20 @@ const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 	async function startScan() {
 		setIsScanned(false);
 
-		const a = await BluetoothManager.scan([], 10, true)
+		await BluetoothManager.scan([], 10, true)
 			.then(async () => {
 				console.debug("Scanning...");
 				await sleep(10 * 1000);
 				try {
 					const peripherals = await BluetoothManager.getDiscoveredPeripherals();
 					const connectablePeripherals: Peripheral[] = [];
-
+					console.debug("검색 결과 출력");
 					peripherals.forEach((e) => {
 						if (e.advertising.localName) {
 							connectablePeripherals.push(e);
 							console.debug(e.name);
-						} else if (e.id === "2C:CF:67:10:CA:28") {
-							console.log(e);
+						} else if (e.name === "bada") {
+							console.debug(e);
 						}
 					});
 
@@ -58,7 +65,7 @@ const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 				console.error(error);
 			})
 			.finally(() => {
-				console.debug("scan done");
+				console.debug("스캔 종료");
 				setIsScanned(true);
 			});
 	}

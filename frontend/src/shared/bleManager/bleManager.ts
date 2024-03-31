@@ -7,7 +7,28 @@ import {
 } from "react-native-permissions";
 import BleManager from "react-native-ble-manager";
 
-export const handleAndroidBluetoothPermissions = async () => {
+export async function handleAndroidBluetoothPermissions() {
+	async function getPermissions(permissions: Permission) {
+		try {
+			const result = await check(permissions);
+			switch (result) {
+				case RESULTS.GRANTED:
+					return result;
+				case RESULTS.DENIED:
+					return await request(permissions);
+				default:
+					return result;
+			}
+		} catch (error) {
+			console.error("Permission check failed:", error);
+			throw error;
+		}
+	}
+
+	await getPermissions(PERMISSIONS.ANDROID.BLUETOOTH_CONNECT);
+	await getPermissions(PERMISSIONS.ANDROID.BLUETOOTH_SCAN);
+	console.log("dwaasd");
+
 	BleManager.start({ showAlert: false })
 		.then(() => {
 			console.debug("BleManager initialized");
@@ -19,20 +40,4 @@ export const handleAndroidBluetoothPermissions = async () => {
 	BleManager.enableBluetooth().then(() => {
 		console.debug("Bluetooth is turned on!");
 	});
-
-	async function getPermissions(permissions: Permission) {
-		check(permissions).then(async (result) => {
-			switch (result) {
-				case RESULTS.GRANTED:
-					break;
-				case RESULTS.DENIED:
-					await request(permissions);
-					break;
-			}
-		});
-	}
-
-	const a = getPermissions(PERMISSIONS.ANDROID.BLUETOOTH_CONNECT);
-	const b = getPermissions(PERMISSIONS.ANDROID.BLUETOOTH_SCAN);
-	await Promise.allSettled([a, b]);
-};
+}
