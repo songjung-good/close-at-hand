@@ -7,17 +7,29 @@ import Index from "./src/app/App";
 import { navigationRef } from "./src/app/navigation/AppNav";
 import { notification } from "./src/shared";
 
+function waitForNavigationReady() {
+	return new Promise<void>((resolve) => {
+		const checkNavigationReady = () => {
+			if (navigationRef.isReady()) {
+				resolve();
+			} else {
+				setTimeout(checkNavigationReady, 100); // 네비게이션이 준비될 때까지 100ms마다 체크
+			}
+		};
+		checkNavigationReady();
+	});
+}
+
 notifee.onBackgroundEvent(async ({ type, detail }) => {
 	if (type === EventType.PRESS && detail.notification) {
 		const { notificationType } = detail.notification.data!;
-		if (navigationRef.isReady()) {
-			if (notificationType === "CloseAtHandHomeAlarm") {
-				notification.id = notificationType;
-				navigationRef.navigate("2", {
-					screen: "laundryMain",
-					params: { fromNoti: true },
-				});
-			}
+		await waitForNavigationReady();
+		if (notificationType === "CloseAtHandHomeAlarm") {
+			notification.id = notificationType;
+			navigationRef.navigate("2", {
+				screen: "laundryMain",
+				params: { fromNoti: true },
+			});
 		}
 	}
 });

@@ -1,7 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HistoryMainScreen 스냅샷 테스트 1`] = `
-<RCTScrollView>
+<RCTScrollView
+  refreshControl={
+    <RefreshControlMock
+      onRefresh={[Function]}
+      refreshing={false}
+    />
+  }
+>
+  <RCTRefreshControl />
   <View>
     <View
       style={

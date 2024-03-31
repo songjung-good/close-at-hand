@@ -7,13 +7,17 @@ import Laundries from "./Laundries";
 import { LaundryDB, ROW } from "../../shared";
 
 interface Props {
-	textures: string;
+	textures: "일반 세탁" | "울 / 캐시미어" | "기능성 소재";
 }
 
 const LaundryBasket: React.FC<Props> = ({ textures }) => {
 	const realm = useRealm();
+
+	const textureSelector = ["일반 세탁", "울 / 캐시미어", "기능성 소재"];
+	const query = textureSelector.indexOf(textures);
+
 	const laundries = useQuery(LaundryDB, (laundry) =>
-		laundry.filtered("textures == $0", textures),
+		laundry.filtered("textures == $0", query),
 	);
 
 	const [selectedLaundries, setSelectedLaundries] = useState<Set<LaundryDB>>(

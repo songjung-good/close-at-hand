@@ -1,9 +1,20 @@
 import { StyleSheet, View } from "react-native";
 import { SignUp, SignIn, TextButton } from "../../components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { useToken } from "../../shared";
 
 const LoginScreen = () => {
+	const navigation = useNavigation<Navigation>();
+
 	const [signUpTry, setSignUpTry] = useState(false);
+	const token = useToken();
+
+	useEffect(() => {
+		if (token) {
+			navigation.replace("home");
+		}
+	}, [token]);
 
 	function hanldePress() {
 		setSignUpTry((prev) => !prev);

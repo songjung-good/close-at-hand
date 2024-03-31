@@ -31,9 +31,10 @@ describe("MostClothes", () => {
 	it("렌더링 테스트", () => {
 		mockUseQuery.mockReturnValue({
 			data: mockData,
+			refetch: jest.fn(),
 		});
 
-		const { getByTestId } = render(<MostClothes />);
+		const { getByTestId } = render(<MostClothes refreshing={false} />);
 
 		mockData.forEach((e) => {
 			expect(getByTestId(`test-${e.clothesId}`)).toBeDefined();
@@ -43,6 +44,7 @@ describe("MostClothes", () => {
 	it("사진을 누르면 옷 상세 정보로 이동", () => {
 		mockUseQuery.mockReturnValue({
 			data: mockData,
+			refetch: jest.fn(),
 		});
 
 		const mockNavigation = {
@@ -50,14 +52,15 @@ describe("MostClothes", () => {
 		};
 		mockUseNavigation.mockReturnValue(mockNavigation);
 
-		const { getByTestId } = render(<MostClothes />);
+		const { getByTestId } = render(<MostClothes refreshing={false} />);
 
 		const button = getByTestId(`test-${testId}`);
 
 		fireEvent.press(button);
 
-		expect(mockNavigation.navigate).toHaveBeenCalledWith("cloth", {
-			id: testId,
+		expect(mockNavigation.navigate).toHaveBeenCalledWith("1", {
+			screen: "cloth",
+			params: { id: testId },
 		});
 	});
 });

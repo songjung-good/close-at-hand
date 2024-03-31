@@ -23,9 +23,12 @@ describe("ClothesHistoryList component", () => {
 			data: mockData,
 			isError: false,
 			error: null,
+			refetch: jest.fn(),
 		});
 
-		const { getByTestId, queryByText } = render(<ClothesHistoryList />);
+		const { getByTestId, queryByText } = render(
+			<ClothesHistoryList refreshing={false} />,
+		);
 
 		// 모든 컴포넌트가 렌더링 되기를 기다림
 		await waitFor(() => {
@@ -46,10 +49,11 @@ describe("ClothesHistoryList component", () => {
 			data: null,
 			isError: true,
 			error: mockError,
+			refetch: jest.fn(),
 		});
 
 		// Render the component
-		const { getByText } = render(<ClothesHistoryList />);
+		const { getByText } = render(<ClothesHistoryList refreshing={false} />);
 
 		// 에러 메세지가 올바르게 나옴
 		await waitFor(() => {

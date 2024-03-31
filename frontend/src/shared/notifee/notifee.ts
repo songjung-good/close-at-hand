@@ -31,11 +31,14 @@ function getRandomNum(min: number, max: number): number {
 
 // 알람 설정
 export async function scheduleDailyAlarm() {
+	deleteNotification(NotificationKey.CloseAtHandHomeAlarm);
 	const date = new Date();
 	const randomHour = getRandomNum(18, 25); // 6PM (18)와 8PM (20) 사이의 랜덤한 시간
 	const randomMinute = getRandomNum(0, 60);
 	const randomSecond = getRandomNum(0, 60);
 	date.setHours(randomHour, randomMinute, randomSecond);
+
+	console.debug("alarm set at", date.getTime());
 
 	const trigger: Trigger = {
 		type: TriggerType.TIMESTAMP,
@@ -67,5 +70,5 @@ export async function scheduleDailyAlarm() {
 export const notification: { id: null | "CloseAtHandHomeAlarm" } = { id: null };
 
 export async function deleteNotification(channelId: string) {
-	notifee.deleteChannel(channelId);
+	await notifee.deleteChannel(channelId);
 }

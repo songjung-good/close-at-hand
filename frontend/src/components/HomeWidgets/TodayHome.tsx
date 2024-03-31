@@ -1,13 +1,15 @@
 import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import AntDesign from "react-native-vector-icons/AntDesign";
-
-import { COLORS, LaundryDB } from "../../shared";
-import { fetchToday } from "./API";
 import { useRealm } from "@realm/react";
+
+import { COLORS } from "../../shared";
+import { fetchToday } from "./API";
+import { saveToRealm } from "./TodayHomeRealm";
 
 interface ImageProps {
 	imageUrl: string;
+	looks: string[];
 }
 
 const DataExist: React.FC<ImageProps> = ({ imageUrl }) => {
@@ -51,22 +53,11 @@ const TodayHome = () => {
 		if ("noResponse" in data) {
 			content = <StyledText content={data.message} />;
 		} else {
-			content = <DataExist imageUrl={data.ootdImgUrl} />;
-			const textures: string[] = [];
+			content = (
+				<DataExist imageUrl={data.ootdImgUrl} looks={data.clothes[0].looks} />
+			);
 
-			data.clothes.forEach((e) => {
-				realm.write(() => {
-					realm.create(
-						"LaundryDB",
-						LaundryDB.generate(
-							e.clothesId,
-							e.clothesImgUrl,
-							textures,
-							new Date(e.lastWashDate),
-						),
-					);
-				});
-			});
+			saveToRealm(data, realm);
 		}
 	}
 

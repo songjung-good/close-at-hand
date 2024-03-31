@@ -1,8 +1,16 @@
 import { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { COLORS, FONTSIZE, SHADOW } from "../../shared";
+import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
+import {
+	COLORS,
+	dataSendToDevice,
+	FONTSIZE,
+	PairDevices,
+	SHADOW,
+} from "../../shared";
 import { ROW } from "../../shared";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface ButtonProps {
 	title: string;
@@ -21,11 +29,17 @@ const Overlay = () => {
 	const navigation = useNavigation<Navigation>();
 
 	function handleChangeLayout() {
-		navigation.navigate("0");
+		return;
 	}
 
-	function handleCloseAtHandIoT(identifier: string) {
-		// 블루투스로 명령보내는 거
+	async function handleCloseAtHandIoT(identifier: string) {
+		const device = await PairDevices();
+		if (!device) {
+			Alert.alert("연결된 기기가 없습니다.");
+			return;
+		}
+		const result = dataSendToDevice(identifier);
+		Alert.alert("클로젯 핸드를 확인해주세요");
 	}
 
 	return (

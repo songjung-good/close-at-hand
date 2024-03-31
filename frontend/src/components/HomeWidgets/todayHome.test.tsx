@@ -4,9 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import TodayHome from "./TodayHome";
 import { fetchToday } from "./API";
 import { API } from "../../shared";
+import "./TodayHomeRealm";
 
 jest.mock("@tanstack/react-query");
 jest.mock("../../shared");
+jest.mock("./TodayHomeRealm");
 
 const mockUseQuery = useQuery as jest.Mock;
 const mockAPI = API.get as jest.Mock; // axios 인스턴스
@@ -37,6 +39,7 @@ describe("TodayHome", () => {
 			isLoading: false,
 			isError: true,
 			error: new Error(errorMessage),
+			refetch: jest.fn(),
 		});
 
 		// 컴포넌트를 렌더링하고 에러 상태를 확인합니다.
@@ -45,7 +48,7 @@ describe("TodayHome", () => {
 	});
 
 	it("데이터 있는 경우 렌더링", () => {
-		const mockData = { message: "Test message" };
+		const mockData = { ootdImgUrl: "Test message", clothes: [{ looks: 1 }] };
 		mockUseQuery.mockReturnValue({
 			data: mockData,
 			isLoading: false,
@@ -63,14 +66,14 @@ describe("TodayHome", () => {
 		});
 
 		it("204에러시의 올바른 데이터 반환", async () => {
-			mockAPI.mockResolvedValueOnce({ status: 204 });
+			mockAPI.mockResolvedValueOnce({ data: { data: { clothes: [] } } });
 			const mockSignal = new AbortController();
 
 			const result = await fetchToday({ signal: mockSignal.signal });
 
 			expect(result).toHaveProperty(
 				"message",
-				"기록된 오늘의 코디가 없어요! \n 오늘의 코디를 추가해 주세요.",
+				"기록된 오늘의 코디가 없어요! \n 클로젯 핸드를 통해 오늘의 코디를 추가해 주세요.",
 			);
 		});
 
@@ -120,7 +123,7 @@ describe("TodayHome", () => {
 	});
 
 	it("데이터가 있는 상황에서 터치시 refetch 함수가 호출안됨", () => {
-		const mockData = { message: "Test message" };
+		const mockData = { ootdImgUrl: "Test message", clothes: [{ looks: 1 }] };
 		const refetch = jest.fn();
 		// 오류 없이 데이터 응답 받음
 		mockUseQuery.mockReturnValue({

@@ -14,22 +14,13 @@ module.exports = {
 		assetBundlePatterns: ["**/*"],
 		ios: {
 			supportsTablet: true,
-			splash: {
-				image: "./assets/splashA.png",
-				resizeMode: "contain",
-				backgroundColor: "#fdd087",
-			},
 		},
 		android: {
+			versionCode: 1,
 			package: "com.closeAtHand",
 			adaptiveIcon: {
 				foregroundImage: "./assets/adaptive-iconA.png",
 				backgroundColor: "#ffffff",
-			},
-			splash: {
-				image: "./assets/splashA.png",
-				resizeMode: "contain",
-				backgroundColor: "#fdd087",
 			},
 		},
 		web: {

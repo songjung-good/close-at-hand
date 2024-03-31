@@ -13,6 +13,8 @@ export {
 	useUserActions,
 } from "./zustand/userStore";
 
+export { useMirror } from "./zustand/MirroeStore";
+
 // realm
 export { LaundryDB } from "./realm/realm";
 
@@ -29,3 +31,12 @@ export {
 	scheduleDailyAlarm,
 	NotificationType,
 } from "./notifee/notifee";
+
+//
+export {
+	requestAccessFineLocationPermission,
+	startDiscovery,
+	cancelDiscovery,
+	PairDevices,
+	dataSendToDevice,
+} from "./bluetooth/bluetoothClassic";

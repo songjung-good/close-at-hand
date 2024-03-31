@@ -1,5 +1,6 @@
 // 홈
 export { default as HomeScreen } from "./home/HomeScreen";
+export { default as LoginScreen } from "./home/LoginScreen";
 
 // 옷장
 export { default as ClosetMainScreen } from "./closet/ClosetMainScreen";
@@ -21,8 +22,4 @@ export { default as LaundryBasketScreen } from "./management/LaundryBasketScreen
 export { default as SettingsScreen } from "./settingsScreen/SettingsScreen";
 export { default as AlarmScreen } from "./settingsScreen/AlarmScreen";
 export { default as ProfileScreen } from "./settingsScreen/ProfileScreen";
-
-// 온보딩
-export { default as LoginScreen } from "./onboarding/LoginScreen";
-export { default as ForDebug } from "./onboarding/ForDebug";
 export { default as BluetoothConnectionScreen } from "./settingsScreen/BluetoothConnectionScreen";

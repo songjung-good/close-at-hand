@@ -12,10 +12,9 @@ import HomeNav, { HomeParamList } from "./HomeNav";
 import ClosetNav, { ClosetParamList } from "./ClosetNav";
 import ManagementNav, { ManagementParamList } from "./ManagementNav";
 import SettingsNav, { SettingsParamList } from "./SettingsNav";
-
-import OnBoardingNav from "./OnBoardingNav";
-import { COLORS, notification } from "../../shared";
+import { COLORS, useToken } from "../../shared";
 import { useEffect } from "react";
+import { TouchableOpacity } from "react-native";
 
 // type
 export type RootParamList = {
@@ -42,17 +41,13 @@ const Tab = createBottomTabNavigator<RootParamList>();
 
 export const navigationRef = createNavigationContainerRef<RootParamList>();
 
-const AppNav = () => {
-	useEffect(() => {
-		if (notification.id && navigationRef.isReady()) {
-			if (notification.id === "CloseAtHandHomeAlarm") {
-				navigationRef.navigate("2", {
-					screen: "laundryMain",
-					params: { fromNoti: true },
-				});
-			}
-		}
-	}, []);
+const AppNav: React.FC = () => {
+	const token = useToken();
+
+	if (navigationRef.isReady() && !token) {
+		navigationRef.navigate("0", { screen: "login" });
+	}
+
 	return (
 		<NavigationContainer
 			ref={navigationRef}
@@ -62,9 +57,18 @@ const AppNav = () => {
 			}}
 		>
 			<Tab.Navigator
+				detachInactiveScreens={true}
 				screenOptions={{
 					headerShown: false,
 					tabBarStyle: { height: 80, paddingBottom: 20 },
+					lazy: false,
+					tabBarButton: (props) => {
+						if (token) {
+							return <TouchableOpacity {...props} />;
+						} else {
+							return <></>;
+						}
+					},
 				}}
 			>
 				<Tab.Screen
@@ -123,8 +127,6 @@ const AppNav = () => {
 						),
 					}}
 				/>
-				{/* 아레는 임시*/}
-				<Tab.Screen name="onboarding" component={OnBoardingNav} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	);

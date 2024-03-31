@@ -11,16 +11,20 @@ interface NoResponse {
 	noResponse: true;
 }
 
-interface TodayResponse {
+export interface TodayResponse {
 	ootdId: number;
 	ootdImgUrl: "string";
 	clothes: [
 		{
 			clothesId: number;
 			clothesImgUrl: string;
-			detection: string;
-			lastWashDate: string; // "2024-03-28T23:53:59.950Z
-			price: number;
+			lastWashDate: string; // 2024-03-29T08:29:24.287Z
+			texture: string[];
+			category: string[];
+			item: string[];
+			colors: string[];
+			looks: string[];
+			prints: string[];
 			clothesTagGroupList: [
 				{
 					clothesTagGroupName: string;
