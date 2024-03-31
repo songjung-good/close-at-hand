@@ -17,8 +17,6 @@ const ClosetScreen: React.FC = () => {
   // 임시데이터
   const [clothes, setClothes] = useState<ClothInfo[]>([]);
   const [recommendClothes, setRecommendedClothes] = useState<ClothInfo[][]>([]);
-  // const [clothes, setClothes] = useState<clothInfo[]>([]); // 옷 목록 데이터 상태 변경
-  // const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>([]); // 추천 옷 데이터 상태 변경
   // 검색 모달과 태그
   const [selectedTags, setSelectedTags] = useState<any[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
