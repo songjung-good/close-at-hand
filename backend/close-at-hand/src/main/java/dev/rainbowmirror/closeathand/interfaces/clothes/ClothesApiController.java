@@ -8,6 +8,7 @@ import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesListInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesRecommendInfo;
+import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagAllInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroupInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -76,7 +78,7 @@ public class ClothesApiController {
 
     @Operation(summary = "옷 태그리스트 조회")
     @GetMapping("/tag")
-    public CommonResponse<List<String>> findAllClothesTag() {
+    public CommonResponse<ClothesDto.ClothesTagResponse> findAllClothesTag() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -84,8 +86,8 @@ public class ClothesApiController {
         GrantedAuthority auth = iter.next();
 
         String userToken = auth.getAuthority();
-        List<String> list = clothesFacade.findAllClothesTag(userToken);
-        return CommonResponse.success(list);
+        List<ClothesTagAllInfo> list = clothesFacade.findAllClothesTag(userToken);
+        return CommonResponse.success(new ClothesDto.ClothesTagResponse(list));
     }
 
 }

@@ -34,6 +34,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(account, password, null);
             return authenticationManager.authenticate(authToken);
         } catch (Exception e){
+            System.out.println(e.getMessage());
             Enumeration<String> params = request.getParameterNames();
             while(params.hasMoreElements()) {
                 String name = params.nextElement();
