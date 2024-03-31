@@ -8,6 +8,5 @@ module.exports = {
 		"./__mocks__/@notifee/react-native.js",
 		"./__mocks__/realm/realmMocking.js",
 		"./__mocks__/react-native-permissions/react-native-permissions.js",
-		"./__mocks__/react-native-ble-manager/BleManger.js",
 	],
 };
