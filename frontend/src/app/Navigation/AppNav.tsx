@@ -14,6 +14,7 @@ import ManagementNav, { ManagementParamList } from "./ManagementNav";
 import SettingsNav, { SettingsParamList } from "./SettingsNav";
 import { COLORS, useToken } from "../../shared";
 import { useEffect } from "react";
+import { TouchableOpacity } from "react-native";
 
 // type
 export type RootParamList = {
@@ -40,16 +41,12 @@ const Tab = createBottomTabNavigator<RootParamList>();
 
 export const navigationRef = createNavigationContainerRef<RootParamList>();
 
-const AppNav = () => {
+const AppNav: React.FC = () => {
 	const token = useToken();
 
-	useEffect(() => {
-		console.log(token);
-		if (navigationRef.isReady() && !token) {
-			console.log("로그인 하세용");
-			navigationRef.navigate("0", { screen: "login" });
-		}
-	}, [token]);
+	if (navigationRef.isReady() && !token) {
+		navigationRef.navigate("0", { screen: "login" });
+	}
 
 	return (
 		<NavigationContainer
@@ -65,6 +62,13 @@ const AppNav = () => {
 					headerShown: false,
 					tabBarStyle: { height: 80, paddingBottom: 20 },
 					lazy: false,
+					tabBarButton: (props) => {
+						if (token) {
+							return <TouchableOpacity {...props} />;
+						} else {
+							return <></>;
+						}
+					},
 				}}
 			>
 				<Tab.Screen
