@@ -106,6 +106,10 @@ const SignUp: React.FC<Props> = ({ setSignUpTry }) => {
 	}
 
 	async function handleIdCheck() {
+		if (state.account.length < 5) {
+			setIdError("아이디는 최소 5글자 이상이어야 합니다.");
+			return;
+		}
 		const result = await fetchIdCheck(state.account);
 		if (result === "Already exist") {
 			setIdError("이미 존재하는 아이디입니다.");
