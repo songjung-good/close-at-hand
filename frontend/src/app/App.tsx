@@ -12,7 +12,6 @@ import {
 	useUserActions,
 	NotificationType,
 	LaundryDB,
-	handleAndroidBluetoothPermissions,
 } from "../shared";
 import { deleteNotification } from "../shared/notifee/notifee";
 interface Props {
@@ -39,7 +38,7 @@ const App: React.FC<Props> = ({ readyNow }) => {
 
 		getNotificationPermission();
 
-		async function setNotifications() {
+		async function setPermissions() {
 			const notificationJson = await AsyncStorage.getItem(
 				"CloseAtHandNotifications",
 			);
@@ -47,20 +46,18 @@ const App: React.FC<Props> = ({ readyNow }) => {
 				const notificationSettings = JSON.parse(
 					notificationJson,
 				) as NotificationType;
-				Object.entries(notificationSettings).forEach(([key, value]) => {
+				Object.entries(notificationSettings).forEach(async ([key, value]) => {
 					if (key === "CloseAtHandHomeAlarm" && !value) {
-						deleteNotification(key);
+						await deleteNotification(key);
 					} else if (key === "CloseAtHandHomeAlarm") {
-						scheduleDailyAlarm();
+						await scheduleDailyAlarm();
 					}
 				});
 			} else {
-				scheduleDailyAlarm();
+				await scheduleDailyAlarm();
 			}
 		}
-		setNotifications();
-
-		handleAndroidBluetoothPermissions();
+		setPermissions();
 	}, []);
 
 	return (
