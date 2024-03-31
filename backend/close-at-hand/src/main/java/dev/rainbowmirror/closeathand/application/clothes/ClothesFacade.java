@@ -6,6 +6,7 @@ import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesListInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesService;
+import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagAllInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroupInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -51,7 +53,7 @@ public class ClothesFacade {
         return clothesService.findAllClothes(userToken);
     }
 
-    public List<String> findAllClothesTag(String userToken){
+    public List<ClothesTagAllInfo> findAllClothesTag(String userToken){
         return clothesService.findAllClothesTag(userToken);
     }
 }

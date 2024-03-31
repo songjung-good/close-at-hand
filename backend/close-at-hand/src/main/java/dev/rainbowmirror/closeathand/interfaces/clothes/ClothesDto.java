@@ -2,6 +2,7 @@ package dev.rainbowmirror.closeathand.interfaces.clothes;
 
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
+import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagAllInfo;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 public class ClothesDto {
     @Getter
@@ -68,5 +70,29 @@ public class ClothesDto {
             this.lastWashDate = clothesInfo.getLastWashDate();
         }
 
+    }
+    @Getter
+    @Setter
+    @ToString
+    public static class ClothesTagResponse {
+        private List<String> category;
+        private List<String> item;
+        private List<String> texture;
+        private List<String> colors;
+        private List<String> looks;
+        private List<String> prints;
+
+        public ClothesTagResponse(List<ClothesTagAllInfo> list) {
+            for (ClothesTagAllInfo ctai: list) {
+                switch (ctai.getClothesTagGroupName()){
+                    case "category" : this.category = ctai.getClothesTagList(); break;
+                    case "item" : this.item = ctai.getClothesTagList(); break;
+                    case "texture" : this.texture = ctai.getClothesTagList(); break;
+                    case "colors" : this.colors = ctai.getClothesTagList(); break;
+                    case "looks" : this.looks = ctai.getClothesTagList(); break;
+                    case "prints" : this.prints = ctai.getClothesTagList(); break;
+                }
+            }
+        }
     }
 }

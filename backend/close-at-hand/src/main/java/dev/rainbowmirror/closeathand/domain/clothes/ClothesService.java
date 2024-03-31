@@ -1,8 +1,10 @@
 package dev.rainbowmirror.closeathand.domain.clothes;
 
+import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagAllInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroupInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ClothesService {
     ClothesInfo createClothes(ClothesCommand.CreateCommand command);
@@ -10,6 +12,6 @@ public interface ClothesService {
 
     ClothesInfo findClothesByClothesToken(String clothesToken);
     List<ClothesListInfo> findAllClothes(String userToken);
-    List<String> findAllClothesTag(String userToken);
+    List<ClothesTagAllInfo> findAllClothesTag(String userToken);
     ClothesInfo updateClothes(ClothesCommand.UpdateCommand command);
 }

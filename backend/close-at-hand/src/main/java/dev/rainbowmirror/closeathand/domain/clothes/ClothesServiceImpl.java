@@ -3,6 +3,7 @@ package dev.rainbowmirror.closeathand.domain.clothes;
 import dev.rainbowmirror.closeathand.common.util.JsonTagPaser;
 import dev.rainbowmirror.closeathand.domain.OmniCommerceService;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTag.ClothesTag;
+import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagAllInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroup;
 import dev.rainbowmirror.closeathand.domain.user.UserReader;
 import dev.rainbowmirror.closeathand.infrastructure.clothes.ClothesRepository;
@@ -15,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 // 이 파일은 service의 내용을 실제 구현하는거
@@ -61,12 +64,27 @@ public class ClothesServiceImpl implements ClothesService{
         return result;
     }
 
-    public List<String> findAllClothesTag(String userToken){
-        List<String> list = new ArrayList<>();
+    public List<ClothesTagAllInfo> findAllClothesTag(String userToken){
+        List<List<String>> clothesTags = new ArrayList<>();
+        for (int i=0; i<6; i++) clothesTags.add(new ArrayList<>());
         for (ClothesTag cLothesTag: clothesRepository.findDistinctTagByUserToken(userToken)){
-            list.add(cLothesTag.getTagName());
+            switch (cLothesTag.getClothesTagGroup().getClothesTagGroupName()){
+                case "category" : clothesTags.get(0).add(cLothesTag.getTagName());
+                case "item" : clothesTags.get(1).add(cLothesTag.getTagName());
+                case "texture" : clothesTags.get(2).add(cLothesTag.getTagName());
+                case "colors" : clothesTags.get(3).add(cLothesTag.getTagName());
+                case "looks" : clothesTags.get(4).add(cLothesTag.getTagName());
+                case "prints" : clothesTags.get(5).add(cLothesTag.getTagName());
+            }
         }
-        return list;
+        List<ClothesTagAllInfo> result = new ArrayList<>();
+        result.add(new ClothesTagAllInfo("category",clothesTags.get(0)));
+        result.add(new ClothesTagAllInfo("item",clothesTags.get(1)));
+        result.add(new ClothesTagAllInfo("texture",clothesTags.get(2)));
+        result.add(new ClothesTagAllInfo("colors",clothesTags.get(3)));
+        result.add(new ClothesTagAllInfo("looks",clothesTags.get(4)));
+        result.add(new ClothesTagAllInfo("prints",clothesTags.get(5)));
+        return result;
     }
 
     @Override
