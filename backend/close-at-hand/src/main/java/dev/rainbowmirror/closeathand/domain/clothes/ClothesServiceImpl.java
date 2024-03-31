@@ -70,21 +70,21 @@ public class ClothesServiceImpl implements ClothesService{
         for (int i=0; i<6; i++) clothesTags.add(new ArrayList<>());
         for (ClothesTag cLothesTag: clothesRepository.findDistinctTagByUserToken(userToken)){
             switch (cLothesTag.getClothesTagGroup().getClothesTagGroupName()){
-                case "category" : clothesTags.get(0).add(cLothesTag.getTagName());
-                case "item" : clothesTags.get(1).add(cLothesTag.getTagName());
-                case "texture" : clothesTags.get(2).add(cLothesTag.getTagName());
-                case "colors" : clothesTags.get(3).add(cLothesTag.getTagName());
-                case "looks" : clothesTags.get(4).add(cLothesTag.getTagName());
-                case "prints" : clothesTags.get(5).add(cLothesTag.getTagName());
+                case "category" : clothesTags.get(0).add(cLothesTag.getTagName()); break;
+                case "item" : clothesTags.get(1).add(cLothesTag.getTagName()); break;
+                case "texture" : clothesTags.get(2).add(cLothesTag.getTagName()); break;
+                case "colors" : clothesTags.get(3).add(cLothesTag.getTagName()); break;
+                case "looks" : clothesTags.get(4).add(cLothesTag.getTagName()); break;
+                case "prints" : clothesTags.get(5).add(cLothesTag.getTagName()); break;
             }
         }
         List<ClothesTagAllInfo> result = new ArrayList<>();
-        result.add(new ClothesTagAllInfo("category",clothesTags.get(0).stream().distinct().collect(Collectors.toList())));
-        result.add(new ClothesTagAllInfo("item",clothesTags.get(1).stream().distinct().collect(Collectors.toList())));
-        result.add(new ClothesTagAllInfo("texture",clothesTags.get(2).stream().distinct().collect(Collectors.toList())));
-        result.add(new ClothesTagAllInfo("colors",clothesTags.get(3).stream().distinct().collect(Collectors.toList())));
-        result.add(new ClothesTagAllInfo("looks",clothesTags.get(4).stream().distinct().collect(Collectors.toList())));
-        result.add(new ClothesTagAllInfo("prints",clothesTags.get(5).stream().distinct().collect(Collectors.toList())));
+        result.add(new ClothesTagAllInfo("category",clothesTags.get(0)));
+        result.add(new ClothesTagAllInfo("item",clothesTags.get(1)));
+        result.add(new ClothesTagAllInfo("texture",clothesTags.get(2)));
+        result.add(new ClothesTagAllInfo("colors",clothesTags.get(3)));
+        result.add(new ClothesTagAllInfo("looks",clothesTags.get(4)));
+        result.add(new ClothesTagAllInfo("prints",clothesTags.get(5)));
         return result;
     }
 

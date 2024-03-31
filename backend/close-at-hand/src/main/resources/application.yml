@@ -1,16 +1,21 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${MYSQL_URL}
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://localhost:3306/closeathand?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
   jpa:
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+  security:
+    user:
+      name: account
+  jwt:
+    secret: rainbow207closeathanddduckddakpurunpururun
 server:
   port: 3000
   shutdown: graceful
@@ -23,3 +28,22 @@ springdoc:
   api-docs:
     path: /api-docs
   show-actuator: true
+cloud:
+  aws:
+    s3:
+      bucket: rainmirror
+    credentials:
+      access-key: AKIAV4KMUIH6OSIDLCOV
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+omni:
+  X-Api-Key: test-2XPioSKYZtt4MzHXH3QGoB938xTCbqxqChHT9Z8L
+  url: https://api.kr.omnicommerce.ai/2022-08/management/products
+  get-key: test-7DRXS8K8i9hXi9tjN7yWE9mh58zpffbvb3fhxd5k
+  get-url: https://api.kr.omnicommerce.ai/2022-08/tagging/tags/{productId}
+  recommend-url: https://api.kr.omnicommerce.ai/2022-08/styling-recommend/{productId}
+  recommend-key: test-5ETozRMWGCQm9R5X5pYLk6R5jFPENZmXpKt7GpoM

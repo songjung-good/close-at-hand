@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface ClothesRepository extends JpaRepository<Clothes, Long> {
-    @Query("SELECT DISTINCT ct FROM ClothesTagGroup ctg LEFT JOIN ClothesTag ct ON ctg = ct.clothesTagGroup WHERE ctg.clothes.user.userToken = :userToken")
+    @Query("SELECT distinct ct.tagName FROM ClothesTagGroup ctg LEFT JOIN ClothesTag ct ON ctg = ct.clothesTagGroup WHERE ctg.clothes.user.userToken = :userToken")
     Set<ClothesTag> findDistinctTagByUserToken(String userToken);
 
     List<Clothes> findAllByUserUserToken(String userToken);
