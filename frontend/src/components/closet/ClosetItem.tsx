@@ -5,15 +5,13 @@ import { useNavigation } from "@react-navigation/native";
 import { FONTSIZE, COLORS } from "../../shared";
 
 // 옷 인터페이스
-interface clothInfo {
-  clothesId: number,
-  clothesImgUrl: string,
-  detection: string,
-  lastWashDate: string,
-  price: number,
-};
+interface ClothInfo {
+  clothesId: number;
+  clothesImgUrl: string;
+}
 
-const ClosetItem: React.FC<clothInfo> = ({ clothesId, clothesImgUrl, detection, lastWashDate, price }) => {
+
+const ClosetItem: React.FC<ClothInfo> = ({ clothesId, clothesImgUrl }) => {
   const navigation = useNavigation<Navigation>()
   const handleClothItemClick = () => {
     // ClothInfoScreen으로 이동하는 코드
@@ -23,8 +21,7 @@ const ClosetItem: React.FC<clothInfo> = ({ clothesId, clothesImgUrl, detection, 
   return (
     <TouchableOpacity onPress={handleClothItemClick}>
       <View style={styles.clothesItem}>
-        <Image source={{ uri: clothesImgUrl }} style={{ width: 50, height: 50, borderRadius: 50 }} />
-        <Text style={styles.clothesText} numberOfLines={1}>{detection}</Text>
+        <Image source={{ uri: clothesImgUrl }} style={{ width: 70, height: 70 }} />
       </View>
     </TouchableOpacity>
   );
@@ -38,8 +35,8 @@ const styles = StyleSheet.create({
   },
   clothesItem: {
     paddingHorizontal: 15,
-    paddingVertical: 5,
-    marginHorizontal: 10,
+    paddingVertical: 15,
+    marginRight: 10,
     marginVertical: 15,
     borderColor: COLORS.Black,
     borderWidth: 1,

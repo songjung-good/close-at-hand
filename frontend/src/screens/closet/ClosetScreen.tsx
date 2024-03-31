@@ -7,21 +7,18 @@ import { FONTSIZE, COLORS } from "../../shared";
 import { AxiosError } from "axios";
 import { API } from "../../shared";
 // 임시데이터
-import { clothList, recommendedClothes } from "./clothInfo";
+import { clothesList, recommendedClothes } from "./clothInfo";
 
 // 옷 인터페이스
-interface clothInfo {
-  clothesId: number,
-  clothesImgUrl: string,
-  detection: string,
-  lastWashDate: string,
-  price: number,
-};
+interface ClothInfo {
+  clothesId: number;
+  clothesImgUrl: string;
+}
 
 const ClosetScreen: React.FC = () => {
   // 임시데이터
-  const [clothes, setClothes] = useState<clothInfo[]>(clothList);
-  const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>(recommendedClothes);
+  const [clothes, setClothes] = useState<ClothInfo[]>([]);
+  const [recommendClothes, setRecommendedClothes] = useState<ClothInfo[][]>([]);
   // const [clothes, setClothes] = useState<clothInfo[]>([]); // 옷 목록 데이터 상태 변경
   // const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>([]); // 추천 옷 데이터 상태 변경
   // 검색 모달과 태그
@@ -40,11 +37,13 @@ const ClosetScreen: React.FC = () => {
   //   };
   //   fetchData();
   // }, []);
+    setClothes(clothesList);
+    setRecommendedClothes(recommendedClothes.recommendList);
   }, []);
+
 
   // 검색 모달에서 선택된 태그를 받아옵니다.
   const handleSaveTags = (tags: any[]) => {
-    console.log(tags)
     setSelectedTags(tags);
   };
 
@@ -58,9 +57,8 @@ const ClosetScreen: React.FC = () => {
     return (
       <View style={styles.recommendedDiv}>
         <FlatList
-          numColumns={3}
-          contentContainerStyle={styles.flatListContent}
-          data={recommendClothes}
+          horizontal
+          data={recommendClothes.flat()}
           renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
           keyExtractor={(item) => item.clothesId.toString()}
         />
@@ -73,11 +71,8 @@ const ClosetScreen: React.FC = () => {
     const filteredClothes = clothes.filter((cloth) => {
       return selectedTags.every((tag) => {
         return (
-          cloth.detection === tag ||
-          cloth.clothesId === tag ||
-          cloth.clothesImgUrl === tag ||
-          cloth.lastWashDate === tag ||
-          cloth.price === tag
+          cloth.clothesId.toString() === tag ||
+          cloth.clothesImgUrl === tag
         );
       });
     });
@@ -98,7 +93,7 @@ const ClosetScreen: React.FC = () => {
       <View style={styles.recommendlistDiv}>
         <View style={styles.header}>
           <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
-            {/* 검색 버튼 */}
+          {/* 검색 버튼 */}
           <TouchableOpacity>
             <SearchModal
               onClose={toggleModal}
@@ -106,21 +101,24 @@ const ClosetScreen: React.FC = () => {
             />
           </TouchableOpacity>
         </View>
-            {/* 추천 옷 */}
+        {/* 추천 옷 */}
         <RenderRecommendedClothes />
       </View>
-            {/* 옷 리스트 */}
+      {/* 옷 리스트 */}
       <View style={styles.clotheslistDiv}>
         <Text style={styles.clothesTitle}>옷장</Text>
-        <View style={styles.clothesDiv}>
-          <RenderClothes />
-        </View>
+        <RenderClothes />
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  recommendlistDiv: {
+    width: '90%',
+    marginLeft: '5%',
+    marginVertical: '5%',
+  },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -133,24 +131,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingLeft: 10,
   },
-  clothesTitle: {
-    fontSize: FONTSIZE.Medium,
-    fontWeight: "bold",
-    marginBottom: 20,
-    marginLeft: 10,
-  },
-  recommendlistDiv: {
-    width: '90%',
-    marginLeft: '5%',
-    marginVertical: '5%',
-  },
   clotheslistDiv: {
     width: '90%',
     marginLeft: '5%',
     marginVertical: '5%',
   },
-  clothesDiv:{
-    marginLeft: '3%',
+  clothesTitle: {
+    fontSize: FONTSIZE.Medium,
+    fontWeight: "bold",
+    marginBottom: 20,
+    marginLeft: 10,
   },
   recommendedDiv: {
     borderColor: COLORS.CarrotRed,
