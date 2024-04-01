@@ -13,7 +13,7 @@ public interface ClothesService {
     ClothesInfo findClothesByClothesToken(String clothesToken);
 
     List<Clothes> findEnabledClothes();
-    List<ClothesListInfo> findAllClothes(String userToken);
+    List<ClothesInfo> findAllClothes(String userToken);
     List<ClothesTagAllInfo> findAllClothesTag(String userToken);
     ClothesInfo updateClothes(ClothesCommand.UpdateCommand command);
 }
