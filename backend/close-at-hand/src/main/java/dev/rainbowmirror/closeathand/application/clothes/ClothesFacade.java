@@ -49,7 +49,7 @@ public class ClothesFacade {
         return clothesInfo;
     }
 
-    public List<ClothesListInfo> findAllClothes(String userToken){
+    public List<ClothesInfo> findAllClothes(String userToken){
         return clothesService.findAllClothes(userToken);
     }
 

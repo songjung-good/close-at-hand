@@ -55,10 +55,10 @@ public class ClothesServiceImpl implements ClothesService{
     }
 
     @Override
-    public List<ClothesListInfo> findAllClothes(String userToken) {
+    public List<ClothesInfo> findAllClothes(String userToken) {
         List<Clothes> clothesList = clothesReader.findAllClothes(userToken);
-        List<ClothesListInfo> result = new ArrayList<>();
-        for (Clothes clothes: clothesList){result.add(new ClothesListInfo(clothes));}
+        List<ClothesInfo> result = new ArrayList<>();
+        for (Clothes clothes: clothesList){result.add(new ClothesInfo(clothes));}
         return result;
     }
 
