@@ -16,10 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OotdFacade {
     private final OotdService ootdService;
-    private final S3UploadService s3UploadService;
 
     public OotdInfo.Detail getTodayOotd(String userToken){
         return ootdService.getTodayOotd(userToken);
+    }
+    public OotdInfo.Detail getOotd(Long ootdId){
+        return ootdService.getOotd(ootdId);
     }
 
     public OotdInfo saveOotd(OotdCommand.CreateCommand command) throws IOException {

@@ -65,6 +65,13 @@ public class OotdApiController {
         return CommonResponse.success(ootdInfo);
     }
 
+    @Operation(summary = "Ootd 상세", description = "당일 Ootd를 조회합니다, 없을시 noImage")
+    @GetMapping("/{ootdId}")
+    public CommonResponse<OotdInfo.Detail> getOotd(@PathVariable("ootdId") Long ootdId){
+        OotdInfo.Detail ootdInfo = ootdFacade.getOotd(ootdId);
+        return CommonResponse.success(ootdInfo);
+    }
+
     @Operation(summary = "Ootd 전체조회", description = "Ootd를 조회")
     @GetMapping
     public CommonResponse<List<OotdInfo>> getOotds(){
@@ -86,4 +93,5 @@ public class OotdApiController {
         ootdFacade.deleteOotd(ootdId);
         return CommonResponse.success(null);
     }
+
 }
