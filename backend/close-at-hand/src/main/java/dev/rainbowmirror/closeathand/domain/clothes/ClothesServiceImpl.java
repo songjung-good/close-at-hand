@@ -71,7 +71,7 @@ public class ClothesServiceImpl implements ClothesService{
             switch (cLothesTag.getClothesTagGroup().getClothesTagGroupName()){
                 case "category" : clothesTags.get(0).add(cLothesTag.getTagName()); break;
                 case "item" : clothesTags.get(1).add(cLothesTag.getTagName()); break;
-                case "texture" : clothesTags.get(2).add(cLothesTag.getTagName()); break;
+                case "textures" : clothesTags.get(2).add(cLothesTag.getTagName()); break;
                 case "colors" : clothesTags.get(3).add(cLothesTag.getTagName()); break;
                 case "looks" : clothesTags.get(4).add(cLothesTag.getTagName()); break;
                 case "prints" : clothesTags.get(5).add(cLothesTag.getTagName()); break;
