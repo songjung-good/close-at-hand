@@ -21,6 +21,6 @@ public interface ClothesRepository extends JpaRepository<Clothes, Long> {
     Clothes findByClothesToken(String clothesToken);
 
     @Query("SELECT c FROM Clothes c where c.location = :location")
-    List<Clothes> findEnabledClothes(Location location);
+    List<Clothes> findEnabledClothes(Clothes.Location location);
 
 }
