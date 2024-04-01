@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 // 컴포넌트 불러오기
 import { COLORS, FONTSIZE } from '../../shared/';
-import { PresetItem, NewPreset, ClosetItem } from '../../components';
+import { PresetItem, NewPreset } from '../../components';
 // API
 import { AxiosError } from 'axios';
 import { API } from '../../shared/';
 
-interface PresetItem {
+interface presetItem {
   presetId: number;
   presetImgUrl: string;
   presetName: string;
@@ -30,8 +31,9 @@ interface ClosetItem {
 }
 
 const CoordiScreen: React.FC = () => {
-  const [presets, setPresets] = useState<PresetItem[]>([]);
+  const [presets, setPresets] = useState<presetItem[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation<Navigation>();
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -50,29 +52,21 @@ const CoordiScreen: React.FC = () => {
     fetchPresetData();
   }, []);
 
-  const RenderPresetList: React.FC = () => {
-    return (
-      <FlatList
-        data={presets.flatMap(preset => preset.clothes)}
-        renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
-        keyExtractor={(item) => item.clothesId.toString()}
-      />
-    );
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>프리셋 목록</Text>
       </View>
-      <View>
-        <RenderPresetList />
-        <TouchableOpacity>
-          <NewPreset 
-            onClose={toggleModal}
-          />
-        </TouchableOpacity>
-      </View>
+      <FlatList
+        data={presets}
+        renderItem={({ item }) => <PresetItem presetId={item.presetId} presetName={item.presetName} clothes={item.clothes} />} // 수정된 부분
+        keyExtractor={(item) => item.presetId.toString()}
+      />
+      <TouchableOpacity>
+        <NewPreset 
+          onClose={toggleModal}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

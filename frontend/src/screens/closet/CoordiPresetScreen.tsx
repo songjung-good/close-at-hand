@@ -2,69 +2,118 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 // 컴포넌트
+import { AddPreset } from "../../components";
 import { FONTSIZE, COLORS } from "../../shared";
-// 임시데이터
-import { presetClothes } from "./presetInfo";
+// API
+import { AxiosError } from 'axios';
+import { API } from '../../shared/';
 
-interface presetInfo {
-  presetId: number,
-  clothes: {
-    clothesId: number,
-    clothesImgUrl: string,
-    detection: string,
-    lastWashDate: string,
-    price: number,
-  }[]
+interface Clothes {
+  clothesId: number;
+  clothesImgUrl: string;
+  lastWashDate: string;
+  texture: string[];
+  category: string[];
+  item: string[];
+  colors: string[];
+  looks: string[];
+  prints: string[];
+}
+
+interface PresetInfo {
+  presetId: number;
+  presetImgUrl: string;
+  presetName: string;
+  clothes: Clothes[];
 }
 
 const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
   const presetId = route.params.id;
-  const [ presetInfo, setPresetInfo ] = useState< presetInfo | null > (null);
+  const [presetInfo, setPresetInfo] = useState<PresetInfo | null>(null);
   
-  const navigation = useNavigation<Navigation>()
+  const navigation = useNavigation<Navigation>();
 
   useEffect(() => {
-    const fetchPresetInfo = () => {
-      const foundPreset = presetClothes.find((preset) => preset.presetId === presetId);
-      if (foundPreset) {
-        // 옷 정보를 설정합니다.
-        setPresetInfo(foundPreset);
+    const fetchPresetInfo = async () => {
+      try {
+        const response = await API.get(`preset/${presetId}`);
+        const data = response.data.data;
+        setPresetInfo(data);
+      } catch (error) {
+        console.error("받아오는 데이터에 문제가 있네요ㅠ:", error);
       }
     };
+
     fetchPresetInfo();
   }, [presetId]);
 
   const handleClothItemPress = (clothesId: number) => {
     navigation.navigate('cloth', { id: clothesId });
-  }
+  };
+
+  const handleDeleteCloth = async (index: number) => {
+    try {
+      const updatedClothes = [...presetInfo!.clothes];
+      updatedClothes.splice(index, 1);
+      setPresetInfo(prevState => ({
+        ...prevState!,
+        clothes: updatedClothes,
+      }));
+
+      // 옷이 지워진 후 서버로 해당 변경을 반영하는 요청
+      const clothesIdList = [presetInfo!.clothes[index].clothesId]; // 삭제된 옷의 clothesId를 clothesIdList에 추가
+      const requestData = {
+        presetId: presetInfo!.presetId,
+        clothesIdList: clothesIdList,
+      };
+
+      const response = await API.put('/preset/pop', requestData)
+
+      if (response.data.result === "SUCCESS") {
+        console.log("서버에서 옷 삭제 요청이 성공적으로 처리되었습니다.");
+      } else {
+        console.error("서버에서 옷 삭제 요청 처리 중 오류가 발생했습니다.");
+      }
+    } catch (error) {
+      console.error("서버에 옷 삭제 요청을 보내는 중 오류가 발생했습니다:", error);
+    }
+  };
 
   return (
     <>
-    {presetInfo ? (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: presetInfo.clothes[0].clothesImgUrl }} style={styles.image} />
-      </View>
-      <ScrollView style={styles.infoContainer}>
-        {presetInfo.clothes.map((clothes, index) => (
-          <TouchableOpacity key={index} style={styles.infoItem} onPress={() => handleClothItemPress(clothes.clothesId)}>
-            <View style={styles.infoImageContainer}>
-              <Image style={styles.infoImg} source={{ uri: clothes.clothesImgUrl }} />
-            </View>
-            <View style={styles.infoTextContainer}>
-              <Text style={styles.infoText}>종류: {clothes.detection}</Text>
-              <Text style={styles.infoText}>가격: {clothes.price}원</Text>
-              <Text style={styles.infoText}>마지막 세탁일: {clothes.lastWashDate}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </View>
-    ) : (
-      <View>
-        <Text>옷 정보를 가져오는 중입니다...</Text>
-      </View>
-    )}
+      {presetInfo ? (
+        <View style={styles.container}>
+          <View style={styles.imageContainer}>
+            <Image source={{ uri: presetInfo.presetImgUrl }} style={styles.image} />
+          </View>
+          <ScrollView style={styles.infoContainer}>
+            {presetInfo.clothes.map((clothes, index) => (
+              <TouchableOpacity key={index} style={styles.infoItem} onPress={() => handleClothItemPress(clothes.clothesId)}>
+                <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteCloth(index)}>
+                  <Text style={styles.deleteButtonText}>삭제</Text>
+                </TouchableOpacity>
+                <View style={styles.infoImageContainer}>
+                  <Image style={styles.infoImg} source={{ uri: clothes.clothesImgUrl }} />
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <Text style={styles.infoText}>텍스처: {clothes.texture.join(', ')}</Text>
+                  <Text style={styles.infoText}>아이템: {clothes.item.join(', ')}</Text>
+                  <Text style={styles.infoText}>색상: {clothes.colors.join(', ')}</Text>
+                  <Text style={styles.infoText}>룩: {clothes.looks.join(', ')}</Text>
+                  <Text style={styles.infoText}>프린트: {clothes.prints.join(', ')}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+            <TouchableOpacity style={styles.addButton} onPress={() => handleAddCloth()}>
+              <Text style={styles.addButtonText}>+</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      ) : (
+        <View>
+          <Text>옷 정보를 가져오는 중입니다...</Text>
+        </View>
+      )}
     </>
   );
 };
@@ -88,11 +137,36 @@ const styles = StyleSheet.create({
   },
   infoItem: {
     flexDirection: 'row', // 가로로 배치되도록 설정
+    alignItems: "center",
     borderColor: COLORS.Mint,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 10,
     padding: 10,
     marginBottom: 10,
+  },
+  deleteButton: {
+    position: 'absolute',
+    top: 5,
+    left: 5,
+    backgroundColor: COLORS.CarrotRed,
+    padding: 5,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: COLORS.White,
+    fontSize: FONTSIZE.Small,
+  },
+  addButton: {
+    borderColor: COLORS.Mint,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+  },
+  addButtonText: {
+    color: COLORS.PurpleBlue,
+    fontSize: FONTSIZE.Large,
+    textAlign: "center",
   },
   infoImageContainer: {
     flex: 1, // 왼쪽 1/3 공간을 차지하도록 설정
@@ -102,13 +176,13 @@ const styles = StyleSheet.create({
     width: '100%', // 이미지를 컨테이너의 가로 길이에 맞게 조정
     height: 120, // 이미지의 높이 설정 (원하는 크기로 변경 가능)
     borderRadius: 5, // 이미지에 테두리를 둥글게 만듭니다.
-    // resizeMode: 'contain', // 이미지를 원하는 크기로 조정
+    resizeMode: 'contain', // 이미지를 원하는 크기로 조정
   },
   infoTextContainer: {
     flex: 2, // 오른쪽 2/3 공간을 차지하도록 설정
   },
   infoText: {
-    fontSize: FONTSIZE.Small, // 폰트 크기 조절
+    fontSize: FONTSIZE.ExtraSmall, // 폰트 크기 조절
     color: COLORS.Black, // 폰트 색상 조절
     borderBottomWidth: 1, // border-bottom-line 추가
     borderBottomColor: COLORS.Gray, // border-bottom-line 색상 조절

@@ -18,7 +18,6 @@ interface ClothInfo {
   prints: string[],
 }
 
-
 const ClothInfoScreen: React.FC<{ route: any }> = ({ route }) => {
   const clothId = route.params.id;
   const [clothesInfo, setClothesInfo] = useState<ClothInfo | null>(null);
@@ -77,6 +76,7 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%", // 이미지 크기 조절
+    resizeMode: 'contain', // 이미지를 원하는 크기로 조정
   },
   infoContainer: {
     paddingHorizontal: 20,

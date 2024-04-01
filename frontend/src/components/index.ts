@@ -3,6 +3,7 @@ export { default as ClosetItem } from "./closet/ClosetItem";
 export { default as SearchModal } from "./closet/SearchModal";
 export { default as PresetItem } from "./closet/PresetItem";
 export { default as NewPreset } from "./closet/NewPreset";
+export { default as AddPreset } from "./closet/AddPreset";
 
 // 홈
 export { default as MirrorConnection } from "./HomeWidgets/MirrorConnection";

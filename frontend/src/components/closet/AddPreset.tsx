@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, Button, Pressable, StyleSheet, FlatList, TouchableOpacity, TextInput, Image } from 'react-native';
 // 컴포넌트
-import { COLORS, FONTSIZE } from '../../shared/styles/STYLES'
+import { COLORS, FONTSIZE } from '../../shared/styles/STYLES';
 // axios
 import { API } from "../../shared";
 import { AxiosError } from 'axios';
@@ -10,6 +10,7 @@ import { AxiosError } from 'axios';
 interface NewPresetProps {
   onClose: () => void;
 };
+
 // 옷 인터페이스
 interface ClothInfo {
   clothesId: number,

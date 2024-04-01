@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, StyleSheet, Text, Pressable, View } from 'react-native';
+import { Modal, StyleSheet, Text, Pressable, View, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // 컴포넌트
 import { COLORS, FONTSIZE } from '../../shared/styles/STYLES';
-// 임시데이터
-import { ClothesTagGroups } from './searchTag';
+// axios
+import { API } from "../../shared";
 
 interface ClothesTag {
   clothesTagName: string;
@@ -18,10 +18,10 @@ interface ClothesTagGroup {
 interface SearchModalProps {
   onClose: () => void;
   // 클릭된 태그 정보를 상위 컴포넌트로 전달하기 위한 콜백 함수
-  onTagsSelected: (tags: number[]) => void; 
+  onTagsSelected: (tags: string[]) => void; 
 };
 
-const TagItem: React.FC<{ tag: ClothesTag, onClick: (name: string) => void }> = ({ tag, onClick }) => {
+const TagItem: React.FC<{ tag: ClothesTag; onClick: (name: string) => void }> = ({ tag, onClick }) => {
   const [clicked, setClicked] = useState(false);
 
   const addTag = () => {
@@ -38,13 +38,12 @@ const TagItem: React.FC<{ tag: ClothesTag, onClick: (name: string) => void }> = 
   );
 };
 
-const TagList: React.FC<{ onTagsSelected: (tags: number[]) => void }> = ({ onTagsSelected }) => {
-  // 태그의 상태
-  const [selectedTags, setSelectedTags] = useState<number[]>([]);
+const TagList: React.FC<{ onTagsSelected: (tags: string[]) => void }> = ({ onTagsSelected }) => {
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const handleTagClick = (tagName: string) => {
     if (selectedTags.includes(tagName)) {
-      setSelectedTags(selectedTags.filter(name => name !== tagName));
+      setSelectedTags(selectedTags.filter((name) => name !== tagName));
     } else {
       setSelectedTags([...selectedTags, tagName]);
     }
@@ -52,30 +51,58 @@ const TagList: React.FC<{ onTagsSelected: (tags: number[]) => void }> = ({ onTag
 
   // 클릭된 태그 ID 정보를 전달
   useEffect(() => {
-    const selectedTagIds: number[] = [];
-    ClothesTagGroups.forEach(group => {
-      group.clothesTagList.forEach(tag => {
+    const fetchTagList = async () => {
+      try {
+        const response = await API.get('clothes/tag');
+        const tagData = response.data.data;
+        // 태그 데이터를 묶어서 태그 그룹 리스트로 구성
+        const clothesTagGroups: ClothesTagGroup[] = [];
+        for (const key in tagData) {
+          const group: ClothesTagGroup = {
+            clothesTagGroupName: key,
+            clothesTagList: tagData[key].map((tagName: string) => ({ clothesTagName: tagName })),
+          };
+          clothesTagGroups.push(group);
+        }
+        setClothesTagGroups(clothesTagGroups);
+      } catch (error) {
+        console.error('태그 목록을 불러오는데 문제가 발생했습니다:', error);
+      }
+    };
+
+    fetchTagList();
+  }, []);
+
+  const [clothesTagGroups, setClothesTagGroups] = useState<ClothesTagGroup[]>([]);
+
+  useEffect(() => {
+    const selectedTagNames: string[] = []; // 선택된 태그 이름의 배열로 수정
+    clothesTagGroups.forEach((group) => {
+      group.clothesTagList.forEach((tag) => {
         if (selectedTags.includes(tag.clothesTagName)) {
-          selectedTagIds.push(tag.id);
+          selectedTagNames.push(tag.clothesTagName);
         }
       });
     });
-    onTagsSelected(selectedTagIds);
+    onTagsSelected(selectedTagNames);
   }, [selectedTags]);
 
+
   return (
-    <View style={styles.tagContainer}>
-      {ClothesTagGroups.map(group => (
-        <View key={group.clothesTagGroupName}>
-          <Text style={styles.tagGroupTitle}>{group.clothesTagGroupName}</Text>
-          <View style={styles.tagGroupContainer}>
-            {group.clothesTagList.map(tag => (
-              <TagItem key={tag.clothesTagName} tag={tag} onClick={handleTagClick} />
-            ))}
+    <ScrollView>
+      <View style={styles.tagContainer}>
+        {clothesTagGroups.map((group) => (
+          <View key={group.clothesTagGroupName}>
+            <Text style={styles.tagGroupTitle}>{group.clothesTagGroupName}</Text>
+            <View style={styles.tagGroupContainer}>
+              {group.clothesTagList.map((tag) => (
+                <TagItem key={tag.clothesTagName} tag={tag} onClick={handleTagClick} />
+              ))}
+            </View>
           </View>
-        </View>
-      ))}
-    </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -83,7 +110,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ onTagsSelected }) => {
   // 모달상태
   const [modalVisible, setModalVisible] = useState(false);
    // 선택된 태그 상태 추가
-  const [selectedTags, setSelectedTags] = useState<number[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // 모달이 열릴 때 이전 선택 태그 복원
   useEffect(() => {

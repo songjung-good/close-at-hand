@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, FlatList } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, FlatList, ScrollView } from "react-native";
 // 컴포넌트 불러오기
 import { SearchModal, ClosetItem } from "../../components";
 import { FONTSIZE, COLORS } from "../../shared";
@@ -17,8 +17,6 @@ const ClosetScreen: React.FC = () => {
   // 임시데이터
   const [clothes, setClothes] = useState<ClothInfo[]>([]);
   const [recommendClothes, setRecommendedClothes] = useState<ClothInfo[][]>([]);
-  // const [clothes, setClothes] = useState<clothInfo[]>([]); // 옷 목록 데이터 상태 변경
-  // const [recommendClothes, setRecommendedClothes] = useState<clothInfo[]>([]); // 추천 옷 데이터 상태 변경
   // 검색 모달과 태그
   const [selectedTags, setSelectedTags] = useState<any[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -61,14 +59,11 @@ const ClosetScreen: React.FC = () => {
   // 추천 옷 리스트
   const RenderRecommendedClothes: React.FC = () => {
     return (
-      <View style={styles.recommendedDiv}>
-        <FlatList
-          horizontal
-          data={recommendClothes.flat()}
-          renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
-          keyExtractor={(item) => item.clothesId.toString()}
-        />
-      </View>
+      <ScrollView horizontal style={styles.recommendedDiv}>
+        {recommendClothes.flat().map((item) => (
+          <ClosetItem key={item.clothesId} {...item} />
+        ))}
+      </ScrollView>
     );
   };
 
