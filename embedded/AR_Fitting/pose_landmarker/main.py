@@ -175,20 +175,19 @@ def run(model: str, num_poses: int,
 
         # 탐지 결과가 있을 경우 랜드마크를 그림
         if DETECTION_RESULT and len(DETECTION_RESULT.pose_landmarks) > 0:
-            for pose_landmarks in DETECTION_RESULT.pose_landmarks:
-                # print('TEST', pose_landmarks[0])
-                pose_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
-                pose_landmarks_proto.landmark.extend([
-                    landmark_pb2.NormalizedLandmark(x=landmark.x, y=landmark.y,
-                                                    z=landmark.z) for landmark
-                    in pose_landmarks
-                ])
-                
-                mp_drawing.draw_landmarks(
-                    current_frame,
-                    pose_landmarks_proto,
-                    mp_pose.POSE_CONNECTIONS,
-                    mp_drawing_styles.get_default_pose_landmarks_style())
+            # for pose_landmarks in DETECTION_RESULT.pose_landmarks:
+            #     # print('TEST', pose_landmarks[0])
+            #     pose_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
+            #     pose_landmarks_proto.landmark.extend([
+            #         landmark_pb2.NormalizedLandmark(x=landmark.x, y=landmark.y,
+            #                                         z=landmark.z) for landmark
+            #         in pose_landmarks
+            #     ])
+            #     mp_drawing.draw_landmarks(
+            #         current_frame,
+            #         pose_landmarks_proto,
+            #         mp_pose.POSE_CONNECTIONS,
+            #         mp_drawing_styles.get_default_pose_landmarks_style())
             
             # 하의
             if DETECTION_RESULT.pose_landmarks[0][23] and DETECTION_RESULT.pose_landmarks[0][24]:
@@ -210,16 +209,8 @@ def run(model: str, num_poses: int,
                 overlay_position_top = ((left_shoulder_x + right_shoulder_x) // 2 - (top_image.shape[1] * scale_factor_top) // 2, min(left_shoulder_y, right_shoulder_y) - (shoulder_width * scale_factor_top) / 2)
                 current_frame = overlay_clothing_on_person(current_frame, top_image, overlay_position_top, scale_factor_top, current_frame.shape)
 
-        if (output_segmentation_masks and DETECTION_RESULT):
-            if DETECTION_RESULT.segmentation_masks is not None:
-                segmentation_mask = DETECTION_RESULT.segmentation_masks[0].numpy_view()
-                mask_image = np.zeros(image.shape, dtype=np.uint8)
-                mask_image[:] = mask_color
-                condition = np.stack((segmentation_mask,) * 3, axis=-1) > 0.1
-                visualized_mask = np.where(condition, mask_image, current_frame)
-                current_frame = cv.addWeighted(current_frame, overlay_alpha,
-                                                visualized_mask, overlay_alpha,
-                                                0)
+        else:
+            print('No person detected')
 
         # 최종 이미지 표시
         cv.imshow('Mediapipe Feed', current_frame)
