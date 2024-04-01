@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class OotdInfo {
         private final Long ootdId;
         private final String ootdImgUrl;
         private final Set<ClothesInfo> clothes = new HashSet<>();
+        private final ZonedDateTime createdAt;
 
         @Builder
         public Detail(Ootd ootd){
@@ -38,6 +40,7 @@ public class OotdInfo {
             for (Clothes clothes:ootd.getClothes()){
                 this.clothes.add(new ClothesInfo(clothes));
             }
+            this.createdAt = ootd.getCreatedAt();
         }
     }
 }
