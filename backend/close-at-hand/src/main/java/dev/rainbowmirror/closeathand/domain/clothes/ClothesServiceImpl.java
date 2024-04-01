@@ -13,16 +13,22 @@ import kong.unirest.HttpResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 
+
+
 // 이 파일은 service의 내용을 실제 구현하는거
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Import(Querydsl.class)
 public class ClothesServiceImpl implements ClothesService{
     private final ClothesStore clothesStore;
     private final UserReader userReader;
@@ -87,6 +93,13 @@ public class ClothesServiceImpl implements ClothesService{
         result.add(new ClothesTagAllInfo("prints",clothesTags.get(5)));
         return result;
     }
+
+    @Override
+    public List<Clothes> findEnabledClothes() {
+        return clothesRepository.findEnabledClothes();
+
+    }
+
 
     @Override
     public ClothesInfo updateClothes(ClothesCommand.UpdateCommand command) {
