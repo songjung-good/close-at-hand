@@ -52,7 +52,7 @@ public class ClothesCommand {
     @Builder
     @ToString
     public static class UpdateCommand {
-        private final Long clothesId;
+        private final Long[] clothesIdList;
         private final Boolean laundry;
     }
 

@@ -99,12 +99,12 @@ public class ClothesDto {
     @Setter
     @ToString
     public static class UpdateRequest{
-        private Long clothesId;
+        private Long[] clothesIdList;
         private Boolean laundry;
 
         public ClothesCommand.UpdateCommand toCommand(){
             return ClothesCommand.UpdateCommand.builder()
-                    .clothesId(clothesId)
+                    .clothesIdList(clothesIdList)
                     .laundry(laundry)
                     .build();
         }

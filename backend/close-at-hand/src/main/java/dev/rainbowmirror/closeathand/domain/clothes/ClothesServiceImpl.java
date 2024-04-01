@@ -94,10 +94,16 @@ public class ClothesServiceImpl implements ClothesService{
 
 
     @Override
-    public ClothesInfo updateClothes(ClothesCommand.UpdateCommand command) {
-        Clothes clothes = clothesReader.findClothes(command.getClothesId());
-        if (command.getLaundry()) {clothes.disable();}
-        else {clothes.enable();}
-        return new ClothesInfo(clothes);
+    public List<ClothesInfo> updateClothes(ClothesCommand.UpdateCommand command) {
+        List<ClothesInfo> result = new ArrayList<>();
+        for (Long clothesId : command.getClothesIdList()) {
+            Clothes clothes = clothesReader.findClothes(clothesId);
+            if (command.getLaundry()) {
+                clothes.disable();
+            } else {
+                clothes.enable();
+            }
+        }
+        return result;
     }
 }

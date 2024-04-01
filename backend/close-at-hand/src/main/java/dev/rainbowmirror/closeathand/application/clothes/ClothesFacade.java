@@ -57,7 +57,7 @@ public class ClothesFacade {
         return clothesService.findAllClothesTag(userToken);
     }
 
-    public ClothesInfo updateClothesLocation(ClothesCommand.UpdateCommand command){
+    public List<ClothesInfo> updateClothesLocation(ClothesCommand.UpdateCommand command){
         return clothesService.updateClothes(command);
     }
 }
