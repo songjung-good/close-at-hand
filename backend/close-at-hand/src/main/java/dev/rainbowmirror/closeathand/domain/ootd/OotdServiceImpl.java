@@ -3,14 +3,17 @@ package dev.rainbowmirror.closeathand.domain.ootd;
 import dev.rainbowmirror.closeathand.common.exception.EntityNotFoundException;
 import dev.rainbowmirror.closeathand.domain.S3UploadService;
 import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesListInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesReader;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesUpdateTool;
 import dev.rainbowmirror.closeathand.domain.user.User;
 import dev.rainbowmirror.closeathand.domain.user.UserReader;
+import dev.rainbowmirror.closeathand.infrastructure.ootd.OotdRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,7 @@ public class OotdServiceImpl implements OotdService{
     private final ClothesReader clothesReader;
     private final S3UploadService s3UploadService;
     private final ClothesUpdateTool clothesUpdateTool;
+    private final OotdRepository ootdRepository;
     @Autowired
     private final EntityManager em;
     @Override
@@ -96,4 +100,14 @@ public class OotdServiceImpl implements OotdService{
         ootdStore.delete(ootdId);
     }
 
+    @Override
+    public List<ClothesListInfo> getMostUsedClothes(String userToken) {
+        ZonedDateTime endDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+        List<Clothes> list = ootdRepository.findTop5ClothsInMonth(endDate.minusMonths(1) ,endDate, userToken);
+        List<ClothesListInfo> result = new ArrayList<>();
+        for (Clothes clothes: list){
+            result.add(new ClothesListInfo(clothes));
+        }
+        return result;
+    }
 }
