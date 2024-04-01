@@ -4,6 +4,7 @@ import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTag.ClothesTag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,7 @@ public interface ClothesRepository extends JpaRepository<Clothes, Long> {
 
     Clothes findByClothesToken(String clothesToken);
 
-    @Query("SELECT c FROM Clothes c where c.location = :location")
-    List<Clothes> findEnabledClothes(Clothes.Location location);
+    @Query("SELECT c FROM Clothes c where c.location = :description")
+    List<Clothes> findEnabledClothes(@Param("description") String description);
 
 }
