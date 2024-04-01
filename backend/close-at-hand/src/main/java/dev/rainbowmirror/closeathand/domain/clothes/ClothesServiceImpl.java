@@ -1,25 +1,19 @@
 package dev.rainbowmirror.closeathand.domain.clothes;
 
-import dev.rainbowmirror.closeathand.common.util.JsonTagPaser;
-import dev.rainbowmirror.closeathand.domain.OmniCommerceService;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTag.ClothesTag;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagAllInfo;
-import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroup;
 import dev.rainbowmirror.closeathand.domain.user.UserReader;
 import dev.rainbowmirror.closeathand.infrastructure.clothes.ClothesRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import kong.unirest.HttpResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 
@@ -28,7 +22,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Import(Querydsl.class)
 public class ClothesServiceImpl implements ClothesService{
     private final ClothesStore clothesStore;
     private final UserReader userReader;
