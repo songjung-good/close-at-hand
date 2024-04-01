@@ -191,23 +191,24 @@ def run(model: str, num_poses: int,
                     mp_drawing_styles.get_default_pose_landmarks_style())
             
             # 하의
-            left_hip, right_hip = DETECTION_RESULT.pose_landmarks[0][23], DETECTION_RESULT.pose_landmarks[0][24]
-            left_hip_x, left_hip_y = int(left_hip.x * width), int(left_hip.y * height)
-            right_hip_x, right_hip_y = int(right_hip.x * width), int(right_hip.y * height)
-            hip_width = np.sqrt((right_hip_x - left_hip_x) ** 2 + (right_hip_y - left_hip_y) ** 2)
-            scale_factor_pants = calculate_scale_factor_for_pants(hip_width, pants_distance)
-            overlay_position_pants = ((left_hip_x + right_hip_x) // 2 - (pants_image.shape[1] * scale_factor_pants) // 2, left_hip_y - (hip_width * scale_factor_pants))
-            current_frame = overlay_clothing_on_person(current_frame, pants_image, overlay_position_pants, scale_factor_pants, current_frame.shape)
+            if DETECTION_RESULT.pose_landmarks[0][23] and DETECTION_RESULT.pose_landmarks[0][24]:
+                left_hip, right_hip = DETECTION_RESULT.pose_landmarks[0][23], DETECTION_RESULT.pose_landmarks[0][24]
+                left_hip_x, left_hip_y = int(left_hip.x * width), int(left_hip.y * height)
+                right_hip_x, right_hip_y = int(right_hip.x * width), int(right_hip.y * height)
+                hip_width = np.sqrt((right_hip_x - left_hip_x) ** 2 + (right_hip_y - left_hip_y) ** 2)
+                scale_factor_pants = calculate_scale_factor_for_pants(hip_width, pants_distance)
+                overlay_position_pants = ((left_hip_x + right_hip_x) // 2 - (pants_image.shape[1] * scale_factor_pants) // 2, left_hip_y - (hip_width * scale_factor_pants))
+                current_frame = overlay_clothing_on_person(current_frame, pants_image, overlay_position_pants, scale_factor_pants, current_frame.shape)
 
             # 상의
-            left_shoulder, right_shoulder = DETECTION_RESULT.pose_landmarks[0][11], DETECTION_RESULT.pose_landmarks[0][12]
-            left_shoulder_x, left_shoulder_y = int(left_shoulder.x * width), int(left_shoulder.y * height)
-            right_shoulder_x, right_shoulder_y = int(right_shoulder.x * width), int(right_shoulder.y * height)
-            shoulder_width = np.sqrt((right_shoulder_x - left_shoulder_x) ** 2 + (right_shoulder_y - left_shoulder_y) ** 2)
-            scale_factor_top = calculate_scale_factor_for_top(shoulder_width, top_distance)
-            overlay_position_top = ((left_shoulder_x + right_shoulder_x) // 2 - (top_image.shape[1] * scale_factor_top) // 2, min(left_shoulder_y, right_shoulder_y) - (shoulder_width * scale_factor_top) / 2)
-            current_frame = overlay_clothing_on_person(current_frame, top_image, overlay_position_top, scale_factor_top, current_frame.shape)
-
+            if DETECTION_RESULT.pose_landmarks[0][11] and DETECTION_RESULT.pose_landmarks[0][12]:
+                left_shoulder, right_shoulder = DETECTION_RESULT.pose_landmarks[0][11], DETECTION_RESULT.pose_landmarks[0][12]
+                left_shoulder_x, left_shoulder_y = int(left_shoulder.x * width), int(left_shoulder.y * height)
+                right_shoulder_x, right_shoulder_y = int(right_shoulder.x * width), int(right_shoulder.y * height)
+                shoulder_width = np.sqrt((right_shoulder_x - left_shoulder_x) ** 2 + (right_shoulder_y - left_shoulder_y) ** 2)
+                scale_factor_top = calculate_scale_factor_for_top(shoulder_width, top_distance)
+                overlay_position_top = ((left_shoulder_x + right_shoulder_x) // 2 - (top_image.shape[1] * scale_factor_top) // 2, min(left_shoulder_y, right_shoulder_y) - (shoulder_width * scale_factor_top) / 2)
+                current_frame = overlay_clothing_on_person(current_frame, top_image, overlay_position_top, scale_factor_top, current_frame.shape)
 
         if (output_segmentation_masks and DETECTION_RESULT):
             if DETECTION_RESULT.segmentation_masks is not None:
