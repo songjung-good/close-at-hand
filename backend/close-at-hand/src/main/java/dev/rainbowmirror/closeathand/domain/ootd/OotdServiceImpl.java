@@ -7,9 +7,11 @@ import dev.rainbowmirror.closeathand.domain.clothes.ClothesReader;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesUpdateTool;
 import dev.rainbowmirror.closeathand.domain.user.User;
 import dev.rainbowmirror.closeathand.domain.user.UserReader;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -28,6 +30,8 @@ public class OotdServiceImpl implements OotdService{
     private final ClothesReader clothesReader;
     private final S3UploadService s3UploadService;
     private final ClothesUpdateTool clothesUpdateTool;
+    @Autowired
+    private final EntityManager em;
     @Override
     public List<OotdInfo> getOotds(String userToken) {
         List<OotdInfo> ootdInfoList = new ArrayList<>();
@@ -57,6 +61,8 @@ public class OotdServiceImpl implements OotdService{
                         .user(userReader.getUser(userToken))
                         .build()
         );
+        em.persist(ootd);
+        em.flush();
         return new OotdInfo.Detail(ootd);
     }
 

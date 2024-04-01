@@ -15,10 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -66,9 +63,11 @@ public class ClothesServiceImpl implements ClothesService{
     }
 
     public List<ClothesTagAllInfo> findAllClothesTag(String userToken){
+        Set<String> set = new HashSet<>();
         List<List<String>> clothesTags = new ArrayList<>();
         for (int i=0; i<6; i++) clothesTags.add(new ArrayList<>());
         for (ClothesTag cLothesTag: clothesRepository.findDistinctTagByUserToken(userToken)){
+            if (set.contains(cLothesTag.getTagName())) continue;
             switch (cLothesTag.getClothesTagGroup().getClothesTagGroupName()){
                 case "category" : clothesTags.get(0).add(cLothesTag.getTagName()); break;
                 case "item" : clothesTags.get(1).add(cLothesTag.getTagName()); break;
@@ -77,6 +76,7 @@ public class ClothesServiceImpl implements ClothesService{
                 case "looks" : clothesTags.get(4).add(cLothesTag.getTagName()); break;
                 case "prints" : clothesTags.get(5).add(cLothesTag.getTagName()); break;
             }
+            set.add(cLothesTag.getTagName());
         }
         List<ClothesTagAllInfo> result = new ArrayList<>();
         result.add(new ClothesTagAllInfo("category",clothesTags.get(0)));
