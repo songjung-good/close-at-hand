@@ -195,6 +195,10 @@ let config = {
 			  displayButton: "portrait"
 			}
 		},
+		{
+			module: "MMM-OpenCVStream",
+			position: "bottom_right"
+		},
 
 
 
@@ -211,7 +215,7 @@ let config = {
 				modules: [
 					["AR_Header", "AR_category", "AR-guideline", "notification_AR"],  // page 0: AR
 					["alert", "MMM-Face-Recognition-SMAI", "updatenotification", "clock", "compliments", "weather", "newsfeed"],  // page 1: Home
-					["OOTD_Header", "handgesture", "notification_OOTD", "navi4", "MMM-Selfieshot"]  // page 1: OOTD
+					["OOTD_Header", "handgesture", "notification_OOTD", "navi4", "MMM-Selfieshot", "MMM-OpenCVStream"]  // page 1: OOTD
 				],
 				fixed: ["MMM-page-indicator"],
 				hiddenPages: {
