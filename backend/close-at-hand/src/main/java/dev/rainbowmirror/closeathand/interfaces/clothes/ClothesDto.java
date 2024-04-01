@@ -100,13 +100,11 @@ public class ClothesDto {
     @ToString
     public static class UpdateRequest{
         private Long clothesId;
-        private ZonedDateTime lastWashDate;
         private Boolean laundry;
 
         public ClothesCommand.UpdateCommand toCommand(){
             return ClothesCommand.UpdateCommand.builder()
                     .clothesId(clothesId)
-                    .lastWashDate(lastWashDate)
                     .laundry(laundry)
                     .build();
         }

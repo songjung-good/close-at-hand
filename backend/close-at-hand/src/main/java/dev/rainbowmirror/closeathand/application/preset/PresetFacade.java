@@ -30,11 +30,11 @@ public class PresetFacade {
         return presetService.getPresetByUserToken(userToken);
     }
 
-    public PresetInfo addClothes(PresetDto.UpdateRequestDto request) {
+    public PresetInfo addClothes(PresetDto.ClothesAddPop request) {
         return presetService.addClothes(request.getPresetId(), request.getClothesIdList());
     }
 
-    public PresetInfo popClothes(PresetDto.UpdateRequestDto request) {
+    public PresetInfo popClothes(PresetDto.ClothesAddPop request) {
         return presetService.popClothes(request.getPresetId(), request.getClothesIdList());
     }
 }

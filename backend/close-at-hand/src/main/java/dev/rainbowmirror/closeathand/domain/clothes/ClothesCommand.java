@@ -53,9 +53,7 @@ public class ClothesCommand {
     @ToString
     public static class UpdateCommand {
         private final Long clothesId;
-        private final ZonedDateTime lastWashDate;
         private final Boolean laundry;
-
     }
 
 }

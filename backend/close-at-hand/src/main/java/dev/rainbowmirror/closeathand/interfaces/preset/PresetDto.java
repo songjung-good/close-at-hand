@@ -1,10 +1,8 @@
 package dev.rainbowmirror.closeathand.interfaces.preset;
 
-import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
 import dev.rainbowmirror.closeathand.domain.preset.PresetCommand;
 import dev.rainbowmirror.closeathand.domain.preset.PresetInfo;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -49,9 +47,16 @@ public class PresetDto {
     @Getter
     @Setter
     @ToString
-    public static class UpdateRequestDto{
+    public static class ClothesAddPop {
         private Long presetId;
         private Long[] clothesIdList;
 
+    }
+    @Getter
+    @Setter
+    @ToString
+    public static class UpdateRequest{
+        private Long presetId;
+        private Long[] clothesIdList;
     }
 }
