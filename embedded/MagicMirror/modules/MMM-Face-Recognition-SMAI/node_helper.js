@@ -22,7 +22,7 @@ module.exports = NodeHelper.create({
                     console.log(err)
                 else
                     face_rec_name = data.toString().replace(/\s+/g, '')
-                    console.log(face_rec_name);
+                    // console.log(face_rec_name);
             });
   
       fs.readdir(publicDirPath, (err, datadir) => {
@@ -39,7 +39,7 @@ module.exports = NodeHelper.create({
           
            if(face_rec_name == face_name_display)
           {
-            console.log(face_name_display);
+            // console.log(face_name_display);
             this.sendSocketNotification("I_DID", face_rec_name)
           }else
           {

@@ -218,7 +218,7 @@ let config = {
                     "screenSaver": [ "clock" ],  // AOD
                     // "admin": [ "MMM-ShowMeSystemStatsModule", "MMM-AnOnScreenMenuModule" ],
                 },
-				homePage: 1, // home page index
+				homePage: 2, // home page index
 			}
 		},
 	]
