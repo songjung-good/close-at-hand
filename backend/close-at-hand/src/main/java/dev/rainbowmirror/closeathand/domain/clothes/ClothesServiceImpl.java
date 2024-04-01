@@ -96,8 +96,7 @@ public class ClothesServiceImpl implements ClothesService{
 
     @Override
     public List<Clothes> findEnabledClothes() {
-        return clothesRepository.findEnabledClothes();
-
+        return clothesRepository.findEnabledClothes(Location.ENABLE)
     }
 
 
