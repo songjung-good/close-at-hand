@@ -12,24 +12,24 @@ interface Props extends ClothesFetchListResponse {
 let windowWidth = Dimensions.get("window").width / 3 - 10;
 
 const CordiCard: React.FC<Props> = ({
-	outfitId,
-	outfitUrl,
+	ootdId,
+	ootdImgUrl,
 	noOnPress,
 	widthMathToScreen,
 }) => {
 	const navigation = useNavigation<Navigation>();
 
-	function handlePress(outfitId: number) {
+	function handlePress(ootdId: number) {
 		if (noOnPress) return;
-		navigation.navigate("recentCoordyDetail", { outfitId });
+		navigation.navigate("recentCoordyDetail", { ootdId });
 	}
 
 	return (
-		<Pressable onPress={handlePress.bind(this, outfitId)}>
-			<View testID={`card-${outfitId}`} style={styles.container}>
+		<Pressable onPress={handlePress.bind(this, ootdId)}>
+			<View testID={`card-${ootdId}`} style={styles.container}>
 				<Image
 					style={[styles.image, widthMathToScreen && { width: windowWidth }]}
-					source={{ uri: outfitUrl }}
+					source={{ uri: ootdImgUrl }}
 				/>
 			</View>
 		</Pressable>
@@ -45,11 +45,13 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		margin: 5,
+		borderWidth: 0.8,
+		borderColor: COLORS.Gray,
 	},
 	image: {
 		height: 240,
 		width: 150,
-		resizeMode: "cover",
-		backgroundColor: COLORS.Gray,
+		resizeMode: "contain",
+		backgroundColor: COLORS.LightGray,
 	},
 });

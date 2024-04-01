@@ -29,7 +29,7 @@ describe("RecentCoordyDetail 컴포넌트", () => {
 		});
 
 		const { getByText, getByTestId } = render(
-			<RecentCoordyDetail outfitId={1} />,
+			<RecentCoordyDetail ootdId={1} />,
 		);
 
 		// 데이터가 성공적으로 로드되고 해당 데이터가 화면에 렌더링되었는지 확인

@@ -5,17 +5,18 @@ import { COLORS, FONTSIZE } from "../../shared";
 
 const DetailUI: React.FC<CoordyDetail> = ({
 	contains,
-	outfitUrl,
+	ootdImgUrl,
 	weather,
 	date,
 }) => {
 	const originalDate = new Date(date);
 	const dateString = `${originalDate.getFullYear()}년 ${originalDate.getMonth() + 1}월 ${originalDate.getDate()}일`;
+
 	return (
 		<View style={styles.container}>
 			<Text>{dateString}</Text>
 			<Image
-				source={{ uri: outfitUrl }}
+				source={{ uri: ootdImgUrl }}
 				style={styles.image}
 				testID="detail-image"
 			/>

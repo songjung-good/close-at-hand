@@ -10,14 +10,13 @@ const RecentCoordyList = () => {
 		queryKey: ["recentCoordyList"],
 		queryFn: fetchRecentCoordyListList,
 	});
-	console.log(isError, isLoading, data);
 
 	return (
 		<>
 			{(isLoading || isError) && (
 				<LoadingOrError isLoading={isLoading} isError={isError} error={error} />
 			)}
-			{!isLoading && !isError && data && (
+			{!isLoading && !isError && data?.length === 0 && (
 				<Text>저장된 옷 기록이 없습니다.</Text>
 			)}
 			{data && (
@@ -26,7 +25,7 @@ const RecentCoordyList = () => {
 					renderItem={({ item }) => (
 						<CoordiCard {...item} widthMathToScreen={true} />
 					)}
-					keyExtractor={(item) => item.outfitId.toString()}
+					keyExtractor={(item) => item.ootdImgUrl.toString()}
 					numColumns={3}
 				/>
 			)}

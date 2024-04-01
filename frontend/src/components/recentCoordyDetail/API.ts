@@ -3,11 +3,11 @@ import { CoordyDetail } from "./types";
 
 interface FetchDetailInterface {
 	signal: AbortSignal;
-	outfitId: number;
+	ootdId: number;
 }
 
-export async function fetchDetail({ signal, outfitId }: FetchDetailInterface) {
-	return API.get(`outfit/${outfitId}`, { signal })
+export async function fetchDetail({ signal, ootdId }: FetchDetailInterface) {
+	return API.get(`ootd/${ootdId}`, { signal })
 		.then((response) => response.data as CoordyDetail)
 		.catch((error) => {
 			if (error.response) {

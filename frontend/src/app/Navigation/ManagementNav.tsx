@@ -14,7 +14,7 @@ export type ManagementParamList = {
 	laundryMain: { fromNoti: boolean };
 	history: undefined;
 	recentCoordyList: undefined;
-	recentCoordyDetail: { outfitId: number };
+	recentCoordyDetail: { ootdId: number };
 	laundryBasket: { basket: string };
 };
 const Stack = createNativeStackNavigator<ManagementParamList>();
@@ -48,7 +48,7 @@ const ManagementNav = () => {
 			<Stack.Screen
 				name="recentCoordyDetail"
 				component={RecentCoordyDetailScreen}
-				options={{ title: "빨래 바구니" }}
+				options={{ title: "최근 코디 상세" }}
 			/>
 			<Stack.Screen
 				name="laundryBasket"

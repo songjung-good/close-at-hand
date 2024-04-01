@@ -17,14 +17,14 @@ describe("CordiCard 컴포넌트", () => {
 		mockUseNavigation.mockReturnValue(mockNavigation);
 
 		const { getByTestId } = render(
-			<CoordyCard outfitId={testId} outfitUrl="test-url" />,
+			<CoordyCard ootdId={testId} ootdImgUrl="test-url" />,
 		);
 
 		const pressable = getByTestId("card-1");
 		fireEvent.press(pressable);
 
 		expect(mockNavigation.navigate).toHaveBeenCalledWith("recentCoordyDetail", {
-			outfitId: testId,
+			ootdId: testId,
 		});
 	});
 
@@ -38,7 +38,7 @@ describe("CordiCard 컴포넌트", () => {
 		mockUseNavigation.mockReturnValue(mockNavigation);
 
 		const { getByTestId } = render(
-			<CoordyCard outfitId={testId} outfitUrl="test-url" noOnPress={true} />,
+			<CoordyCard ootdId={testId} ootdImgUrl="test-url" noOnPress={true} />,
 		);
 
 		const pressable = getByTestId("card-1");

@@ -1,6 +1,6 @@
 export interface ClothesFetchListResponse {
-	outfitId: number;
-	outfitUrl: string;
+	ootdId: number;
+	ootdImgUrl: string;
 }
 
 export interface Clothes {

@@ -2,7 +2,7 @@ import { Clothes } from "../types";
 
 export interface CoordyDetail {
 	contains: Clothes[];
-	outfitUrl: string;
+	ootdImgUrl: string;
 	weather: string;
 	date: string;
 }
