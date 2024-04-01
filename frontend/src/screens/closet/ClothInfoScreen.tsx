@@ -18,7 +18,6 @@ interface ClothInfo {
   prints: string[],
 }
 
-
 const ClothInfoScreen: React.FC<{ route: any }> = ({ route }) => {
   const clothId = route.params.id;
   const [clothesInfo, setClothesInfo] = useState<ClothInfo | null>(null);

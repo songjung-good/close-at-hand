@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, FlatList } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, FlatList, ScrollView } from "react-native";
 // 컴포넌트 불러오기
 import { SearchModal, ClosetItem } from "../../components";
 import { FONTSIZE, COLORS } from "../../shared";
@@ -59,14 +59,11 @@ const ClosetScreen: React.FC = () => {
   // 추천 옷 리스트
   const RenderRecommendedClothes: React.FC = () => {
     return (
-      <View style={styles.recommendedDiv}>
-        <FlatList
-          horizontal
-          data={recommendClothes.flat()}
-          renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
-          keyExtractor={(item) => item.clothesId.toString()}
-        />
-      </View>
+      <ScrollView horizontal style={styles.recommendedDiv}>
+        {recommendClothes.flat().map((item) => (
+          <ClosetItem key={item.clothesId} {...item} />
+        ))}
+      </ScrollView>
     );
   };
 
