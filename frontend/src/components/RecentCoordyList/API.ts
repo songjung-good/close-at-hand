@@ -8,7 +8,7 @@ export async function fetchRecentCoordyListList({
 	signal,
 }: FetchRecentCoordyListInterface) {
 	return API.get("ootd", { signal })
-		.then((response) => response.data as ClothesFetchListResponse[])
+		.then((response) => response.data.data as ClothesFetchListResponse[])
 		.catch((error) => {
 			if (error.response) {
 				throw new Error(error.response.data?.message ?? "네트워크 에러");

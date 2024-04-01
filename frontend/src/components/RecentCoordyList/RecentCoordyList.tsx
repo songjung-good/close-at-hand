@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { FlatList, Text } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchRecentCoordyListList } from "./API";
@@ -10,11 +10,15 @@ const RecentCoordyList = () => {
 		queryKey: ["recentCoordyList"],
 		queryFn: fetchRecentCoordyListList,
 	});
+	console.log(isError, isLoading, data);
 
 	return (
 		<>
 			{(isLoading || isError) && (
 				<LoadingOrError isLoading={isLoading} isError={isError} error={error} />
+			)}
+			{!isLoading && !isError && data && (
+				<Text>저장된 옷 기록이 없습니다.</Text>
 			)}
 			{data && (
 				<FlatList
