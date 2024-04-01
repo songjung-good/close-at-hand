@@ -51,7 +51,7 @@ const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 		<View style={styles.container}>
 			{isScanned ? (
 				<>
-					<Text style={[styles.title, styles.textCenter]}>검색 종료.</Text>
+					<Text style={[styles.title, styles.textCenter]}>검색 종료</Text>
 					<View style={styles.imageContainer}>
 						<Image
 							source={require("../../../assets/image/bluetoothSearching.png")}

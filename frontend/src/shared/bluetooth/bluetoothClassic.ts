@@ -73,7 +73,7 @@ export async function PairDevices(address?: string) {
 		).address;
 		if (!address) {
 			console.debug("연결 실패");
-			throw new Error("검색된 클로젯 핸드가 없습니다.");
+			return false;
 		}
 	}
 
