@@ -65,7 +65,7 @@ public class ClothesApiController {
 
     @Operation(summary = "옷 전체 조회 api")
     @GetMapping
-    public CommonResponse<List<ClothesListInfo>> findAllClothes() {
+    public CommonResponse<List<ClothesInfo>> findAllClothes() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iter = authorities.iterator();
@@ -73,7 +73,7 @@ public class ClothesApiController {
 
         String userToken = auth.getAuthority();
 
-        List<ClothesListInfo> clothesInfoList = clothesFacade.findAllClothes(userToken);
+        List<ClothesInfo> clothesInfoList = clothesFacade.findAllClothes(userToken);
         return CommonResponse.success(clothesInfoList);
     }
 

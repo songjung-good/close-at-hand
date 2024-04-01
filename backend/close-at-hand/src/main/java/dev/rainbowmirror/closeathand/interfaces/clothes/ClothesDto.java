@@ -55,7 +55,6 @@ public class ClothesDto {
         }
     }
 
-    // 조회요청 반환
     @Getter
     @Setter
     @ToString
@@ -94,5 +93,12 @@ public class ClothesDto {
                 }
             }
         }
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class UpdateRequest{
+
     }
 }
