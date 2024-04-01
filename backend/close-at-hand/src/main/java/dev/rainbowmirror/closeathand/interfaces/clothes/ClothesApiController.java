@@ -90,11 +90,4 @@ public class ClothesApiController {
         List<ClothesTagAllInfo> list = clothesFacade.findAllClothesTag(userToken);
         return CommonResponse.success(new ClothesDto.ClothesTagResponse(list));
     }
-
-    @Operation(summary = "추천 옷 받기")
-    @GetMapping("/recommend")
-    public CommonResponse<ClothesRecommendInfo> getRecommend() {
-        ClothesRecommendInfo clothesRecommendInfo = recommendService.getRecommendation();
-        return CommonResponse.success(clothesRecommendInfo);
-    }
 }

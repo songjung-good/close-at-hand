@@ -22,7 +22,7 @@ import java.util.Iterator;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping
-@Tag(name = "Recommend")
+@Tag(name = "E.T.C")
 public class RecommendApiController {
     private final RecommendService recommendService;
     private final OotdService ootdService;
@@ -47,6 +47,6 @@ public class RecommendApiController {
         RecommendDto recommendDto = RecommendDto.builder()
                 .top5UsedClothes(ootdService.getMostUsedClothes(userToken))
                 .build();
-        return CommonResponse.success("");
+        return CommonResponse.success(recommendDto);
     }
 }
