@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 import {
 	COLORS,
@@ -10,7 +9,6 @@ import {
 	SHADOW,
 } from "../../shared";
 import { ROW } from "../../shared";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface ButtonProps {
 	title: string;
@@ -26,8 +24,6 @@ const ButtonBlock: React.FC<ButtonProps> = ({ title, onPress }) => {
 };
 
 const Overlay = () => {
-	const navigation = useNavigation<Navigation>();
-
 	function handleChangeLayout() {
 		return;
 	}
@@ -39,6 +35,7 @@ const Overlay = () => {
 			return;
 		}
 		const result = dataSendToDevice(identifier);
+		console.debug("블루투스 요청 결과", result);
 		Alert.alert("클로젯 핸드를 확인해주세요");
 	}
 

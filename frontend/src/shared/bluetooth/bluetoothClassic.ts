@@ -28,10 +28,10 @@ export async function startDiscovery() {
 
 		try {
 			const unpaired = await RNBluetoothClassic.startDiscovery();
-			console.debug("검색 결과", unpaired);
+
 			for (const e of unpaired) {
-				console.debug(e);
-				if (e.name === "bada") {
+				console.debug(e.name);
+				if (e.name === "Close_at_Hand") {
 					const device = {
 						address: e.address,
 						id: e.id,
@@ -81,10 +81,10 @@ export async function PairDevices(address?: string) {
 		const device = await RNBluetoothClassic.pairDevice(address);
 		return device;
 	} catch (error) {
-		// Handle error accordingly
+		console.debug("블루투스 연결 실패", error);
 		return false;
 	} finally {
-		console.debug("연결 시도 종료 시도한 주소: ", address);
+		console.debug("시도한 주소: ", address);
 	}
 }
 
