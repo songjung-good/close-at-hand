@@ -20,7 +20,6 @@ public class ClothesInfo {
     private final List<String> colors = new ArrayList<>();
     private final List<String> looks = new ArrayList<>();
     private final List<String> prints = new ArrayList<>();
-    private final List<ClothesTagGroupInfo> clothesTagGroupList = new ArrayList<>();
 
     public ClothesInfo(Clothes clothes) {
         this.clothesId = clothes.getClothesId();

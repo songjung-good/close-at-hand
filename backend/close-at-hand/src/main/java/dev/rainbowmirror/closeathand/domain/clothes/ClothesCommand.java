@@ -52,9 +52,10 @@ public class ClothesCommand {
     @Builder
     @ToString
     public static class UpdateCommand {
-        private final String clothesImgUrl;
+        private final Long clothesId;
         private final ZonedDateTime lastWashDate;
-        private final Integer price;
+        private final Boolean laundry;
+
     }
 
 }

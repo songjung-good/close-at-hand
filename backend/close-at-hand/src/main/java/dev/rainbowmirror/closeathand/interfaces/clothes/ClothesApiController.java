@@ -2,17 +2,11 @@ package dev.rainbowmirror.closeathand.interfaces.clothes;
 
 import dev.rainbowmirror.closeathand.application.clothes.ClothesFacade;
 import dev.rainbowmirror.closeathand.common.response.CommonResponse;
-import dev.rainbowmirror.closeathand.domain.OmniCommerceService;
-import dev.rainbowmirror.closeathand.domain.RecommendService;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
-import dev.rainbowmirror.closeathand.domain.clothes.ClothesListInfo;
-import dev.rainbowmirror.closeathand.domain.clothes.ClothesRecommendInfo;
 import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagAllInfo;
-import dev.rainbowmirror.closeathand.domain.clothes.clothesTagGroup.ClothesTagGroupInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -25,7 +19,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -34,7 +27,6 @@ import java.util.Map;
 @Tag(name = "Clothes")
 public class ClothesApiController {
     private final ClothesFacade clothesFacade;
-    private final RecommendService recommendService;
 
     @Operation(summary = "옷 등록 api")
     @PostMapping(produces = "application/json", consumes = "multipart/form-data") // post 요청이 올 경우
@@ -89,5 +81,11 @@ public class ClothesApiController {
         String userToken = auth.getAuthority();
         List<ClothesTagAllInfo> list = clothesFacade.findAllClothesTag(userToken);
         return CommonResponse.success(new ClothesDto.ClothesTagResponse(list));
+    }
+
+    @Operation(summary = "옷상태 정보 수정 (세탁)", description = "laundry=true -> 세탁기로 이동, laundry=false -> 옷장으로 이동 + 세탁날짜 갱신")
+    @PutMapping("/laundry")
+    public CommonResponse<ClothesInfo> updateClothesLocation(@RequestBody ClothesDto.UpdateRequest request){
+        return CommonResponse.success(clothesFacade.updateClothesLocation(request.toCommand()));
     }
 }

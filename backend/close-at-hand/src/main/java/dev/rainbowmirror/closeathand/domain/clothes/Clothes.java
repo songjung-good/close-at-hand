@@ -64,7 +64,7 @@ public class Clothes extends AbstractEntity {
         private final String description;
     }
 
-    public void enable(){ this.location = Location.ENABLE; }
+    public void enable(){ this.location = Location.ENABLE; this.lastWashDate = ZonedDateTime.now();}
     public void disable(){ this.location = Location.DISABLE; }
 
     @Getter

@@ -95,7 +95,9 @@ public class ClothesServiceImpl implements ClothesService{
 
     @Override
     public ClothesInfo updateClothes(ClothesCommand.UpdateCommand command) {
-
-        return null;
+        Clothes clothes = clothesReader.findClothes(command.getClothesId());
+        if (command.getLaundry()) {clothes.disable();}
+        else {clothes.enable();}
+        return new ClothesInfo(clothes);
     }
 }
