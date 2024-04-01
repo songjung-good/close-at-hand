@@ -9,23 +9,22 @@ const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 	navigation,
 	route,
 }) => {
-	const [isModalOpen, setIsModalOpen] = useState(
+	const [modalVisible, setModalVisible] = useState(
 		route.params?.fromNoti ?? false,
 	);
 
-	console.log(isModalOpen);
+	console.log(modalVisible);
 
 	function handleButtonPress(basket: string) {
 		navigation.navigate("laundryBasket", { basket });
 	}
 
-	function HandleModalButtonPress() {
-		setIsModalOpen(false);
-	}
-
 	return (
 		<View>
-			{isModalOpen && <DoLaundry onPress={HandleModalButtonPress} />}
+			<DoLaundry
+				hideModal={setModalVisible.bind(null, false)}
+				modalVisible={modalVisible}
+			/>
 			<View style={[ROW, styles.center]}>
 				<Image
 					style={styles.image}

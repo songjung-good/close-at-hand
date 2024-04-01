@@ -1,26 +1,41 @@
 import { FlatList, Image, Modal, StyleSheet, Text, View } from "react-native";
-import { CENTER, COLORS, FONTSIZE, LaundryDB, ROW, SHADOW } from "../../shared";
+import { CENTER, COLORS, FONTSIZE, ROW, SHADOW } from "../../shared";
 import StyledButton from "../buttons/StyledButton";
-import { useQuery } from "@realm/react";
+import { useRealm } from "@realm/react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { saveToRealm } from "../HomeWidgets/TodayHomeRealm";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TodayClothes } from "../types";
 
 interface Props {
-	onPress(): void;
+	modalVisible: boolean;
+	hideModal(): void;
 }
 
-const DoLaundry: React.FC<Props> = ({ onPress }) => {
-	const OOTD = useQuery(LaundryDB, (laundry) =>
-		laundry.filtered("lastDayOfWear == $0", new Date()),
-	);
+const DoLaundry: React.FC<Props> = ({ modalVisible, hideModal }) => {
+	const realm = useRealm();
+	const [OOTD, setOOTD] = useState<TodayClothes[]>([]);
 
-	const [selected, setSelected] = useState<Set<LaundryDB>>(new Set(OOTD));
+	useEffect(() => {
+		async function get() {
+			const data = await AsyncStorage.getItem("todayWear");
+			if (data) {
+				setOOTD(JSON.parse(data));
+			}
+		}
+		get();
+	}, []);
 
-	function moveToLaundryBasket() {
-		onPress();
+	const [selected, setSelected] = useState<Set<TodayClothes>>(new Set(OOTD));
+
+	async function moveToLaundryBasket() {
+		if (!OOTD) return;
+		saveToRealm(OOTD, realm);
+		hideModal();
 	}
 
-	function handleSelect(item: LaundryDB) {
+	function handleSelect(item: TodayClothes) {
 		if (selected.has(item)) {
 			selected.delete(item);
 			const deletedSet = new Set(selected);
@@ -31,7 +46,7 @@ const DoLaundry: React.FC<Props> = ({ onPress }) => {
 	}
 
 	return (
-		<Modal transparent={true}>
+		<Modal transparent={true} visible={modalVisible}>
 			<View style={styles.outerContainer}>
 				<View style={[SHADOW, styles.container]}>
 					<FlatList
@@ -66,7 +81,7 @@ const DoLaundry: React.FC<Props> = ({ onPress }) => {
 						></StyledButton>
 						<StyledButton
 							title="아니요"
-							onPress={onPress}
+							onPress={hideModal}
 							backgroundColor="White"
 						></StyledButton>
 					</View>

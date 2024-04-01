@@ -5,13 +5,16 @@ import { useQuery, useRealm } from "@realm/react";
 import { StyledButton } from "../buttons";
 import Laundries from "./Laundries";
 import { LaundryDB, ROW } from "../../shared";
+import BasketModal from "./BasketModal";
 
-interface Props {
+export interface BasketProps {
 	textures: "일반 세탁" | "울 / 캐시미어" | "기능성 소재";
 }
 
-const LaundryBasket: React.FC<Props> = ({ textures }) => {
+const LaundryBasket: React.FC<BasketProps> = ({ textures }) => {
 	const realm = useRealm();
+
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const textureSelector = ["일반 세탁", "울 / 캐시미어", "기능성 소재"];
 	const query = textureSelector.indexOf(textures);
@@ -23,6 +26,10 @@ const LaundryBasket: React.FC<Props> = ({ textures }) => {
 	const [selectedLaundries, setSelectedLaundries] = useState<Set<LaundryDB>>(
 		new Set(),
 	);
+
+	function showModal() {
+		setModalVisible(true);
+	}
 
 	function handleDoLaundry() {
 		selectedLaundries.forEach((laundry) => {
@@ -51,6 +58,13 @@ const LaundryBasket: React.FC<Props> = ({ textures }) => {
 
 	return (
 		<View>
+			<BasketModal
+				modalVisible={modalVisible}
+				textures={textures}
+				hideModal={setModalVisible.bind(null, false)}
+				doLandry={handleDoLaundry}
+			/>
+
 			<FlatList
 				style={styles.list}
 				data={laundries}
@@ -71,7 +85,7 @@ const LaundryBasket: React.FC<Props> = ({ textures }) => {
 				<StyledButton
 					title="세탁하기"
 					backgroundColor="SkyBlue"
-					onPress={handleDoLaundry}
+					onPress={showModal}
 				/>
 				{/* <StyledButton
 					title="옷장으로"

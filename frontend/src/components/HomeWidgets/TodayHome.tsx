@@ -1,23 +1,26 @@
 import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { useRealm } from "@realm/react";
 
 import { CENTER, COLORS, FONTSIZE, ROW } from "../../shared";
-import { fetchToday, TodayResponse } from "./API";
-import { saveToRealm } from "./TodayHomeRealm";
+import { fetchToday } from "./API";
+import { ReactNode } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TodayResponse } from "../types";
 
 const alternative = ["OOTD", "패션", "좋아요"];
 
 const DataExist: React.FC<TodayResponse> = ({ ootdImgUrl, clothes }) => {
-	console.log("fwafw", ootdImgUrl);
 	const tag = clothes
-		.map((e, idx) => ({
-			tag:
-				e.clothesTagGroupList[0]?.clothesTagList[0]?.clothesTagName ??
-				alternative[idx],
-			id: e.clothesId,
-		}))
+		.map((e, idx) => {
+			const tag =
+				e.clothesTagGroupList?.[0]?.clothesTagList?.[0]?.clothesTagName ||
+				alternative[idx];
+			return {
+				tag,
+				id: e.clothesId || idx,
+			};
+		})
 		.slice(0, 3);
 	return (
 		<View style={[ROW, styles.flex]} testID="data-box">
@@ -55,7 +58,6 @@ const StyledText: React.FC<StyledTextProps> = ({ content }) => {
 };
 
 const TodayHome = () => {
-	const realm = useRealm();
 	const { data, isLoading, isError, error, refetch } = useQuery({
 		queryKey: ["home", "today", new Date().toISOString().split("T")[0]],
 		queryFn: fetchToday,
@@ -73,7 +75,7 @@ const TodayHome = () => {
 		}
 	}
 
-	let content;
+	let content: ReactNode;
 
 	if (data) {
 		if ("noResponse" in data) {
@@ -91,8 +93,11 @@ const TodayHome = () => {
 					ootdId={data.ootdId}
 				/>
 			);
+			async function save(data: TodayResponse) {
+				await AsyncStorage.setItem("todayWear", JSON.stringify(data.clothes));
+			}
 
-			saveToRealm(data, realm);
+			save(data);
 		}
 	}
 
