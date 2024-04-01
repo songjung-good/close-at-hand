@@ -1,44 +1,48 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image, FlatList, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+// 컴포넌트 불러오기
 import { FONTSIZE, COLORS } from "../../shared";
 
 interface presetItem {
-  presetId: number,
-  presetName: string,
-  clothes: string[],
-};
+  presetId: number;
+  presetName: string;
+  clothes: Clothes[];
+}
 
-const PresetList: React.FC<presetItem> = ({ presetId, presetName, clothes }) => {
+interface Clothes {
+  clothesId: number;
+  clothesImgUrl: string;
+  lastWashDate: string;
+  texture: string[];
+  category: string[];
+  item: string[];
+  colors: string[];
+  looks: string[];
+  prints: string[];
+}
+
+const PresetList: React.FC<{ clothes: Clothes[] }> = ({ clothes }) => {
   return (
-    // <View style={styles.imageContainer}>
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      {clothes.map((clothesUrl, index) => (
-        <Image key={index} source={{ uri: clothesUrl }} style={styles.image} />
+    <ScrollView horizontal>
+      {clothes.map((clothesItem, index) => (
+        <Image key={index} source={{ uri: clothesItem.clothesImgUrl }} style={styles.image} />
       ))}
     </ScrollView>
   );
 };
 
-
 const PresetItem: React.FC<presetItem> = ({ presetId, presetName, clothes }) => {
-  const navigation = useNavigation<Navigation>();
+  const navigation = useNavigation<NavigationProp<Record<string, object>>>();
   const handlePresetNavigation = () => {
     navigation.navigate('preset', { id: presetId });
   };
-  const presetList = [{presetId, presetName, clothes}];
 
   return (
     <TouchableOpacity onPress={handlePresetNavigation}>
       <View style={styles.presetContainer}>
         <Text style={styles.presetName}>{presetName}</Text>
-        <FlatList 
-          contentContainerStyle={styles.presetItem}
-          data={presetList}
-          renderItem={({item}) => <PresetList key={item.presetId} {...item} />}
-          keyExtractor={(item) => item.presetId.toString()}
-        />
+        <PresetList clothes={clothes} />
       </View>
     </TouchableOpacity>
   );
