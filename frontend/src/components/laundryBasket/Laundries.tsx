@@ -9,12 +9,15 @@ const itemWidth = screenWidth / 3;
 interface Props {
 	laundry: LaundryDB;
 	isSelected: boolean;
-	onPress(clothesId: LaundryDB): void;
+	onPress(clothesId: number): void;
 }
 
 const Laundries: React.FC<Props> = ({ laundry, isSelected, onPress }) => {
 	return (
-		<Pressable style={styles.container} onPress={() => onPress(laundry)}>
+		<Pressable
+			style={styles.container}
+			onPress={() => onPress(laundry.clothesId)}
+		>
 			<Image style={styles.img} source={{ uri: laundry.clothesImgUrl }} />
 			<FontAwesome
 				name={isSelected ? "check-circle-o" : "circle-o"}

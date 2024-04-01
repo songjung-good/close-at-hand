@@ -21,7 +21,7 @@ export { default as MostClothes } from "./mostClothes/MostClothes";
 // 옷 관리 - 세탁
 export { default as LaundryButton } from "./buttons/LaundryButton";
 export { default as LaundryBasket } from "./laundryBasket/LaundryBasket";
-export { default as DoLaundry } from "./modals/DoLaundry";
+export { default as DoLaundry } from "./laundryBasket/DoLaundry";
 
 // OnBoarding
 export { default as SignIn } from "./signIn/SignIn";

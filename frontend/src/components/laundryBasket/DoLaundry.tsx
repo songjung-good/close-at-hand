@@ -1,4 +1,12 @@
-import { FlatList, Image, Modal, StyleSheet, Text, View } from "react-native";
+import {
+	FlatList,
+	Image,
+	Modal,
+	Pressable,
+	StyleSheet,
+	Text,
+	View,
+} from "react-native";
 import { CENTER, COLORS, FONTSIZE, ROW, SHADOW } from "../../shared";
 import StyledButton from "../buttons/StyledButton";
 import { useRealm } from "@realm/react";
@@ -7,6 +15,8 @@ import { useEffect, useState } from "react";
 import { saveToRealm } from "../HomeWidgets/TodayHomeRealm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TodayClothes } from "../types";
+import { useMutation } from "@tanstack/react-query";
+import { laundryDone } from "./API";
 
 interface Props {
 	modalVisible: boolean;
@@ -16,6 +26,14 @@ interface Props {
 const DoLaundry: React.FC<Props> = ({ modalVisible, hideModal }) => {
 	const realm = useRealm();
 	const [OOTD, setOOTD] = useState<TodayClothes[]>([]);
+
+	const { mutate, isError, error, isPending } = useMutation({
+		mutationFn: laundryDone,
+		onSuccess: () => {
+			saveToRealm(Array.from(selected), realm);
+			setSelected(new Set());
+		},
+	});
 
 	useEffect(() => {
 		async function get() {
@@ -31,7 +49,8 @@ const DoLaundry: React.FC<Props> = ({ modalVisible, hideModal }) => {
 
 	async function moveToLaundryBasket() {
 		if (!OOTD) return;
-		saveToRealm(OOTD, realm);
+		const clothesIdList = OOTD.map((e) => e.clothesId);
+		mutate({ clothesIdList, laundry: true });
 		hideModal();
 	}
 
@@ -39,9 +58,11 @@ const DoLaundry: React.FC<Props> = ({ modalVisible, hideModal }) => {
 		if (selected.has(item)) {
 			selected.delete(item);
 			const deletedSet = new Set(selected);
-			return deletedSet;
+			setSelected(deletedSet);
 		} else {
-			return setSelected(selected.add(item));
+			selected.add(item);
+			const newSet = new Set(selected);
+			setSelected(newSet);
 		}
 	}
 
@@ -50,20 +71,20 @@ const DoLaundry: React.FC<Props> = ({ modalVisible, hideModal }) => {
 			<View style={styles.outerContainer}>
 				<View style={[SHADOW, styles.container]}>
 					<FlatList
+						horizontal
 						style={styles.list}
 						data={OOTD}
 						renderItem={({ item }) => (
-							<>
+							<Pressable onPress={handleSelect.bind(this, item)} style={ROW}>
 								<Image
 									style={[SHADOW, styles.image]}
 									source={{ uri: item.clothesImgUrl }}
 								/>
 								<FontAwesome
-									onPress={handleSelect.bind(this, item)}
 									name={selected.has(item) ? "check-circle-o" : "circle-o"}
 									size={FONTSIZE.Medium}
 								/>
-							</>
+							</Pressable>
 						)}
 						keyExtractor={(item) => item.clothesId.toString()}
 					></FlatList>
@@ -119,11 +140,10 @@ const styles = StyleSheet.create({
 	image: {
 		marginVertical: 3,
 		marginHorizontal: 5,
-		width: 54,
+		width: 100,
 		height: 180,
 	},
 	list: {
-		width: 60,
 		height: 190,
 	},
 });

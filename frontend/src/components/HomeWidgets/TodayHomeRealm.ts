@@ -8,6 +8,8 @@ export async function saveToRealm(data: TodayClothes[], realm: Realm) {
 
 	const today = new Date().toISOString().split("T")[0];
 
+	console.log(data);
+
 	if (lastSave !== today) {
 		data.forEach((e) => {
 			let texture = 0;
@@ -21,12 +23,7 @@ export async function saveToRealm(data: TodayClothes[], realm: Realm) {
 			realm.write(() => {
 				realm.create(
 					"LaundryDB",
-					LaundryDB.generate(
-						e.clothesId,
-						e.clothesImgUrl,
-						texture,
-						new Date(e.lastWashDate),
-					),
+					LaundryDB.generate(e.clothesId, e.clothesImgUrl, texture, new Date()),
 				);
 			});
 		});
