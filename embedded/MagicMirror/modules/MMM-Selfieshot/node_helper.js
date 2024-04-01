@@ -9,7 +9,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 const fs = require('fs');
 
-require('dotenv').config();
+// require('dotenv').config();
 
 var log = () => {
 	//do nothing
@@ -107,7 +107,7 @@ module.exports = NodeHelper.create({
 				uri: uri,
 				session: payload.session
 			});
-			this.sendPhotoToBackend(data);
+			// this.sendPhotoToBackend(data);
 		});
 	},
 
@@ -116,7 +116,7 @@ module.exports = NodeHelper.create({
 		formData.append('clothesImg', fs.createReadStream(filepath));
 
 		const apiEndpoint = 'YOUR_BACKEND_API_ENDPOINT';
-		const userToken = process.env.USER_TOKEN;
+		// const userToken = process.env.USER_TOKEN;
 	
 		axios.post(apiEndpoint, formData, {
 			headers: {
