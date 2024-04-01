@@ -86,37 +86,36 @@ module.exports = NodeHelper.create({
 	},
 
 	shoot: function(payload) {
-		var uri = moment().format("YYMMDD_HHmmss") + ".jpg";
-		var filename = path.resolve(__dirname, "photos", uri);
-		var opts = Object.assign ({
-			width: this.config.width,
-			height: this.config.height,
-			quality: this.config.quality,
-			delay: 0,
-			saveShots: true,
-			output: "jpeg",
-			device: this.device,
-			callbackReturn: "location",
-			verbose: this.config.debug
-		}, (payload.options) ? payload.options : {});
-		NodeWebcam.capture(filename, opts, (err, data)=>{
-			if (err) log("Error:", err);
-			log("Photo is taken:", data);
-			this.sendSocketNotification("SHOOT_RESULT", {
-				path: data,
-				uri: uri,
-				session: payload.session
-			});
-			// this.sendPhotoToBackend(data);
-		});
-	},
+        var uri = moment().format("YYMMDD_HHmmss") + ".jpg";
+        var filename = path.resolve(__dirname, "photos", uri);
+        
+        var command = `libcamera-still -o ${filename} --width ${this.config.width} --height ${this.config.height} --quality ${this.config.quality} --nopreview`;
+    
+        console.log(`[MMM-Selfieshot] Executing command: ${command}`);
+    
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`[MMM-Selfieshot] Error taking photo: ${error}`);
+                return;
+            }
+            console.log(`[MMM-Selfieshot] Photo captured: ${filename}`);
+            // 성공적으로 사진을 찍었으면, 결과를 전송
+            this.sendSocketNotification("SHOOT_RESULT", {
+                path: filename,
+                uri: uri,
+                session: payload.session
+            });
+            this.sendPhotoToBackend(filename);
+        });
+    },    
 
 	sendPhotoToBackend: function(filepath) {
 		const formData = new FormData();
-		formData.append('clothesImg', fs.createReadStream(filepath));
+		formData.append('request', {'clothesIdList':[1, 3, 5]});
+		formData.append('ootdImg', fs.createReadStream(filepath));
 
-		const apiEndpoint = 'YOUR_BACKEND_API_ENDPOINT';
-		// const userToken = process.env.USER_TOKEN;
+		const apiEndpoint = 'https://j10e207.p.ssafy.io/api/v1/ootd';
+		const userToken = process.env.USER_TOKEN;
 	
 		axios.post(apiEndpoint, formData, {
 			headers: {
