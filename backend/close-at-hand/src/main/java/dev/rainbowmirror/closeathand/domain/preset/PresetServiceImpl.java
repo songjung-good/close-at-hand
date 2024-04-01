@@ -28,6 +28,7 @@ public class PresetServiceImpl implements PresetService{
     private final ClothesReader clothesReader;
     private final S3UploadService s3UploadService;
     private final ClothesUpdateTool clothesUpdateTool;
+
     @Override
     public PresetInfo insertPreset(PresetCommand.InsertCommand command) {
         var user = userReader.getUser(command.getUserToken());
@@ -45,6 +46,7 @@ public class PresetServiceImpl implements PresetService{
         }
         presetStore.store(preset);
         // 파일이 있으면 업로드 하고 없으면 기본이미지 제공하는걸로 바꿔!
+        if (command.getPresetImg() == null) return new PresetInfo(preset);
         try {
             String presetImgUrl = s3UploadService.saveFile(command.getPresetImg(), preset.getFilename());
             preset.changeImgUrl(presetImgUrl);

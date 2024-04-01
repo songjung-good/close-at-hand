@@ -19,7 +19,6 @@ public class PresetDto {
     public static class InsertRequestDto{
         private String presetName;
         private Long[] clothesIdList;
-//        private MultipartFile presetImg;
 
         public PresetCommand.InsertCommand toCommand(String userToken, MultipartFile presetImg){
             return PresetCommand.InsertCommand.builder()

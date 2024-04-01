@@ -23,12 +23,5 @@ public class PresetCommand {
         private User user;
         @Setter
         private Set<Clothes> clothes;
-        public Preset toEntity(){
-            return Preset.builder()
-                    .presetName(presetName)
-                    .user(user)
-//                    .presetImgUrl(presetImgUrl)
-                    .build();
-        }
     }
 }
