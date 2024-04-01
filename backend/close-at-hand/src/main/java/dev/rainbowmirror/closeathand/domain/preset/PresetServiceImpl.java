@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +56,6 @@ public class PresetServiceImpl implements PresetService{
         } catch (IOException e){
             throw new RuntimeException("이미지 저장 실패");
         }
-
     }
 
     @Override
@@ -96,5 +97,19 @@ public class PresetServiceImpl implements PresetService{
         Preset preset = presetReader.getPreset(presetId);
         preset.popClothes(clothes);
         return new PresetInfo(preset);
+    }
+
+    @Override
+    public PresetInfo update(Long presetId, String presetName, MultipartFile presetImg) {
+        Preset preset = presetReader.getPreset(presetId);
+        if (StringUtils.hasLength(presetName)) preset.changeName(presetName);
+        if (presetImg == null) return new PresetInfo(preset);
+        try {
+            String presetImgUrl = s3UploadService.saveFile(presetImg, preset.getFilename());
+            preset.changeImgUrl(presetImgUrl);
+            return new PresetInfo(preset);
+        } catch (IOException e){
+            throw new RuntimeException("이미지 저장 실패");
+        }
     }
 }

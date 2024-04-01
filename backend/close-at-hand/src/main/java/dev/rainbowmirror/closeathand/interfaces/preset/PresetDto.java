@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.interfaces.preset;
 
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
 import dev.rainbowmirror.closeathand.domain.preset.PresetCommand;
 import dev.rainbowmirror.closeathand.domain.preset.PresetInfo;
@@ -57,6 +58,7 @@ public class PresetDto {
     @ToString
     public static class UpdateRequest{
         private Long presetId;
-        private Long[] clothesIdList;
+        private String presetName;
+        private MultipartFile presetImg;
     }
 }

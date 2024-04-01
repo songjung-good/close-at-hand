@@ -37,4 +37,8 @@ public class PresetFacade {
     public PresetInfo popClothes(PresetDto.ClothesAddPop request) {
         return presetService.popClothes(request.getPresetId(), request.getClothesIdList());
     }
+
+    public PresetInfo update(PresetDto.UpdateRequest request){
+        return presetService.update(request.getPresetId(), request.getPresetName(), request.getPresetImg());
+    }
 }

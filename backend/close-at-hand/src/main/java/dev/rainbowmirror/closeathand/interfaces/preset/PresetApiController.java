@@ -81,8 +81,7 @@ public class PresetApiController {
 
     @Operation(summary = "preset name update")
     @PutMapping("/name")
-    public CommonResponse<PresetInfo> rename(@RequestBody String name){
-
-        return null;
+    public CommonResponse<PresetInfo> rename(@RequestBody PresetDto.UpdateRequest request){
+        return CommonResponse.success(presetFacade.update(request));
     }
 }

@@ -1,6 +1,6 @@
 package dev.rainbowmirror.closeathand.domain.preset;
 
-import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -11,4 +11,5 @@ public interface PresetService {
     PresetInfo deletePreset(Long presetId);
     PresetInfo addClothes(Long presetId, Long[] clothesIdList);
     PresetInfo popClothes(Long presetId, Long[] clothesIdList);
+    PresetInfo update(Long presetId, String presetName, MultipartFile presetImg);
 }
