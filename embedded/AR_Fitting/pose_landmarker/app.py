@@ -1,5 +1,4 @@
-from flask import Flask, request, jsonify
-import threading
+from flask import Flask, Response
 import argparse
 import sys
 import time
@@ -22,7 +21,7 @@ START_TIME = time.time()
 DETECTION_RESULT = None
 
 top_image_path = 'clothes/Blue_T.png'
-pants_image_path = 'clothes/long_skirt.png'
+pants_image_path = 'clothes/blue_pants.png'
 
 # 이미지를 불러오고 필요한 색 공간으로 변환
 def load_and_convert_image(image_path, color_space='RGB'):
@@ -179,21 +178,6 @@ def run(model: str, num_poses: int,
 
         # 탐지 결과가 있을 경우 랜드마크를 그림
         if DETECTION_RESULT and len(DETECTION_RESULT.pose_landmarks) > 0:
-            # for pose_landmarks in DETECTION_RESULT.pose_landmarks:
-            #     # print('TEST', pose_landmarks[0])
-            #     pose_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
-            #     pose_landmarks_proto.landmark.extend([
-            #         landmark_pb2.NormalizedLandmark(x=landmark.x, y=landmark.y,
-            #                                         z=landmark.z) for landmark
-            #         in pose_landmarks
-            #     ])
-                
-            #     mp_drawing.draw_landmarks(
-            #         current_frame,
-            #         pose_landmarks_proto,
-            #         mp_pose.POSE_CONNECTIONS,
-            #         mp_drawing_styles.get_default_pose_landmarks_style())
-            
             # 하의
             if DETECTION_RESULT.pose_landmarks[0][23] and DETECTION_RESULT.pose_landmarks[0][24]:
                 left_hip, right_hip = DETECTION_RESULT.pose_landmarks[0][23], DETECTION_RESULT.pose_landmarks[0][24]
@@ -217,16 +201,7 @@ def run(model: str, num_poses: int,
         else:
             print('No person detected')
 
-        # 최종 이미지 표시
-        cv.imshow('Mediapipe Feed', current_frame)
-        
-        # 'q'를 누르면 루프 종료
-        if cv.waitKey(5) & 0xFF == ord('q'):
-            break
-
-    # 자원 해제
-    cv.destroyAllWindows()
-    picam2.stop()
+        return current_frame
 
 def main():
     parser = argparse.ArgumentParser(
@@ -277,20 +252,20 @@ def main():
         default=960)
     args = parser.parse_args()
 
-    run(args.model, int(args.num_poses), args.min_pose_detection_confidence,
+    image = run(args.model, int(args.num_poses), args.min_pose_detection_confidence,
         args.min_pose_presence_confidence, args.min_tracking_confidence,
         args.output_segmentation_masks,
         args.width, args.height)
+    
+    ret, buffer = cv.imencode('.jpg', image)
+    image = buffer.tobytes()
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+    yield (b'--frame\r\nContent-Type: image/jpeg\r\n\r\n' + image + b'\r\n')
 
-@app.route('/fitting', methods=['GET', 'POST'])
-def start_detection():
-    thread = threading.Thread(target=main)
-    thread.start()
-    return jsonify({"message": "Detection started"})
 
-if __name__ == '__main__':
+@app.route('/video', methods=['GET'])
+def video_stream():
+    return Response(main(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
