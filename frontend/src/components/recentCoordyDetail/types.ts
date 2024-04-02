@@ -12,4 +12,5 @@ export interface CoordyDetail {
 		looks: string[];
 		prints: string[];
 	}[];
+	createdAt: string;
 }

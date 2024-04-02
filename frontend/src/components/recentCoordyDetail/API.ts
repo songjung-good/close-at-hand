@@ -8,7 +8,7 @@ interface FetchDetailInterface {
 
 export async function fetchDetail({ signal, ootdId }: FetchDetailInterface) {
 	return API.get(`ootd/${ootdId}`, { signal })
-		.then((response) => response.data as CoordyDetail)
+		.then((response) => response.data.data as CoordyDetail)
 		.catch((error) => {
 			if (error.response) {
 				throw new Error(error.response.data?.message ?? "네트워크 에러");
