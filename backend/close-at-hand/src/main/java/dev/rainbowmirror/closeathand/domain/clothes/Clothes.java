@@ -25,7 +25,7 @@ import java.util.*;
 @Getter
 @Entity
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"user", "presets", "clothesTagGroupList"})
 @Table(name = "clothes")
 public class Clothes extends AbstractEntity {
 

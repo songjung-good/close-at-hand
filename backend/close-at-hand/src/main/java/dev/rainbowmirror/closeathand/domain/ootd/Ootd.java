@@ -18,7 +18,7 @@ import java.util.Set;
 @Getter
 @Entity
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"user"})
 @Table(name = "ootd")
 public class Ootd extends AbstractEntity {
 
