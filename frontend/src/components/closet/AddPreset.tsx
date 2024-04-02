@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, View, Text, Button, Pressable, StyleSheet, FlatList, TouchableOpacity, TextInput, Image } from 'react-native';
+import { Modal, View, Text, Button, Pressable, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 // 컴포넌트
 import { COLORS, FONTSIZE } from '../../shared/styles/STYLES';
 // axios
@@ -9,8 +9,8 @@ import { AxiosError } from 'axios';
 // 프리셋
 interface AddPresetProps {
   onClose: () => void;
-  presetId: string;
-  clothesId: number[];
+  presetId: number;
+  setisUpdate: () => void;
 };
 
 // 옷 인터페이스
@@ -19,15 +19,18 @@ interface ClothInfo {
   clothesImgUrl: string,
 };
 
-const AddPreset: React.FC<AddPresetProps> = ({ onClose }) => {
+const AddPreset: React.FC<AddPresetProps> = ({ onClose, presetId, setisUpdate }) => {
   // 모달상태
   const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
   // 전체 옷 리스트
   const [clothes, setClothes] = useState<ClothInfo[]>([]);
   // 선택된 옷 목록
   const [selectedClothes, setSelectedClothes] = useState<ClothInfo[]>([]);
-  // 프리셋 ID
-  const [presetId, setPresetId] = useState<number>(0);
 
   useEffect(() => {
     // 옷 목록을 가져오는 axios 요청
@@ -83,7 +86,7 @@ const AddPreset: React.FC<AddPresetProps> = ({ onClose }) => {
         presetId: presetId,
         clothesIdList: clothesIdList,
       });
-      console.log(presetId, clothesIdList)
+      console.log(clothesIdList);
       if (response.data.result === 'SUCCESS') {
         console.log('프리셋이 성공적으로 업데이트되었습니다.');
       } else {
@@ -94,15 +97,13 @@ const AddPreset: React.FC<AddPresetProps> = ({ onClose }) => {
     }
   };
 
-  // 모달을 열거나 닫는 함수
-  const toggleModal = () => {
-    // 모달을 닫기 전에 선택된 옷을 업데이트합니다.
-    updatePreset();
-    setModalVisible(!modalVisible);
-  };
-
   return (
     <View>
+      <TouchableOpacity onPress={openModal} >
+        <View style={styles.addButton}>
+          <Text style={styles.buttonText}> 추가!  </Text> 
+        </View>
+      </TouchableOpacity>
       <Modal
         animationType="none"
         transparent={true}
@@ -118,15 +119,16 @@ const AddPreset: React.FC<AddPresetProps> = ({ onClose }) => {
           <View style={{ alignItems: 'center', margin: 10 }}>
             <Button 
               title="등록" 
-              onPress={() => toggleModal()} />
+              onPress={async () => {
+                // 등록 버튼을 누르면 모달을 닫고 프리셋을 업데이트합니다.
+                onClose();
+                await updatePreset();
+                setModalVisible(false); // 모달을 닫습니다.
+                setisUpdate();
+              }} />
           </View>
         </View>
       </Modal>
-      <Pressable
-        style={styles.addButton}
-        onPress={() => setModalVisible(true)}>
-        <Text style={styles.buttonText}>➕</Text>
-      </Pressable>
     </View> 
   );
 };
@@ -159,23 +161,17 @@ const styles = StyleSheet.create({
     color: COLORS.White,
   },
   buttonText: {
-    color: COLORS.CarrotRed,
+    color: COLORS.Turquoise,
     fontSize: FONTSIZE.Medium,
     fontWeight: 'bold',
   },
   addButton: {
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    marginHorizontal: 10,
-    marginVertical: 15,
-    borderColor: COLORS.Black,
+    borderColor: COLORS.Mint,
     borderWidth: 1,
-    borderRadius: 25,
-    height: 100,
-    width: '90%',
-    borderBlockColor: COLORS.Black,
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    alignItems: "center",
   },
   input: {
     height: 40,
@@ -199,6 +195,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     // width: '30%',
+  },
+  addButtonText: {
+    color: COLORS.PurpleBlue,
+    fontSize: FONTSIZE.Large,
+    textAlign: "center",
   },
 })
 

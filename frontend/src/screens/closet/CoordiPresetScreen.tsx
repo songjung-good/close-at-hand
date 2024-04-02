@@ -30,9 +30,13 @@ interface PresetInfo {
 const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
   const presetId = route.params.id;
   const [presetInfo, setPresetInfo] = useState<PresetInfo | null>(null);
-  const [showAddPresetModal, setShowAddPresetModal] = useState(false);
-
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation<Navigation>();
+  const [isUpdate, setisUpdate] = useState(0);
+
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  }
 
   useEffect(() => {
     const fetchPresetInfo = async () => {
@@ -44,10 +48,10 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
         console.error("받아오는 데이터에 문제가 있네요ㅠ:", error);
       }
     };
-
     fetchPresetInfo();
-  }, [presetId]);
+  }, [presetId, isUpdate]);
 
+  // 옷 상세정보
   const handleClothItemPress = (clothesId: number) => {
     navigation.navigate('cloth', { id: clothesId });
   };
@@ -62,8 +66,8 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
         clothes: updatedClothes,
       }));
 
-      // 옷이 지워진 후 서버로 해당 변경을 반영하는 요청
-      const clothesIdList = [presetInfo!.clothes[index].clothesId]; // 삭제된 옷의 clothesId를 clothesIdList에 추가
+      // 옷이 지워진 후 서버로 요청
+      const clothesIdList = [presetInfo!.clothes[index].clothesId];
       const requestData = {
         presetId: presetInfo!.presetId,
         clothesIdList: clothesIdList,
@@ -81,23 +85,9 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
     }
   };
 
-  // 모달
-  const handleAddCloth = () => {
-    setShowAddPresetModal(true); 
-    // AddPreset 모달 띄우기
-    return (
-      <>
-        {showAddPresetModal && (
-          <AddPreset
-            onClose={() => setShowAddPresetModal(false)}
-            presetId={presetInfo!.presetId}
-            clothesId={clothes.clothesId}
-          />
-        )}
-      </>
-    );
-  };
-    
+  function update() {
+    setisUpdate(prev => prev+1)
+  }
 
   return (
     <>
@@ -124,18 +114,17 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
                 </View>
               </TouchableOpacity>
             ))}
-            <TouchableOpacity style={styles.addButton} onPress={() => handleAddCloth()}>
-              <Text style={styles.addButtonText}>+</Text>
-            </TouchableOpacity>
+            <AddPreset
+              onClose={toggleModal} 
+              presetId={presetId}
+              setisUpdate={update}
+              />
           </ScrollView>
         </View>
       ) : (
         <View>
           <Text>옷 정보를 가져오는 중입니다...</Text>
         </View>
-      )}
-        {showAddPresetModal && (
-          <AddPreset onClose={() => setShowAddPresetModal(false)} />
       )}
     </>
   );
@@ -174,22 +163,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.CarrotRed,
     padding: 5,
     borderRadius: 5,
+    zIndex: 1,
   },
   deleteButtonText: {
     color: COLORS.White,
     fontSize: FONTSIZE.Small,
-  },
-  addButton: {
-    borderColor: COLORS.Mint,
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 10,
-  },
-  addButtonText: {
-    color: COLORS.PurpleBlue,
-    fontSize: FONTSIZE.Large,
-    textAlign: "center",
   },
   infoImageContainer: {
     flex: 1, // 왼쪽 1/3 공간을 차지하도록 설정
