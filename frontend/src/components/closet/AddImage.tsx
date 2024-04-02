@@ -24,8 +24,8 @@ const AddImage: React.FC<PresetProps> = ({ onClose, presetId, setisUpdate }) => 
   // 모달상태
   const [imageModalVisible, setimageModalVisible] = useState(false);
   const [presetName, setPresetName] = useState('');
-  const [imageURL, setImageURL] = useState('');
-  const [image, setImage] = useState(null);
+  const [imageURL, setImageURL] = useState(null);
+  const [image, setImage] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -42,29 +42,19 @@ const AddImage: React.FC<PresetProps> = ({ onClose, presetId, setisUpdate }) => 
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4, 4],
       quality: 1,
     });
-  
-    console.log(result);
-  
-    if (!result.cancelled) {
-      setImage(result.uri);
-      setImageURL(result.uri); // imageURL 상태 업데이트
+
+    if (!result.assets) {
+      setImageURL(result.assets);
     }
   };
-
-  const openModal = () => {
-    setimageModalVisible(!imageModalVisible);
-  };
-
-  // 새로 받는 정보
-  const [Preset, setPreset] = useState<PresetInfo[]>([]);
 
   const updatePreset = async () => {
     try {
       // 프리셋 업데이트를 위한 axios 요청
-      const response = await API.put('/preset/name', {
+      const response = await API.put('/preset', {
         presetId: presetId,
         presetName: presetName,
         presetImg: imageURL,
@@ -79,34 +69,52 @@ const AddImage: React.FC<PresetProps> = ({ onClose, presetId, setisUpdate }) => 
     }
   };
 
+  const openModal = () => {
+    setimageModalVisible(!imageModalVisible);
+  };
+
+  const handleSend = () => {
+    updatePreset(); // 프리셋 업데이트 수행
+    setimageModalVisible(false); // 모달 닫기
+  };
+  
+  const handleBack = () => {
+    setimageModalVisible(false); // 모달 닫기
+  };
+
   return (
-    <View>
-      <TouchableOpacity onPress={openModal} >
-        <View style={styles.addButton}>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={openModal} style={styles.absoluteButton}>
           <Text style={styles.buttonText}> 추가!  </Text> 
-        </View>
       </TouchableOpacity>
       <Modal
-        animationType="none"
-        transparent={true}
-        visible={imageModalVisible}>
-        <View style={styles.modalContainer}>
-          {/* 제목을 입력하는 칸 */}
-          <TextInput
-            style={styles.inputText}
-            placeholder="제목을 입력하세요"
-            onChangeText={text => setPresetName(text)}
-            value={presetName}
-          />
-          {/* 사진을 업로드하는 칸 */}
+      animationType="none"
+      transparent={true}
+      visible={imageModalVisible}>
+      <View style={styles.modalContainer}>
+        {/* 제목을 입력하는 칸 */}
+        <TextInput
+          style={styles.inputText}
+          placeholder="제목을 입력하세요"
+          onChangeText={text => setPresetName(text)}
+          value={presetName}
+        />
+        {/* 사진을 업로드하는 칸 */}
+        <View style={styles.imgContainer}>
           <TouchableOpacity onPress={pickImage}>
-            <Text style={styles.uploadText}>사진을 업로드하세요</Text>
+            <Text style={styles.uploadText}>여기를 눌러서 사진을 업로드하세요</Text>
           </TouchableOpacity>
-          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-          {/* 전송하는 버튼 */}
-          <TouchableOpacity style={styles.sendButton} onPress={updatePreset}>
-            <Text style={styles.sendButtonText}>전송</Text>
-          </TouchableOpacity>
+        </View>
+        {imageURL && <Image source={{ uri: imageURL }} style={{ width: 200, height: 200 }} />}
+        {/* 전송하는 버튼 */}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+              <Text style={styles.sendButtonText}>전송</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+              <Text style={styles.backButtonText}>뒤로가기</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     </View> 
@@ -114,21 +122,26 @@ const AddImage: React.FC<PresetProps> = ({ onClose, presetId, setisUpdate }) => 
 };
 
 const styles = StyleSheet.create({
-  buttonText: {
-    color: COLORS.Turquoise,
-    fontSize: FONTSIZE.Medium,
-    fontWeight: 'bold',
+  container: {
+    flex: 1,
   },
-  addButton: {
-    borderColor: COLORS.Turquoise,
-    borderWidth: 1,
+  absoluteButton: {
+    position: 'absolute',
+    left: '25%',
+    top: '5%',
+    backgroundColor: COLORS.Turquoise,
     borderRadius: 10,
     padding: 10,
-    marginBottom: 10,
-    alignItems: "center",
+    zIndex: 1,
+  },
+  buttonText: {
+    color: COLORS.White,
+    fontSize: FONTSIZE.Small,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   modalContainer: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.White,
     flex: 1,
     justifyContent: "center",
     alignContent: "center",
@@ -143,25 +156,48 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
   },
+  imgContainer: {
+    height: '50%',
+    margin: '10%',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: COLORS.Turquoise,
+  },
   uploadText: {
     color: COLORS.Turquoise,
     fontSize: FONTSIZE.Medium,
     marginTop: 20,
     margin: '10%',
   },
-  sendButton: {
-    backgroundColor: COLORS.Turquoise,
-    margin: '10%',
-    height: '5%',
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 20,
-    alignItems: "center", // 이 부분을 추가함
-  },
   sendButtonText: {
     color: COLORS.White,
     fontSize: FONTSIZE.Medium,
     fontWeight: 'bold',
+  },
+  buttonContainer: {
+    flexDirection: 'row', // 버튼을 가로로 배열합니다.
+    justifyContent: 'space-around', // 버튼 사이에 공간을 일정하게 배치합니다.
+    marginTop: 20, // 전송 버튼과 뒤로가기 버튼 사이의 간격 조정을 위한 마진 설정
+  },
+  sendButton: {
+    backgroundColor: COLORS.Turquoise,
+    width: '35%',
+    height: '35%',
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backButton: {
+    backgroundColor: COLORS.CarrotRedRipple,
+    width: '35%',
+    height: '35%',
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backButtonText: {
+    color: COLORS.White,
+    fontSize: FONTSIZE.Medium,
   },
 })
 
