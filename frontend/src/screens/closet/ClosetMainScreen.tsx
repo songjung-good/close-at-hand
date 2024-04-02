@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, FlatList } from "react-native"
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native"
 
 import { FONTSIZE, COLORS } from "../../shared";
 // import API from "../../shared/axios/axios";

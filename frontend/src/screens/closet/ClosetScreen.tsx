@@ -11,6 +11,12 @@ import { API } from "../../shared";
 interface ClothInfo {
   clothesId: number;
   clothesImgUrl: string;
+  texture: string[];
+  category: string[];
+  item: string[];
+  colors: string[];
+  looks: string[];
+  prints: string[];
 }
 
 const ClosetScreen: React.FC = () => {
@@ -70,16 +76,24 @@ const ClosetScreen: React.FC = () => {
   // 옷장화면 옷 리스트 구성
   const RenderClothes: React.FC = () => {
     const filteredClothes = clothes.filter((cloth) => {
+      // 선택된 태그와 옷의 속성을 비교하여 필터링합니다.
       return selectedTags.every((tag) => {
+        // 각 옷의 속성을 가져옵니다.
+        const { texture, category, item, colors, looks, prints } = cloth;
+        // 선택된 태그와 옷의 속성을 비교하여 필터링합니다.
         return (
-          cloth.clothesId.toString() === tag ||
-          cloth.clothesImgUrl === tag
+          texture.includes(tag) || 
+          category.includes(tag) ||
+          item.includes(tag) ||
+          colors.includes(tag) ||
+          looks.includes(tag) ||
+          prints.includes(tag)
         );
       });
     });
-  
+
     return (
-      <FlatList
+        <FlatList
         numColumns={3}
         contentContainerStyle={styles.flatListContent}
         data={filteredClothes}

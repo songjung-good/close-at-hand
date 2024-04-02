@@ -52,16 +52,17 @@ const CoordiScreen: React.FC = () => {
       <View style={styles.header}>
         <Text style={styles.title}>프리셋 목록</Text>
       </View>
-        <TouchableOpacity>
-          <NewPreset 
-            onClose={toggleModal}
-          />
-        </TouchableOpacity>
-        <FlatList
-          data={presets}
-          renderItem={({ item }) => <PresetItem presetId={item.presetId} presetName={item.presetName} clothes={item.clothes} />} // 수정된 부분
-          keyExtractor={(item) => item.presetId.toString()}
+      <TouchableOpacity>
+        <NewPreset 
+          onClose={toggleModal}
         />
+      </TouchableOpacity>
+      <FlatList
+        data={presets}
+        renderItem={({ item }) => <PresetItem presetId={item.presetId} presetName={item.presetName} clothes={item.clothes} />} // 수정된 부분
+        keyExtractor={(item) => item.presetId.toString()}
+        contentContainerStyle={styles.flatListContent}
+      />
     </View>
   );
 };
@@ -81,6 +82,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: FONTSIZE.Medium,
     fontWeight: 'bold',
+  },
+  flatListContent: {
+    flexGrow: 1,
   },
 });
 
