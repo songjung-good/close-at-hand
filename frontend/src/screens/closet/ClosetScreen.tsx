@@ -33,16 +33,32 @@ const ClosetScreen: React.FC = () => {
       try {
         const response = await API.get("/clothes");
         setClothes(response.data.data);
+        // 모든 태그를 선택하여 초기화
+        const allTags = response.data.data.map((cloth: any) => {
+          // 옷의 모든 속성에서 태그만 추출하여 배열로 반환
+          return [
+            ...cloth.texture,
+            ...cloth.category,
+            ...cloth.item,
+            ...cloth.colors,
+            ...cloth.looks,
+            ...cloth.prints,
+          ];
+        });
+        
+        // 중복 제거 후 선택된 태그로 설정
+        const uniqueTags = Array.from(new Set(allTags.flat()));
+        setSelectedTags(uniqueTags);
       } catch (error) {
         console.error("옷 데이터가 없어용 ㅠ:", error as AxiosError);
       }
     };
     fetchClothesData();
-    
+      
     // 서버로부터 추천 옷 데이터를 가져오는 API 호출
     const fetchRecommendData = async () => {
       try {
-        const response = await API.get("/recommend/recommend");
+        const response = await API.get("/recommend");
         setRecommendedClothes(response.data.data.recommendList);
       } catch (error) {
         console.error("추천 옷 받아오는 거 어렵워용 ㅠㅠ:", error as AxiosError);
@@ -77,7 +93,7 @@ const ClosetScreen: React.FC = () => {
   const RenderClothes: React.FC = () => {
     const filteredClothes = clothes.filter((cloth) => {
       // 선택된 태그와 옷의 속성을 비교하여 필터링합니다.
-      return selectedTags.every((tag) => {
+      return selectedTags.some((tag) => {
         // 각 옷의 속성을 가져옵니다.
         const { texture, category, item, colors, looks, prints } = cloth;
         // 선택된 태그와 옷의 속성을 비교하여 필터링합니다.
@@ -91,6 +107,15 @@ const ClosetScreen: React.FC = () => {
         );
       });
     });
+
+        // 필터링된 옷이 없는 경우 알림창을 표시하는 로직 추가
+    if (filteredClothes.length === 0 || selectedTags.length === 0) {
+      return (
+        <View>
+          <Text style={styles.alertText}>선택된 옷이 없습니다. 다른 태그를 선택해주세요.</Text>
+        </View>
+      );
+    };
 
     return (
         <FlatList
@@ -139,6 +164,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
+  },
+  alertText: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 10,
+    fontSize: FONTSIZE.Medium,
+    color: COLORS.Blue,
   },
   recommendedTitle: {
     fontSize: FONTSIZE.Medium,
