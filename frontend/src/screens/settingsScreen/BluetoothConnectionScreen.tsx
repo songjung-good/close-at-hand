@@ -12,6 +12,8 @@ import {
 
 import { StyledButton } from "../../components";
 
+import bluetoothSearching from "../../../assets/image/bluetoothSearching.png";
+
 const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 	navigation,
 }) => {
@@ -53,9 +55,7 @@ const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 				<>
 					<Text style={[styles.title, styles.textCenter]}>검색 종료</Text>
 					<View style={styles.imageContainer}>
-						<Image
-							source={require("../../../assets/image/bluetoothSearching.png")}
-						></Image>
+						<Image source={bluetoothSearching}></Image>
 					</View>
 					{isDeviceFound ? (
 						<>
@@ -77,9 +77,7 @@ const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 						주변의 기기를 검색 중입니다.
 					</Text>
 					<View style={styles.imageContainer}>
-						<Image
-							source={require("../../../assets/image/bluetoothSearching.png")}
-						></Image>
+						<Image source={bluetoothSearching}></Image>
 					</View>
 					<Text style={[styles.text, styles.textCenter]}>
 						{

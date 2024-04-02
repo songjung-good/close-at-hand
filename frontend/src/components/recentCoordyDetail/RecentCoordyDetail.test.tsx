@@ -1,12 +1,16 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react-native";
 import { useQuery } from "@tanstack/react-query";
+
 import RecentCoordyDetail from "./RecentCoordyDetail";
+import { useNavigation } from "@react-navigation/native";
 
 // Mock Tanstack Query 모듈
 jest.mock("@tanstack/react-query");
+jest.mock("@react-navigation/native");
 
 const mockUsequery = useQuery as jest.Mock;
+const mockNavigation = useNavigation as jest.Mock;
 
 describe("RecentCoordyDetail 컴포넌트", () => {
 	it("데이터를 성공적으로 불러온 경우 적절한 UI를 렌더링합니다.", async () => {
@@ -24,6 +28,10 @@ describe("RecentCoordyDetail 컴포넌트", () => {
 				prints: [" "],
 			},
 		};
+
+		mockNavigation.mockReturnValue({
+			navigae: jest.fn(),
+		});
 
 		// useQuery 함수를 Mocking하여 성공적으로 데이터를 반환하도록 설정
 		mockUsequery.mockReturnValue({

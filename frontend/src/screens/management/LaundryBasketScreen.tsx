@@ -3,6 +3,8 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { FONTSIZE } from "../../shared";
 import { LaundryBasket } from "../../components";
 
+import bubble from "../../../assets/image/bubble.png";
+
 const LaundryBasketScreen: React.FC<RootScreenProp<"laundryBasket">> = ({
 	navigation,
 	route,
@@ -17,7 +19,7 @@ const LaundryBasketScreen: React.FC<RootScreenProp<"laundryBasket">> = ({
 		<View style={styles.container}>
 			<View style={styles.bubbleContainer}>
 				<Text style={styles.overlayText}>{textures}</Text>
-				<Image source={require("../../../assets/image/bubble.png")} />
+				<Image source={bubble} />
 				<View style={styles.imageContainer}></View>
 			</View>
 			<LaundryBasket textures={textures} />

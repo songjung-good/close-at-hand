@@ -5,6 +5,9 @@ import { LaundryButton } from "../../components";
 import { ROW } from "../../shared";
 import { DoLaundry } from "../../components";
 
+import form from "../../../assets/image/foam.png";
+import basket from "../../../assets/image/laundry_Basket.png";
+
 const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 	navigation,
 	route,
@@ -28,10 +31,7 @@ const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 				modalVisible={modalVisible}
 			/>
 			<View style={[ROW, styles.center]}>
-				<Image
-					style={styles.image}
-					source={require("../../../assets/image/foam.png")}
-				/>
+				<Image style={styles.image} source={form} />
 				<LaundryButton
 					title="일반 세탁"
 					bubble1={true}
@@ -50,10 +50,7 @@ const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 					onPress={handleButtonPress}
 				/>
 			</View>
-			<Image
-				style={styles.laudaryBasket}
-				source={require("../../../assets/image/laundry_Basket.png")}
-			/>
+			<Image style={styles.laudaryBasket} source={basket} />
 		</View>
 	);
 };
