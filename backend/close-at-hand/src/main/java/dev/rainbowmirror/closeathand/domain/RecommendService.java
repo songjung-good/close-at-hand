@@ -4,13 +4,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dev.rainbowmirror.closeathand.common.exception.IllegalStatusException;
 import dev.rainbowmirror.closeathand.domain.clothes.*;
 import kong.unirest.HttpResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -27,6 +30,7 @@ public class RecommendService {
         List<Clothes> closet = clothesService.findEnabledClothes();
         // 랜덤 추출
         Collections.shuffle(closet);
+        if (closet.size() < 2) throw new IllegalStatusException("옷을 더 추가하고 다시 시도해주세요");
         List<Clothes> randomClothes = closet.subList(0, 2);
 
         for (Clothes clothes: randomClothes) {

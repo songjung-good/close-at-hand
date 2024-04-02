@@ -89,7 +89,7 @@ public class ClothesServiceImpl implements ClothesService{
 
     @Override
     public List<Clothes> findEnabledClothes() {
-        return clothesRepository.findEnabledClothes("옷장");
+        return clothesRepository.findEnabledClothes(Clothes.Location.ENABLE);
     }
 
 

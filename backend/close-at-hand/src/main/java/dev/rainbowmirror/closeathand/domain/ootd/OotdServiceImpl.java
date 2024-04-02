@@ -103,9 +103,14 @@ public class OotdServiceImpl implements OotdService{
     @Override
     public List<ClothesListInfo> getMostUsedClothes(String userToken) {
         ZonedDateTime endDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+        System.out.println("checking");
         List<Clothes> list = ootdRepository.findTop5ClothsInMonth(endDate.minusMonths(1) ,endDate, userToken);
+        System.out.println(list);
         List<ClothesListInfo> result = new ArrayList<>();
-        for (Clothes clothes: list){
+        Clothes clothes;
+        int lastIndex = Math.min(5,list.size());
+        for (int i=0; i<lastIndex; i++){
+            clothes = list.get(i);
             result.add(new ClothesListInfo(clothes));
         }
         return result;
