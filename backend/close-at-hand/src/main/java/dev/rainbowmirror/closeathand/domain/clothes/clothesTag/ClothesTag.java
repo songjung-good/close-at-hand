@@ -20,7 +20,7 @@ public class ClothesTag {
     private Long id;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "clothes_tag_group_id")
     private ClothesTagGroup clothesTagGroup;
     private String tagName;

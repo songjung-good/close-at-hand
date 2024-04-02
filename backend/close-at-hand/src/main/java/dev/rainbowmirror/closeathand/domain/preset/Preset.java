@@ -29,13 +29,13 @@ public class Preset extends AbstractEntity {
     private String presetImgUrl;
     private String presetName;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "preset_detail",
             joinColumns = @JoinColumn(name = "preset_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "clothes_id", nullable = false))
     private Set<Clothes> clothes = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

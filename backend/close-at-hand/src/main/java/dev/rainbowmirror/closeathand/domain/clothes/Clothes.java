@@ -50,7 +50,7 @@ public class Clothes extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(mappedBy = "clothes")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "clothes")
     private Set<Preset> presets = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "clothes", cascade = CascadeType.PERSIST)

@@ -30,7 +30,7 @@ public class Ootd extends AbstractEntity {
     @Setter
     private String ootdImgUrl;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "ootd_detail",
             joinColumns = @JoinColumn(name = "ootd_id"),
             inverseJoinColumns = @JoinColumn(name = "clothes_id"))

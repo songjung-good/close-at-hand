@@ -31,11 +31,11 @@ public class ClothesTagGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "clothes_id")
     private Clothes clothes;
 
-    @OneToMany(mappedBy = "clothesTagGroup", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clothesTagGroup", cascade = CascadeType.PERSIST)
     private List<ClothesTag> clothesTagList = Lists.newArrayList();
 
     private String clothesTagGroupName;
