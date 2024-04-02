@@ -21,5 +21,8 @@ module.exports = (async () => {
 	config.resolver.assetExts = assetExts.filter((ext) => ext !== "svg");
 	config.resolver.sourceExts = [...sourceExts, "svg"];
 
+	// Add routerRoot option
+	config.transformer.routerRoot = "App.tsx";
+
 	return config;
 })();
