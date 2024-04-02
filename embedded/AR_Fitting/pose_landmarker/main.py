@@ -16,9 +16,12 @@ mp_drawing_styles = mp.solutions.drawing_styles
 COUNTER, FPS = 0, 0
 START_TIME = time.time()
 DETECTION_RESULT = None
+INDEX = 0
 
-top_image_path = 'clothes/Blue_T.png'
-pants_image_path = 'clothes/blue_pants.png'
+# top_image_path = ['clothes/satur_T.png', 'clothes/ck_T.png']
+# pants_image_path = ['clothes/blue_pants.png', 'clothes/blue_skirt.png']
+
+looks = [['clothes/satur_T.png', 'clothes/blue_pants.png', None], ['clothes/ck_T.png', 'clothes/navy_skirt.png', None], ['clothes/white_cardigan.png', 'clothes/blue_skirt.png', None], [None, None, 'clothes/black_dress.png']]
 
 # 이미지를 불러오고 필요한 색 공간으로 변환
 def load_and_convert_image(image_path, color_space='RGB'):
@@ -68,6 +71,11 @@ def calculate_scale_factor_for_top(shoulder_width, top_distance, scale_adjustmen
     # print((shoulder_width * scale_adjustment) / top_distance)
     return (shoulder_width * scale_adjustment) / top_distance
 
+def calculate_scale_factor_for_dress(shoulder_width, top_distance, scale_adjustment=0.35):
+    """상의 이미지와 사람의 어깨 너비 사이의 스케일 팩터를 계산합니다."""
+    print((shoulder_width * scale_adjustment) / top_distance)
+    return (shoulder_width * scale_adjustment) / top_distance
+
 # 하의 이미지와 사람의 골반 너비 사이의 스케일 팩터 계산
 def calculate_scale_factor_for_pants(hip_width, pants_distance, scale_adjustment=1.4):
     # print((hip_width * scale_adjustment) / pants_distance)
@@ -94,13 +102,6 @@ def run(model: str, num_poses: int,
         output_segmentation_masks: bool,
         width: int, height: int) -> None:
     
-    # 상의와 하의 이미지를 불러옵니다.
-    top_image = load_and_convert_image(top_image_path, color_space='RGBA')
-    pants_image = load_and_convert_image(pants_image_path, color_space='RGBA')
-
-    top_distance, _, _ = find_top_extremes(top_image)
-    pants_distance, _, _ = find_pants_extremes(pants_image)
-
     # Picamera2 객체 생성 및 카메라 설정
     picam2 = Picamera2()
     preview_config = picam2.create_preview_configuration(main={"size": (width, height)})
@@ -114,8 +115,6 @@ def run(model: str, num_poses: int,
     font_size = 1
     font_thickness = 1
     fps_avg_frame_count = 10
-    overlay_alpha = 0.5
-    mask_color = (100, 100, 0)  # 청록색
 
     # 결과 저장 및 FPS 계산을 위한 함수
     def save_result(result: vision.PoseLandmarkerResult,
@@ -143,6 +142,23 @@ def run(model: str, num_poses: int,
         output_segmentation_masks=output_segmentation_masks,
         result_callback=save_result)
     detector = vision.PoseLandmarker.create_from_options(options)
+
+    top_image_path = looks[INDEX][0]
+    pants_image_path = looks[INDEX][1]
+    dress_image_path = looks[INDEX][2]
+
+    # 해당 이미지 경로가 None이 아닌 경우에만 이미지를 불러오도록 수정합니다.
+    if top_image_path:
+        top_image = load_and_convert_image(top_image_path, color_space='RGBA')
+        top_distance, _, _ = find_top_extremes(top_image)
+
+    if pants_image_path:
+        pants_image = load_and_convert_image(pants_image_path, color_space='RGBA')
+        pants_distance, _, _ = find_pants_extremes(pants_image)
+
+    if dress_image_path:
+        dress_image = load_and_convert_image(dress_image_path, color_space='RGBA')
+        dress_distance, _, _ = find_top_extremes(dress_image)
 
     while True:
         # picamera2를 통해 이미지 캡처
@@ -175,39 +191,36 @@ def run(model: str, num_poses: int,
 
         # 탐지 결과가 있을 경우 랜드마크를 그림
         if DETECTION_RESULT and len(DETECTION_RESULT.pose_landmarks) > 0:
-            # for pose_landmarks in DETECTION_RESULT.pose_landmarks:
-            #     # print('TEST', pose_landmarks[0])
-            #     pose_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
-            #     pose_landmarks_proto.landmark.extend([
-            #         landmark_pb2.NormalizedLandmark(x=landmark.x, y=landmark.y,
-            #                                         z=landmark.z) for landmark
-            #         in pose_landmarks
-            #     ])
-            #     mp_drawing.draw_landmarks(
-            #         current_frame,
-            #         pose_landmarks_proto,
-            #         mp_pose.POSE_CONNECTIONS,
-            #         mp_drawing_styles.get_default_pose_landmarks_style())
-            
-            # 하의
-            if DETECTION_RESULT.pose_landmarks[0][23] and DETECTION_RESULT.pose_landmarks[0][24]:
-                left_hip, right_hip = DETECTION_RESULT.pose_landmarks[0][23], DETECTION_RESULT.pose_landmarks[0][24]
-                left_hip_x, left_hip_y = int(left_hip.x * width), int(left_hip.y * height)
-                right_hip_x, right_hip_y = int(right_hip.x * width), int(right_hip.y * height)
-                hip_width = np.sqrt((right_hip_x - left_hip_x) ** 2 + (right_hip_y - left_hip_y) ** 2)
-                scale_factor_pants = calculate_scale_factor_for_pants(hip_width, pants_distance)
-                overlay_position_pants = ((left_hip_x + right_hip_x) // 2 - (pants_image.shape[1] * scale_factor_pants) // 2, left_hip_y - (hip_width * scale_factor_pants))
-                current_frame = overlay_clothing_on_person(current_frame, pants_image, overlay_position_pants, scale_factor_pants, current_frame.shape)
-
-            # 상의
-            if DETECTION_RESULT.pose_landmarks[0][11] and DETECTION_RESULT.pose_landmarks[0][12]:
-                left_shoulder, right_shoulder = DETECTION_RESULT.pose_landmarks[0][11], DETECTION_RESULT.pose_landmarks[0][12]
-                left_shoulder_x, left_shoulder_y = int(left_shoulder.x * width), int(left_shoulder.y * height)
-                right_shoulder_x, right_shoulder_y = int(right_shoulder.x * width), int(right_shoulder.y * height)
-                shoulder_width = np.sqrt((right_shoulder_x - left_shoulder_x) ** 2 + (right_shoulder_y - left_shoulder_y) ** 2)
-                scale_factor_top = calculate_scale_factor_for_top(shoulder_width, top_distance)
-                overlay_position_top = ((left_shoulder_x + right_shoulder_x) // 2 - (top_image.shape[1] * scale_factor_top) // 2, min(left_shoulder_y, right_shoulder_y) - (shoulder_width * scale_factor_top) / 2)
-                current_frame = overlay_clothing_on_person(current_frame, top_image, overlay_position_top, scale_factor_top, current_frame.shape)
+            # 원피스
+            if dress_image_path:
+                if DETECTION_RESULT.pose_landmarks[0][11] and DETECTION_RESULT.pose_landmarks[0][12]:
+                    left_shoulder, right_shoulder = DETECTION_RESULT.pose_landmarks[0][11], DETECTION_RESULT.pose_landmarks[0][12]
+                    left_shoulder_x, left_shoulder_y = int(left_shoulder.x * width), int(left_shoulder.y * height)
+                    right_shoulder_x, right_shoulder_y = int(right_shoulder.x * width), int(right_shoulder.y * height)
+                    shoulder_width = np.sqrt((right_shoulder_x - left_shoulder_x) ** 2 + (right_shoulder_y - left_shoulder_y) ** 2)
+                    scale_factor_dress = calculate_scale_factor_for_dress(shoulder_width, dress_distance)
+                    overlay_position_dress = ((left_shoulder_x + right_shoulder_x) // 2 - (dress_image.shape[1] * scale_factor_dress) // 2, min(left_shoulder_y, right_shoulder_y) - (shoulder_width * scale_factor_dress) / 2.5)
+                    current_frame = overlay_clothing_on_person(current_frame, dress_image, overlay_position_dress, scale_factor_dress, current_frame.shape)
+            # 상의와 하의
+            else:
+                # 하의
+                if DETECTION_RESULT.pose_landmarks[0][23] and DETECTION_RESULT.pose_landmarks[0][24]:
+                    left_hip, right_hip = DETECTION_RESULT.pose_landmarks[0][23], DETECTION_RESULT.pose_landmarks[0][24]
+                    left_hip_x, left_hip_y = int(left_hip.x * width), int(left_hip.y * height)
+                    right_hip_x, right_hip_y = int(right_hip.x * width), int(right_hip.y * height)
+                    hip_width = np.sqrt((right_hip_x - left_hip_x) ** 2 + (right_hip_y - left_hip_y) ** 2)
+                    scale_factor_pants = calculate_scale_factor_for_pants(hip_width, pants_distance)
+                    overlay_position_pants = ((left_hip_x + right_hip_x) // 2 - (pants_image.shape[1] * scale_factor_pants) // 2, left_hip_y - (hip_width * scale_factor_pants))
+                    current_frame = overlay_clothing_on_person(current_frame, pants_image, overlay_position_pants, scale_factor_pants, current_frame.shape)
+                #상의
+                if DETECTION_RESULT.pose_landmarks[0][11] and DETECTION_RESULT.pose_landmarks[0][12]:
+                    left_shoulder, right_shoulder = DETECTION_RESULT.pose_landmarks[0][11], DETECTION_RESULT.pose_landmarks[0][12]
+                    left_shoulder_x, left_shoulder_y = int(left_shoulder.x * width), int(left_shoulder.y * height)
+                    right_shoulder_x, right_shoulder_y = int(right_shoulder.x * width), int(right_shoulder.y * height)
+                    shoulder_width = np.sqrt((right_shoulder_x - left_shoulder_x) ** 2 + (right_shoulder_y - left_shoulder_y) ** 2)
+                    scale_factor_top = calculate_scale_factor_for_top(shoulder_width, top_distance)
+                    overlay_position_top = ((left_shoulder_x + right_shoulder_x) // 2 - (top_image.shape[1] * scale_factor_top) // 2, min(left_shoulder_y, right_shoulder_y) - (shoulder_width * scale_factor_top) / 2)
+                    current_frame = overlay_clothing_on_person(current_frame, top_image, overlay_position_top, scale_factor_top, current_frame.shape)
 
         else:
             print('No person detected')
