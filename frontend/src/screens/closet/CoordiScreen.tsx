@@ -25,11 +25,6 @@ interface presetItem {
   }[];
 }
 
-interface ClosetItem {
-  clothesId: number;
-  clothesImgUrl: string;
-}
-
 const CoordiScreen: React.FC = () => {
   const [presets, setPresets] = useState<presetItem[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -57,16 +52,16 @@ const CoordiScreen: React.FC = () => {
       <View style={styles.header}>
         <Text style={styles.title}>프리셋 목록</Text>
       </View>
-      <FlatList
-        data={presets}
-        renderItem={({ item }) => <PresetItem presetId={item.presetId} presetName={item.presetName} clothes={item.clothes} />} // 수정된 부분
-        keyExtractor={(item) => item.presetId.toString()}
-      />
-      <TouchableOpacity>
-        <NewPreset 
-          onClose={toggleModal}
+        <TouchableOpacity>
+          <NewPreset 
+            onClose={toggleModal}
+          />
+        </TouchableOpacity>
+        <FlatList
+          data={presets}
+          renderItem={({ item }) => <PresetItem presetId={item.presetId} presetName={item.presetName} clothes={item.clothes} />} // 수정된 부분
+          keyExtractor={(item) => item.presetId.toString()}
         />
-      </TouchableOpacity>
     </View>
   );
 };

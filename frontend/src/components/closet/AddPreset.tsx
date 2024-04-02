@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, View, Text, Button, Pressable, StyleSheet, FlatList, TouchableOpacity, TextInput, Image } from 'react-native';
+import { Modal, View, Text, Button, Pressable, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 // 컴포넌트
 import { COLORS, FONTSIZE } from '../../shared/styles/STYLES';
 // axios
@@ -7,8 +7,10 @@ import { API } from "../../shared";
 import { AxiosError } from 'axios';
 
 // 프리셋
-interface NewPresetProps {
+interface AddPresetProps {
   onClose: () => void;
+  presetId: number;
+  setisUpdate: () => void;
 };
 
 // 옷 인터페이스
@@ -17,15 +19,18 @@ interface ClothInfo {
   clothesImgUrl: string,
 };
 
-const NewPreset: React.FC<NewPresetProps> = ({ onClose }) => {
+const AddPreset: React.FC<AddPresetProps> = ({ onClose, presetId, setisUpdate }) => {
   // 모달상태
   const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
   // 전체 옷 리스트
   const [clothes, setClothes] = useState<ClothInfo[]>([]);
   // 선택된 옷 목록
   const [selectedClothes, setSelectedClothes] = useState<ClothInfo[]>([]);
-  // 프리셋 이름
-  const [presetName, setPresetName] = useState('');
 
   useEffect(() => {
     // 옷 목록을 가져오는 axios 요청
@@ -72,40 +77,33 @@ const NewPreset: React.FC<NewPresetProps> = ({ onClose }) => {
     }
   };
 
-  const saveSelectedClothes = async () => {
+  const updatePreset = async () => {
     try {
       const clothesIdList = selectedClothes.map(cloth => cloth.clothesId);
 
-      const formdata = new FormData();
-      formdata.append('presetName', presetName);
-      formdata.append('request', JSON.stringify({clothesIdList}));
-
-      // 프리셋 등록을 위한 axios 요청
-      const response = await API.post('/preset', formdata, {
-        headers: {
-          "Content-Type": 'multipart/form-data; boundary="boundary"',
-      },
+      // 프리셋 업데이트를 위한 axios 요청
+      const response = await API.put('/preset/add', {
+        presetId: presetId,
+        clothesIdList: clothesIdList,
       });
-  
+      console.log(clothesIdList);
       if (response.data.result === 'SUCCESS') {
-        console.log('프리셋이 성공적으로 저장되었습니다.');
+        console.log('프리셋이 성공적으로 업데이트되었습니다.');
       } else {
-        console.error('프리셋 저장 중 오류가 발생했습니다.');
+        console.error('프리셋 업데이트 중 오류가 발생했습니다.');
       }
     } catch (error) {
-      console.error('프리셋 저장 중 오류가 발생했습니다:', error);
+      console.error('프리셋 업데이트 중 오류가 발생했습니다:', error);
     }
-  };
-
-  // 모달을 열거나 닫는 함수
-  const toggleModal = () => {
-    // 모달을 닫기 전에 선택된 옷을 저장합니다.
-    saveSelectedClothes();
-    setModalVisible(!modalVisible);
   };
 
   return (
     <View>
+      <TouchableOpacity onPress={openModal} >
+        <View style={styles.addButton}>
+          <Text style={styles.buttonText}> 추가!  </Text> 
+        </View>
+      </TouchableOpacity>
       <Modal
         animationType="none"
         transparent={true}
@@ -114,12 +112,6 @@ const NewPreset: React.FC<NewPresetProps> = ({ onClose }) => {
           <Text style={styles.titleText}>
             옷 목록
           </Text>
-          <TextInput
-            style={styles.input}
-            placeholder="프리셋 이름 입력"
-            onChangeText={(text) => setPresetName(text)}
-            value={presetName}
-          />
           <View style={{ flexDirection: 'row', marginVertical: 10 }}>
             {/* 카테고리 탭 (예시: 상의, 하의, 외투) 추가하기 */}
           </View>
@@ -127,15 +119,16 @@ const NewPreset: React.FC<NewPresetProps> = ({ onClose }) => {
           <View style={{ alignItems: 'center', margin: 10 }}>
             <Button 
               title="등록" 
-              onPress={() => toggleModal()} />
+              onPress={async () => {
+                // 등록 버튼을 누르면 모달을 닫고 프리셋을 업데이트합니다.
+                onClose();
+                await updatePreset();
+                setModalVisible(false); // 모달을 닫습니다.
+                setisUpdate();
+              }} />
           </View>
         </View>
       </Modal>
-      <Pressable
-        style={styles.addButton}
-        onPress={() => setModalVisible(true)}>
-        <Text style={styles.buttonText}>➕</Text>
-      </Pressable>
     </View> 
   );
 };
@@ -168,23 +161,17 @@ const styles = StyleSheet.create({
     color: COLORS.White,
   },
   buttonText: {
-    color: COLORS.CarrotRed,
+    color: COLORS.Turquoise,
     fontSize: FONTSIZE.Medium,
     fontWeight: 'bold',
   },
   addButton: {
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    marginHorizontal: 10,
-    marginVertical: 15,
-    borderColor: COLORS.Black,
+    borderColor: COLORS.Mint,
     borderWidth: 1,
-    borderRadius: 25,
-    height: 100,
-    width: '90%',
-    borderBlockColor: COLORS.Black,
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    alignItems: "center",
   },
   input: {
     height: 40,
@@ -209,6 +196,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // width: '30%',
   },
+  addButtonText: {
+    color: COLORS.PurpleBlue,
+    fontSize: FONTSIZE.Large,
+    textAlign: "center",
+  },
 })
 
-export default NewPreset;
+export default AddPreset;
