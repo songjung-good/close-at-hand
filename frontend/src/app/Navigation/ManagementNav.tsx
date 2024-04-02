@@ -15,7 +15,7 @@ export type ManagementParamList = {
 	history: undefined;
 	recentCoordyList: undefined;
 	recentCoordyDetail: { ootdId: number };
-	laundryBasket: { basket: string };
+	laundryBasket: { basket: "일반 세탁" | "울 / 캐시미어" | "기능성 소재" };
 };
 const Stack = createNativeStackNavigator<ManagementParamList>();
 

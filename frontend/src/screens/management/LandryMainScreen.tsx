@@ -15,8 +15,10 @@ const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 
 	console.log(modalVisible);
 
-	function handleButtonPress(basket: string) {
-		navigation.navigate("laundryBasket", { basket });
+	function handleButtonPress(
+		basket: "일반 세탁" | "울 / 캐시미어" | "기능성 소재",
+	) {
+		navigation.navigate("2", { screen: "laundryBasket", params: { basket } });
 	}
 
 	return (

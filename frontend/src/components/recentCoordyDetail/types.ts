@@ -1,8 +1,15 @@
-import { Clothes } from "../types";
-
 export interface CoordyDetail {
-	contains: Clothes[];
+	ootdId: number;
 	ootdImgUrl: string;
-	weather: string;
-	date: string;
+	clothes: {
+		clothesId: number;
+		clothesImgUrl: string;
+		lastWashDate: string;
+		texture: string[];
+		category: string[];
+		item: string[];
+		colors: string[];
+		looks: string[];
+		prints: string[];
+	}[];
 }

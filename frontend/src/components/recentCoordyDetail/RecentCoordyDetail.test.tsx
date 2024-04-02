@@ -11,13 +11,18 @@ const mockUsequery = useQuery as jest.Mock;
 describe("RecentCoordyDetail 컴포넌트", () => {
 	it("데이터를 성공적으로 불러온 경우 적절한 UI를 렌더링합니다.", async () => {
 		const mockData = {
-			contains: [
-				{ clothesId: 1, clothesImgUrl: "https://example.com/clothes1.jpg" },
-				{ clothesId: 2, clothesImgUrl: "https://example.com/clothes2.jpg" },
-			],
-			outfitUrl: "https://example.com/outfit.jpg",
-			weather: "맑음",
-			date: "2024-03-19T12:00:00Z",
+			ootdImgUrl: " ",
+			clothes: {
+				clothesId: 1,
+				clothesImgUrl: " ",
+				lastWashDate: " ",
+				texture: [" "],
+				category: [" "],
+				item: [" "],
+				colors: [" "],
+				looks: [" "],
+				prints: [" "],
+			},
 		};
 
 		// useQuery 함수를 Mocking하여 성공적으로 데이터를 반환하도록 설정
@@ -34,7 +39,7 @@ describe("RecentCoordyDetail 컴포넌트", () => {
 
 		// 데이터가 성공적으로 로드되고 해당 데이터가 화면에 렌더링되었는지 확인
 		await waitFor(() => expect(getByTestId("detail-image")).toBeDefined());
-		expect(getByText(/맑음/)).toBeDefined();
-		expect(getByText("2024년 3월 19일"));
+
+		// expect(getByText("2024년 3월 19일"));
 	});
 });

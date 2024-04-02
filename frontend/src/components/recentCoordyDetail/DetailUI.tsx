@@ -3,30 +3,26 @@ import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { CoordyDetail } from "./types";
 import { COLORS, FONTSIZE } from "../../shared";
 
-const DetailUI: React.FC<CoordyDetail> = ({
-	contains,
-	ootdImgUrl,
-	weather,
-	date,
-}) => {
-	const originalDate = new Date(date);
-	const dateString = `${originalDate.getFullYear()}년 ${originalDate.getMonth() + 1}월 ${originalDate.getDate()}일`;
+const DetailUI: React.FC<CoordyDetail> = ({ clothes, ootdImgUrl }) => {
+	// const originalDate = new Date(date);
+	// const dateString = `${originalDate.getFullYear()}년 ${originalDate.getMonth() + 1}월 ${originalDate.getDate()}일`;
 
 	return (
 		<View style={styles.container}>
-			<Text>{dateString}</Text>
+			{/* <Text>{dateString}</Text> */}
 			<Image
 				source={{ uri: ootdImgUrl }}
 				style={styles.image}
 				testID="detail-image"
 			/>
-			<Text style={styles.text}>날씨: {weather}</Text>
 			<View style={styles.horizontalLine} />
 			<Text style={styles.title}>입었던 옷</Text>
 			<FlatList
-				data={contains}
+				data={clothes}
 				renderItem={({ item }) => (
-					<Image source={{ uri: item.clothesImgUrl }} style={styles.image} />
+					<View>
+						<Image source={{ uri: item.clothesImgUrl }} style={styles.image} />
+					</View>
 				)}
 				keyExtractor={(item) => item.clothesId.toString()}
 				numColumns={2}

@@ -34,10 +34,10 @@ const MostClothes: React.FC<Props> = ({ refreshing }) => {
 			{(isLoading || isError) && (
 				<LoadingOrError error={error} isError={isError} isLoading={isLoading} />
 			)}
-			{data && data.length ? (
+			{data && data.top5UsedClothes ? (
 				<FlatList
 					horizontal={true}
-					data={data}
+					data={data.top5UsedClothes}
 					renderItem={({ item }) => <Card {...item} onPress={hadlePress} />}
 					keyExtractor={(item) => item.clothesId.toString()}
 				/>

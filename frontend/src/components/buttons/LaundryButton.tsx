@@ -2,9 +2,9 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { FONTSIZE } from "../../shared";
 
 interface Props {
-	title: string;
+	title: "일반 세탁" | "울 / 캐시미어" | "기능성 소재";
 	bubble1: boolean;
-	onPress: (title: string) => void;
+	onPress: (title: Props["title"]) => void;
 }
 
 const LaundryButton: React.FC<Props> = ({ title, bubble1, onPress }) => {
