@@ -11,8 +11,8 @@ import java.util.Set;
 
 public interface ClothesRepository extends JpaRepository<Clothes, Long> {
     @Query("SELECT ct " +
-            "FROM ClothesTagGroup ctg " +
-            "LEFT JOIN ClothesTag ct " +
+            "FROM ClothesTag ct " +
+            "LEFT JOIN ClothesTagGroup ctg " +
             "ON ctg = ct.clothesTagGroup " +
             "WHERE ctg.clothes.user.userToken = :userToken")
     Set<ClothesTag> findDistinctTagByUserToken(String userToken);

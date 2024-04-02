@@ -66,6 +66,7 @@ public class ClothesServiceImpl implements ClothesService{
         List<List<String>> clothesTags = new ArrayList<>();
         for (int i=0; i<6; i++) clothesTags.add(new ArrayList<>());
         for (ClothesTag cLothesTag: clothesRepository.findDistinctTagByUserToken(userToken)){
+            if (cLothesTag == null) continue;
             if (set.contains(cLothesTag.getTagName())) continue;
             switch (cLothesTag.getClothesTagGroup().getClothesTagGroupName()){
                 case "category" : clothesTags.get(0).add(cLothesTag.getTagName()); break;
