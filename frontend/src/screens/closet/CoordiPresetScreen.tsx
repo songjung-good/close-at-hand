@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Button } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 // 컴포넌트
-import { AddPreset } from "../../components";
+import { AddPreset, AddImage } from "../../components";
 import { FONTSIZE, COLORS } from "../../shared";
 // API
 import { AxiosError } from 'axios';
@@ -33,9 +33,16 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation<Navigation>();
   const [isUpdate, setisUpdate] = useState(0);
+  const [imageModalVisible, setimageModalVisible] = useState(false);
 
+  // 옷 추가 모달
   const toggleModal = () => {
     setModalVisible(!modalVisible);
+  }
+
+  // 이미지 추가 모달
+  const toggleImageModal = () => {
+    setimageModalVisible(!imageModalVisible);
   }
 
   useEffect(() => {
@@ -94,9 +101,12 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
       {presetInfo ? (
         <View style={styles.container}>
           <View style={styles.imageContainer}>
-            <Button
-              title='수정'
-            />
+            <AddImage
+              onClose={toggleImageModal} 
+              presetId={presetId}
+              // presetName={presetName}
+              setisUpdate={update}
+              />
             <Image source={{ uri: presetInfo.presetImgUrl }} style={styles.image} />
           </View>
           <ScrollView style={styles.infoContainer}>
@@ -140,12 +150,21 @@ const styles = StyleSheet.create({
   },
   imageButton: {
     width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: COLORS.Black,
-    justifyContent: "center",
+    height: 30,
+    borderRadius: 5,
+    backgroundColor: COLORS.White,
     alignItems: "center",
-    marginTop: 20,
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    zIndex: 1,
+    borderColor: COLORS.Black,
+    borderWidth: 1,
+  },
+  imageButtonText: {
+    color: COLORS.PurpleBlue,
+    fontSize: FONTSIZE.ExtraSmall,
+    zIndex: 2,
   },
   imageContainer: {
     alignItems: "center",

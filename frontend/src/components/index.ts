@@ -4,6 +4,7 @@ export { default as SearchModal } from "./closet/SearchModal";
 export { default as PresetItem } from "./closet/PresetItem";
 export { default as NewPreset } from "./closet/NewPreset";
 export { default as AddPreset } from "./closet/AddPreset";
+export { default as AddImage } from "./closet/AddImage";
 
 // 홈
 export { default as MirrorConnection } from "./HomeWidgets/MirrorConnection";
