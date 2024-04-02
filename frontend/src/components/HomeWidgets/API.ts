@@ -17,7 +17,8 @@ export async function fetchToday({
 }: FetchTodayInterface): Promise<NoResponse | TodayResponse> {
 	try {
 		const response = await API.get("ootd/today", { signal });
-		if (response.data.data.clothes.length === 0) {
+		console.log(response.data);
+		if (!response.data.data.ootdImgUrl) {
 			return {
 				message:
 					"기록된 오늘의 코디가 없어요! \n 클로젯 핸드를 통해 오늘의 코디를 추가해 주세요.",
