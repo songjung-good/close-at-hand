@@ -1,5 +1,5 @@
 const path = require("path");
-const { getDefaultConfig } = require("expo/metro-config");
+const { getDefaultConfig } = require("@react-native/metro-config");
 const { generate } = require("@storybook/react-native/scripts/generate");
 
 generate({
