@@ -7,8 +7,10 @@ import { API } from "../../shared";
 import { AxiosError } from 'axios';
 
 // 프리셋
-interface NewPresetProps {
+interface AddPresetProps {
   onClose: () => void;
+  presetId: string;
+  clothesId: number[];
 };
 
 // 옷 인터페이스
@@ -17,15 +19,15 @@ interface ClothInfo {
   clothesImgUrl: string,
 };
 
-const NewPreset: React.FC<NewPresetProps> = ({ onClose }) => {
+const AddPreset: React.FC<AddPresetProps> = ({ onClose }) => {
   // 모달상태
   const [modalVisible, setModalVisible] = useState(false);
   // 전체 옷 리스트
   const [clothes, setClothes] = useState<ClothInfo[]>([]);
   // 선택된 옷 목록
   const [selectedClothes, setSelectedClothes] = useState<ClothInfo[]>([]);
-  // 프리셋 이름
-  const [presetName, setPresetName] = useState('');
+  // 프리셋 ID
+  const [presetId, setPresetId] = useState<number>(0);
 
   useEffect(() => {
     // 옷 목록을 가져오는 axios 요청
@@ -72,35 +74,30 @@ const NewPreset: React.FC<NewPresetProps> = ({ onClose }) => {
     }
   };
 
-  const saveSelectedClothes = async () => {
+  const updatePreset = async () => {
     try {
       const clothesIdList = selectedClothes.map(cloth => cloth.clothesId);
 
-      const formdata = new FormData();
-      formdata.append('presetName', presetName);
-      formdata.append('request', JSON.stringify({clothesIdList}));
-
-      // 프리셋 등록을 위한 axios 요청
-      const response = await API.post('/preset', formdata, {
-        headers: {
-          "Content-Type": 'multipart/form-data; boundary="boundary"',
-      },
+      // 프리셋 업데이트를 위한 axios 요청
+      const response = await API.put('/preset/add', {
+        presetId: presetId,
+        clothesIdList: clothesIdList,
       });
-  
+      console.log(presetId, clothesIdList)
       if (response.data.result === 'SUCCESS') {
-        console.log('프리셋이 성공적으로 저장되었습니다.');
+        console.log('프리셋이 성공적으로 업데이트되었습니다.');
       } else {
-        console.error('프리셋 저장 중 오류가 발생했습니다.');
+        console.error('프리셋 업데이트 중 오류가 발생했습니다.');
       }
     } catch (error) {
-      console.error('프리셋 저장 중 오류가 발생했습니다:', error);
+      console.error('프리셋 업데이트 중 오류가 발생했습니다:', error);
     }
   };
 
   // 모달을 열거나 닫는 함수
   const toggleModal = () => {
-    // 모달을 닫기 전에 선택된 옷을 저장합니다.
-    saveSelectedClothes();
+    // 모달을 닫기 전에 선택된 옷을 업데이트합니다.
+    updatePreset();
     setModalVisible(!modalVisible);
   };
 
@@ -114,12 +111,6 @@ const NewPreset: React.FC<NewPresetProps> = ({ onClose }) => {
           <Text style={styles.titleText}>
             옷 목록
           </Text>
-          <TextInput
-            style={styles.input}
-            placeholder="프리셋 이름 입력"
-            onChangeText={(text) => setPresetName(text)}
-            value={presetName}
-          />
           <View style={{ flexDirection: 'row', marginVertical: 10 }}>
             {/* 카테고리 탭 (예시: 상의, 하의, 외투) 추가하기 */}
           </View>
@@ -211,4 +202,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default NewPreset;
+export default AddPreset;

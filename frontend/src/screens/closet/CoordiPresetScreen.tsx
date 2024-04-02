@@ -30,7 +30,8 @@ interface PresetInfo {
 const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
   const presetId = route.params.id;
   const [presetInfo, setPresetInfo] = useState<PresetInfo | null>(null);
-  
+  const [showAddPresetModal, setShowAddPresetModal] = useState(false);
+
   const navigation = useNavigation<Navigation>();
 
   useEffect(() => {
@@ -51,6 +52,7 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
     navigation.navigate('cloth', { id: clothesId });
   };
 
+  // 옷 삭제 
   const handleDeleteCloth = async (index: number) => {
     try {
       const updatedClothes = [...presetInfo!.clothes];
@@ -78,6 +80,24 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
       console.error("서버에 옷 삭제 요청을 보내는 중 오류가 발생했습니다:", error);
     }
   };
+
+  // 모달
+  const handleAddCloth = () => {
+    setShowAddPresetModal(true); 
+    // AddPreset 모달 띄우기
+    return (
+      <>
+        {showAddPresetModal && (
+          <AddPreset
+            onClose={() => setShowAddPresetModal(false)}
+            presetId={presetInfo!.presetId}
+            clothesId={clothes.clothesId}
+          />
+        )}
+      </>
+    );
+  };
+    
 
   return (
     <>
@@ -113,6 +133,9 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
         <View>
           <Text>옷 정보를 가져오는 중입니다...</Text>
         </View>
+      )}
+        {showAddPresetModal && (
+          <AddPreset onClose={() => setShowAddPresetModal(false)} />
       )}
     </>
   );
