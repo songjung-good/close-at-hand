@@ -41,4 +41,8 @@ public class PresetFacade {
     public PresetInfo update(PresetDto.UpdateRequest request){
         return presetService.update(request.getPresetId(), request.getPresetName(), request.getPresetImg());
     }
+
+    public void remove(Long presetId){
+        presetService.deletePreset(presetId);
+    }
 }

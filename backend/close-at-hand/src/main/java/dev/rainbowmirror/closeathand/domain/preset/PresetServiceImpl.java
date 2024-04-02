@@ -6,9 +6,11 @@ import dev.rainbowmirror.closeathand.domain.clothes.ClothesReader;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesUpdateTool;
 import dev.rainbowmirror.closeathand.domain.user.User;
 import dev.rainbowmirror.closeathand.domain.user.UserReader;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +32,8 @@ public class PresetServiceImpl implements PresetService{
     private final ClothesReader clothesReader;
     private final S3UploadService s3UploadService;
     private final ClothesUpdateTool clothesUpdateTool;
+    @Autowired
+    private final EntityManager em;
 
     @Override
     public PresetInfo insertPreset(PresetCommand.InsertCommand command) {
@@ -73,8 +77,9 @@ public class PresetServiceImpl implements PresetService{
     }
 
     @Override
-    public PresetInfo deletePreset(Long presetId) {
-        return null;
+    public void deletePreset(Long presetId) {
+        Preset preset = presetReader.getPreset(presetId);
+        em.remove(preset);
     }
 
     @Override

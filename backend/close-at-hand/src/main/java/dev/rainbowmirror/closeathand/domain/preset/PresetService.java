@@ -8,7 +8,7 @@ public interface PresetService {
     PresetInfo insertPreset(PresetCommand.InsertCommand command);
     List<PresetInfo> getPresetByUserToken(String userToken);
     PresetInfo getPreset(Long presetId);
-    PresetInfo deletePreset(Long presetId);
+    void deletePreset(Long presetId);
     PresetInfo addClothes(Long presetId, Long[] clothesIdList);
     PresetInfo popClothes(Long presetId, Long[] clothesIdList);
     PresetInfo update(Long presetId, String presetName, MultipartFile presetImg);

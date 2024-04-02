@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
@@ -73,4 +74,5 @@ public class Preset extends AbstractEntity {
     public String getFilename(){
         return "preset/" + presetId;
     }
+
 }

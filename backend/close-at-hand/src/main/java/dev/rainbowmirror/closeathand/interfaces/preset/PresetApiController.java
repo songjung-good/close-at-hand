@@ -84,4 +84,11 @@ public class PresetApiController {
     public CommonResponse<PresetInfo> rename(@RequestBody PresetDto.UpdateRequest request){
         return CommonResponse.success(presetFacade.update(request));
     }
+
+    @Operation(summary = "preset remove")
+    @DeleteMapping("/{presetId}")
+    public CommonResponse<String> remove(@PathVariable("presetId") Long presetId){
+        presetFacade.remove(presetId);
+        return CommonResponse.success("SUCCESSFUL DELETE");
+    }
 }
