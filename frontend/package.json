@@ -24,6 +24,7 @@
 		"@realm/react": "^0.6.2",
 		"@tanstack/react-query": "^5.25.0",
 		"axios": "^1.6.7",
+		"eas-cli": "^7.6.2",
 		"expo": "^50.0.14",
 		"expo-splash-screen": "^0.26.4",
 		"expo-status-bar": "~1.11.1",

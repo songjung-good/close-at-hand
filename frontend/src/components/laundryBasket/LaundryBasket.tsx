@@ -1,35 +1,58 @@
 import { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useQuery, useRealm } from "@realm/react";
+import { useNavigation } from "@react-navigation/native";
 
 import { StyledButton } from "../buttons";
 import Laundries from "./Laundries";
 import { LaundryDB, ROW } from "../../shared";
+import BasketModal from "./BasketModal";
+import { useMutation } from "@tanstack/react-query";
+import { laundryDone } from "./API";
 
-interface Props {
+export interface BasketProps {
 	textures: "일반 세탁" | "울 / 캐시미어" | "기능성 소재";
 }
 
-const LaundryBasket: React.FC<Props> = ({ textures }) => {
+const LaundryBasket: React.FC<BasketProps> = ({ textures }) => {
 	const realm = useRealm();
+	const navigation = useNavigation<Navigation>();
+
+	const { mutate, isError, error, isPending } = useMutation({
+		mutationFn: laundryDone,
+		onSuccess: () => {
+			setModalVisible(false);
+
+			selectedLaundries.forEach((clothesId) => {
+				const laundry = laundries.find((e) => e.clothesId === clothesId);
+				console.log(laundry);
+				realm.write(() => {
+					realm.delete(laundry);
+				});
+			});
+
+			navigation.pop();
+		},
+	});
+
+	const [modalVisible, setModalVisible] = useState(false);
+	const [selectedLaundries, setSelectedLaundries] = useState<Set<number>>(
+		new Set(),
+	);
 
 	const textureSelector = ["일반 세탁", "울 / 캐시미어", "기능성 소재"];
 	const query = textureSelector.indexOf(textures);
-
 	const laundries = useQuery(LaundryDB, (laundry) =>
 		laundry.filtered("textures == $0", query),
 	);
 
-	const [selectedLaundries, setSelectedLaundries] = useState<Set<LaundryDB>>(
-		new Set(),
-	);
+	function showModal() {
+		setModalVisible(true);
+	}
 
 	function handleDoLaundry() {
-		selectedLaundries.forEach((laundry) => {
-			realm.write(() => {
-				realm.delete(laundry);
-			});
-		});
+		const clothesIdList = Array.from(selectedLaundries);
+		mutate({ clothesIdList, laundry: false });
 	}
 
 	// function handleGotoCloset() {
@@ -40,7 +63,7 @@ const LaundryBasket: React.FC<Props> = ({ textures }) => {
 	// 	});
 	// }
 
-	function handleSelect(laundry: LaundryDB) {
+	function handleSelect(laundry: number) {
 		if (selectedLaundries.has(laundry)) {
 			selectedLaundries.delete(laundry);
 			setSelectedLaundries(new Set(selectedLaundries));
@@ -51,6 +74,13 @@ const LaundryBasket: React.FC<Props> = ({ textures }) => {
 
 	return (
 		<View>
+			<BasketModal
+				modalVisible={modalVisible}
+				textures={textures}
+				hideModal={setModalVisible.bind(null, false)}
+				doLandry={handleDoLaundry}
+			/>
+
 			<FlatList
 				style={styles.list}
 				data={laundries}
@@ -58,7 +88,7 @@ const LaundryBasket: React.FC<Props> = ({ textures }) => {
 					<Laundries
 						laundry={item}
 						onPress={handleSelect}
-						isSelected={selectedLaundries.has(item)}
+						isSelected={selectedLaundries.has(item.clothesId)}
 					/>
 				)}
 				keyExtractor={(item) => item.clothesId.toString()}
@@ -71,7 +101,7 @@ const LaundryBasket: React.FC<Props> = ({ textures }) => {
 				<StyledButton
 					title="세탁하기"
 					backgroundColor="SkyBlue"
-					onPress={handleDoLaundry}
+					onPress={showModal}
 				/>
 				{/* <StyledButton
 					title="옷장으로"

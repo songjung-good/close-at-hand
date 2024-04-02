@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { FlatList, Text } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchRecentCoordyListList } from "./API";
@@ -16,13 +16,16 @@ const RecentCoordyList = () => {
 			{(isLoading || isError) && (
 				<LoadingOrError isLoading={isLoading} isError={isError} error={error} />
 			)}
+			{!isLoading && !isError && data?.length === 0 && (
+				<Text>저장된 옷 기록이 없습니다.</Text>
+			)}
 			{data && (
 				<FlatList
 					data={data}
 					renderItem={({ item }) => (
 						<CoordiCard {...item} widthMathToScreen={true} />
 					)}
-					keyExtractor={(item) => item.outfitId.toString()}
+					keyExtractor={(item) => item.ootdImgUrl.toString()}
 					numColumns={3}
 				/>
 			)}

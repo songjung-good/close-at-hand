@@ -12,16 +12,26 @@ import {
 
 import { StyledButton } from "../../components";
 
+import bluetoothSearching from "../../../assets/image/bluetoothSearching.png";
+
 const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 	navigation,
 }) => {
 	const [isScanned, setIsScanned] = useState(false);
+	const [isDeviceFound, setIsDeviceFound] = useState(false);
 
 	async function startScan() {
 		setIsScanned(false);
 		const address = await startDiscovery();
-		await PairDevices(address);
+		const device = await PairDevices(address);
 		setIsScanned(true);
+		if (device) {
+			setIsDeviceFound(true);
+		}
+	}
+
+	function pressFoundButton() {
+		navigation.pop();
 	}
 
 	useEffect(() => {
@@ -43,15 +53,22 @@ const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 		<View style={styles.container}>
 			{isScanned ? (
 				<>
-					<Text style={[styles.title, styles.textCenter]}>검색 종료.</Text>
+					<Text style={[styles.title, styles.textCenter]}>검색 종료</Text>
 					<View style={styles.imageContainer}>
-						<Image
-							source={require("../../../assets/image/bluetoothSearching.png")}
-						></Image>
+						<Image source={bluetoothSearching}></Image>
 					</View>
-					<Text style={[styles.text, styles.textCenter]}>
-						{"클로젯 핸드를 찾을 수 없습니다."}
-					</Text>
+					{isDeviceFound ? (
+						<>
+							<Text style={[styles.text]}>
+								연결 완료 이전 화면으로 이동하려면 다음 버튼을 누르세요
+							</Text>
+							<StyledButton title="검색 완료" onPress={pressFoundButton} />
+						</>
+					) : (
+						<Text style={[styles.text, styles.textCenter]}>
+							{"클로젯 핸드를 찾을 수 없습니다."}
+						</Text>
+					)}
 					<StyledButton title="다시 검색" onPress={startScan} />
 				</>
 			) : (
@@ -60,9 +77,7 @@ const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 						주변의 기기를 검색 중입니다.
 					</Text>
 					<View style={styles.imageContainer}>
-						<Image
-							source={require("../../../assets/image/bluetoothSearching.png")}
-						></Image>
+						<Image source={bluetoothSearching}></Image>
 					</View>
 					<Text style={[styles.text, styles.textCenter]}>
 						{

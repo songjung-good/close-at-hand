@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { API, LaundryDB } from "../../shared";
 import { useQuery } from "@realm/react";
+import { TodayResponse } from "../types";
 
 interface FetchTodayInterface {
 	signal: AbortSignal;
@@ -9,34 +10,6 @@ interface FetchTodayInterface {
 interface NoResponse {
 	message: string;
 	noResponse: true;
-}
-
-export interface TodayResponse {
-	ootdId: number;
-	ootdImgUrl: "string";
-	clothes: [
-		{
-			clothesId: number;
-			clothesImgUrl: string;
-			lastWashDate: string; // 2024-03-29T08:29:24.287Z
-			texture: string[];
-			category: string[];
-			item: string[];
-			colors: string[];
-			looks: string[];
-			prints: string[];
-			clothesTagGroupList: [
-				{
-					clothesTagGroupName: string;
-					clothesTagList: [
-						{
-							clothesTagName: string;
-						},
-					];
-				},
-			];
-		},
-	];
 }
 
 export async function fetchToday({

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 import {
 	COLORS,
@@ -10,7 +9,8 @@ import {
 	SHADOW,
 } from "../../shared";
 import { ROW } from "../../shared";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import img1 from "../../../assets/image/mirror.png";
+import img2 from "../../../assets/image/touchMessage.png";
 
 interface ButtonProps {
 	title: string;
@@ -26,8 +26,6 @@ const ButtonBlock: React.FC<ButtonProps> = ({ title, onPress }) => {
 };
 
 const Overlay = () => {
-	const navigation = useNavigation<Navigation>();
-
 	function handleChangeLayout() {
 		return;
 	}
@@ -39,6 +37,7 @@ const Overlay = () => {
 			return;
 		}
 		const result = dataSendToDevice(identifier);
+		console.debug("블루투스 요청 결과", result);
 		Alert.alert("클로젯 핸드를 확인해주세요");
 	}
 
@@ -79,10 +78,10 @@ const MirrorConnection = () => {
 				style={styles.container}
 			>
 				<View style={[ROW, styles.innerContainer]}>
-					<Image source={require("../../../assets/image/mirror.png")} />
+					<Image source={img1} />
 					<View style={styles.textContainer}>
 						<Text>Close-At-Hand가 연결되었어요!</Text>
-						<Image source={require("../../../assets/image/touchMessage.png")} />
+						<Image source={img2} />
 					</View>
 				</View>
 				{mode && <Overlay />}

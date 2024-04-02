@@ -48,7 +48,10 @@ describe("TodayHome", () => {
 	});
 
 	it("데이터 있는 경우 렌더링", () => {
-		const mockData = { ootdImgUrl: "Test message", clothes: [{ looks: 1 }] };
+		const mockData = {
+			ootdImgUrl: "Test message",
+			clothes: [{ clothesTagGroupList: [] }],
+		};
 		mockUseQuery.mockReturnValue({
 			data: mockData,
 			isLoading: false,
@@ -123,7 +126,10 @@ describe("TodayHome", () => {
 	});
 
 	it("데이터가 있는 상황에서 터치시 refetch 함수가 호출안됨", () => {
-		const mockData = { ootdImgUrl: "Test message", clothes: [{ looks: 1 }] };
+		const mockData = {
+			ootdImgUrl: "Test message",
+			clothes: [{ clothesTagGroupList: [] }],
+		};
 		const refetch = jest.fn();
 		// 오류 없이 데이터 응답 받음
 		mockUseQuery.mockReturnValue({

@@ -1,54 +1,90 @@
-import { FlatList, Image, Modal, StyleSheet, Text, View } from "react-native";
-import { CENTER, COLORS, FONTSIZE, LaundryDB, ROW, SHADOW } from "../../shared";
+import {
+	FlatList,
+	Image,
+	Modal,
+	Pressable,
+	StyleSheet,
+	Text,
+	View,
+} from "react-native";
+import { CENTER, COLORS, FONTSIZE, ROW, SHADOW } from "../../shared";
 import StyledButton from "../buttons/StyledButton";
-import { useQuery } from "@realm/react";
+import { useRealm } from "@realm/react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { saveToRealm } from "../HomeWidgets/TodayHomeRealm";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TodayClothes } from "../types";
+import { useMutation } from "@tanstack/react-query";
+import { laundryDone } from "./API";
 
 interface Props {
-	onPress(): void;
+	modalVisible: boolean;
+	hideModal(): void;
 }
 
-const DoLaundry: React.FC<Props> = ({ onPress }) => {
-	const OOTD = useQuery(LaundryDB, (laundry) =>
-		laundry.filtered("lastDayOfWear == $0", new Date()),
-	);
+const DoLaundry: React.FC<Props> = ({ modalVisible, hideModal }) => {
+	const realm = useRealm();
+	const [OOTD, setOOTD] = useState<TodayClothes[]>([]);
 
-	const [selected, setSelected] = useState<Set<LaundryDB>>(new Set(OOTD));
+	const { mutate, isError, error, isPending } = useMutation({
+		mutationFn: laundryDone,
+		onSuccess: () => {
+			saveToRealm(Array.from(selected), realm);
+			setSelected(new Set());
+		},
+	});
 
-	function moveToLaundryBasket() {
-		onPress();
+	useEffect(() => {
+		async function get() {
+			const data = await AsyncStorage.getItem("todayWear");
+			if (data) {
+				setOOTD(JSON.parse(data));
+			}
+		}
+		get();
+	}, []);
+
+	const [selected, setSelected] = useState<Set<TodayClothes>>(new Set(OOTD));
+
+	async function moveToLaundryBasket() {
+		if (!OOTD) return;
+		const clothesIdList = OOTD.map((e) => e.clothesId);
+		mutate({ clothesIdList, laundry: true });
+		hideModal();
 	}
 
-	function handleSelect(item: LaundryDB) {
+	function handleSelect(item: TodayClothes) {
 		if (selected.has(item)) {
 			selected.delete(item);
 			const deletedSet = new Set(selected);
-			return deletedSet;
+			setSelected(deletedSet);
 		} else {
-			return setSelected(selected.add(item));
+			selected.add(item);
+			const newSet = new Set(selected);
+			setSelected(newSet);
 		}
 	}
 
 	return (
-		<Modal transparent={true}>
+		<Modal transparent={true} visible={modalVisible}>
 			<View style={styles.outerContainer}>
 				<View style={[SHADOW, styles.container]}>
 					<FlatList
+						horizontal
 						style={styles.list}
 						data={OOTD}
 						renderItem={({ item }) => (
-							<>
+							<Pressable onPress={handleSelect.bind(this, item)} style={ROW}>
 								<Image
 									style={[SHADOW, styles.image]}
 									source={{ uri: item.clothesImgUrl }}
 								/>
 								<FontAwesome
-									onPress={handleSelect.bind(this, item)}
 									name={selected.has(item) ? "check-circle-o" : "circle-o"}
 									size={FONTSIZE.Medium}
 								/>
-							</>
+							</Pressable>
 						)}
 						keyExtractor={(item) => item.clothesId.toString()}
 					></FlatList>
@@ -66,7 +102,7 @@ const DoLaundry: React.FC<Props> = ({ onPress }) => {
 						></StyledButton>
 						<StyledButton
 							title="아니요"
-							onPress={onPress}
+							onPress={hideModal}
 							backgroundColor="White"
 						></StyledButton>
 					</View>
@@ -104,11 +140,10 @@ const styles = StyleSheet.create({
 	image: {
 		marginVertical: 3,
 		marginHorizontal: 5,
-		width: 54,
+		width: 100,
 		height: 180,
 	},
 	list: {
-		width: 60,
 		height: 190,
 	},
 });

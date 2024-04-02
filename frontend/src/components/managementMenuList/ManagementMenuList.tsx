@@ -1,6 +1,9 @@
 import Menu from "./Menu";
 import { useNavigation } from "@react-navigation/native";
 
+import basket from "../../../assets/image/laundry_Basket.png";
+import diary from "../../../assets/image/diary.png";
+
 const ManagementMenuList = () => {
 	const navigation = useNavigation<Navigation>();
 
@@ -17,13 +20,13 @@ const ManagementMenuList = () => {
 				title="빨래 바구니"
 				onPress={handleLaundryPress}
 				backgroundColor="PaleBlue"
-				image={require("../../../assets/image/laundry_Basket.png")}
+				image={basket}
 			/>
 			<Menu
 				title="옷 관리"
 				onPress={handleHistoryPress}
 				backgroundColor="PurpleBlue"
-				image={require("../../../assets/image/diary.png")}
+				image={diary}
 			/>
 		</>
 	);

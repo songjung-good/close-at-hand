@@ -5,6 +5,11 @@ import { COLORS, FONTSIZE } from "../../shared";
 import { ROW } from "../../shared";
 import { countLaundries } from "./API";
 
+import full from "../../../assets/image/laundry-basket-full.png";
+import empty from "../../../assets/image/laundry-basket-empty.png";
+import tshirts from "../../../assets/image/tshirt.png";
+import pant from "../../../assets/image/pant.png";
+
 interface TitleProps {
 	title: string;
 }
@@ -25,8 +30,7 @@ interface widget {
 
 const Basket: React.FC<widget> = ({ onPress }) => {
 	const count = countLaundries();
-	const full = require("../../../assets/image/laundry-basket-full.png");
-	const empty = require("../../../assets/image/laundry-basket-empty.png");
+
 	return (
 		<Pressable
 			style={styles.container}
@@ -46,18 +50,12 @@ const Closet: React.FC<widget> = ({ onPress }) => {
 	return (
 		<Pressable style={styles.container} onPress={onPress.bind(null, "closet")}>
 			<View style={[ROW, styles.rowContainer]}>
-				<Image
-					style={styles.image}
-					source={require("../../../assets/image/tshirt.png")}
-				/>
+				<Image style={styles.image} source={tshirts} />
 				<Text style={styles.text}>{"(옷 개수)"}개</Text>
 			</View>
 			<View style={styles.line} />
 			<View style={[ROW, styles.rowContainer]}>
-				<Image
-					style={styles.image}
-					source={require("../../../assets/image/pant.png")}
-				/>
+				<Image style={styles.image} source={pant} />
 				<Text style={styles.text}>{"(옷 개수)"}개</Text>
 			</View>
 			<Title title="옷장" />

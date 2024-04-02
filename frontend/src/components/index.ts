@@ -17,12 +17,12 @@ export { default as ManagementMenuList } from "./managementMenuList/ManagementMe
 export { default as ClothesHistoryList } from "./clothesHistory/ClothesHistoryList";
 export { default as RecentCoordyList } from "./RecentCoordyList/RecentCoordyList";
 export { default as RecentCoordyDetail } from "./recentCoordyDetail/RecentCoordyDetail";
-export { default as MostClothes } from "./mostClothes/MostClothes";
+export { default as MostClothes } from "./Statistics/Statistics";
 
 // 옷 관리 - 세탁
 export { default as LaundryButton } from "./buttons/LaundryButton";
 export { default as LaundryBasket } from "./laundryBasket/LaundryBasket";
-export { default as DoLaundry } from "./modals/DoLaundry";
+export { default as DoLaundry } from "./laundryBasket/DoLaundry";
 
 // OnBoarding
 export { default as SignIn } from "./signIn/SignIn";

@@ -31,7 +31,7 @@ const ClothesHistoryList: React.FC<Props> = ({ refreshing }) => {
 					renderItem={({ item }) => (
 						<CordiCard {...item} noOnPress={isLoading} />
 					)}
-					keyExtractor={(item) => item.outfitId.toString()}
+					keyExtractor={(item) => item.ootdId.toString()}
 				/>
 			) : (
 				<Text style={styles.text}>저장된 최근 코디가 없습니다.</Text>

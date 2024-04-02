@@ -4,7 +4,7 @@ export const placeholderData: ClothesFetchListResponse[] = [];
 
 for (let i = 0; i < 3; i++) {
 	placeholderData.push({
-		outfitId: i,
-		outfitUrl: " ",
+		ootdId: i,
+		ootdImgUrl: " ",
 	});
 }

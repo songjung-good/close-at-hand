@@ -14,7 +14,7 @@ const mockUsequery = useQuery as jest.Mock;
 describe("ClothesHistoryList component", () => {
 	it("렌더링 테스트", async () => {
 		const mockData = Array.from({ length: 5 }, (_, i) => ({
-			outfitId: i,
+			ootdId: i,
 			name: `https://example.com/outfit1.jpg${i + 1}`,
 		}));
 
@@ -34,7 +34,7 @@ describe("ClothesHistoryList component", () => {
 		await waitFor(() => {
 			// 모든 데이터가 올바르게 렌더링됨
 			mockData.forEach((item) => {
-				expect(getByTestId(`card-${item.outfitId}`)).toBeDefined();
+				expect(getByTestId(`card-${item.ootdId}`)).toBeDefined();
 			});
 			// 에러 메세지는 나오지 않아야 함
 			expect(queryByText("네트워크 에러")).toBeNull();
@@ -65,12 +65,12 @@ describe("ClothesHistoryList component", () => {
 describe("Card component", () => {
 	it("렌더링 테스트", () => {
 		const outfit: ClothesFetchListResponse = {
-			outfitId: 1,
-			outfitUrl: "https://example.com/outfit.jpg",
+			ootdId: 1,
+			ootdImgUrl: "https://example.com/outfit.jpg",
 		};
 
 		const { getByTestId } = render(<Card {...outfit} />);
 
-		expect(getByTestId(`card-${outfit.outfitId}`)).toBeDefined();
+		expect(getByTestId(`card-${outfit.ootdId}`)).toBeDefined();
 	});
 });

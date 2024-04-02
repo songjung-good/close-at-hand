@@ -5,32 +5,33 @@ import { LaundryButton } from "../../components";
 import { ROW } from "../../shared";
 import { DoLaundry } from "../../components";
 
+import form from "../../../assets/image/foam.png";
+import basket from "../../../assets/image/laundry_Basket.png";
+
 const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 	navigation,
 	route,
 }) => {
-	const [isModalOpen, setIsModalOpen] = useState(
+	const [modalVisible, setModalVisible] = useState(
 		route.params?.fromNoti ?? false,
 	);
 
-	console.log(isModalOpen);
+	console.log(modalVisible);
 
-	function handleButtonPress(basket: string) {
-		navigation.navigate("laundryBasket", { basket });
-	}
-
-	function HandleModalButtonPress() {
-		setIsModalOpen(false);
+	function handleButtonPress(
+		basket: "일반 세탁" | "울 / 캐시미어" | "기능성 소재",
+	) {
+		navigation.navigate("2", { screen: "laundryBasket", params: { basket } });
 	}
 
 	return (
 		<View>
-			{isModalOpen && <DoLaundry onPress={HandleModalButtonPress} />}
+			<DoLaundry
+				hideModal={setModalVisible.bind(null, false)}
+				modalVisible={modalVisible}
+			/>
 			<View style={[ROW, styles.center]}>
-				<Image
-					style={styles.image}
-					source={require("../../../assets/image/foam.png")}
-				/>
+				<Image style={styles.image} source={form} />
 				<LaundryButton
 					title="일반 세탁"
 					bubble1={true}
@@ -49,10 +50,7 @@ const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 					onPress={handleButtonPress}
 				/>
 			</View>
-			<Image
-				style={styles.laudaryBasket}
-				source={require("../../../assets/image/laundry_Basket.png")}
-			/>
+			<Image style={styles.laudaryBasket} source={basket} />
 		</View>
 	);
 };

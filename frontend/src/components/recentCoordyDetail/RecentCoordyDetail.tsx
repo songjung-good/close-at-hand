@@ -5,14 +5,15 @@ import LoadingOrError from "../fetchHelper/LoadingOrError";
 import DetailUI from "./DetailUI";
 
 interface Props {
-	outfitId: number;
+	ootdId: number;
 }
 
-const RecentCoordyDetail: React.FC<Props> = ({ outfitId }) => {
+const RecentCoordyDetail: React.FC<Props> = ({ ootdId }) => {
 	const { data, isLoading, isError, error } = useQuery({
-		queryKey: ["recentCoordyList", outfitId],
-		queryFn: async ({ signal }) => fetchDetail({ signal, outfitId }),
+		queryKey: ["recentCoordyList", ootdId],
+		queryFn: async ({ signal }) => fetchDetail({ signal, ootdId }),
 	});
+	console.log(data);
 	return (
 		<>
 			{(isLoading || isError) && (

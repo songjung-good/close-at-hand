@@ -1,7 +1,7 @@
 module.exports = {
 	expo: {
 		name: "Close At Hand",
-		slug: "Close At Hand",
+		slug: "close-at-hand",
 		version: "0.0.1",
 		orientation: "portrait",
 		icon: "./assets/icon.png",
@@ -28,6 +28,9 @@ module.exports = {
 		},
 		extra: {
 			storybookEnabled: "process.env.STORYBOOK_ENABLED",
+			eas: {
+				projectId: "f3d1051a-5df5-4914-9071-3b8c233ece52",
+			},
 		},
 	},
 };

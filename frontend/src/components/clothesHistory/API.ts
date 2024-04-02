@@ -8,6 +8,7 @@ interface FetchListInterface {
 export async function fetchList({ signal }: FetchListInterface) {
 	return API.get("ootd", { signal })
 		.then((response) => {
+			console.log(response.data.data);
 			return response.data.data as ClothesFetchListResponse[];
 		})
 		.catch((error) => {
