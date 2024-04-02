@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 // 컴포넌트
 import { AddPreset } from "../../components";
@@ -94,6 +94,9 @@ const CoordiPresetScreen: React.FC<{ route: any }> = ({ route }) => {
       {presetInfo ? (
         <View style={styles.container}>
           <View style={styles.imageContainer}>
+            <Button
+              title='수정'
+            />
             <Image source={{ uri: presetInfo.presetImgUrl }} style={styles.image} />
           </View>
           <ScrollView style={styles.infoContainer}>
@@ -134,6 +137,15 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     flex: 1,
+  },
+  imageButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: COLORS.Black,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
   },
   imageContainer: {
     alignItems: "center",
