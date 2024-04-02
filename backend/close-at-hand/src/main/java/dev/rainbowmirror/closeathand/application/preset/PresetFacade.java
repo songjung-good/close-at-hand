@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.application.preset;
 
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesCommand;
 import dev.rainbowmirror.closeathand.domain.preset.PresetCommand;
 import dev.rainbowmirror.closeathand.domain.preset.PresetInfo;
 import dev.rainbowmirror.closeathand.domain.preset.PresetService;
@@ -38,8 +39,8 @@ public class PresetFacade {
         return presetService.popClothes(request.getPresetId(), request.getClothesIdList());
     }
 
-    public PresetInfo update(PresetDto.UpdateRequest request){
-        return presetService.update(request.getPresetId(), request.getPresetName(), request.getPresetImg());
+    public PresetInfo update(PresetCommand.UpdateCommand command){
+        return presetService.update(command.getPresetId(), command.getPresetName(), command.getPresetImg());
     }
 
     public void remove(Long presetId){

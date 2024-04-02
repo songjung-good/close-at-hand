@@ -59,6 +59,13 @@ public class PresetDto {
     public static class UpdateRequest{
         private Long presetId;
         private String presetName;
-        private MultipartFile presetImg;
+
+        public PresetCommand.UpdateCommand toCommand(MultipartFile presetImg){
+            return PresetCommand.UpdateCommand.builder()
+                    .presetId(presetId)
+                    .presetImg(presetImg)
+                    .presetName(presetName)
+                    .build();
+        }
     }
 }

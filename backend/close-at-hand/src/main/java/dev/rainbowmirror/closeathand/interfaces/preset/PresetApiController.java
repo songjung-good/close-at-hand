@@ -79,10 +79,10 @@ public class PresetApiController {
         return CommonResponse.success(presetInfo);
     }
 
-    @Operation(summary = "preset name update")
-    @PutMapping("/name")
-    public CommonResponse<PresetInfo> rename(@RequestBody PresetDto.UpdateRequest request){
-        return CommonResponse.success(presetFacade.update(request));
+    @Operation(summary = "preset name, image update")
+    @PutMapping(produces = "application/json", consumes = "multipart/form-data")
+    public CommonResponse<PresetInfo> rename(@RequestPart PresetDto.UpdateRequest request, @RequestPart(value = "presetImg", required = false) MultipartFile presetImg){
+        return CommonResponse.success(presetFacade.update(request.toCommand(presetImg)));
     }
 
     @Operation(summary = "preset remove")

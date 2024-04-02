@@ -24,4 +24,13 @@ public class PresetCommand {
         @Setter
         private Set<Clothes> clothes;
     }
+
+    @Getter
+    @Builder
+    @ToString
+    public static class UpdateCommand {
+        private Long presetId;
+        private String presetName;
+        private MultipartFile presetImg;
+    }
 }
