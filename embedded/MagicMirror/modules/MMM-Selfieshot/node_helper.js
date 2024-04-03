@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
-const NodeWebcam = require( "node-webcam" );
+// const NodeWebcam = require( "node-webcam" );
 const moment = require("moment");
 const path = require("path");
 const exec = require("child_process").exec;
-var nodemailer = require("nodemailer");
+// var nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 const axios = require('axios');
 const FormData = require('form-data');
