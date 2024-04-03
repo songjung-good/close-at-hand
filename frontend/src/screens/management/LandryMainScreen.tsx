@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { LaundryButton } from "../../components";
-import { ROW } from "../../shared";
+import { CENTER, COLORS, FONTSIZE, ROW } from "../../shared";
 import { DoLaundry } from "../../components";
 
 import form from "../../../assets/image/foam.png";
@@ -16,7 +16,17 @@ const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 		route.params?.fromNoti ?? false,
 	);
 
-	console.log(modalVisible);
+	useEffect(() => {
+		const { fromNoti } = route.params;
+
+		setModalVisible(fromNoti);
+	}, [route.params]);
+
+	function putLaundry() {
+		navigation.navigate("laundryMain", {
+			fromNoti: true,
+		});
+	}
 
 	function handleButtonPress(
 		basket: "일반 세탁" | "울 / 캐시미어" | "기능성 소재",
@@ -50,7 +60,16 @@ const LandryMainScreen: React.FC<RootScreenProp<"laundryMain">> = ({
 					onPress={handleButtonPress}
 				/>
 			</View>
-			<Image style={styles.laudaryBasket} source={basket} />
+			<Pressable onPress={putLaundry} style={[CENTER]}>
+				<View
+					style={[styles.overlayText, styles.laundryButtonContainer, CENTER]}
+				>
+					<Text style={[styles.overlayText, styles.laundryButtonText, CENTER]}>
+						{"오늘 입은 옷 넣기"}
+					</Text>
+				</View>
+				<Image style={styles.laundryBasket} source={basket} />
+			</Pressable>
 		</View>
 	);
 };
@@ -74,7 +93,15 @@ const styles = StyleSheet.create({
 		width: 170,
 		resizeMode: "contain",
 	},
-	laudaryBasket: {
+	laundryBasket: {
 		alignSelf: "center",
+	},
+	laundryButtonText: {
+		fontSize: FONTSIZE.ExtarLarge,
+		backgroundColor: COLORS.CarrotRedRipple,
+	},
+	laundryButtonContainer: {
+		opacity: 0.8,
+		borderRadius: 10,
 	},
 });
