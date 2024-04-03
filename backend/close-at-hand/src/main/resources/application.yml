@@ -41,7 +41,7 @@ cloud:
     stack:
       auto: false
 omni:
-  X-Api-Key: 
+  X-Api-Key:
   url:
   get-key:
   get-url:
