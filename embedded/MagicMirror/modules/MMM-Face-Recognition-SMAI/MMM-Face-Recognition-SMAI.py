@@ -6,9 +6,7 @@ import time
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 
-
-
-# 여러 사진의 파일 경로
+# 여러 얼굴 사진의 파일 경로
 image_paths = [
     os.path.join(current_dir, "public/face1.png"),
     os.path.join(current_dir, "public/face2.png"),
