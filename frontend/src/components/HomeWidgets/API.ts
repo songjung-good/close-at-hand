@@ -39,6 +39,11 @@ export function countLaundries() {
 	return realm.length;
 }
 
-// 상의 개수 하의 개수를 받기
-
-// 오늘 입은 옷과 태그 받기
+export async function fetchCount({ signal }: FetchTodayInterface) {
+  try {
+    const response = await API.get("statistics/count", {signal})
+    return response.data.data as number
+  } catch (error) {
+    throw new Error((error as AxiosError).message ?? "네트워크 에러")
+  }
+}

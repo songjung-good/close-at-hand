@@ -14,7 +14,7 @@ jest.mock("./API", () => ({
 describe("Bascket 컴포넌트", () => {
 	test("개수 텍스트가 렌더링되는지 확인", () => {
 		const { getByText } = render(<HomeInfo />);
-		expect(getByText(/\d+/)).toBeDefined();
+		expect(getByText(/\d+개$/)).toBeDefined();
 	});
 });
 

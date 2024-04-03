@@ -34,6 +34,20 @@ notifee.onBackgroundEvent(async ({ type, detail }) => {
 	}
 });
 
+notifee.onForegroundEvent(async ({ type, detail }) => {
+	if (type === EventType.PRESS && detail.notification) {
+		const { notificationType } = detail.notification.data!;
+		await waitForNavigationReady();
+		if (notificationType === "CloseAtHandHomeAlarm") {
+			notification.id = notificationType;
+			navigationRef.navigate("2", {
+				screen: "laundryMain",
+				params: { fromNoti: true },
+			});
+		}
+	}
+});
+
 const isStorybook = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED ? true : false;
 
 if (!isStorybook) {

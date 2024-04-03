@@ -3,12 +3,13 @@ import { useNavigation } from "@react-navigation/native";
 
 import { COLORS, FONTSIZE } from "../../shared";
 import { ROW } from "../../shared";
-import { countLaundries } from "./API";
+import { countLaundries, fetchCount } from "./API";
 
 import full from "../../../assets/image/laundry-basket-full.png";
 import empty from "../../../assets/image/laundry-basket-empty.png";
 import tshirts from "../../../assets/image/tshirt.png";
 import pant from "../../../assets/image/pant.png";
+import { useQuery } from "@tanstack/react-query";
 
 interface TitleProps {
 	title: string;
@@ -47,16 +48,21 @@ const Basket: React.FC<widget> = ({ onPress }) => {
 };
 
 const Closet: React.FC<widget> = ({ onPress }) => {
+  const {data, isError, isLoading, error} = useQuery({
+    queryKey: ['home', 'count'],
+    staleTime: 1000 * 60 * 60 * 60, // 1시간
+    queryFn: fetchCount
+  })
+
 	return (
 		<Pressable style={styles.container} onPress={onPress.bind(null, "closet")}>
 			<View style={[ROW, styles.rowContainer]}>
 				<Image style={styles.image} source={tshirts} />
-				<Text style={styles.text}>{"(옷 개수)"}개</Text>
+        <Image style={styles.image} source={pant} />
 			</View>
 			<View style={styles.line} />
 			<View style={[ROW, styles.rowContainer]}>
-				<Image style={styles.image} source={pant} />
-				<Text style={styles.text}>{"(옷 개수)"}개</Text>
+				<Text style={styles.text}>옷장의 옷 {data}개</Text>
 			</View>
 			<Title title="옷장" />
 		</Pressable>
