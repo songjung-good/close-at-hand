@@ -16,4 +16,5 @@ public interface ClothesService {
     List<ClothesInfo> findAllClothes(String userToken);
     List<ClothesTagAllInfo> findAllClothesTag(String userToken);
     List<ClothesInfo> updateClothes(ClothesCommand.UpdateCommand command);
+
 }

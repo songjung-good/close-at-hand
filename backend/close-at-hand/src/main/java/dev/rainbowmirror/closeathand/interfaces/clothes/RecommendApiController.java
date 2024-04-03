@@ -3,6 +3,7 @@ package dev.rainbowmirror.closeathand.interfaces.clothes;
 import dev.rainbowmirror.closeathand.common.response.CommonResponse;
 import dev.rainbowmirror.closeathand.domain.RecommendService;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesRecommendInfo;
+import dev.rainbowmirror.closeathand.domain.clothes.ClothesService;
 import dev.rainbowmirror.closeathand.domain.ootd.OotdService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +27,7 @@ import java.util.Iterator;
 public class RecommendApiController {
     private final RecommendService recommendService;
     private final OotdService ootdService;
+    private final ClothesService clothesService;
     @Operation(summary = "추천 옷 받기")
     @GetMapping("/recommend")
     public CommonResponse<ClothesRecommendInfo> getRecommend() {
@@ -48,5 +50,19 @@ public class RecommendApiController {
                 .top5UsedClothes(ootdService.getMostUsedClothes(userToken))
                 .build();
         return CommonResponse.success(recommendDto);
+    }
+
+    @Operation(summary = "옷 전체 갯수")
+    @GetMapping("/statistics/count")
+    public CommonResponse<Integer> getClothesCount(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+        GrantedAuthority auth = iter.next();
+
+        String userToken = auth.getAuthority();
+
+        return CommonResponse.success(clothesService.findAllClothes(userToken).size());
     }
 }
