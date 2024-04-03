@@ -129,7 +129,7 @@ const ClosetScreen: React.FC = () => {
   };
 
   return (
-    <View>
+    <View style={{flex:1}}>
       <View style={styles.recommendlistDiv}>
         <View style={styles.header}>
           <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
+    padding: 5,
   },
   alertText: {
     flexDirection: "row",
@@ -183,7 +183,6 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: '5%',
     marginVertical: '5%',
-    // flex: 1,
   },
   clothesTitle: {
     fontSize: FONTSIZE.Medium,
@@ -193,7 +192,7 @@ const styles = StyleSheet.create({
   },
   recommendedDiv: {
     borderColor: COLORS.CarrotRed,
-    margin: 10,
+    margin: 5,
     borderWidth: 2,
     borderRadius: 5,
   },
