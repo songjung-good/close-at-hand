@@ -10,11 +10,13 @@ import {
 	Alert,
 } from "react-native";
 import {
+	ImagePickerResult,
 	launchImageLibraryAsync,
 	MediaTypeOptions,
 	PermissionStatus,
 	useCameraPermissions,
 } from "expo-image-picker";
+import FormData from "form-data";
 
 // 컴포넌트
 import { COLORS, FONTSIZE } from "../../shared/styles/STYLES";
@@ -44,7 +46,7 @@ const AddImage: React.FC<PresetProps> = ({
 	// 모달상태
 	const [imageModalVisible, setimageModalVisible] = useState(false);
 	const [presetName, setPresetName] = useState("");
-	const [image, setImage] = useState("");
+	const [image, setImage] = useState<ImagePickerResult>();
 
 	const pickImage = async () => {
 		if (camerPermissionInformation?.status !== PermissionStatus.GRANTED) {
@@ -61,10 +63,9 @@ const AddImage: React.FC<PresetProps> = ({
 			quality: 1,
 			selectionLimit: 1,
 			allowsMultipleSelection: false,
-			base64: true,
 		});
 		if (result?.assets?.length) {
-			setImage("data:image/jpeg;base64," + result.assets[0]!.base64);
+			setImage(result);
 		}
 	};
 
@@ -81,14 +82,23 @@ const AddImage: React.FC<PresetProps> = ({
 				}),
 			);
 
-			formData.append("presetImg", image);
+			// ImagePicker saves the taken photo to disk and returns a local URI to it
+			if (image?.assets?.length) {
+				let localUri = image?.assets[0].uri;
+				let filename = localUri.split("/").pop()!;
+
+				let match = /\.(\w+)$/.exec(filename);
+				let type = match ? `image/${match[1]}` : `image`;
+
+				formData.append("presetImg", { uri: localUri, name: filename, type });
+			}
 
 			// formData.append('presetImg', {uri: image, name: 'image.jpg', type: 'image/jpeg' }
 
 			// 프리셋 업데이트를 위한 axios 요청
 			const response = await API.put("/preset", formData, {
 				headers: {
-					"Content-Type": 'multipart/form-data; boundary="boundary"',
+					"content-type": 'multipart/form-data; boundary="boundary"',
 				},
 			});
 			if (response.data.result === "SUCCESS") {
@@ -137,9 +147,9 @@ const AddImage: React.FC<PresetProps> = ({
 					{/* 사진을 업로드하는 칸 */}
 					<View style={styles.imgContainer}>
 						<TouchableOpacity onPress={pickImage}>
-							{image ? (
+							{image?.assets ? (
 								<Image
-									source={{ uri: image }}
+									source={{ uri: image.assets[0].uri }}
 									style={{ width: 200, height: 200 }}
 								/>
 							) : (

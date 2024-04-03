@@ -28,7 +28,6 @@ export { default as DoLaundry } from "./laundryBasket/DoLaundry";
 // OnBoarding
 export { default as SignIn } from "./signIn/SignIn";
 export { default as SignUp } from "./signUp/SignUp";
-export { default as Bluetooth } from "./ble/Bluetooth";
 
 // 설정 화면
 export { default as SettingsButton } from "./buttons/SettingsButton";

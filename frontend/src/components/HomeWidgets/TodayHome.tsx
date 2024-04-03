@@ -51,7 +51,7 @@ const TodayHome = () => {
 	const { data, isLoading, isError, error, refetch } = useQuery({
 		queryKey: ["home", "today", new Date().toISOString().split("T")[0]],
 		queryFn: fetchToday,
-		gcTime: 1000 * 60 * 60 * 60 * 1, // 1시간
+		// gcTime: 1000 * 60 * 60 * 60 * 1, // 1시간
 		placeholderData: {
 			message:
 				"기록된 오늘의 코디가 없어요! \n 터치하여 오늘의 코디를 받아보세요.",
