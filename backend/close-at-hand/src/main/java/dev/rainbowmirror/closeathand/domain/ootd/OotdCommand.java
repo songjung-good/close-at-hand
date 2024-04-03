@@ -1,5 +1,6 @@
 package dev.rainbowmirror.closeathand.domain.ootd;
 
+import dev.rainbowmirror.closeathand.common.util.TokenGenrator;
 import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
 import dev.rainbowmirror.closeathand.domain.preset.Preset;
 import dev.rainbowmirror.closeathand.domain.user.User;
@@ -30,7 +31,7 @@ public class OotdCommand {
         }
 
         public String getFilename(Long ootdId){
-            return "ootd/"+ootdId.toString();
+            return "ootd/"+ootdId.toString()+ TokenGenrator.randomCharacter(5);
         }
     }
 
