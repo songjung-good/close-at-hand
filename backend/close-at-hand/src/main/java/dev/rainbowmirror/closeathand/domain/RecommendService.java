@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.rainbowmirror.closeathand.common.exception.IllegalStatusException;
 import dev.rainbowmirror.closeathand.domain.clothes.*;
+import dev.rainbowmirror.closeathand.domain.preset.PresetService;
 import kong.unirest.HttpResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.util.List;
 public class RecommendService {
     private final OmniCommerceService omniCommerceService;
     private final ClothesService clothesService;
+    private final PresetService presetService;
 
     // 옷 내가 정해서 보내기
     public ClothesRecommendInfo getRecommendation () {
@@ -73,7 +75,17 @@ public class RecommendService {
 
                 // 후처리(세탁기에 있으면 추천 못해줌)
                 // 그리고 그 정보(옷의 token, 이미지)를 보내주기
-            } else { throw new RuntimeException("옷 추천 과정에서 문제가 발생했습니다."); }
+            } else {
+                List<ClothesListInfo> list;
+                ClothesListInfo clothesListInfo;
+                for (long i= 18L; i<22; i++){
+                    list = new ArrayList<>();
+                    for (ClothesInfo clothesInfo: presetService.getPreset(i).getClothes()) {
+                        list.add(new ClothesListInfo(clothesInfo));
+                    }
+                    recommendList.add(list);
+                }
+            }
 
         }
         // 리스트에 담긴 아이 보내주기
