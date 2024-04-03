@@ -62,6 +62,9 @@ public class OotdApiController {
         String userToken = auth.getAuthority();
 
         OotdInfo.Detail ootdInfo = ootdFacade.getTodayOotd(userToken);
+        if ("https://rainmirror.s3.ap-northeast-2.amazonaws.com/ootd/noImg.png".equals(ootdInfo.getOotdImgUrl())){
+            ootdInfo.setOotdImgUrl("");
+        }
         return CommonResponse.success(ootdInfo);
     }
 

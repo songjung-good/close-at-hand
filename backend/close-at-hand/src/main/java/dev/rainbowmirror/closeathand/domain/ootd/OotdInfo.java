@@ -2,10 +2,7 @@ package dev.rainbowmirror.closeathand.domain.ootd;
 
 import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
 import dev.rainbowmirror.closeathand.domain.clothes.ClothesInfo;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -29,7 +26,8 @@ public class OotdInfo {
     @AllArgsConstructor
     public static class Detail{
         private final Long ootdId;
-        private final String ootdImgUrl;
+        @Setter
+        private String ootdImgUrl;
         private final Set<ClothesInfo> clothes = new HashSet<>();
         private final ZonedDateTime createdAt;
 
