@@ -94,11 +94,11 @@ const TagList: React.FC<{ onTagsSelected: (tags: string[]) => void }> = ({ onTag
         {clothesTagGroups.map((group) => (
           <View key={group.clothesTagGroupName}>
             <Text style={styles.tagGroupTitle}>{group.clothesTagGroupName}</Text>
-            <View style={styles.tagGroupContainer}>
-              {group.clothesTagList.map((tag) => (
-                <TagItem key={tag.clothesTagName} tag={tag} onClick={handleTagClick} />
-              ))}
-            </View>
+            <ScrollView horizontal={true} style={styles.tagGroupContainer}>
+            {group.clothesTagList.map((tag) => (
+              <TagItem key={tag.clothesTagName} tag={tag} onClick={handleTagClick} />
+            ))}
+          </ScrollView>
           </View>
         ))}
       </View>
@@ -216,6 +216,7 @@ const styles = StyleSheet.create({
   },
   tagContainer: {
     marginHorizontal: 15,
+    marginBottom: 20, // 아래 여백 추가
   },
   tagGroupTitle: {
     fontSize: FONTSIZE.Large,
@@ -224,8 +225,8 @@ const styles = StyleSheet.create({
   },
   tagGroupContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    flexWrap: 'nowrap', // 수정: 한 줄에 모든 태그를 표시하고, 넘치는 경우 가로 스크롤 제공
+    overflow: 'scroll', // 넘치는 경우 스크롤 표시
   },
   tagItem: {
     backgroundColor: COLORS.White,
@@ -235,6 +236,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.Black,
     borderWidth: 1,
     marginTop: 5,
+    marginRight: 5,
   },
   tagTitle: {
     flexDirection: 'row',

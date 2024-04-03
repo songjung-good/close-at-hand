@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, View, Text, TextInput , StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Modal, View, Text, TextInput , StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 // 컴포넌트
@@ -23,16 +23,17 @@ interface PresetInfo {
 const AddImage: React.FC<PresetProps> = ({ onClose, presetId, setisUpdate }) => {
   // 모달상태
   const [imageModalVisible, setimageModalVisible] = useState(false);
+  const presetID = useState(presetId)
   const [presetName, setPresetName] = useState('');
-  const [imageURL, setImageURL] = useState(null);
-  const [image, setImage] = useState('');
-
+  const [imageURL, setImageURL] = useState<string | null>(null);
+  const [image, setImage] = useState<string>('');
+  
   useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
-          Alert.alert('Sorry, we need camera roll permissions to make this work!');
+          Alert.alert('이 기기에는 카메라가 허가되지 않았어요');
         }
       }
     })();
@@ -45,7 +46,7 @@ const AddImage: React.FC<PresetProps> = ({ onClose, presetId, setisUpdate }) => 
       aspect: [4, 4],
       quality: 1,
     });
-
+    console.log(result)
     if (!result.assets) {
       setImageURL(result.assets);
     }
@@ -53,11 +54,19 @@ const AddImage: React.FC<PresetProps> = ({ onClose, presetId, setisUpdate }) => 
 
   const updatePreset = async () => {
     try {
+      const formData = new FormData();
+      formData.append('presetId', String(presetID)); // presetId를 문자열로 변환하여 FormData에 추가
+      formData.append('presetName', presetName);
+      // 사진 데이터 추가
+      if (image) {
+        formData.append('presetImg', {uri: image, name: 'image.jpg', type: 'image/jpeg' });
+      }
+
       // 프리셋 업데이트를 위한 axios 요청
-      const response = await API.put('/preset', {
-        presetId: presetId,
-        presetName: presetName,
-        presetImg: imageURL,
+      const response = await API.put('/preset', formData, {
+        headers: {
+          "Content-Type": 'multipart/form-data; boundary="boundary"',
+      },
       });
       if (response.data.result === 'SUCCESS') {
         console.log('프리셋이 성공적으로 업데이트되었습니다.');

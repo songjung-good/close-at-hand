@@ -39,12 +39,12 @@ const PresetItem: React.FC<presetItem> = ({ presetId, presetName, clothes }) => 
   };
 
   return (
-    <TouchableOpacity onPress={handlePresetNavigation}>
-      <View style={styles.presetContainer}>
-        <Text style={styles.presetName}>{presetName}</Text>
+    <View style={styles.presetContainer}>
+      <Text style={styles.presetName}>{presetName}</Text>
+      <TouchableOpacity onPress={handlePresetNavigation}>
         <PresetList clothes={clothes} />
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity> 
+    </View>
   );
 };
 

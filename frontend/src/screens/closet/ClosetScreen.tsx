@@ -118,7 +118,7 @@ const ClosetScreen: React.FC = () => {
     };
 
     return (
-        <FlatList
+      <FlatList
         numColumns={3}
         contentContainerStyle={styles.flatListContent}
         data={filteredClothes}
@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: '5%',
     marginVertical: '5%',
+    // flex: 1,
   },
   clothesTitle: {
     fontSize: FONTSIZE.Medium,
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
   },
   flatListContent: {
     marginLeft: '5%',
-    justifyContent: 'center',
+    flexGrow: 1,
   },
 });
 
