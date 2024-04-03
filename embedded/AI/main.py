@@ -38,8 +38,8 @@ looks = [
 
 # 여러 얼굴 사진의 파일 경로
 image_paths = [
-    os.path.join(current_dir, "public/face1.png"),
-    os.path.join(current_dir, "public/face2.png"),
+    os.path.join(current_dir, "Face/face1.png"),
+    os.path.join(current_dir, "Face/face2.png"),
     # 여기에 더 많은 이미지 경로를 추가할 수 있습니다.
 ]
 
@@ -94,7 +94,6 @@ def calculate_scale_factor_for_top(shoulder_width, top_distance, scale_adjustmen
     return (shoulder_width * scale_adjustment) / top_distance
 
 def calculate_scale_factor_for_dress(shoulder_width, top_distance, scale_adjustment=1.8):
-    """상의 이미지와 사람의 어깨 너비 사이의 스케일 팩터를 계산합니다."""
     print((shoulder_width * scale_adjustment) / top_distance)
     return (shoulder_width * scale_adjustment) / top_distance
 
@@ -223,7 +222,7 @@ def AR_Fitting(model: str, num_poses: int,
                     right_shoulder_x, right_shoulder_y = int(right_shoulder.x * width), int(right_shoulder.y * height)
                     shoulder_width = np.sqrt((right_shoulder_x - left_shoulder_x) ** 2 + (right_shoulder_y - left_shoulder_y) ** 2)
                     scale_factor_dress = calculate_scale_factor_for_dress(shoulder_width, dress_distance)
-                    overlay_position_dress = ((left_shoulder_x + right_shoulder_x) // 2 - (dress_image.shape[1] * scale_factor_dress) // 2, min(left_shoulder_y, right_shoulder_y) - (shoulder_width * scale_factor_dress) / 4)
+                    overlay_position_dress = ((left_shoulder_x + right_shoulder_x) // 2 - (dress_image.shape[1] * scale_factor_dress) // 2, min(left_shoulder_y, right_shoulder_y) - shoulder_width / 3)
                     current_frame = overlay_clothing_on_person(current_frame, dress_image, overlay_position_dress, scale_factor_dress, current_frame.shape)
             # 상의와 하의
             else:
@@ -336,7 +335,7 @@ def swiper():
                 if last_action_time is None or current_time - last_action_time > 300:  # 5분
                     with open(output_file, "w") as file:
                         file.write("SHOW_HIDDEN_PAGE")
-            sleep(1)
+            time.sleep(1)
     except KeyboardInterrupt:
         print("Script stopped.")
 

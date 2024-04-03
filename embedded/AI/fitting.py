@@ -22,7 +22,7 @@ looks = [
     ['clothes/satur_T.png', 'clothes/blue_pants.png', None], 
     ['clothes/ck_T.png', 'clothes/navy_skirt.png', None], 
     ['clothes/white_cardigan.png', 'clothes/blue_skirt.png', None], 
-    [None, None, 'clothes/black_dress.png']
+    [None, None, 'clothes/pink_dress.png']
     ]
 
 # 이미지를 불러오고 필요한 색 공간으로 변환
@@ -78,8 +78,7 @@ def calculate_scale_factor_for_pants(hip_width, pants_distance, scale_adjustment
     # print((hip_width * scale_adjustment) / pants_distance)
     return (hip_width * scale_adjustment) / pants_distance
 
-def calculate_scale_factor_for_dress(shoulder_width, top_distance, scale_adjustment=0.35):
-    """상의 이미지와 사람의 어깨 너비 사이의 스케일 팩터를 계산합니다."""
+def calculate_scale_factor_for_dress(shoulder_width, top_distance, scale_adjustment=1.8):
     print((shoulder_width * scale_adjustment) / top_distance)
     return (shoulder_width * scale_adjustment) / top_distance
 
@@ -154,25 +153,24 @@ def run(model: str, num_poses: int,
         result_callback=save_result)
     detector = vision.PoseLandmarker.create_from_options(options)
 
-    top_image_path = looks[INDEX][0]
-    pants_image_path = looks[INDEX][1]
-    dress_image_path = looks[INDEX][2]
-
-    # 해당 이미지 경로가 None이 아닌 경우에만 이미지를 불러오도록 수정합니다.
-    if top_image_path:
-        top_image = load_and_convert_image(top_image_path, color_space='RGBA')
-        top_distance, _, _ = find_top_extremes(top_image)
-
-    if pants_image_path:
-        pants_image = load_and_convert_image(pants_image_path, color_space='RGBA')
-        pants_distance, _, _ = find_pants_extremes(pants_image)
-
-    if dress_image_path:
-        dress_image = load_and_convert_image(dress_image_path, color_space='RGBA')
-        dress_distance, _, _ = find_top_extremes(dress_image)
-
-
     while True:
+        top_image_path = looks[INDEX][0]
+        pants_image_path = looks[INDEX][1]
+        dress_image_path = looks[INDEX][2]
+
+        # 해당 이미지 경로가 None이 아닌 경우에만 이미지를 불러오도록 수정합니다.
+        if top_image_path:
+            top_image = load_and_convert_image(top_image_path, color_space='RGBA')
+            top_distance, _, _ = find_top_extremes(top_image)
+
+        if pants_image_path:
+            pants_image = load_and_convert_image(pants_image_path, color_space='RGBA')
+            pants_distance, _, _ = find_pants_extremes(pants_image)
+
+        if dress_image_path:
+            dress_image = load_and_convert_image(dress_image_path, color_space='RGBA')
+            dress_distance, _, _ = find_top_extremes(dress_image)
+        
         # picamera2를 통해 이미지 캡처
         image = picam2.capture_array()
         if image is None:
@@ -211,7 +209,7 @@ def run(model: str, num_poses: int,
                     right_shoulder_x, right_shoulder_y = int(right_shoulder.x * width), int(right_shoulder.y * height)
                     shoulder_width = np.sqrt((right_shoulder_x - left_shoulder_x) ** 2 + (right_shoulder_y - left_shoulder_y) ** 2)
                     scale_factor_dress = calculate_scale_factor_for_dress(shoulder_width, dress_distance)
-                    overlay_position_dress = ((left_shoulder_x + right_shoulder_x) // 2 - (dress_image.shape[1] * scale_factor_dress) // 2, min(left_shoulder_y, right_shoulder_y) - (shoulder_width * scale_factor_dress) / 2.5)
+                    overlay_position_dress = ((left_shoulder_x + right_shoulder_x) // 2 - (dress_image.shape[1] * scale_factor_dress) // 2, min(left_shoulder_y, right_shoulder_y) - shoulder_width / 3)
                     current_frame = overlay_clothing_on_person(current_frame, dress_image, overlay_position_dress, scale_factor_dress, current_frame.shape)
             # 상의와 하의
             else:
