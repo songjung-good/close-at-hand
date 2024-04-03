@@ -8,6 +8,7 @@ import {
 	startDiscovery,
 	cancelDiscovery,
 	PairDevices,
+	CENTER,
 } from "../../shared";
 
 import { StyledButton } from "../../components";
@@ -59,7 +60,7 @@ const BluetoothConnectionScreen: React.FC<RootNavigationProp> = ({
 					</View>
 					{isDeviceFound ? (
 						<>
-							<Text style={[styles.text]}>
+							<Text style={[CENTER, styles.text]}>
 								연결 완료 이전 화면으로 이동하려면 다음 버튼을 누르세요
 							</Text>
 							<StyledButton title="검색 완료" onPress={pressFoundButton} />

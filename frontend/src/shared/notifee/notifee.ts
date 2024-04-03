@@ -62,6 +62,7 @@ export async function scheduleDailyAlarm() {
 				pressAction: { id: "default" },
 			},
 			data: { notificationType: NotificationKey.CloseAtHandHomeAlarm },
+			id: NotificationKey.CloseAtHandHomeAlarm,
 		},
 		trigger,
 	);
