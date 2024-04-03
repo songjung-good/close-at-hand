@@ -3,6 +3,7 @@ import HomeInfo, { Title } from "./HomeInfo";
 import "@react-navigation/native";
 import "@realm/react";
 import "./API";
+import { useQuery } from "@tanstack/react-query";
 
 jest.mock("@react-navigation/native");
 jest.mock("@realm/react");
@@ -10,11 +11,23 @@ jest.mock("./API", () => ({
 	...jest.requireActual("@realm/react"),
 	countLaundries: jest.fn().mockReturnValue(0),
 }));
+jest.mock("@tanstack/react-query");
+
+const mockUseQuery = useQuery as jest.Mock;
 
 describe("Bascket 컴포넌트", () => {
+	beforeEach(() => {
+		mockUseQuery.mockReturnValue({
+			data: 11,
+		});
+	});
+
 	test("개수 텍스트가 렌더링되는지 확인", () => {
+		mockUseQuery.mockReturnValue({
+			data: 11,
+		});
 		const { getByText } = render(<HomeInfo />);
-		expect(getByText(/\d+개$/)).toBeDefined();
+		expect(getByText(/^\d+개/)).toBeDefined();
 	});
 });
 
