@@ -2,6 +2,7 @@ package dev.rainbowmirror.closeathand.domain.preset;
 
 
 import dev.rainbowmirror.closeathand.common.AbstractEntity;
+import dev.rainbowmirror.closeathand.common.util.TokenGenrator;
 import dev.rainbowmirror.closeathand.domain.clothes.Clothes;
 import dev.rainbowmirror.closeathand.domain.user.User;
 import jakarta.persistence.*;
@@ -72,7 +73,7 @@ public class Preset extends AbstractEntity {
     }
 
     public String getFilename(){
-        return "preset/" + presetId;
+        return "preset/" + presetId + TokenGenrator.randomCharacter(5);
     }
 
 }
