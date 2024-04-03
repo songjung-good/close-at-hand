@@ -8,7 +8,8 @@ import threading
 import argparse
 import subprocess
 import os
-import time
+import time, sleep
+from gpiozero import DistanceSensor
 
 from picamera2 import Picamera2
 import face_recognition
@@ -318,6 +319,27 @@ def face_recognition():
             with open(file_path, "w") as f:
                 f.write(name)
 
+def swiper():
+    sensor = DistanceSensor(echo=18, trigger=17)
+    output_file = "../MagicMirror/modules/MMM-Simple-Swiper/swipe_result.txt"
+
+    last_action_time = None  # 마지막 액션 시간을 추적
+
+    try:
+        while True:
+            if sensor.distance * 100 <= 10:
+                with open(output_file, "w") as file:
+                    file.write("LEAVE_HIDDEN_PAGE")
+                last_action_time = time()
+            else:
+                current_time = time()
+                if last_action_time is None or current_time - last_action_time > 300:  # 5분
+                    with open(output_file, "w") as file:
+                        file.write("SHOW_HIDDEN_PAGE")
+            sleep(1)
+    except KeyboardInterrupt:
+        print("Script stopped.")
+
 def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -382,8 +404,13 @@ def main():
     face_recognition_thread.daemon = True
     face_recognition_thread.start()
 
+    swiper_thread = threading.Thread(target=swiper)
+    swiper_thread.daemon = True
+    swiper_thread.start()
+
     dressing_thread.join()
     face_recognition_thread.join()
+    swiper_thread.join()
 
 
 if __name__ == '__main__':
