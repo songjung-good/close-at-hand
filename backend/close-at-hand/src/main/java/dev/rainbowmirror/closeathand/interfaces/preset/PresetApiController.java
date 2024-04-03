@@ -1,6 +1,7 @@
 package dev.rainbowmirror.closeathand.interfaces.preset;
 
 import dev.rainbowmirror.closeathand.application.preset.PresetFacade;
+import dev.rainbowmirror.closeathand.common.Base64ToMultipartFileConverter;
 import dev.rainbowmirror.closeathand.common.response.CommonResponse;
 import dev.rainbowmirror.closeathand.domain.preset.PresetInfo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -81,8 +83,14 @@ public class PresetApiController {
 
     @Operation(summary = "preset name, image update")
     @PutMapping(produces = "application/json", consumes = "multipart/form-data")
-    public CommonResponse<PresetInfo> rename(@RequestPart PresetDto.UpdateRequest request, @RequestPart(value = "presetImg", required = false) MultipartFile presetImg){
-        return CommonResponse.success(presetFacade.update(request.toCommand(presetImg)));
+    public CommonResponse<PresetInfo> rename(@RequestPart PresetDto.UpdateRequest request, @RequestPart(value = "presetImg", required = false) String presetImgString){
+        try {
+            MultipartFile presetImg = Base64ToMultipartFileConverter.convert(presetImgString);
+            return CommonResponse.success(presetFacade.update(request.toCommand(presetImg)));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("convert error");
+        }
     }
 
     @Operation(summary = "preset remove")
