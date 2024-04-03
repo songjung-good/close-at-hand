@@ -83,20 +83,21 @@ public class PresetApiController {
 
     @Operation(summary = "preset name, image update")
     @PutMapping(produces = "application/json", consumes = "multipart/form-data")
-    public CommonResponse<PresetInfo> rename(@RequestPart PresetDto.UpdateRequest request, @RequestPart(value = "presetImg", required = false) String presetImgString){
-        System.out.println(request);
-        System.out.println(presetImgString);
-        try {
-            MultipartFile presetImg = null;
-            if (presetImgString != null) {
-                presetImg = Base64ToMultipartFileConverter.convert(presetImgString);
-            }
-            System.out.println("decoding done!");
-            return CommonResponse.success(presetFacade.update(request.toCommand(presetImg)));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException("convert error");
-        }
+    public CommonResponse<PresetInfo> rename(@RequestPart PresetDto.UpdateRequest request, @RequestPart(value = "presetImg", required = false) MultipartFile presetImg){
+//        System.out.println(request);
+//        System.out.println(presetImgString);
+//        try {
+//            MultipartFile presetImg = null;
+//            if (presetImgString != null) {
+//                presetImg = Base64ToMultipartFileConverter.convert(presetImgString);
+//            }
+//            System.out.println("decoding done!");
+//            return CommonResponse.success(presetFacade.update(request.toCommand(presetImg)));
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//            throw new RuntimeException("convert error");
+//        }
+        return CommonResponse.success(presetFacade.update(request.toCommand(presetImg)));
     }
 
     @Operation(summary = "preset remove")
