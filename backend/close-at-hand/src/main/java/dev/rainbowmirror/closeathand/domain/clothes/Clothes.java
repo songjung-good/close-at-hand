@@ -64,9 +64,18 @@ public class Clothes extends AbstractEntity {
         private final String description;
     }
 
-    public void enable(){ this.location = Location.ENABLE; this.lastWashDate = ZonedDateTime.now();}
-    public void disable(){ this.location = Location.DISABLE; }
-
+    public void enable(){
+        this.location = Location.ENABLE;
+        this.lastWashDate = ZonedDateTime.now();
+    }
+    public void disable(){
+        this.location = Location.DISABLE;
+    }
+    public void updateClothes(List<ClothesTagGroup> list) {
+        clothesTagGroupList = list;
+        // status 변경
+        aidone();
+    }
     @Getter
     @RequiredArgsConstructor
     public enum Status { // status: api에서 정보를 받아왔는지 여부 표시
@@ -114,15 +123,5 @@ public class Clothes extends AbstractEntity {
         this.lastWashDate = lastWashDate;
         this.price = price;
         this.status = Status.BASIC;
-    }
-
-
-
-
-    // db를 건드릴거니까 여기(엔티티)에 옷 업데이트를 만든다.
-    public void updateClothes(List<ClothesTagGroup> list) {
-        clothesTagGroupList = list;
-        // status 변경
-        aidone();
     }
 }
