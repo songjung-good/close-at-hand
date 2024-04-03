@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
 		height: 240,
 		width: 150,
 		resizeMode: "cover",
-		backgroundColor: COLORS.Gray,
+		borderWidth: 0.8,
+		borderColor: COLORS.Gray,
 	},
 });

@@ -8,14 +8,12 @@ import { ReactNode } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TodayResponse } from "../types";
 
-const alternative = ["OOTD", "패션", "좋아요"];
+const alternative = ["무난룩", "OOTD", "캐주얼"];
 
 const DataExist: React.FC<TodayResponse> = ({ ootdImgUrl, clothes }) => {
 	const tag = clothes
 		.map((e, idx) => {
-			const tag =
-				e.clothesTagGroupList?.[0]?.clothesTagList?.[0]?.clothesTagName ||
-				alternative[idx];
+			const tag = e.looks || alternative[idx];
 			return {
 				tag,
 				id: e.clothesId || idx,
@@ -26,21 +24,13 @@ const DataExist: React.FC<TodayResponse> = ({ ootdImgUrl, clothes }) => {
 		<View style={[ROW, styles.flex]} testID="data-box">
 			<View style={[CENTER, styles.flex]}>
 				<Text style={styles.todayFashion}>오늘의 패션</Text>
-				{tag.map(
-					(e, index) =>
-						index % 2 === 0 && (
-							<View style={ROW} key={e.id}>
-								<View style={styles.textContainer}>
-									<Text style={styles.text}># {e.tag}</Text>
-								</View>
-								{tag[index + 1] && (
-									<View style={styles.textContainer}>
-										<Text style={styles.text}># {tag[index + 1].tag}</Text>
-									</View>
-								)}
-							</View>
-						),
-				)}
+				{tag.map((e, index) => (
+					<View style={ROW} key={e.id}>
+						<View style={styles.textContainer}>
+							<Text style={styles.text}># {e.tag}</Text>
+						</View>
+					</View>
+				))}
 			</View>
 			<View style={[styles.flex, styles.imgContainer]}>
 				<Image style={[styles.img]} source={{ uri: ootdImgUrl }} />
@@ -61,7 +51,7 @@ const TodayHome = () => {
 	const { data, isLoading, isError, error, refetch } = useQuery({
 		queryKey: ["home", "today", new Date().toISOString().split("T")[0]],
 		queryFn: fetchToday,
-		gcTime: 1000 * 60 * 60 * 60 * 10, // 10시간
+		gcTime: 1000 * 60 * 60 * 60 * 1, // 1시간
 		placeholderData: {
 			message:
 				"기록된 오늘의 코디가 없어요! \n 터치하여 오늘의 코디를 받아보세요.",
@@ -70,7 +60,12 @@ const TodayHome = () => {
 	});
 
 	function handlePress() {
-		if (isError || (data && "noResponse" in data)) {
+		// 에러, noResponse 응답 혹은 오늘 입은 옷의 정보가 없는 경우에 refetch
+		if (
+			isError ||
+			(data && "noResponse" in data) ||
+			data?.clothes.length === 0
+		) {
 			refetch();
 		}
 	}

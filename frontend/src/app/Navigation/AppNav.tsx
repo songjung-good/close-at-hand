@@ -97,6 +97,7 @@ const AppNav: React.FC = () => {
 								color={focused ? COLORS.PurpleBlue : COLORS.Black}
 							/>
 						),
+						lazy: true,
 					}}
 				/>
 				<Tab.Screen

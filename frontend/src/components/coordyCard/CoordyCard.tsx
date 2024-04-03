@@ -45,13 +45,13 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		margin: 5,
-		borderWidth: 0.8,
-		borderColor: COLORS.Gray,
 	},
 	image: {
 		height: 240,
 		width: 150,
 		resizeMode: "contain",
-		backgroundColor: COLORS.LightGray,
+		backgroundColor: COLORS.White,
+		borderWidth: 0.8,
+		borderColor: COLORS.Gray,
 	},
 });
