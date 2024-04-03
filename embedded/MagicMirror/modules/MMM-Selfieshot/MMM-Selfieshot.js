@@ -4,13 +4,13 @@ Module.register("MMM-Selfieshot", {
 	defaults: {
 		debug: false,
 		storePath: "./photos",
-		width:1280,
-		height:720, // In some webcams, resolution ratio might be fixed so these values might not be applied.
+		width:1080,
+		height:1920, // In some webcams, resolution ratio might be fixed so these values might not be applied.
 		quality: 100, //Of course.
 		device: null, // For default camera. Or,
 		// device: "USB Camera" <-- See the backend log to get your installed camera name.
 		shootMessage: "Smile!",
-		shootCountdown: 5,
+		shootCountdown: 3,
 		displayCountdown: true,
 		displayResult: true,
 		displayButton: null, // null = no button or name of FontAwesome icon

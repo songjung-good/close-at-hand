@@ -111,11 +111,12 @@ module.exports = NodeHelper.create({
 
 	sendPhotoToBackend: function(filepath) {
 		const formData = new FormData();
-		formData.append('request', {'clothesIdList':[1, 3, 5]});
+		formData.append('request', JSON.stringify({'clothesIdList':[1, 3, 5]}));
 		formData.append('ootdImg', fs.createReadStream(filepath));
 
 		const apiEndpoint = 'https://j10e207.p.ssafy.io/api/v1/ootd';
-		const userToken = process.env.USER_TOKEN;
+		// const userToken = process.env.USER_TOKEN;
+		const userToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFiY2QxMjM0IiwidXNlclRva2VuIjoiY2xpX1BDczlqMFFGb09raEhaS08iLCJpYXQiOjE3MTE4NzQwNTYsImV4cCI6MTcxMjY1MTY1Nn0.P_zNNvrGrfHsd56R3FlGVVwV4BfrlfnVgdhVsCPUv-k"
 	
 		axios.post(apiEndpoint, formData, {
 			headers: {

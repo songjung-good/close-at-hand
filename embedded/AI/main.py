@@ -8,7 +8,7 @@ import threading
 import argparse
 import subprocess
 import os
-import time, sleep
+import time
 from gpiozero import DistanceSensor
 
 from picamera2 import Picamera2

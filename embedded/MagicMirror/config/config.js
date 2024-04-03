@@ -192,7 +192,9 @@ let config = {
 			module: "MMM-Selfieshot",
 			position: "bottom_left",
 			config: {
-			  displayButton: "portrait"
+			  displayButton: "portrait",
+			  width: 1080,
+			  height: 1920,
 			}
 		},
 		{
