@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 // 컴포넌트 불러오기
 import { COLORS, FONTSIZE } from '../../shared/';
@@ -7,6 +7,7 @@ import { PresetItem, NewPreset } from '../../components';
 // API
 import { AxiosError } from 'axios';
 import { API } from '../../shared/';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface presetItem {
   presetId: number;
@@ -57,12 +58,14 @@ const CoordiScreen: React.FC = () => {
           onClose={toggleModal}
         />
       </TouchableOpacity>
-      <FlatList
-        data={presets}
-        renderItem={({ item }) => <PresetItem presetId={item.presetId} presetName={item.presetName} clothes={item.clothes} />} // 수정된 부분
-        keyExtractor={(item) => item.presetId.toString()}
-        contentContainerStyle={styles.flatListContent}
-      />
+      <View style={{flexGrow:1}}>
+        <FlatList
+          data={presets}
+          renderItem={({ item }) => <PresetItem presetId={item.presetId} presetName={item.presetName} clothes={item.clothes} />} // 수정된 부분
+          keyExtractor={(item) => item.presetId.toString()}
+          contentContainerStyle={{flexGrow:1}}
+        />
+      </View>
     </View>
   );
 };
