@@ -84,8 +84,11 @@ public class PresetApiController {
     @Operation(summary = "preset name, image update")
     @PutMapping(produces = "application/json", consumes = "multipart/form-data")
     public CommonResponse<PresetInfo> rename(@RequestPart PresetDto.UpdateRequest request, @RequestPart(value = "presetImg", required = false) String presetImgString){
+        System.out.println(request);
+        System.out.println(presetImgString);
         try {
             MultipartFile presetImg = Base64ToMultipartFileConverter.convert(presetImgString);
+            System.out.println("decoding done!");
             return CommonResponse.success(presetFacade.update(request.toCommand(presetImg)));
         } catch (IOException e) {
             System.out.println(e.getMessage());
