@@ -381,12 +381,12 @@ def main():
         '--width',
         help='Width of frame to capture from camera.',
         required=False,
-        default=1280)
+        default=960)
     parser.add_argument(
         '--height',
         help='Height of frame to capture from camera.',
         required=False,
-        default=960)
+        default=1280)
     args = parser.parse_args()
 
     # 옷 입히기 기능을 위한 스레드 생성 및 실행
