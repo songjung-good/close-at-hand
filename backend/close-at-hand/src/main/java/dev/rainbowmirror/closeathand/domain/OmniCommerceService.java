@@ -47,6 +47,7 @@ public class OmniCommerceService {
         HttpResponse<String> response = Unirest.get(getUrl)
                 .header("Content-Type", "application/json")
                 .header("X-Api-Key", getKey)
+                .header("Accept-Language", "KO")
                 .routeParam("productId", clothesToken)
                 .asString();
         System.out.println(response.getBody());
