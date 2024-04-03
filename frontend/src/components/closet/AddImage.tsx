@@ -55,12 +55,15 @@ const AddImage: React.FC<PresetProps> = ({ onClose, presetId, setisUpdate }) => 
   const updatePreset = async () => {
     try {
       const formData = new FormData();
-      formData.append('presetId', String(presetID)); // presetId를 문자열로 변환하여 FormData에 추가
-      formData.append('presetName', presetName);
-      // 사진 데이터 추가
-      if (image) {
-        formData.append('presetImg', {uri: image, name: 'image.jpg', type: 'image/jpeg' });
-      }
+      
+      formData.append('request', JSON.stringify({
+        presetId: presetID,
+        presetName: presetName
+      }));
+
+      formData.append('presetImg', image);
+
+      // formData.append('presetImg', {uri: image, name: 'image.jpg', type: 'image/jpeg' }
 
       // 프리셋 업데이트를 위한 axios 요청
       const response = await API.put('/preset', formData, {

@@ -75,12 +75,14 @@ const NewPreset: React.FC<NewPresetProps> = ({ onClose }) => {
     try {
       const clothesIdList = selectedClothes.map(cloth => cloth.clothesId);
 
-      const formdata = new FormData();
-      formdata.append('presetName', presetName);
-      formdata.append('request', JSON.stringify({clothesIdList}));
+      const formData = new FormData();
+      formData.append('request', JSON.stringify({
+        presetName: presetName, // presetName 추가
+        clothesIdList: clothesIdList
+      }));
 
       // 프리셋 등록을 위한 axios 요청
-      const response = await API.post('/preset', formdata, {
+      const response = await API.post('/preset', formData, {
         headers: {
           "Content-Type": 'multipart/form-data; boundary="boundary"',
       },
@@ -98,10 +100,15 @@ const NewPreset: React.FC<NewPresetProps> = ({ onClose }) => {
 
   // 모달을 열거나 닫는 함수
   const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
+  const sendData = () => {
     // 모달을 닫기 전에 선택된 옷을 저장합니다.
     saveSelectedClothes();
     setModalVisible(!modalVisible);
   };
+
 
   return (
     <View>
@@ -123,10 +130,17 @@ const NewPreset: React.FC<NewPresetProps> = ({ onClose }) => {
             {/* 카테고리 탭 (예시: 상의, 하의, 외투) 추가하기 */}
           </View>
           {renderClothesList()}
-          <View style={{ alignItems: 'center', margin: 10 }}>
-            <Button 
-              title="등록" 
-              onPress={() => toggleModal()} />
+          <View style={styles.buttonContainer}>
+            <Button
+              title="등록"
+              onPress={() => sendData()}
+              style={styles.button}
+            />
+            <Button
+              title="취소"
+              onPress={() => toggleModal()}
+              style={styles.button}
+            />
           </View>
         </View>
       </Modal>
@@ -153,6 +167,12 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.Large,
     marginVertical: 10,
     marginLeft: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    margin: 10,
   },
   button: {
     width: 100,

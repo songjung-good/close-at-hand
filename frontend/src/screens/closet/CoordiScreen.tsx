@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 // 컴포넌트 불러오기
 import { COLORS, FONTSIZE } from '../../shared/';
@@ -7,7 +7,6 @@ import { PresetItem, NewPreset } from '../../components';
 // API
 import { AxiosError } from 'axios';
 import { API } from '../../shared/';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface presetItem {
   presetId: number;
@@ -53,19 +52,19 @@ const CoordiScreen: React.FC = () => {
       <View style={styles.header}>
         <Text style={styles.title}>프리셋 목록</Text>
       </View>
-      <TouchableOpacity>
-        <NewPreset 
-          onClose={toggleModal}
-        />
-      </TouchableOpacity>
-      <View style={{flexGrow:1}}>
-        <FlatList
-          data={presets}
-          renderItem={({ item }) => <PresetItem presetId={item.presetId} presetName={item.presetName} clothes={item.clothes} />} // 수정된 부분
-          keyExtractor={(item) => item.presetId.toString()}
-          contentContainerStyle={{flexGrow:1}}
-        />
+      <View>
+        <TouchableOpacity>
+          <NewPreset 
+            onClose={toggleModal}
+          />
+        </TouchableOpacity>
       </View>
+      <FlatList
+        data={presets}
+        renderItem={({ item }) => <PresetItem presetId={item.presetId} presetName={item.presetName} clothes={item.clothes} />} // 수정된 부분
+        keyExtractor={(item) => item.presetId.toString()}
+        contentContainerStyle={{flexGrow:1}}
+        />
     </View>
   );
 };
@@ -75,6 +74,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: '5%',
     marginVertical: '5%',
+    flex: 1,
   },
   header: {
     flexDirection: "row",
@@ -85,9 +85,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: FONTSIZE.Medium,
     fontWeight: 'bold',
-  },
-  flatListContent: {
-    flexGrow: 1,
   },
 });
 

@@ -31,7 +31,7 @@ const ClosetMainScreen: React.FC <RootScreenProp<"closet">> = () => {
             <Text style={styles.buttonText}>코디</Text>
           </TouchableOpacity>
         </View>
-        <View>
+        <View style={{flex:1}}>
           {selectedButton === "closet" && (
             <ClosetScreen />
           )}
