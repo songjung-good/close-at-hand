@@ -203,7 +203,7 @@ def AR_Fitting(model: str, num_poses: int,
         # # FPS 표시
         # fps_text = 'FPS = {:.1f}'.format(FPS)
         # text_location = (left_margin, row_size)
-        # current_frame = image
+        current_frame = image
         # cv.putText(current_frame, fps_text, text_location,
         #             cv.FONT_HERSHEY_DUPLEX,
         #             font_size, text_color, font_thickness, cv.LINE_AA)
