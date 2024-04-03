@@ -32,7 +32,7 @@ looks = [
     ['clothes/satur_T.png', 'clothes/blue_pants.png', None],
     ['clothes/ck_T.png', 'clothes/navy_skirt.png', None], 
     ['clothes/white_cardigan.png', 'clothes/blue_skirt.png', None], 
-    [None, None, 'clothes/black_dress.png']
+    [None, None, 'clothes/pink_dress.png']
     ]
 
 # 여러 얼굴 사진의 파일 경로
@@ -92,7 +92,7 @@ def calculate_scale_factor_for_top(shoulder_width, top_distance, scale_adjustmen
     # print((shoulder_width * scale_adjustment) / top_distance)
     return (shoulder_width * scale_adjustment) / top_distance
 
-def calculate_scale_factor_for_dress(shoulder_width, top_distance, scale_adjustment=0.35):
+def calculate_scale_factor_for_dress(shoulder_width, top_distance, scale_adjustment=1.8):
     """상의 이미지와 사람의 어깨 너비 사이의 스케일 팩터를 계산합니다."""
     print((shoulder_width * scale_adjustment) / top_distance)
     return (shoulder_width * scale_adjustment) / top_distance
@@ -222,7 +222,7 @@ def AR_Fitting(model: str, num_poses: int,
                     right_shoulder_x, right_shoulder_y = int(right_shoulder.x * width), int(right_shoulder.y * height)
                     shoulder_width = np.sqrt((right_shoulder_x - left_shoulder_x) ** 2 + (right_shoulder_y - left_shoulder_y) ** 2)
                     scale_factor_dress = calculate_scale_factor_for_dress(shoulder_width, dress_distance)
-                    overlay_position_dress = ((left_shoulder_x + right_shoulder_x) // 2 - (dress_image.shape[1] * scale_factor_dress) // 2, min(left_shoulder_y, right_shoulder_y) - (shoulder_width * scale_factor_dress) / 2.5)
+                    overlay_position_dress = ((left_shoulder_x + right_shoulder_x) // 2 - (dress_image.shape[1] * scale_factor_dress) // 2, min(left_shoulder_y, right_shoulder_y) - (shoulder_width * scale_factor_dress) / 4)
                     current_frame = overlay_clothing_on_person(current_frame, dress_image, overlay_position_dress, scale_factor_dress, current_frame.shape)
             # 상의와 하의
             else:
@@ -272,6 +272,7 @@ def face_recognition():
 
     face_id = "DamaskRose"  # 인식된 사람의 이름
     name = "<Unknown Person>"
+    file_path = "../MagicMirror/modules/MMM-Face-Recognition-SMAI/sample.txt"
 
     while True:
         print("Capturing image.")
@@ -293,15 +294,20 @@ def face_recognition():
             if True in matches:
                 name = face_id
                 print(f"Person Detected: {name}!")
+
+                with open(file_path, "w") as f:
+                    f.write(name)
+
+                print("Pausing for 20 minutes.")
+                time.sleep(20 * 60)  # 20분 동안 대기
+                break
             else:
                 name = "<Unknown Person>"
                 print("No known faces detected.")
-            
-            # 인식 결과를 파일에 쓰기
-            # with open(os.path.join(current_dir, "sample.txt"), "w") as f:
-            with open("C:\Users\SSAFY\Desktop\Close_at_Hand\S10P22E207\embedded\MagicMirror\modules\MMM-Face-Recognition-SMAI\sample.txt", "w") as f:
-                f.write(name)
 
+                with open(file_path, "w") as f:
+                    f.write(name)
+            
             # 시간 지연
             time.sleep(15)
 
@@ -309,7 +315,7 @@ def face_recognition():
         # if not face_encodings:
         if not face_locations:
             # with open(os.path.join(current_dir, "sample.txt"), "w") as f:
-            with open("C:\Users\SSAFY\Desktop\Close_at_Hand\S10P22E207\embedded\MagicMirror\modules\MMM-Face-Recognition-SMAI\sample.txt", "w") as f:
+            with open(file_path, "w") as f:
                 f.write(name)
 
 def main():
