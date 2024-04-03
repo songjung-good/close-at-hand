@@ -17,6 +17,7 @@ COUNTER, FPS = 0, 0
 START_TIME = time.time()
 DETECTION_RESULT = None
 INDEX = 0
+LAST_UPDATE_TIME = time.time()
 
 looks = [
     ['clothes/satur_T.png', 'clothes/blue_pants.png', None], 
@@ -24,6 +25,18 @@ looks = [
     ['clothes/white_cardigan.png', 'clothes/blue_skirt.png', None], 
     [None, None, 'clothes/pink_dress.png']
     ]
+
+# INDEX 업데이트 함수
+def update_index():
+    global INDEX, LAST_UPDATE_TIME
+    current_time = time.time()
+    if current_time - LAST_UPDATE_TIME >= 40:  # 40초가 지났는지 확인
+        INDEX += 1
+        if INDEX >= len(looks):
+            INDEX = 0
+        LAST_UPDATE_TIME = current_time
+
+
 
 # 이미지를 불러오고 필요한 색 공간으로 변환
 def load_and_convert_image(image_path, color_space='RGB'):
@@ -70,16 +83,13 @@ def find_pants_extremes(image):
 
 # 상의 이미지와 사람의 어깨 너비 사이의 스케일 팩터 계산
 def calculate_scale_factor_for_top(shoulder_width, top_distance, scale_adjustment=0.45):
-    # print((shoulder_width * scale_adjustment) / top_distance)
     return (shoulder_width * scale_adjustment) / top_distance
 
 # 하의 이미지와 사람의 골반 너비 사이의 스케일 팩터 계산
 def calculate_scale_factor_for_pants(hip_width, pants_distance, scale_adjustment=1.4):
-    # print((hip_width * scale_adjustment) / pants_distance)
     return (hip_width * scale_adjustment) / pants_distance
 
 def calculate_scale_factor_for_dress(shoulder_width, top_distance, scale_adjustment=1.8):
-    print((shoulder_width * scale_adjustment) / top_distance)
     return (shoulder_width * scale_adjustment) / top_distance
 
 
@@ -154,6 +164,8 @@ def run(model: str, num_poses: int,
     detector = vision.PoseLandmarker.create_from_options(options)
 
     while True:
+        update_index() 
+        
         top_image_path = looks[INDEX][0]
         pants_image_path = looks[INDEX][1]
         dress_image_path = looks[INDEX][2]
