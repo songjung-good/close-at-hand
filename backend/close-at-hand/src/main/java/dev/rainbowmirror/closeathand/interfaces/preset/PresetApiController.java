@@ -87,7 +87,10 @@ public class PresetApiController {
         System.out.println(request);
         System.out.println(presetImgString);
         try {
-            MultipartFile presetImg = Base64ToMultipartFileConverter.convert(presetImgString);
+            MultipartFile presetImg = null;
+            if (presetImgString != null) {
+                presetImg = Base64ToMultipartFileConverter.convert(presetImgString);
+            }
             System.out.println("decoding done!");
             return CommonResponse.success(presetFacade.update(request.toCommand(presetImg)));
         } catch (IOException e) {
