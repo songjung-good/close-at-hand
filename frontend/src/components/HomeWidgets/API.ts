@@ -17,7 +17,7 @@ export async function fetchToday({
 }: FetchTodayInterface): Promise<NoResponse | TodayResponse> {
 	try {
 		const response = await API.get("ootd/today", { signal });
-		console.log(response.data);
+
 		if (!response.data.data.ootdImgUrl) {
 			return {
 				message:
@@ -40,10 +40,10 @@ export function countLaundries() {
 }
 
 export async function fetchCount({ signal }: FetchTodayInterface) {
-  try {
-    const response = await API.get("statistics/count", {signal})
-    return response.data.data as number
-  } catch (error) {
-    throw new Error((error as AxiosError).message ?? "네트워크 에러")
-  }
+	try {
+		const response = await API.get("statistics/count", { signal });
+		return response.data.data as number;
+	} catch (error) {
+		throw new Error((error as AxiosError).message ?? "네트워크 에러");
+	}
 }

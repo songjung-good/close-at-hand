@@ -13,7 +13,7 @@ const RecentCoordyDetail: React.FC<Props> = ({ ootdId }) => {
 		queryKey: ["recentCoordyList", ootdId],
 		queryFn: async ({ signal }) => fetchDetail({ signal, ootdId }),
 	});
-	console.log(data);
+
 	return (
 		<>
 			{(isLoading || isError) && (

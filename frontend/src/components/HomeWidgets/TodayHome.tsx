@@ -64,7 +64,8 @@ const TodayHome = () => {
 		if (
 			isError ||
 			(data && "noResponse" in data) ||
-			data?.clothes.length === 0
+			data?.clothes.length === 0 ||
+			!data?.ootdImgUrl
 		) {
 			refetch();
 		}
