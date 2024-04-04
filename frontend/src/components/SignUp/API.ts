@@ -1,17 +1,18 @@
+import { AxiosError } from "axios";
 import { API } from "../../shared";
 
-interface FetchSignUp {
-	accountId: string;
+interface FetchSignUpInterface {
+	account: string;
 	password: string;
-	nickname: string;
+	userName: string;
 }
 
 export async function fetchSignUp({
-	accountId,
+	account,
 	password,
-	nickname,
-}: FetchSignUp) {
-	return API.post("user", { accountId, password, nickname })
+	userName,
+}: FetchSignUpInterface) {
+	return API.post("user", { account, password, userName })
 		.then(() => {
 			return true;
 		})
@@ -19,4 +20,13 @@ export async function fetchSignUp({
 			console.log(reject);
 			throw new Error("회원가입 실패");
 		});
+}
+
+export async function fetchIdCheck(id: string) {
+	try {
+		const response = await API.get(`login/${id}`);
+		return response.data.data as "Already exist" | "Available";
+	} catch (error) {
+		return new Error((error as AxiosError).message);
+	}
 }

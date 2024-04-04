@@ -1,16 +1,16 @@
-import { Alert, StyleSheet } from "react-native";
-import { BorderBottomInput, StyledButton } from "../../shared";
+import { Alert, View } from "react-native";
+import { BorderBottomInput, StyledButton } from "../buttons";
 import { useReducer, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { fetchSignUp } from "./API";
+import { fetchIdCheck, fetchSignUp } from "./API";
 import { ErrorText } from "./UI";
+import { ROW } from "../../shared";
 
 const initialState = {
-	accountId: "",
+	account: "",
 	password: "",
 	password2: "",
-	nickname: "",
-	error: "",
+	userName: "",
 };
 
 type Action = {
@@ -24,13 +24,13 @@ const reducer = (
 ): typeof initialState => {
 	switch (action.type) {
 		case "SET_ACCOUNT_ID":
-			return { ...state, accountId: action.payload };
+			return { ...state, account: action.payload };
 		case "SET_PASSWORD":
 			return { ...state, password: action.payload };
 		case "SET_PASSWORD2":
 			return { ...state, password2: action.payload };
 		case "SET_NICKNAME":
-			return { ...state, nickname: action.payload };
+			return { ...state, userName: action.payload };
 		default:
 			return state;
 	}
@@ -43,6 +43,7 @@ interface Props {
 const SignUp: React.FC<Props> = ({ setSignUpTry }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const [error, setError] = useState("");
+	const [idError, setIdError] = useState("");
 	const { mutate } = useMutation({
 		mutationFn: fetchSignUp,
 		onSuccess: () => {
@@ -104,6 +105,19 @@ const SignUp: React.FC<Props> = ({ setSignUpTry }) => {
 		}
 	}
 
+	async function handleIdCheck() {
+		if (state.account.length < 5) {
+			setIdError("아이디는 최소 5글자 이상이어야 합니다.");
+			return;
+		}
+		const result = await fetchIdCheck(state.account);
+		if (result === "Already exist") {
+			setIdError("이미 존재하는 아이디입니다.");
+		} else {
+			Alert.alert("사용가능한 아이디입니다.");
+		}
+	}
+
 	function hanldeSubmit() {
 		if (isValid(state, setError)) {
 			mutate(state);
@@ -112,11 +126,21 @@ const SignUp: React.FC<Props> = ({ setSignUpTry }) => {
 
 	return (
 		<>
-			<BorderBottomInput
-				value={state.accountId}
-				onChangeText={handleAccountIdChange}
-				placeholder="아이디"
-			/>
+			<View style={[ROW]}>
+				<View style={{ flex: 1 }}>
+					<BorderBottomInput
+						value={state.account}
+						onChangeText={handleAccountIdChange}
+						placeholder="아이디"
+					/>
+				</View>
+				<StyledButton
+					onPress={handleIdCheck}
+					title="중복 확인"
+					backgroundColor="White"
+				/>
+			</View>
+			<ErrorText>{idError}</ErrorText>
 			<BorderBottomInput
 				value={state.password}
 				onChangeText={handlePasswordChange}
@@ -130,7 +154,7 @@ const SignUp: React.FC<Props> = ({ setSignUpTry }) => {
 				secureTextEntry={true}
 			/>
 			<BorderBottomInput
-				value={state.nickname}
+				value={state.userName}
 				onChangeText={handleNicknameChange}
 				placeholder="닉네임"
 			/>
@@ -142,13 +166,11 @@ const SignUp: React.FC<Props> = ({ setSignUpTry }) => {
 
 export default SignUp;
 
-const styles = StyleSheet.create({});
-
 const isValid = (
 	state: typeof initialState,
 	errorDisplayer: (message: string) => void,
 ): boolean => {
-	const { accountId, password, password2, nickname } = state;
+	const { account: accountId, password, password2, userName: nickname } = state;
 
 	if (!accountId || !password || !password2 || !nickname) {
 		errorDisplayer("빈 항목이 있습니다. 모든 항목을 입력하세요");

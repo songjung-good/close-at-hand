@@ -33,3 +33,9 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# @react-native-esbuild's local cache directory for development environment
+.rne
+ 
+# swc plugins
+.swc

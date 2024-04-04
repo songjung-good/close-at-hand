@@ -23,7 +23,7 @@ public class ClothesTagGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "clothes_id")
     private Clothes clothes;
 

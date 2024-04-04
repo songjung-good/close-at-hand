@@ -24,8 +24,6 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-//	implementation("org.flywaydb:flyway-core")
-//	implementation("org.flywaydb:flyway-mysql")
 
 	// https://mvnrepository.com/artifact/com.google.guava/guava
 	implementation("com.google.guava:guava:32.1.3-jre")

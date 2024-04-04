@@ -1,44 +1,39 @@
-import { API } from "../../shared";
-import { setGenericPassword } from "react-native-keychain";
-import * as SecureStore from "expo-secure-store";
+import { API, useUser } from "../../shared";
+import * as Keychain from "react-native-keychain";
 
-interface FetchLogin {
-	accountId: string;
+interface FetchLoginInterface {
+	account: string;
 	password: string;
 }
 
-export async function fetchLogin({ accountId, password }: FetchLogin) {
-	return API.post("login", {
-		accountId,
-		password,
-	})
-		.then(async ({ data }) => {
-			const today = new Date();
-			// 한 달 뒤
-			const oneMonthLater = new Date(
-				today.getFullYear(),
-				today.getMonth() + 1,
-				today.getDate(),
-			);
+export async function fetchLogin({ account, password }: FetchLoginInterface) {
+	const formData = new FormData();
+	formData.append("account", account);
+	formData.append("password", password);
 
-			// 한 시간 전
-			const oneHourEarlier = new Date(oneMonthLater.getTime() - 1000 * 60 * 60); // 1000 = 1초, 60 = 1분
-			const formattedDateTime =
-				oneHourEarlier.toISOString().split("T")[0] +
-				" " +
-				oneHourEarlier.toTimeString().split(" ")[0];
-			try {
-				const a = SecureStore.setItemAsync("CloseAtHandtoken", data.token);
-				const b = SecureStore.setItemAsync("CloseAtHandexp", formattedDateTime);
-				const c = setGenericPassword("refreshToken", data.token);
-				await Promise.allSettled([a, b, c]);
-			} catch (error) {
-				console.log(error);
+	return API.post("login", formData, {
+		headers: {
+			"Content-Type": 'multipart/form-data; boundary="boundary"',
+		},
+	})
+		.then(async ({ headers }) => {
+			if (headers.authorization) {
+				const token = headers.authorization;
+				useUser.setState((state) => ({
+					...state,
+					accessToken: token,
+				}));
+				await Keychain.setInternetCredentials(
+					"closeAtHand",
+					"closeAtHand",
+					token,
+				);
+				console.log("저장");
 			}
-			return true;
+			console.log("응답, 토큰", headers.authorization);
 		})
 		.catch((reject) => {
-			console.log(reject);
+			console.log("로그인 실패", reject.message);
 			throw new Error("로그인 실패");
 		});
 }

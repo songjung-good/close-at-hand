@@ -1,23 +1,25 @@
 module.exports = {
 	expo: {
-		name: "Front",
-		slug: "Front",
-		version: "1.0.0",
+		name: "Close At Hand",
+		slug: "close-at-hand",
+		version: "0.0.1",
 		orientation: "portrait",
 		icon: "./assets/icon.png",
 		userInterfaceStyle: "light",
 		splash: {
-			image: "./assets/splash.png",
+			image: "./assets/splashA.png",
 			resizeMode: "contain",
-			backgroundColor: "#ffffff",
+			backgroundColor: "#fdd087",
 		},
 		assetBundlePatterns: ["**/*"],
 		ios: {
 			supportsTablet: true,
 		},
 		android: {
+			versionCode: 1,
+			package: "com.closeAtHand",
 			adaptiveIcon: {
-				foregroundImage: "./assets/adaptive-icon.png",
+				foregroundImage: "./assets/adaptive-iconA.png",
 				backgroundColor: "#ffffff",
 			},
 		},
@@ -26,14 +28,9 @@ module.exports = {
 		},
 		extra: {
 			storybookEnabled: "process.env.STORYBOOK_ENABLED",
+			eas: {
+				projectId: "f3d1051a-5df5-4914-9071-3b8c233ece52",
+			},
 		},
-		plugins: [
-			[
-				"expo-secure-store",
-				{
-					faceIDPermission: "Face ID를 사용하기 위해 권한을 허용해주세요.",
-				},
-			],
-		],
 	},
 };

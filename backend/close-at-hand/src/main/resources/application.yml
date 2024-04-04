@@ -1,16 +1,21 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/closeathand?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: 1234
+    url:
+    username:
+    password:
   jpa:
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+  security:
+    user:
+      name: account
+  jwt:
+    secret:
 server:
   port: 3000
   shutdown: graceful
@@ -23,3 +28,22 @@ springdoc:
   api-docs:
     path: /api-docs
   show-actuator: true
+cloud:
+  aws:
+    s3:
+      bucket:
+    credentials:
+      access-key:
+      secret-key:
+    region:
+      static:
+      auto: false
+    stack:
+      auto: false
+omni:
+  X-Api-Key:
+  url:
+  get-key:
+  get-url:
+  recommend-url:
+  recommend-key:
