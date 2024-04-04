@@ -103,6 +103,7 @@ public class ClothesServiceImpl implements ClothesService{
             } else {
                 clothes.enable();
             }
+            clothesStore.store(clothes);
         }
         return result;
     }
