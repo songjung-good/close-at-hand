@@ -21,6 +21,21 @@
   float: center; /* Left, center or right */
 }
 
+.ootd_logo {
+  width: auto;
+  height: 100%;
+  margin-right: -1px; /* Move your picture using these */
+  margin-left: -1px; /* Move your picture using these */
+  margin-top: -1px; /* Move your picture using these */
+  margin-bottom: -1px; /* Move your picture using these */
+  float: center; /* Left, center or right */
+}
+
+.your-svg-image {
+  width: 50%;
+  height: auto;
+}
+
 .blue-notification {
   color: var(--color-text-blue);
   margin-bottom: 10px;

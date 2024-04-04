@@ -142,22 +142,31 @@ let config = {
 			module: "MMM-EasyPix",
 			position: "middle_center",
 			config: {
-			  picName: "guideline-img.svg",            // Enter the picture file name.
-			  className: "my-svg-image",                // Size picture precisely. Retains aspect ratio.
+			  picName: "E207수정.png",            // Enter the picture file name.
+			className: "ootd_logo",
 			},
 			classes: "AR-guideline"
+		},
+		{
+			module: "MMM-EasyPix",
+			position: "top_right",
+			config: {
+			  picName: "satur_T.png",            // Enter the picture file name.
+			  className: "your-svg-image",                // Size picture precisely. Retains aspect ratio.
+			},
+			classes: "topclothes"
 
 		},
 		{
-			module: "helloworld",
-			position: "middle_center",
+			module: "MMM-EasyPix",
+			position: "top_right",
 			config: {
-				text: "가이드라인에 맞춰 서주세요!",
-				customClass: "medium blue-notification"
+			  picName: "blue_pants.png",            // Enter the picture file name.
+			  className: "your-svg-image",                // Size picture precisely. Retains aspect ratio.
 			},
-			classes: "notification_AR"
-		},
+			classes: "bottomclothes"
 
+		},
 
 		// OOTD용 모듈
 		{
@@ -215,7 +224,7 @@ let config = {
 			module: "MMM-pages",
 			config: {
 				modules: [
-					["AR_Header", "AR_category", "AR-guideline", "notification_AR"],  // page 0: AR
+					["AR_Header", "AR_category", "AR-guideline", "topclothes", "bottomclothes"],  // page 0: AR
 					["alert", "MMM-Face-Recognition-SMAI", "updatenotification", "clock", "compliments", "weather", "newsfeed"],  // page 1: Home
 					["OOTD_Header", "handgesture", "notification_OOTD", "navi4", "MMM-Selfieshot", "MMM-OpenCVStream"]  // page 1: OOTD
 				],

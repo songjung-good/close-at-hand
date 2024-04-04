@@ -46,13 +46,17 @@ while True:
         if True in matches:
             name = face_id
             print(f"Person Detected: {name}!")
+            with open(os.path.join(current_dir, "sample.txt"), "w") as f:
+                f.write(name)
+            
+            time.sleep(15 * 60)
         else:
             name = "<Unknown Person>"
             print("No known faces detected.")
         
-        # 인식 결과를 파일에 쓰기
-        with open(os.path.join(current_dir, "sample.txt"), "w") as f:
-            f.write(name)
+            # 인식 결과를 파일에 쓰기
+            with open(os.path.join(current_dir, "sample.txt"), "w") as f:
+                f.write(name)
 
         # 시간 지연
         time.sleep(15)

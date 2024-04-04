@@ -39,9 +39,15 @@ Module.register("MMM-EasyPix", {
     image.src = `/modules/MMM-EasyPix/pix/${this.config.picName}`;
     image.className = "mmm-easypix-photo";
     image.style.maxWidth = this.config.maxWidth;
+
+    image.addEventListener("click", () => {
+      this.sendSocketNotification("image_clicked", {});
+    });
+
     wrapper.appendChild(image);
     return wrapper;
   },
+
 
   randomImgLink () {
     const myimages = "/modules/MMM-EasyPix/pix/";

@@ -30,7 +30,7 @@ looks = [
 def update_index():
     global INDEX, LAST_UPDATE_TIME
     current_time = time.time()
-    if current_time - LAST_UPDATE_TIME >= 40:  # 40초가 지났는지 확인
+    if current_time - LAST_UPDATE_TIME >= 15:  # 40초가 지났는지 확인
         INDEX += 1
         if INDEX >= len(looks):
             INDEX = 0
