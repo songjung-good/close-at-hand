@@ -111,7 +111,7 @@ module.exports = NodeHelper.create({
 
 	sendPhotoToBackend: function(filepath) {
 		const formData = new FormData();
-		formData.append('request', JSON.stringify({'clothesIdList':[1, 3, 5]}));
+		formData.append('request', JSON.stringify({'clothesIdList':[41, 42, 43]}));
 		formData.append('ootdImg', fs.createReadStream(filepath));
 
 		const apiEndpoint = 'https://j10e207.p.ssafy.io/api/v1/ootd';
