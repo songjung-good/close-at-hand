@@ -11,7 +11,7 @@ module.exports = NodeHelper.create({
     },
 
     executePythonScript: function() {
-        exec("source /home/bada/myvenv/bin/activate && python3 /home/bada/S10P22E207/embedded/AI/fitting.py", (error, stdout, stderr) => {
+        exec("bash -c 'source /home/bada/myvenv/bin/activate && cd /home/bada/S10P22E207/embedded/AI/ && python fitting.py'", (error, stdout, stderr) => {
             if (error) {
                 console.error(`exec error: ${error}`);
                 return;

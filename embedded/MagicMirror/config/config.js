@@ -147,26 +147,26 @@ let config = {
 			},
 			classes: "AR-guideline"
 		},
-		{
-			module: "MMM-EasyPix",
-			position: "top_right",
-			config: {
-			  picName: "satur_T.png",            // Enter the picture file name.
-			  className: "your-svg-image",                // Size picture precisely. Retains aspect ratio.
-			},
-			classes: "topclothes"
+		// {
+		// 	module: "MMM-EasyPix",
+		// 	position: "top_right",
+		// 	config: {
+		// 	  picName: "satur_T.png",            // Enter the picture file name.
+		// 	  className: "your-svg-image",                // Size picture precisely. Retains aspect ratio.
+		// 	},
+		// 	classes: "topclothes"
 
-		},
-		{
-			module: "MMM-EasyPix",
-			position: "top_right",
-			config: {
-			  picName: "blue_pants.png",            // Enter the picture file name.
-			  className: "your-svg-image",                // Size picture precisely. Retains aspect ratio.
-			},
-			classes: "bottomclothes"
+		// },
+		// {
+		// 	module: "MMM-EasyPix",
+		// 	position: "top_right",
+		// 	config: {
+		// 	  picName: "blue_pants.png",            // Enter the picture file name.
+		// 	  className: "your-svg-image",                // Size picture precisely. Retains aspect ratio.
+		// 	},
+		// 	classes: "bottomclothes"
 
-		},
+		// },
 
 		// OOTD용 모듈
 		{
@@ -233,7 +233,7 @@ let config = {
                     "screenSaver": [ "clock" ],  // AOD
                     // "admin": [ "MMM-ShowMeSystemStatsModule", "MMM-AnOnScreenMenuModule" ],
                 },
-				homePage: 2, // home page index
+				homePage: 1, // home page index
 			}
 		},
 	]
