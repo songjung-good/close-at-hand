@@ -12,7 +12,6 @@
  * see https://docs.magicmirror.builders/configuration/introduction.html#enviromnent-variables
  */
 let config = {
-	// test
 	address: "localhost",	// Address to listen on, can be:
 	// - "localhost", "127.0.0.1", "::1" to listen on loopback interface
 	// - another specific IPv4/6 to listen on a specific interface
@@ -32,36 +31,12 @@ let config = {
 	httpsCertificate: "",	// HTTPS Certificate path, only require when useHttps is true
 
 	language: "ko",
-	locale: "ko-KR",
+    locale: "ko-KR",
 	logLevel: ["INFO", "LOG", "WARN", "ERROR"], // Add "DEBUG" for even more logging
 	timeFormat: 24,
 	units: "metric",
 
 	modules: [
-		// fixed 모듈
-		{
-			module: "MMM-page-indicator",
-			position: 'bottom_bar',
-			config: {
-				pages: 3,
-			}
-		},
-		{
-			module: "MMM-Simple-Swiper",
-			disabled: false,
-			config: {
-				echoPin: 24,
-				triggerPin: 23,
-				threshold: 100,
-				debug: false,
-				delay: 750,
-			},
-		},
-		{
-			module: "MMM-Mediapipe",
-		},
-
-
 		// 홈 화면용 모듈
 		{
 			module: "alert",
@@ -84,6 +59,20 @@ let config = {
 				prompt: "",
 			}
 		},
+		// {
+		// 	module: "calendar",
+		// 	header: "US Holidays",
+		// 	position: "top_left",
+		// 	config: {
+		// 		calendars: [
+		// 			{
+		// 				fetchInterval: 7 * 24 * 60 * 60 * 1000,
+		// 				symbol: "calendar-check",
+		// 				url: "https://ics.calendarlabs.com/76/mm3137/US_Holidays.ics"
+		// 			}
+		// 		]
+		// 	}
+		// },
 		{
 			module: "compliments",
 			position: "lower_third"
@@ -153,22 +142,31 @@ let config = {
 			module: "MMM-EasyPix",
 			position: "middle_center",
 			config: {
-				picName: "guideline-img.svg",            // Enter the picture file name.
-				className: "my-svg-image",                // Size picture precisely. Retains aspect ratio.
+			  picName: "E207수정.png",            // Enter the picture file name.
+			className: "ootd_logo",
 			},
 			classes: "AR-guideline"
-
 		},
-		{
-			module: "helloworld",
-			position: "middle_center",
-			config: {
-				text: "가이드라인에 맞춰 서주세요!",
-				customClass: "medium blue-notification"
-			},
-			classes: "notification_AR"
-		},
+		// {
+		// 	module: "MMM-EasyPix",
+		// 	position: "top_right",
+		// 	config: {
+		// 	  picName: "satur_T.png",            // Enter the picture file name.
+		// 	  className: "your-svg-image",                // Size picture precisely. Retains aspect ratio.
+		// 	},
+		// 	classes: "topclothes"
 
+		// },
+		// {
+		// 	module: "MMM-EasyPix",
+		// 	position: "top_right",
+		// 	config: {
+		// 	  picName: "blue_pants.png",            // Enter the picture file name.
+		// 	  className: "your-svg-image",                // Size picture precisely. Retains aspect ratio.
+		// 	},
+		// 	classes: "bottomclothes"
+
+		// },
 
 		// OOTD용 모듈
 		{
@@ -184,8 +182,8 @@ let config = {
 			module: "MMM-EasyPix",
 			position: "top_right",
 			config: {
-				picName: "hand-gesture.gif",
-				className: "gesture-size"
+			  picName: "hand-gesture.gif",
+			  className: "gesture-size"
 			},
 			classes: "handgesture"
 		},
@@ -198,37 +196,41 @@ let config = {
 			},
 			classes: "notification_OOTD"
 		},
-
 		{
-			module: "MMM-EasyPix",
-			position: "middle_center",
+			disabled: false,
+			module: "MMM-Selfieshot",
+			position: "bottom_left",
 			config: {
-				picName: "logo.png",
-			},
-			classes: "logo_AOD"
+			  displayButton: "portrait",
+			  width: 1080,
+			  height: 1920,
+			}
 		},
 		{
-			module: "helloworld",
-			position: "middle_center",
-			config: {
-				text: "AOD 화면입니당^-^",
-				customClass: "medium bright blue"
-			},
-			classes: "text_AOD"
+			module: "MMM-OpenCVStream",
+			position: "bottom_right"
 		},
 
 
+
+		{
+			module: "MMM-page-indicator",
+			position: 'bottom_bar',
+			config: {
+				pages: 3,
+			}
+		},
 		{
 			module: "MMM-pages",
 			config: {
 				modules: [
-					["AR_Header", "AR_category", "AR-guideline", "notification_AR"],  // page 0: AR
+					["AR_Header", "AR_category", "AR-guideline", "topclothes", "bottomclothes"],  // page 0: AR
 					["alert", "MMM-Face-Recognition-SMAI", "updatenotification", "clock", "compliments", "weather", "newsfeed"],  // page 1: Home
-					["OOTD_Header", "handgesture", "notification_OOTD", "navi4"]  // page 1: OOTD
+					["OOTD_Header", "handgesture", "notification_OOTD", "navi4", "MMM-Selfieshot", "MMM-OpenCVStream"]  // page 1: OOTD
 				],
-				fixed: ["MMM-page-indicator", "MMM-Simple-Swiper", "MMM-Mediapipe"],
+				fixed: ["MMM-page-indicator"],
 				hiddenPages: {
-                    "screenSaver": [ "clock", "logo_AOD", "text_AOD"],
+                    "screenSaver": [ "clock" ],  // AOD
                     // "admin": [ "MMM-ShowMeSystemStatsModule", "MMM-AnOnScreenMenuModule" ],
                 },
 				homePage: 1, // home page index

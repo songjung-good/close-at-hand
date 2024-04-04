@@ -1,16 +1,66 @@
 # Embedded
 
-## 팀원
+## ✔ 멤버
 
 | 이름 | 역할 |
 |-----|-------|
-| 한성주 | 임베디드 팀장 |
-| 서지수 | 임베디드 |
+| 한성주 | 팀장 |
+| 서지수 | 팀원 |
 
 
-----
+-------
 
-## Raspberry Pi 5 OS 설치
+
+  
+## ✔ 개발 환경
+
+
+| 분류                 | 기술 및 도구                                      |
+|----------------------|---------------------------------------------------|
+| **OS**               | Linux                                             |
+| **프로그래밍 언어**  | JavaScript, Python, ShellScript                   |
+| **AI**               | OpenCV, Mediapipe                                 |
+| **백엔드 기술**      | NodeJS, Flask, PM2                                |
+| **프론트엔드 기술**  | Electron, JavaScript, CSS                         |
+| **협업 및 버전 관리** | Git, Figma, Jira, Gerrit                          |
+
+-------
+
+## ✔ 주요 기능
+
+- AR Fitting
+    - 오늘의 추천 옷 가상으로 입어보기 기능
+    - openCV와 Mediapipe 활용
+
+- 제스처 인식
+    - IoT 기기 인터페이스, 기능 제어
+
+- 얼굴 인식
+  - 사용자 인식
+  - 개인화 기능
+
+- 옷 등록 / ootd 등록
+  - 옷장에 있는 옷 등록
+  - 오늘 입은 옷(oodt) 등록
+
+--------
+
+## ✔ MagicMirror2 Modules
+
+### Custom modules
+
+- MMM-Mediapipe
+
+### Third party modules
+- MMM-Face-Recognition
+- MMM-page-indicator
+- MMM-pages
+- MMM-Selfieshot
+- MMM-EasyPix
+
+-------
+
+## ✔ Raspberry Pi 5 OS 설치
 - Raspberry Pi 5 OS (64bit)
     1. **[Raspberry Pi Imager](https://www.raspberrypi.com/software/) 설치**
     2. SD 카드 FAT32로 포맷
@@ -22,7 +72,7 @@
         4. 국가 선택 -> kr
    
 
-## 기본 세팅
+## ✔ 기본 세팅
 
 ### 1. 고정 ip 설정 
  

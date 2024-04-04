@@ -2,8 +2,6 @@ var NodeHelper = require("node_helper");
 const fs = require("fs");
 const path = require("path");
 
-//push용
-
 module.exports = NodeHelper.create({
   start: function() {
     console.log("MMM-Mediapipe helper started.");
