@@ -1,16 +1,18 @@
-import { StyleSheet } from "react-native";
 import Menu from "./Menu";
 import { useNavigation } from "@react-navigation/native";
 
+import basket from "../../../assets/image/laundry_Basket.png";
+import diary from "../../../assets/image/diary.png";
+
 const ManagementMenuList = () => {
-	const navigation = useNavigation<ManageMentNav>();
+	const navigation = useNavigation<Navigation>();
 
 	function handleLaundryPress() {
-		navigation.navigate("LaundryMain");
+		navigation.navigate("laundryMain", { fromNoti: false });
 	}
 
 	function handleHistoryPress() {
-		navigation.navigate("History");
+		navigation.navigate("history");
 	}
 	return (
 		<>
@@ -18,18 +20,16 @@ const ManagementMenuList = () => {
 				title="빨래 바구니"
 				onPress={handleLaundryPress}
 				backgroundColor="PaleBlue"
-				image={require("../../../assets/image/laundry_Bascket.png")}
+				image={basket}
 			/>
 			<Menu
 				title="옷 관리"
 				onPress={handleHistoryPress}
-				backgroundColor="PupleBlue"
-				image={require("../../../assets/image/diary.png")}
+				backgroundColor="PurpleBlue"
+				image={diary}
 			/>
 		</>
 	);
 };
 
 export default ManagementMenuList;
-
-const styles = StyleSheet.create({});

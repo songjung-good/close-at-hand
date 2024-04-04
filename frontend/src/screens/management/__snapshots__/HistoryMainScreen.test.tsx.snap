@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HistoryMainScreen 스냅샷 테스트 1`] = `
+<RCTScrollView
+  refreshControl={
+    <RefreshControlMock
+      onRefresh={[Function]}
+      refreshing={false}
+    />
+  }
+>
+  <RCTRefreshControl />
+  <View>
+    <View
+      style={
+        [
+          {
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          {
+            "alignItems": "center",
+            "justifyContent": "space-between",
+            "marginHorizontal": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "fontSize": 32,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        최근 코디
+      </Text>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <Text />
+      </View>
+    </View>
+    <View
+      style={
+        [
+          {
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          {
+            "alignItems": "center",
+            "justifyContent": "space-between",
+            "marginHorizontal": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "fontSize": 32,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        이번 달 가장 많이 입은 옷
+      </Text>
+    </View>
+  </View>
+</RCTScrollView>
+`;

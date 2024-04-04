@@ -1,32 +1,72 @@
 import { useEffect } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { getGenericPassword } from "react-native-keychain";
+import { RealmProvider } from "@realm/react";
+import * as Keychain from "react-native-keychain";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import AppNav from "./navigation/AppNav";
+import {
+	getNotificationPermission,
+	scheduleDailyAlarm,
+	queryClient,
+	useUserActions,
+	NotificationType,
+	LaundryDB,
+} from "../shared";
+import { deleteNotification } from "../shared/notifee/notifee";
+interface Props {
+	readyNow(ready: boolean): void;
+}
 
-import { queryClient, useUserActions } from "../shared/index";
-
-export default function App() {
-	const { setRefreshToken } = useUserActions();
+const App: React.FC<Props> = ({ readyNow }) => {
+	const { setAccessToken } = useUserActions();
 
 	useEffect(() => {
 		async function getLoginInfo() {
 			try {
-				const credentials = await getGenericPassword();
+				const credentials =
+					await Keychain.getInternetCredentials("closeAtHand");
 				if (credentials) {
-					setRefreshToken({ token: credentials.password, exp: "" });
-					// access Token을 얻는 로직 작성
+					setAccessToken(credentials.password);
 				}
+				readyNow(true);
 			} catch (error) {
 				console.log(error);
 			}
 		}
-
 		getLoginInfo();
+
+		getNotificationPermission();
+
+		async function setPermissions() {
+			const notificationJson = await AsyncStorage.getItem(
+				"CloseAtHandNotifications",
+			);
+			if (notificationJson) {
+				const notificationSettings = JSON.parse(
+					notificationJson,
+				) as NotificationType;
+				Object.entries(notificationSettings).forEach(async ([key, value]) => {
+					if (key === "CloseAtHandHomeAlarm" && !value) {
+						await deleteNotification(key);
+					} else if (key === "CloseAtHandHomeAlarm") {
+						await scheduleDailyAlarm();
+					}
+				});
+			} else {
+				await scheduleDailyAlarm();
+			}
+		}
+		setPermissions();
 	}, []);
 
 	return (
-		<QueryClientProvider client={queryClient}>
-			<AppNav />
-		</QueryClientProvider>
+		<RealmProvider schema={[LaundryDB]} deleteRealmIfMigrationNeeded={true}>
+			<QueryClientProvider client={queryClient}>
+				<AppNav />
+			</QueryClientProvider>
+		</RealmProvider>
 	);
-}
+};
+
+export default App;

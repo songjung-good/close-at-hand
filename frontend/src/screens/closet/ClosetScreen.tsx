@@ -1,112 +1,204 @@
-// src/screens/closet/ClosetScreen.tsx
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, TouchableOpacity, Text, FlatList, ScrollView } from "react-native";
+// 컴포넌트 불러오기
+import { SearchModal, ClosetItem } from "../../components";
+import { FONTSIZE, COLORS } from "../../shared";
+// API
+import { AxiosError } from "axios";
+import { API } from "../../shared";
 
-// Mock data for clothes
-const clothesData1 = [
-  { id: '1', name: 'Shirt 1' },
-  { id: '2', name: 'Pants 1' },
-  { id: '3', name: 'Dress 1' },
-  // ... (add more items)
-];
-
-const clothesData2 = [
-  { id: '4', name: 'Jacket 1' },
-  { id: '5', name: 'Skirt 1' },
-  // ... (add more items)
-];
+// 옷 인터페이스
+interface ClothInfo {
+  clothesId: number;
+  clothesImgUrl: string;
+  texture: string[];
+  category: string[];
+  item: string[];
+  colors: string[];
+  looks: string[];
+  prints: string[];
+}
 
 const ClosetScreen: React.FC = () => {
-  const [isFirstScreen, setIsFirstScreen] = useState(true);
+  // 임시데이터
+  const [clothes, setClothes] = useState<ClothInfo[]>([]);
+  const [recommendClothes, setRecommendedClothes] = useState<ClothInfo[][]>([]);
+  // 검색 모달과 태그
+  const [selectedTags, setSelectedTags] = useState<any[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  
+  useEffect(() => {
+    // 서버로부터 옷 목록 데이터를 가져오는 API 호출
+    const fetchClothesData = async () => {
+      try {
+        const response = await API.get("/clothes");
+        setClothes(response.data.data);
+        // 모든 태그를 선택하여 초기화
+        const allTags = response.data.data.map((cloth: any) => {
+          // 옷의 모든 속성에서 태그만 추출하여 배열로 반환
+          return [
+            ...cloth.texture,
+            ...cloth.category,
+            ...cloth.item,
+            ...cloth.colors,
+            ...cloth.looks,
+            ...cloth.prints,
+          ];
+        });
+        
+        // 중복 제거 후 선택된 태그로 설정
+        const uniqueTags = Array.from(new Set(allTags.flat()));
+        setSelectedTags(uniqueTags);
+      } catch (error) {
+        console.error("옷 데이터가 없어용 ㅠ:", error as AxiosError);
+      }
+    };
+    fetchClothesData();
+      
+    // 서버로부터 추천 옷 데이터를 가져오는 API 호출
+    const fetchRecommendData = async () => {
+      try {
+        const response = await API.get("/recommend");
+        setRecommendedClothes(response.data.data.recommendList);
+      } catch (error) {
+        console.error("추천 옷 받아오는 거 어렵워용 ㅠㅠ:", error as AxiosError);
+      }
+    };
+    fetchRecommendData();
+  }, []);
 
-  const toggleScreen = () => {
-    setIsFirstScreen((prev) => !prev);
+
+  // 검색 모달에서 선택된 태그를 받아옵니다.
+  const handleSaveTags = (tags: any[]) => {
+    setSelectedTags(tags);
   };
 
-  const renderClothesList = () => {
+  // 모달의 현재 상태
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
+  // 추천 옷 리스트
+  const RenderRecommendedClothes: React.FC = () => {
+    return (
+      <ScrollView horizontal style={styles.recommendedDiv}>
+        {recommendClothes.flat().map((item) => (
+          <ClosetItem key={item.clothesId} {...item} />
+        ))}
+      </ScrollView>
+    );
+  };
+
+  // 옷장화면 옷 리스트 구성
+  const RenderClothes: React.FC = () => {
+    const filteredClothes = clothes.filter((cloth) => {
+      // 선택된 태그와 옷의 속성을 비교하여 필터링합니다.
+      return selectedTags.some((tag) => {
+        // 각 옷의 속성을 가져옵니다.
+        const { texture, category, item, colors, looks, prints } = cloth;
+        // 선택된 태그와 옷의 속성을 비교하여 필터링합니다.
+        return (
+          texture.includes(tag) || 
+          category.includes(tag) ||
+          item.includes(tag) ||
+          colors.includes(tag) ||
+          looks.includes(tag) ||
+          prints.includes(tag)
+        );
+      });
+    });
+
+        // 필터링된 옷이 없는 경우 알림창을 표시하는 로직 추가
+    if (filteredClothes.length === 0 || selectedTags.length === 0) {
+      return (
+        <View>
+          <Text style={styles.alertText}>선택된 옷이 없습니다. 다른 태그를 선택해주세요.</Text>
+        </View>
+      );
+    };
+
     return (
       <FlatList
-        data={isFirstScreen ? clothesData1 : clothesData2}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.clothesItem}>
-            <Text>{item.name}</Text>
-          </View>
-        )}
-        numColumns={isFirstScreen ? 3 : 1}
+        numColumns={3}
+        contentContainerStyle={styles.flatListContent}
+        data={filteredClothes}
+        renderItem={({ item }) => <ClosetItem key={item.clothesId} {...item} />}
+        keyExtractor={(item) => item.clothesId.toString()}
       />
     );
   };
 
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.headerButton}>
-          <Text>뒤로가기</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.headerButton}>
-          <Text>검색</Text>
-        </TouchableOpacity>
+    <View style={{flex:1}}>
+      <View style={styles.recommendlistDiv}>
+        <View style={styles.header}>
+          <Text style={styles.recommendedTitle}>오늘의 추천 옷</Text>
+          {/* 검색 버튼 */}
+          <TouchableOpacity>
+            <SearchModal
+              onClose={toggleModal}
+              onTagsSelected={handleSaveTags} 
+            />
+          </TouchableOpacity>
+        </View>
+        {/* 추천 옷 */}
+        <RenderRecommendedClothes />
       </View>
-
-      {/* Toggle Buttons */}
-      <View style={styles.toggleButtons}>
-        <TouchableOpacity
-          style={[styles.toggleButton, isFirstScreen && styles.activeButton]}
-          onPress={() => isFirstScreen || toggleScreen()}
-        >
-          <Text>1번 화면</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.toggleButton, !isFirstScreen && styles.activeButton]}
-          onPress={() => !isFirstScreen || toggleScreen()}
-        >
-          <Text>2번 화면</Text>
-        </TouchableOpacity>
+      {/* 옷 리스트 */}
+      <View style={styles.clotheslistDiv}>
+        <Text style={styles.clothesTitle}>옷장</Text>
+        <RenderClothes />
       </View>
-
-      {/* Clothes List */}
-      {renderClothesList()}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  recommendlistDiv: {
+    width: '90%',
+    marginLeft: '5%',
+    marginVertical: '5%',
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 5,
+  },
+  alertText: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 10,
+    fontSize: FONTSIZE.Medium,
+    color: COLORS.Blue,
   },
-  headerButton: {
-    width: '20%',
-    alignItems: 'center',
+  recommendedTitle: {
+    fontSize: FONTSIZE.Medium,
+    fontWeight: "bold",
+    marginBottom: 10,
+    paddingLeft: 10,
   },
-  toggleButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
+  clotheslistDiv: {
+    width: '90%',
+    marginLeft: '5%',
+    marginVertical: '5%',
   },
-  toggleButton: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#ccc',
+  clothesTitle: {
+    fontSize: FONTSIZE.Medium,
+    fontWeight: "bold",
+    marginBottom: 20,
+    marginLeft: 10,
   },
-  activeButton: {
-    backgroundColor: '#8DB9F8',
-  },
-  clothesItem: {
-    flex: 1,
-    padding: 10,
+  recommendedDiv: {
+    borderColor: COLORS.CarrotRed,
     margin: 5,
-    backgroundColor: '#e0e0e0',
+    borderWidth: 2,
     borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  flatListContent: {
+    marginLeft: '5%',
+    flexGrow: 1,
   },
 });
 

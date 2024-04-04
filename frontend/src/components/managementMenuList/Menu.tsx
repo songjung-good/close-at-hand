@@ -1,12 +1,11 @@
 import { Image, Pressable, View, StyleSheet, Text } from "react-native";
-import { SHADOW } from "../../shared";
-import COLORS from "../../app/constant/COLORS";
+import { SHADOW, COLORS, FONTSIZE, ROW } from "../../shared";
 
 interface Props {
 	image: ReturnType<typeof require>;
 	title: string;
 	backgroundColor: keyof typeof COLORS;
-	onPress: () => void;
+	onPress(): void;
 }
 
 export const Menu: React.FC<Props> = ({
@@ -16,9 +15,14 @@ export const Menu: React.FC<Props> = ({
 	onPress,
 }) => {
 	return (
-		<Pressable onPress={onPress} style={SHADOW}>
+		<Pressable onPress={onPress}>
 			<View
-				style={[styles.container, { backgroundColor: COLORS[backgroundColor] }]}
+				style={[
+					SHADOW,
+					ROW,
+					styles.container,
+					{ backgroundColor: COLORS[backgroundColor] },
+				]}
 			>
 				<Image style={styles.image} source={image} />
 				<View style={styles.textContainer}>
@@ -33,7 +37,6 @@ export default Menu;
 
 const styles = StyleSheet.create({
 	container: {
-		flexDirection: "row",
 		borderRadius: 10,
 		marginVertical: 10,
 		marginHorizontal: 5,
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	text: {
-		fontSize: 32,
+		fontSize: FONTSIZE.ExtarLarge,
 		textAlign: "center",
 	},
 	image: {

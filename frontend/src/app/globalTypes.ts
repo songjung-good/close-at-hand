@@ -1,36 +1,29 @@
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RouteProp } from "@react-navigation/native";
+import { RouteProp as A } from "@react-navigation/native";
 
 import type { RootParamList } from "./navigation/AppNav";
 import type { HomeParamList } from "./navigation/HomeNav";
 import type { ClosetParamList } from "./navigation/ClosetNav";
-import type { MangeMentParamList } from "./navigation/ManagementNav";
+import type { ManagementParamList } from "./navigation/ManagementNav";
 import type { SettingsParamList } from "./navigation/SettingsNav";
-import type { OnBoardingParamList } from "./navigation/OnBoardingNav";
 
 type NativeStackParamList = RootParamList &
 	HomeParamList &
 	ClosetParamList &
-	MangeMentParamList &
-	SettingsParamList &
-	OnBoardingParamList;
+	ManagementParamList &
+	SettingsParamList;
 
-type RootScreenType = {
-	[key in keyof NativeStackParamList]: NativeStackParamList[key];
-};
+type Route<T extends keyof NativeStackParamList> = A<NativeStackParamList, T>;
 
 declare global {
-	interface RootNav extends BottomTabNavigationProp<RootParamList> {}
-	interface HomeNav extends NativeStackNavigationProp<HomeParamList> {}
-	interface ClosetNav extends NativeStackNavigationProp<ClosetParamList> {}
-	interface ManageMentNav
-		extends NativeStackNavigationProp<MangeMentParamList> {}
-	interface SettingsNav extends NativeStackNavigationProp<SettingsParamList> {}
-	interface OnBoardingNav
-		extends NativeStackNavigationProp<OnBoardingParamList> {}
-	interface RootScreenProps {
-		navigation: NativeStackNavigationProp<RootScreenType>;
-		route: RouteProp<RootScreenType>;
+	type Navigation = NativeStackNavigationProp<NativeStackParamList>;
+
+	type RootNavigationProp = {
+		navigation: Navigation;
+	};
+	interface RootScreenProp<T extends keyof NativeStackParamList> {
+		navigation: Navigation;
+		route: Route<T>;
 	}
+	type ScreenNameType = keyof NativeStackParamList;
 }

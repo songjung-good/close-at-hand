@@ -3,22 +3,21 @@ import { Alert } from "react-native";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigation } from "@react-navigation/native";
 
-import { BorderBottomInput, StyledButton } from "../../shared";
+import { BorderBottomInput, StyledButton } from "../buttons";
 import { fetchLogin } from "./API";
 
 const SignIn = () => {
-	const navigation = useNavigation<RootNav>();
+	const navigation = useNavigation<Navigation>();
 	const [accountId, setAccountId] = useState("");
 	const [password, setPassword] = useState("");
 
 	const { mutate } = useMutation({
 		mutationFn: fetchLogin,
 		onSuccess: () => {
-			navigation.navigate("0");
+			navigation.navigate("0", { screen: "home" });
 		},
-		onError: () => {
-			Alert.alert("로그인 실패", "아이디 또는 비밀번호를 다시 확인해주세요");
-			setAccountId("");
+		onError: (error) => {
+			Alert.alert(error.message, "아이디 또는 비밀번호를 다시 확인해주세요");
 			setPassword("");
 		},
 	});
@@ -28,7 +27,7 @@ const SignIn = () => {
 			Alert.alert("입력 오류", "아이디 또는 비밀번호를 입력하세요");
 			return;
 		}
-		mutate({ accountId, password });
+		mutate({ account: accountId, password });
 	}
 
 	function handleIdChange(input: string) {
@@ -46,6 +45,7 @@ const SignIn = () => {
 				onChangeText={setPassword}
 				value={password}
 				placeholder="비밀번호"
+				secureTextEntry={true}
 			/>
 			<StyledButton title="로그인" onPress={hanldeLogin} />
 		</>
