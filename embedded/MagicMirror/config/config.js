@@ -85,7 +85,7 @@ let config = {
 				type: "current",
 				location: "Busan",
 				locationID: "1838524", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-				apiKey: "c1f51ab4e5781f0611df186d95efb880"
+				apiKey: "Personal OpenWeatherMap API Key"
 			}
 		},
 		{
@@ -97,7 +97,7 @@ let config = {
 				type: "forecast",
 				location: "Busan",
 				locationID: "1838524", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-				apiKey: "c1f51ab4e5781f0611df186d95efb880"
+				apiKey: "Personal OpenWeatherMap API Key"
 			}
 		},
 		{
@@ -142,31 +142,22 @@ let config = {
 			module: "MMM-EasyPix",
 			position: "middle_center",
 			config: {
-			  picName: "E207수정.png",            // Enter the picture file name.
-			className: "ootd_logo",
+			  picName: "guideline-img.svg",            // Enter the picture file name.
+			  className: "my-svg-image",                // Size picture precisely. Retains aspect ratio.
 			},
 			classes: "AR-guideline"
+
 		},
-		// {
-		// 	module: "MMM-EasyPix",
-		// 	position: "top_right",
-		// 	config: {
-		// 	  picName: "satur_T.png",            // Enter the picture file name.
-		// 	  className: "your-svg-image",                // Size picture precisely. Retains aspect ratio.
-		// 	},
-		// 	classes: "topclothes"
+		{
+			module: "helloworld",
+			position: "middle_center",
+			config: {
+				text: "가이드라인에 맞춰 서주세요!",
+				customClass: "medium blue-notification"
+			},
+			classes: "notification_AR"
+		},
 
-		// },
-		// {
-		// 	module: "MMM-EasyPix",
-		// 	position: "top_right",
-		// 	config: {
-		// 	  picName: "blue_pants.png",            // Enter the picture file name.
-		// 	  className: "your-svg-image",                // Size picture precisely. Retains aspect ratio.
-		// 	},
-		// 	classes: "bottomclothes"
-
-		// },
 
 		// OOTD용 모듈
 		{
@@ -201,14 +192,8 @@ let config = {
 			module: "MMM-Selfieshot",
 			position: "bottom_left",
 			config: {
-			  displayButton: "portrait",
-			  width: 1080,
-			  height: 1920,
+			  displayButton: "portrait"
 			}
-		},
-		{
-			module: "MMM-OpenCVStream",
-			position: "bottom_right"
 		},
 
 
@@ -224,16 +209,16 @@ let config = {
 			module: "MMM-pages",
 			config: {
 				modules: [
-					["AR_Header", "AR_category", "AR-guideline", "topclothes", "bottomclothes"],  // page 0: AR
+					["AR_Header", "AR_category", "AR-guideline", "notification_AR"],  // page 0: AR
 					["alert", "MMM-Face-Recognition-SMAI", "updatenotification", "clock", "compliments", "weather", "newsfeed"],  // page 1: Home
-					["OOTD_Header", "handgesture", "notification_OOTD", "navi4", "MMM-Selfieshot", "MMM-OpenCVStream"]  // page 1: OOTD
+					["OOTD_Header", "handgesture", "notification_OOTD", "navi4", "MMM-Selfieshot"]  // page 1: OOTD
 				],
 				fixed: ["MMM-page-indicator"],
 				hiddenPages: {
                     "screenSaver": [ "clock" ],  // AOD
                     // "admin": [ "MMM-ShowMeSystemStatsModule", "MMM-AnOnScreenMenuModule" ],
                 },
-				homePage: 1, // home page index
+				homePage: 2, // home page index
 			}
 		},
 	]
