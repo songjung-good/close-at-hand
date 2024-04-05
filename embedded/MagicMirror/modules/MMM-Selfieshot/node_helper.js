@@ -116,7 +116,7 @@ module.exports = NodeHelper.create({
 
 		const apiEndpoint = 'https://j10e207.p.ssafy.io/api/v1/ootd';
 		// const userToken = process.env.USER_TOKEN;
-		const userToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFiY2QxMjM0IiwidXNlclRva2VuIjoiY2xpX1BDczlqMFFGb09raEhaS08iLCJpYXQiOjE3MTE4NzQwNTYsImV4cCI6MTcxMjY1MTY1Nn0.P_zNNvrGrfHsd56R3FlGVVwV4BfrlfnVgdhVsCPUv-k"
+		const userToken = "user_token";
 	
 		axios.post(apiEndpoint, formData, {
 			headers: {
