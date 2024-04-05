@@ -231,3 +231,9 @@ docker ps -a
 ```
 
 # Embedded
+embedded 위치에 venv생성
+requirements.txt 설치
+cd MagicMirror/
+npm run install-mm
+defaults를 제외한 MMM- 모듈 설치
+매직미러 어플리케이션 시작 npm run start
