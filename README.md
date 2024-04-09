@@ -10,8 +10,9 @@
 - 당신의 가까이에 Close At Hand
 
 ## UCC🎞
-
-https://www.youtube.com/watch?v=cSyNY8Ny024&feature=youtu.be
+<a href="https://www.youtube.com/watch?v=cSyNY8Ny024&feature=youtu.be">
+  <img src="./ReadMeImg/UCC 이미지.png" alt="UCC이미지">
+</a>
 
 ## 팀 무지개반사🌈
 
@@ -55,7 +56,7 @@ https://www.youtube.com/watch?v=cSyNY8Ny024&feature=youtu.be
 
 ## ERD
 
-![ERD](ReadMeImg/ERD.png)
+![ERD](ReadMeImg/ERD_new.png)
 
 ## 아키텍쳐
 
