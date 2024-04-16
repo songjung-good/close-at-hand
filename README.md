@@ -1,3 +1,5 @@
+![main](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/32f696f0-45cc-4af0-92bf-aaeb38de5f6e)
+
 # Close At Hand 🙌
 
 ✔ 본 프로젝트는 삼성 청년 SW 아카데미 2학기 특화 프로젝트 결과물입니다.
@@ -126,9 +128,14 @@
 
 ## 스마트 미러
 
+![mirror_page](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/b5d76ceb-1ec4-4558-8a21-9f96eaac807c)
+
 ### 0. 메인 화면
-<img src="./ReadMeImg/스마트미러_메인.png" height="700" alt="스마트미러_메인" title="스마트미러_메인" />
-<br>
+
+![main_page](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/9927b9ec-bdad-431e-b6d0-1c8f53f53d6e)
+
+![logout](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/13a5243c-33f4-4940-aef0-a8a065aed56d)
+
 메인화면 사진 유저 인식 전 / 유저 인식 후
 
 ✔️ 얼굴 인식을 통한 유저 인식
@@ -141,7 +148,7 @@
 
 ### 1. AR 옷 입어보기
 
-사진
+![AR_fitting](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/0bf8139c-da5b-445f-9aab-2c7e95d25ea0)
 
 ✔️ AR 코디 페이지에서 당일 추천된 옷 조회
 
@@ -153,13 +160,20 @@
 
 ### 2. 옷 등록하기
 
-사진
+![ootd](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/3625af34-a92e-4a82-a071-0705c3a31083)
 
 ✔️ 외출 전 스마트미러 기기 앞에서 오늘의 OOTD 촬영
 
 ✔️ 손을 폈다가 쥐는 모션을 통해 촬영 시작
 
 ✔️ 촬영 한 OOTD는 앱 메인페이지의 ‘오늘의 OOTD’ 위젯에 실시간 반영
+
+### 3. Swipe 페이지 전환
+
+
+![swipe_page](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/f29d1547-8eea-4a7b-a7a0-6f33ff02381f)
+
+✔️ Swipe 제스처를 통한 페이지 전환 기능
 
 # 역할 분담
 
