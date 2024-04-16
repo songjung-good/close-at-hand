@@ -13,7 +13,8 @@
 
 ## UCC🎞
 <a href="https://www.youtube.com/watch?v=cSyNY8Ny024&feature=youtu.be">
-  <img src="./ReadMeImg/UCC 이미지.png" alt="UCC이미지">
+  <img src="https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/56d4fd29-f26f-4a48-a451-717e4adeaf99
+" alt="UCC이미지">
 </a>
 
 ## 팀 무지개반사🌈
@@ -134,7 +135,6 @@
 
 ![main_page](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/9927b9ec-bdad-431e-b6d0-1c8f53f53d6e)
 
-![logout](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/13a5243c-33f4-4940-aef0-a8a065aed56d)
 
 메인화면 사진 유저 인식 전 / 유저 인식 후
 
