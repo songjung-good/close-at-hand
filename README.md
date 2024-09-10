@@ -128,11 +128,11 @@
 
 ## 스마트 미러
 
-![mirror_page](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/b5d76ceb-1ec4-4558-8a21-9f96eaac807c)
+![mirror_page](./ReadMeImg/스마트미러_메인.png)
 
 ### 0. 메인 화면
 
-![main_page](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/9927b9ec-bdad-431e-b6d0-1c8f53f53d6e)
+![main_page](./ReadMeImg/스마트미러_메인.png)
 
 
 메인화면 사진 유저 인식 전 / 유저 인식 후
