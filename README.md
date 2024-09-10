@@ -13,8 +13,7 @@
 
 ## UCC🎞
 <a href="https://www.youtube.com/watch?v=cSyNY8Ny024&feature=youtu.be">
-  <img src="https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/56d4fd29-f26f-4a48-a451-717e4adeaf99
-" alt="UCC이미지">
+  <img src="./ReadMeImg/UCC 이미지.png" alt="UCC이미지">
 </a>
 
 ## 팀 무지개반사🌈
