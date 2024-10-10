@@ -86,8 +86,6 @@
 
 ### **3. 내 옷장**
 
-사진
-
 ✔️ 옷장에 등록된 모든 옷 확인 가능
 
 ✔️ 각 옷의 상세 정보제공
@@ -95,8 +93,6 @@
 ✔️ 태그 검색 가능
 
 ### **4. 내 코디**
-
-사진
 
 ✔️ 원하는 옷을 골라 코디 설정 가능
 
@@ -128,12 +124,11 @@
 
 ## 스마트 미러
 
-![mirror_page](./ReadMeImg/스마트미러_메인.png)
+![mirror_page](docs/readmeImage/매직미러_외관.jpg)
 
 ### 0. 메인 화면
 
-![main_page](./ReadMeImg/스마트미러_메인.png)
-
+![main_page](docs/readmeImage/매직미러_메인화면.png)
 
 메인화면 사진 유저 인식 전 / 유저 인식 후
 
@@ -147,7 +142,7 @@
 
 ### 1. AR 옷 입어보기
 
-![AR_fitting](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/0bf8139c-da5b-445f-9aab-2c7e95d25ea0)
+![AR_fitting](docs/readmeImage/매직미러_AR코디.svg)
 
 ✔️ AR 코디 페이지에서 당일 추천된 옷 조회
 
@@ -159,7 +154,7 @@
 
 ### 2. 옷 등록하기
 
-![ootd](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/3625af34-a92e-4a82-a071-0705c3a31083)
+![ootd](docs/readmeImage/매직미러_OOTD.gif)
 
 ✔️ 외출 전 스마트미러 기기 앞에서 오늘의 OOTD 촬영
 
@@ -168,7 +163,6 @@
 ✔️ 촬영 한 OOTD는 앱 메인페이지의 ‘오늘의 OOTD’ 위젯에 실시간 반영
 
 ### 3. Swipe 페이지 전환
-
 
 ![swipe_page](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/f29d1547-8eea-4a7b-a7a0-6f33ff02381f)
 
