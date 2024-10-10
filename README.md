@@ -1,4 +1,4 @@
-![main](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/32f696f0-45cc-4af0-92bf-aaeb38de5f6e)
+![main](docs/picture/20240320_15h29m49s_grim.png)
 
 # Close At Hand 🙌
 
