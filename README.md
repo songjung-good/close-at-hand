@@ -164,8 +164,6 @@
 
 ### 3. Swipe 페이지 전환
 
-![swipe_page](https://github.com/RosaDamascena/Close_at_Hand/assets/95911613/f29d1547-8eea-4a7b-a7a0-6f33ff02381f)
-
 ✔️ Swipe 제스처를 통한 페이지 전환 기능
 
 # 역할 분담
